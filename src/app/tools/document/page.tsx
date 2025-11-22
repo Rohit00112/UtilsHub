@@ -1,41 +1,43 @@
+'use client';
+
 import Link from 'next/link';
 import styles from '../text/text.module.css';
 
 export default function DocumentToolsPage() {
-    return (
-        <div className={styles.page}>
-            <div className={styles.header}>
-                <div className="container">
-                    <Link href="/" className={styles.backLink}>
-                        ← Back to Home
-                    </Link>
-                    <h1 className={styles.title}>
-                        <span className="text-gradient">Document Tools</span>
-                    </h1>
-                    <p className={styles.description}>
-                        Convert documents between different formats
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className="container">
+          <Link href="/" className={styles.backLink}>
+            ← Back to Home
+          </Link>
+          <h1 className={styles.title}>
+            <span className="text-gradient">Document Tools</span>
+          </h1>
+          <p className={styles.description}>
+            Convert documents between different formats
+          </p>
+        </div>
+      </div>
 
-            <main className={styles.main}>
-                <div className="container">
-                    <div className={styles.comingSoon}>
-                        <div className={styles.comingSoonIcon}>🚧</div>
-                        <h2>Coming Soon!</h2>
-                        <p>Document conversion tools are under development:</p>
-                        <ul>
-                            <li>DOCX ↔ PDF</li>
-                            <li>DOCX ↔ TXT</li>
-                            <li>PPTX ↔ PDF</li>
-                            <li>XLSX ↔ PDF</li>
-                            <li>Markdown ↔ HTML/PDF</li>
-                        </ul>
-                    </div>
-                </div>
-            </main>
+      <main className={styles.main}>
+        <div className="container">
+          <div className={styles.comingSoon}>
+            <div className={styles.comingSoonIcon}>🚧</div>
+            <h2>Coming Soon!</h2>
+            <p>Document conversion tools are under development:</p>
+            <ul>
+              <li>DOCX ↔ PDF</li>
+              <li>DOCX ↔ TXT</li>
+              <li>PPTX ↔ PDF</li>
+              <li>XLSX ↔ PDF</li>
+              <li>Markdown ↔ HTML/PDF</li>
+            </ul>
+          </div>
+        </div>
+      </main>
 
-            <style jsx>{`
+      <style jsx>{`
         .comingSoon {
           text-align: center;
           padding: 4rem 2rem;
@@ -79,6 +81,6 @@ export default function DocumentToolsPage() {
           margin-right: 0.5rem;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }

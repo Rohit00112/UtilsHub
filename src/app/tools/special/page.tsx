@@ -1,41 +1,43 @@
+'use client';
+
 import Link from 'next/link';
 import styles from '../text/text.module.css';
 
 export default function SpecialToolsPage() {
-    return (
-        <div className={styles.page}>
-            <div className={styles.header}>
-                <div className="container">
-                    <Link href="/" className={styles.backLink}>
-                        ← Back to Home
-                    </Link>
-                    <h1 className={styles.title}>
-                        <span className="text-gradient">Special Tools</span>
-                    </h1>
-                    <p className={styles.description}>
-                        Unique and rare utilities for specific tasks
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className="container">
+          <Link href="/" className={styles.backLink}>
+            ← Back to Home
+          </Link>
+          <h1 className={styles.title}>
+            <span className="text-gradient">Special Tools</span>
+          </h1>
+          <p className={styles.description}>
+            Unique and rare utilities for specific tasks
+          </p>
+        </div>
+      </div>
 
-            <main className={styles.main}>
-                <div className="container">
-                    <div className={styles.comingSoon}>
-                        <div className={styles.comingSoonIcon}>🚧</div>
-                        <h2>Coming Soon!</h2>
-                        <p>Special tools under development:</p>
-                        <ul>
-                            <li>Remove Duplicate Lines</li>
-                            <li>Text Diff Checker</li>
-                            <li>PDF Compare</li>
-                            <li>Image Merger</li>
-                            <li>Favicon Creator</li>
-                        </ul>
-                    </div>
-                </div>
-            </main>
+      <main className={styles.main}>
+        <div className="container">
+          <div className={styles.comingSoon}>
+            <div className={styles.comingSoonIcon}>🚧</div>
+            <h2>Coming Soon!</h2>
+            <p>Special tools under development:</p>
+            <ul>
+              <li>Remove Duplicate Lines</li>
+              <li>Text Diff Checker</li>
+              <li>PDF Compare</li>
+              <li>Image Merger</li>
+              <li>Favicon Creator</li>
+            </ul>
+          </div>
+        </div>
+      </main>
 
-            <style jsx>{`
+      <style jsx>{`
         .comingSoon {
           text-align: center;
           padding: 4rem 2rem;
@@ -79,6 +81,6 @@ export default function SpecialToolsPage() {
           margin-right: 0.5rem;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }

@@ -1,41 +1,43 @@
+'use client';
+
 import Link from 'next/link';
 import styles from '../text/text.module.css';
 
 export default function ImageToolsPage() {
-    return (
-        <div className={styles.page}>
-            <div className={styles.header}>
-                <div className="container">
-                    <Link href="/" className={styles.backLink}>
-                        ← Back to Home
-                    </Link>
-                    <h1 className={styles.title}>
-                        <span className="text-gradient">Image Tools</span>
-                    </h1>
-                    <p className={styles.description}>
-                        Edit, convert, and optimize images
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className="container">
+          <Link href="/" className={styles.backLink}>
+            ← Back to Home
+          </Link>
+          <h1 className={styles.title}>
+            <span className="text-gradient">Image Tools</span>
+          </h1>
+          <p className={styles.description}>
+            Edit, convert, and optimize images
+          </p>
+        </div>
+      </div>
 
-            <main className={styles.main}>
-                <div className="container">
-                    <div className={styles.comingSoon}>
-                        <div className={styles.comingSoonIcon}>🚧</div>
-                        <h2>Coming Soon!</h2>
-                        <p>Image tools are under development:</p>
-                        <ul>
-                            <li>Image Format Converter (PNG, JPG, WebP)</li>
-                            <li>Image Resizer & Cropper</li>
-                            <li>Image Compressor</li>
-                            <li>Background Remover (AI)</li>
-                            <li>Color Picker</li>
-                        </ul>
-                    </div>
-                </div>
-            </main>
+      <main className={styles.main}>
+        <div className="container">
+          <div className={styles.comingSoon}>
+            <div className={styles.comingSoonIcon}>🚧</div>
+            <h2>Coming Soon!</h2>
+            <p>Image tools are under development:</p>
+            <ul>
+              <li>Image Format Converter (PNG, JPG, WebP)</li>
+              <li>Image Resizer & Cropper</li>
+              <li>Image Compressor</li>
+              <li>Background Remover (AI)</li>
+              <li>Color Picker</li>
+            </ul>
+          </div>
+        </div>
+      </main>
 
-            <style jsx>{`
+      <style jsx>{`
         .comingSoon {
           text-align: center;
           padding: 4rem 2rem;
@@ -79,6 +81,6 @@ export default function ImageToolsPage() {
           margin-right: 0.5rem;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }
