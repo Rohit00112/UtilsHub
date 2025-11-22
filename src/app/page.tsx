@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import styles from './page.module.css';
 
 const categories = [
     {
@@ -8,7 +7,7 @@ const categories = [
         icon: '📄',
         description: 'Merge, split, compress, convert PDFs',
         tools: ['PDF Merger', 'PDF Splitter', 'PDF Compressor', 'PDF to Word', 'Word to PDF', 'Image to PDF', 'PDF to Image', 'PDF Reorder', 'PDF Delete', 'PDF Rotate', 'PDF Unlock', 'PDF Watermark', 'PDF Viewer'],
-        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        gradient: 'from-[#667eea] to-[#764ba2]',
     },
     {
         id: 'document',
@@ -16,7 +15,7 @@ const categories = [
         icon: '📝',
         description: 'Convert documents between formats',
         tools: ['DOCX ↔ PDF', 'DOCX ↔ TXT', 'PPTX ↔ PDF', 'XLSX ↔ PDF', 'CSV ↔ XLSX', 'Markdown ↔ HTML', 'Markdown ↔ PDF'],
-        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        gradient: 'from-[#f093fb] to-[#f5576c]',
     },
     {
         id: 'text',
@@ -24,7 +23,7 @@ const categories = [
         icon: '✍️',
         description: 'Process and transform text',
         tools: ['Case Converter', 'Remove Spaces', 'Word Counter', 'Character Counter', 'Keyword Extractor', 'Grammar Checker', 'Text Summarizer', 'Encrypt/Decrypt', 'URL Encoder', 'Base64 Encoder'],
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        gradient: 'from-[#4facfe] to-[#00f2fe]',
     },
     {
         id: 'image',
@@ -32,7 +31,7 @@ const categories = [
         icon: '🎨',
         description: 'Edit and convert images',
         tools: ['PNG ↔ JPG', 'WebP Converter', 'HEIC Converter', 'Image to Base64', 'Image Resizer', 'Image Cropper', 'Image Compressor', 'Background Remover', 'Watermark Tool', 'Color Picker'],
-        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+        gradient: 'from-[#fa709a] to-[#fee140]',
     },
     {
         id: 'security',
@@ -40,7 +39,7 @@ const categories = [
         icon: '🔐',
         description: 'Encryption and password utilities',
         tools: ['Password Generator', 'Hash Generator', 'JWT Decoder', 'QR Code Generator', 'QR Scanner', 'Barcode Generator', 'ZIP Creator', 'ZIP Extractor', 'Metadata Viewer', 'EXIF Remover'],
-        gradient: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+        gradient: 'from-[#30cfd0] to-[#330867]',
     },
     {
         id: 'web',
@@ -48,7 +47,7 @@ const categories = [
         icon: '🌐',
         description: 'URL and web utilities',
         tools: ['URL Shortener', 'Open Graph Preview', 'HTTP Header Checker', 'Status Checker', 'DNS Lookup', 'WHOIS Lookup'],
-        gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+        gradient: 'from-[#a8edea] to-[#fed6e3]',
     },
     {
         id: 'calculator',
@@ -56,7 +55,7 @@ const categories = [
         icon: '🧮',
         description: 'Financial and unit calculators',
         tools: ['EMI Calculator', 'GST Calculator', 'Age Calculator', 'BMI Calculator', 'CGPA Converter', 'Unit Converter'],
-        gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+        gradient: 'from-[#ffecd2] to-[#fcb69f]',
     },
     {
         id: 'ai',
@@ -64,7 +63,7 @@ const categories = [
         icon: '🤖',
         description: 'AI-powered utilities',
         tools: ['Image Upscaler', 'Text Summarizer', 'Paraphraser', 'Resume Analyzer', 'Chat PDF', 'Speech-to-Text', 'Text-to-Speech', 'Translator', 'OCR'],
-        gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+        gradient: 'from-[#ff9a9e] to-[#fecfef]',
     },
     {
         id: 'developer',
@@ -72,7 +71,7 @@ const categories = [
         icon: '💻',
         description: 'Tools for developers',
         tools: ['JSON Formatter', 'XML Formatter', 'YAML ↔ JSON', 'Regex Tester', 'UUID Generator', 'Color Palette', 'Lorem Ipsum', 'Markdown Editor'],
-        gradient: 'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)',
+        gradient: 'from-[#a1c4fd] to-[#c2e9fb]',
     },
     {
         id: 'special',
@@ -80,66 +79,86 @@ const categories = [
         icon: '💡',
         description: 'Unique and rare utilities',
         tools: ['Remove Duplicates', 'Text Diff', 'PDF Compare', 'Image Merger', 'Audio Cleaner', 'Multi-file ZIP', 'Favicon Creator'],
-        gradient: 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
+        gradient: 'from-[#fbc2eb] to-[#a6c1ee]',
     },
 ];
 
 export default function Home() {
     return (
-        <div className={styles.page}>
+        <div className="min-h-screen bg-bg-primary relative">
+            {/* Background Mesh Gradient */}
+            <div className="fixed inset-0 bg-gradient-mesh opacity-50 pointer-events-none" />
+
             {/* Hero Section */}
-            <section className={styles.hero}>
-                <div className={styles.heroContent}>
-                    <div className={styles.heroGlow}></div>
-                    <h1 className={styles.heroTitle}>
+            <section className="relative py-32 px-8 text-center overflow-hidden">
+                <div className="relative z-10 max-w-4xl mx-auto">
+                    {/* Glow Effect */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/30 rounded-full blur-[80px] animate-pulse pointer-events-none" />
+
+                    <h1 className="text-7xl font-extrabold mb-4 tracking-tight animate-fade-in">
                         <span className="text-gradient">UtilsHub</span>
                     </h1>
-                    <p className={styles.heroSubtitle}>
+                    <p className="text-3xl text-text-secondary mb-4 font-semibold animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'backwards' }}>
                         Your All-in-One Toolkit for Everything
                     </p>
-                    <p className={styles.heroDescription}>
+                    <p className="text-xl text-text-tertiary mb-12 animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'backwards' }}>
                         50+ Free Online Tools for PDF, Images, Text, Documents, AI, and More
                     </p>
-                    <div className={styles.heroStats}>
-                        <div className={styles.stat}>
-                            <div className={styles.statNumber}>50+</div>
-                            <div className={styles.statLabel}>Tools</div>
+
+                    {/* Stats */}
+                    <div className="flex justify-center gap-12 animate-fade-in" style={{ animationDelay: '0.6s', animationFillMode: 'backwards' }}>
+                        <div className="text-center">
+                            <div className="text-5xl font-extrabold text-gradient mb-2">50+</div>
+                            <div className="text-sm text-text-tertiary uppercase tracking-wider">Tools</div>
                         </div>
-                        <div className={styles.stat}>
-                            <div className={styles.statNumber}>10</div>
-                            <div className={styles.statLabel}>Categories</div>
+                        <div className="text-center">
+                            <div className="text-5xl font-extrabold text-gradient mb-2">10</div>
+                            <div className="text-sm text-text-tertiary uppercase tracking-wider">Categories</div>
                         </div>
-                        <div className={styles.stat}>
-                            <div className={styles.statNumber}>100%</div>
-                            <div className={styles.statLabel}>Free</div>
+                        <div className="text-center">
+                            <div className="text-5xl font-extrabold text-gradient mb-2">100%</div>
+                            <div className="text-sm text-text-tertiary uppercase tracking-wider">Free</div>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Categories Grid */}
-            <section className={styles.categories}>
+            <section className="relative z-10 py-16">
                 <div className="container">
-                    <h2 className={styles.sectionTitle}>Explore Tools by Category</h2>
-                    <div className={styles.grid}>
+                    <h2 className="text-5xl text-center mb-12 text-gradient">Explore Tools by Category</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {categories.map((category) => (
                             <Link
                                 href={`/tools/${category.id}`}
                                 key={category.id}
-                                className={styles.categoryCard}
+                                className="group relative bg-bg-secondary rounded-2xl p-8 border border-border transition-all duration-base hover:-translate-y-2 hover:border-primary hover:shadow-lg hover:shadow-glow overflow-hidden"
                             >
-                                <div className={styles.cardGlow} style={{ background: category.gradient }}></div>
-                                <div className={styles.cardContent}>
-                                    <div className={styles.categoryIcon}>{category.icon}</div>
-                                    <h3 className={styles.categoryName}>{category.name}</h3>
-                                    <p className={styles.categoryDescription}>{category.description}</p>
-                                    <div className={styles.toolCount}>{category.tools.length} tools</div>
-                                    <div className={styles.toolsList}>
+                                {/* Gradient Glow on Hover */}
+                                <div className={`absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-15 transition-opacity duration-slow blur-3xl pointer-events-none`} />
+
+                                {/* Mesh Background on Hover */}
+                                <div className="absolute inset-0 bg-gradient-mesh opacity-0 group-hover:opacity-10 transition-opacity duration-base" />
+
+                                <div className="relative z-10">
+                                    <div className="text-5xl mb-4 inline-block transition-transform duration-base group-hover:scale-110 group-hover:rotate-6">
+                                        {category.icon}
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-2 text-text-primary">{category.name}</h3>
+                                    <p className="text-text-secondary mb-4 text-base">{category.description}</p>
+                                    <div className="inline-block px-3 py-1 bg-bg-tertiary rounded-full text-sm text-primary-light font-semibold mb-4">
+                                        {category.tools.length} tools
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
                                         {category.tools.slice(0, 3).map((tool, idx) => (
-                                            <span key={idx} className={styles.toolTag}>{tool}</span>
+                                            <span key={idx} className="px-3 py-1 bg-primary/10 border border-primary/20 rounded text-xs text-text-secondary">
+                                                {tool}
+                                            </span>
                                         ))}
                                         {category.tools.length > 3 && (
-                                            <span className={styles.toolTag}>+{category.tools.length - 3} more</span>
+                                            <span className="px-3 py-1 bg-primary/10 border border-primary/20 rounded text-xs text-text-secondary">
+                                                +{category.tools.length - 3} more
+                                            </span>
                                         )}
                                     </div>
                                 </div>
@@ -150,29 +169,29 @@ export default function Home() {
             </section>
 
             {/* Features Section */}
-            <section className={styles.features}>
+            <section className="relative z-10 py-16 pb-24">
                 <div className="container">
-                    <h2 className={styles.sectionTitle}>Why Choose UtilsHub?</h2>
-                    <div className={styles.featuresGrid}>
-                        <div className={styles.feature}>
-                            <div className={styles.featureIcon}>⚡</div>
-                            <h3>Lightning Fast</h3>
-                            <p>All tools run in your browser for instant results</p>
+                    <h2 className="text-5xl text-center mb-12 text-gradient">Why Choose UtilsHub?</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="text-center p-8 bg-bg-secondary rounded-lg border border-border transition-all duration-base hover:-translate-y-1 hover:border-primary hover:shadow-md">
+                            <div className="text-5xl mb-4 inline-block transition-transform duration-base hover:scale-125">⚡</div>
+                            <h3 className="text-xl font-bold mb-2">Lightning Fast</h3>
+                            <p className="text-text-secondary text-base m-0">All tools run in your browser for instant results</p>
                         </div>
-                        <div className={styles.feature}>
-                            <div className={styles.featureIcon}>🔒</div>
-                            <h3>100% Private</h3>
-                            <p>Your files never leave your device</p>
+                        <div className="text-center p-8 bg-bg-secondary rounded-lg border border-border transition-all duration-base hover:-translate-y-1 hover:border-primary hover:shadow-md">
+                            <div className="text-5xl mb-4 inline-block transition-transform duration-base hover:scale-125">🔒</div>
+                            <h3 className="text-xl font-bold mb-2">100% Private</h3>
+                            <p className="text-text-secondary text-base m-0">Your files never leave your device</p>
                         </div>
-                        <div className={styles.feature}>
-                            <div className={styles.featureIcon}>🎯</div>
-                            <h3>No Limits</h3>
-                            <p>Use all tools unlimited times, completely free</p>
+                        <div className="text-center p-8 bg-bg-secondary rounded-lg border border-border transition-all duration-base hover:-translate-y-1 hover:border-primary hover:shadow-md">
+                            <div className="text-5xl mb-4 inline-block transition-transform duration-base hover:scale-125">🎯</div>
+                            <h3 className="text-xl font-bold mb-2">No Limits</h3>
+                            <p className="text-text-secondary text-base m-0">Use all tools unlimited times, completely free</p>
                         </div>
-                        <div className={styles.feature}>
-                            <div className={styles.featureIcon}>📱</div>
-                            <h3>Works Everywhere</h3>
-                            <p>Fully responsive on desktop, tablet, and mobile</p>
+                        <div className="text-center p-8 bg-bg-secondary rounded-lg border border-border transition-all duration-base hover:-translate-y-1 hover:border-primary hover:shadow-md">
+                            <div className="text-5xl mb-4 inline-block transition-transform duration-base hover:scale-125">📱</div>
+                            <h3 className="text-xl font-bold mb-2">Works Everywhere</h3>
+                            <p className="text-text-secondary text-base m-0">Fully responsive on desktop, tablet, and mobile</p>
                         </div>
                     </div>
                 </div>
