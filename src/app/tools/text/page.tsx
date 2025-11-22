@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import styles from './text.module.css';
 
 const textTools = [
     {
@@ -30,30 +29,49 @@ const textTools = [
 
 export default function TextToolsPage() {
     return (
-        <div className={styles.page}>
-            <div className={styles.header}>
-                <div className="container">
-                    <Link href="/" className={styles.backLink}>
+        <div className="min-h-screen bg-bg-primary">
+            {/* Header */}
+            <div className="bg-bg-secondary border-b border-border relative">
+                <div className="absolute inset-0 bg-gradient-mesh opacity-30 pointer-events-none" />
+
+                <div className="container py-12 relative z-10">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-primary-light font-semibold mb-6 transition-all duration-fast hover:text-primary hover:-translate-x-1"
+                    >
                         ← Back to Home
                     </Link>
-                    <h1 className={styles.title}>
+                    <h1 className="text-6xl font-bold mb-4">
                         <span className="text-gradient">Text Tools</span>
                     </h1>
-                    <p className={styles.description}>
+                    <p className="text-xl text-text-secondary m-0">
                         Process, transform, and analyze text with our collection of text utilities
                     </p>
                 </div>
             </div>
 
-            <main className={styles.main}>
+            {/* Tools Grid */}
+            <main className="py-16">
                 <div className="container">
-                    <div className={styles.grid}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {textTools.map((tool) => (
-                            <Link href={tool.href} key={tool.href} className={styles.toolCard}>
-                                <div className={styles.toolIcon}>{tool.icon}</div>
-                                <h3 className={styles.toolName}>{tool.name}</h3>
-                                <p className={styles.toolDescription}>{tool.description}</p>
-                                <div className={styles.arrow}>→</div>
+                            <Link
+                                href={tool.href}
+                                key={tool.href}
+                                className="group relative bg-bg-secondary border-2 border-border rounded-lg p-8 transition-all duration-base hover:-translate-y-2 hover:border-primary hover:shadow-lg cursor-pointer overflow-hidden block"
+                            >
+                                <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 transition-opacity duration-base" />
+
+                                <div className="relative z-10">
+                                    <div className="text-5xl mb-4 inline-block transition-transform duration-base group-hover:scale-110 group-hover:rotate-6">
+                                        {tool.icon}
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-3 text-text-primary">{tool.name}</h3>
+                                    <p className="text-text-secondary text-base m-0 leading-relaxed">{tool.description}</p>
+                                    <div className="absolute bottom-8 right-8 text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all duration-base -translate-x-2 group-hover:translate-x-0">
+                                        →
+                                    </div>
+                                </div>
                             </Link>
                         ))}
                     </div>
