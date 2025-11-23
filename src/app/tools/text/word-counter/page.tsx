@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import styles from '../case-converter/case-converter.module.css';
 
 export default function WordCounter() {
     const [text, setText] = useState('');
@@ -14,7 +13,7 @@ export default function WordCounter() {
         sentences: text.trim() ? text.split(/[.!?]+/).filter(s => s.trim()).length : 0,
         paragraphs: text.trim() ? text.split(/\n\n+/).filter(p => p.trim()).length : 0,
         lines: text.split('\n').length,
-        readingTime: Math.ceil((text.trim() ? text.trim().split(/\s+/).length : 0) / 200), // 200 words per minute
+        readingTime: Math.ceil((text.trim() ? text.trim().split(/\s+/).length : 0) / 200),
     };
 
     const clearText = () => setText('');
@@ -25,99 +24,49 @@ export default function WordCounter() {
             description="Count words, characters, sentences, paragraphs, and estimate reading time"
             category="text"
         >
-            <div className={styles.tool}>
-                <div className={styles.inputSection}>
-                    <label htmlFor="input" className={styles.label}>
+            <div className="max-w-6xl mx-auto space-y-8">
+                {/* Input Section */}
+                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                    <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
                         Enter Your Text
                     </label>
                     <textarea
                         id="input"
-                        className={styles.textarea}
+                        className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Start typing or paste your text here..."
                         rows={12}
                     />
-                    <button onClick={clearText} className="btn btn-secondary" style={{ marginTop: '1rem' }}>
+                    <button onClick={clearText} className="btn btn-secondary mt-4">
                         Clear Text
                     </button>
                 </div>
 
-                <div className={styles.outputSection}>
-                    <h2 className={styles.label}>Statistics</h2>
-                    <div className={styles.statsGrid}>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.words}</div>
-                            <div className={styles.statLabel}>Words</div>
-                        </div>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.characters}</div>
-                            <div className={styles.statLabel}>Characters</div>
-                        </div>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.charactersNoSpaces}</div>
-                            <div className={styles.statLabel}>Characters (no spaces)</div>
-                        </div>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.sentences}</div>
-                            <div className={styles.statLabel}>Sentences</div>
-                        </div>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.paragraphs}</div>
-                            <div className={styles.statLabel}>Paragraphs</div>
-                        </div>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.lines}</div>
-                            <div className={styles.statLabel}>Lines</div>
-                        </div>
-                        <div className={styles.statCard}>
-                            <div className={styles.statValue}>{stats.readingTime} min</div>
-                            <div className={styles.statLabel}>Reading Time</div>
-                        </div>
+                {/* Statistics */}
+                <div>
+                    <h2 className="text-2xl font-bold text-text-primary mb-4">Statistics</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                        {[
+                            { label: 'Words', value: stats.words },
+                            { label: 'Characters', value: stats.characters },
+                            { label: 'Characters (no spaces)', value: stats.charactersNoSpaces },
+                            { label: 'Sentences', value: stats.sentences },
+                            { label: 'Paragraphs', value: stats.paragraphs },
+                            { label: 'Lines', value: stats.lines },
+                            { label: 'Reading Time', value: `${stats.readingTime} min` },
+                        ].map((stat, idx) => (
+                            <div
+                                key={idx}
+                                className="bg-bg-secondary border-2 border-border rounded-lg p-6 text-center transition-all duration-250 hover:border-primary hover:-translate-y-1 hover:shadow-md"
+                            >
+                                <div className="text-4xl font-extrabold text-gradient mb-2">{stat.value}</div>
+                                <div className="text-sm text-text-secondary uppercase tracking-wider">{stat.label}</div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-
-            <style jsx>{`
-        .statsGrid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: 1.5rem;
-          margin-top: 1rem;
-        }
-
-        .statCard {
-          background: var(--bg-secondary);
-          border: 2px solid var(--border-color);
-          border-radius: var(--radius-lg);
-          padding: 1.5rem;
-          text-align: center;
-          transition: all var(--transition-base);
-        }
-
-        .statCard:hover {
-          border-color: var(--color-primary);
-          transform: translateY(-4px);
-          box-shadow: var(--shadow-md);
-        }
-
-        .statValue {
-          font-size: 2.5rem;
-          font-weight: 800;
-          background: var(--gradient-primary);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          margin-bottom: 0.5rem;
-        }
-
-        .statLabel {
-          font-size: 0.9rem;
-          color: var(--text-secondary);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-      `}</style>
         </ToolLayout>
     );
 }

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import styles from '../../text/case-converter/case-converter.module.css';
 
 export default function QRCodeGenerator() {
     const [text, setText] = useState('');
@@ -14,8 +13,6 @@ export default function QRCodeGenerator() {
             alert('Please enter some text or URL');
             return;
         }
-
-        // Using a free QR code API
         const encodedText = encodeURIComponent(text);
         const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodedText}`;
         setQrCodeUrl(url);
@@ -34,94 +31,69 @@ export default function QRCodeGenerator() {
             description="Generate QR codes from text, URLs, or any data"
             category="security"
         >
-            <div className={styles.tool}>
-                <div className={styles.inputSection}>
-                    <label htmlFor="input" className={styles.label}>
-                        Enter Text or URL
-                    </label>
-                    <textarea
-                        id="input"
-                        className={styles.textarea}
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        placeholder="Enter text, URL, phone number, or any data..."
-                        rows={6}
-                    />
+            <div className="max-w-4xl mx-auto space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Input Section */}
+                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 h-fit">
+                        <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
+                            Enter Text or URL
+                        </label>
+                        <textarea
+                            id="input"
+                            className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary mb-6"
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            placeholder="Enter text, URL, phone number, or any data..."
+                            rows={6}
+                        />
 
-                    <label className={styles.label} style={{ marginTop: '1.5rem' }}>
-                        QR Code Size: {size}x{size}px
-                    </label>
-                    <input
-                        type="range"
-                        min="128"
-                        max="512"
-                        step="64"
-                        value={size}
-                        onChange={(e) => setSize(Number(e.target.value))}
-                        className={styles.slider}
-                    />
-
-                    <button
-                        onClick={generateQRCode}
-                        className="btn btn-primary"
-                        style={{ width: '100%', marginTop: '1.5rem' }}
-                    >
-                        🔲 Generate QR Code
-                    </button>
-                </div>
-
-                {qrCodeUrl && (
-                    <div className={styles.outputSection}>
-                        <label className={styles.label}>Generated QR Code</label>
-                        <div className={styles.qrDisplay}>
-                            <img src={qrCodeUrl} alt="QR Code" />
+                        <div className="mb-6">
+                            <div className="flex justify-between mb-2">
+                                <label className="text-text-secondary font-medium">Size</label>
+                                <span className="text-primary font-bold">{size}x{size}px</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="128"
+                                max="512"
+                                step="64"
+                                value={size}
+                                onChange={(e) => setSize(Number(e.target.value))}
+                                className="w-full h-2 bg-bg-tertiary rounded-lg appearance-none cursor-pointer accent-primary"
+                            />
                         </div>
+
                         <button
-                            onClick={downloadQRCode}
-                            className="btn btn-secondary"
-                            style={{ width: '100%', marginTop: '1rem' }}
+                            onClick={generateQRCode}
+                            className="btn btn-primary w-full"
                         >
-                            💾 Download QR Code
+                            🔲 Generate QR Code
                         </button>
                     </div>
-                )}
+
+                    {/* Output Section */}
+                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
+                        {qrCodeUrl ? (
+                            <>
+                                <div className="bg-white p-4 rounded-lg shadow-lg mb-6">
+                                    <img src={qrCodeUrl} alt="QR Code" className="max-w-full h-auto block" />
+                                </div>
+                                <button
+                                    onClick={downloadQRCode}
+                                    className="btn btn-secondary w-full"
+                                >
+                                    💾 Download PNG
+                                </button>
+                            </>
+                        ) : (
+                            <div className="text-center text-text-tertiary">
+                                <div className="text-6xl mb-4 opacity-20">🔲</div>
+                                <p>Generated QR code will appear here</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
-
-            <style jsx>{`
-        .slider {
-          width: 100%;
-          height: 8px;
-          border-radius: var(--radius-full);
-          background: var(--bg-tertiary);
-          outline: none;
-          margin: 1rem 0;
-        }
-
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--color-primary);
-          cursor: pointer;
-        }
-
-        .qrDisplay {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 2rem;
-          background: white;
-          border-radius: var(--radius-lg);
-          margin-top: 1rem;
-        }
-
-        .qrDisplay img {
-          max-width: 100%;
-          height: auto;
-          display: block;
-        }
-      `}</style>
         </ToolLayout>
     );
 }

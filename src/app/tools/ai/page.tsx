@@ -1,87 +1,42 @@
 'use client';
 
 import Link from 'next/link';
-import styles from '../text/text.module.css';
 
 export default function AIToolsPage() {
   return (
-    <div className={styles.page}>
-      <div className={styles.header}>
-        <div className="container">
-          <Link href="/" className={styles.backLink}>
+    <div className="min-h-screen bg-bg-primary">
+      <div className="bg-bg-secondary border-b border-border relative">
+        <div className="absolute inset-0 bg-gradient-mesh opacity-30 pointer-events-none" />
+        <div className="container py-12 relative z-10">
+          <Link href="/" className="inline-flex items-center gap-2 text-primary-light font-semibold mb-6 transition-all duration-150 hover:text-primary hover:-translate-x-1">
             ← Back to Home
           </Link>
-          <h1 className={styles.title}>
+          <h1 className="text-6xl font-bold mb-4">
             <span className="text-gradient">AI Tools</span>
           </h1>
-          <p className={styles.description}>
+          <p className="text-xl text-text-secondary m-0">
             AI-powered utilities for advanced processing
           </p>
         </div>
       </div>
 
-      <main className={styles.main}>
+      <main className="py-16">
         <div className="container">
-          <div className={styles.comingSoon}>
-            <div className={styles.comingSoonIcon}>🚧</div>
-            <h2>Coming Soon!</h2>
-            <p>AI-powered tools require API integration:</p>
-            <ul>
-              <li>AI Image Upscaler</li>
-              <li>Text Summarizer</li>
-              <li>AI Paraphraser</li>
-              <li>OCR (Extract Text from Images)</li>
-              <li>Speech-to-Text</li>
-              <li>Language Translator</li>
+          <div className="text-center p-16 bg-bg-secondary border-2 border-border rounded-2xl max-w-2xl mx-auto">
+            <div className="text-8xl mb-6">🚧</div>
+            <h2 className="text-4xl font-bold mb-4 text-text-primary">Coming Soon!</h2>
+            <p className="text-text-secondary mb-6 text-lg">AI-powered tools require API integration:</p>
+            <ul className="list-none p-0 text-text-secondary space-y-2">
+              <li className="before:content-['✓'] before:text-primary before:font-bold before:mr-2">AI Image Upscaler</li>
+              <li className="before:content-['✓'] before:text-primary before:font-bold before:mr-2">Text Summarizer</li>
+              <li className="before:content-['✓'] before:text-primary before:font-bold before:mr-2">AI Paraphraser</li>
+              <li className="before:content-['✓'] before:text-primary before:font-bold before:mr-2">OCR (Extract Text from Images)</li>
+              <li className="before:content-['✓'] before:text-primary before:font-bold before:mr-2">Speech-to-Text</li>
+              <li className="before:content-['✓'] before:text-primary before:font-bold before:mr-2">Language Translator</li>
             </ul>
           </div>
         </div>
       </main>
-
-      <style jsx>{`
-        .comingSoon {
-          text-align: center;
-          padding: 4rem 2rem;
-          background: var(--bg-secondary);
-          border: 2px solid var(--border-color);
-          border-radius: var(--radius-xl);
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        .comingSoonIcon {
-          font-size: 5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .comingSoon h2 {
-          font-size: 2rem;
-          margin-bottom: 1rem;
-          color: var(--text-primary);
-        }
-
-        .comingSoon p {
-          color: var(--text-secondary);
-          margin-bottom: 1.5rem;
-        }
-
-        .comingSoon ul {
-          list-style: none;
-          padding: 0;
-          color: var(--text-secondary);
-        }
-
-        .comingSoon li {
-          padding: 0.5rem 0;
-        }
-
-        .comingSoon li::before {
-          content: '✓ ';
-          color: var(--color-primary);
-          font-weight: bold;
-          margin-right: 0.5rem;
-        }
-      `}</style>
     </div>
   );
 }

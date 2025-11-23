@@ -1,52 +1,64 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import styles from '../../text/case-converter/case-converter.module.css';
 
 export default function PasswordGenerator() {
     const [password, setPassword] = useState('');
     const [length, setLength] = useState(16);
-    const [includeUppercase, setIncludeUppercase] = useState(true);
-    const [includeLowercase, setIncludeLowercase] = useState(true);
-    const [includeNumbers, setIncludeNumbers] = useState(true);
-    const [includeSymbols, setIncludeSymbols] = useState(true);
+    const [options, setOptions] = useState({
+        uppercase: true,
+        lowercase: true,
+        numbers: true,
+        symbols: true,
+    });
     const [strength, setStrength] = useState('');
 
-    const generatePassword = () => {
-        let charset = '';
-        if (includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if (includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
-        if (includeNumbers) charset += '0123456789';
-        if (includeSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    const generatePassword = useCallback(() => {
+        const charset = {
+            uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lowercase: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?',
+        };
 
-        if (charset === '') {
-            alert('Please select at least one character type');
+        let chars = '';
+        if (options.uppercase) chars += charset.uppercase;
+        if (options.lowercase) chars += charset.lowercase;
+        if (options.numbers) chars += charset.numbers;
+        if (options.symbols) chars += charset.symbols;
+
+        if (chars === '') {
+            setPassword('');
+            setStrength('');
             return;
         }
 
         let generatedPassword = '';
         for (let i = 0; i < length; i++) {
-            generatedPassword += charset.charAt(Math.floor(Math.random() * charset.length));
+            generatedPassword += chars.charAt(Math.floor(Math.random() * chars.length));
         }
 
         setPassword(generatedPassword);
         calculateStrength(generatedPassword);
-    };
+    }, [length, options]);
 
-    const calculateStrength = (pwd: string) => {
+    const calculateStrength = (pass: string) => {
         let score = 0;
-        if (pwd.length >= 8) score++;
-        if (pwd.length >= 12) score++;
-        if (pwd.length >= 16) score++;
-        if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) score++;
-        if (/\d/.test(pwd)) score++;
-        if (/[^a-zA-Z0-9]/.test(pwd)) score++;
+        if (pass.length > 8) score++;
+        if (pass.length > 12) score++;
+        if (/[A-Z]/.test(pass)) score++;
+        if (/[0-9]/.test(pass)) score++;
+        if (/[^A-Za-z0-9]/.test(pass)) score++;
 
-        if (score <= 2) setStrength('Weak');
-        else if (score <= 4) setStrength('Medium');
+        if (score < 3) setStrength('Weak');
+        else if (score < 5) setStrength('Medium');
         else setStrength('Strong');
     };
+
+    useEffect(() => {
+        generatePassword();
+    }, [generatePassword]);
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(password);
@@ -58,157 +70,68 @@ export default function PasswordGenerator() {
             description="Generate strong, random passwords with customizable options"
             category="security"
         >
-            <div className={styles.tool}>
-                <div className={styles.inputSection}>
-                    <label className={styles.label}>Password Length: {length}</label>
-                    <input
-                        type="range"
-                        min="4"
-                        max="64"
-                        value={length}
-                        onChange={(e) => setLength(Number(e.target.value))}
-                        className={styles.slider}
-                    />
-
-                    <div className={styles.checkboxGroup}>
-                        <label className={styles.checkbox}>
-                            <input
-                                type="checkbox"
-                                checked={includeUppercase}
-                                onChange={(e) => setIncludeUppercase(e.target.checked)}
-                            />
-                            <span>Uppercase (A-Z)</span>
-                        </label>
-                        <label className={styles.checkbox}>
-                            <input
-                                type="checkbox"
-                                checked={includeLowercase}
-                                onChange={(e) => setIncludeLowercase(e.target.checked)}
-                            />
-                            <span>Lowercase (a-z)</span>
-                        </label>
-                        <label className={styles.checkbox}>
-                            <input
-                                type="checkbox"
-                                checked={includeNumbers}
-                                onChange={(e) => setIncludeNumbers(e.target.checked)}
-                            />
-                            <span>Numbers (0-9)</span>
-                        </label>
-                        <label className={styles.checkbox}>
-                            <input
-                                type="checkbox"
-                                checked={includeSymbols}
-                                onChange={(e) => setIncludeSymbols(e.target.checked)}
-                            />
-                            <span>Symbols (!@#$%...)</span>
-                        </label>
+            <div className="max-w-4xl mx-auto space-y-8">
+                {/* Password Display */}
+                <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center transition-all duration-250 hover:border-primary/50">
+                    <div className="text-4xl font-mono font-bold text-text-primary break-all mb-4 min-h-[3rem] flex items-center justify-center">
+                        {password}
                     </div>
-
-                    <button onClick={generatePassword} className="btn btn-primary" style={{ width: '100%', marginTop: '1.5rem' }}>
-                        🔐 Generate Password
-                    </button>
-                </div>
-
-                {password && (
-                    <div className={styles.outputSection}>
-                        <div className={styles.labelRow}>
-                            <label className={styles.label}>Generated Password</label>
-                            <button onClick={copyToClipboard} className={styles.copyBtn}>
-                                📋 Copy
-                            </button>
-                        </div>
-                        <div className={styles.passwordDisplay}>
-                            <code>{password}</code>
-                        </div>
-                        <div className={`${styles.strengthBadge} ${styles[strength.toLowerCase()]}`}>
+                    <div className="flex justify-center gap-4">
+                        <button
+                            onClick={generatePassword}
+                            className="btn btn-primary"
+                        >
+                            🔄 Generate New
+                        </button>
+                        <button
+                            onClick={copyToClipboard}
+                            className="btn btn-secondary"
+                        >
+                            📋 Copy
+                        </button>
+                    </div>
+                    {strength && (
+                        <div className={`mt-4 inline-block px-4 py-1 rounded-full text-sm font-bold ${strength === 'Strong' ? 'bg-success/20 text-success' :
+                                strength === 'Medium' ? 'bg-warning/20 text-warning' :
+                                    'bg-error/20 text-error'
+                            }`}>
                             Strength: {strength}
                         </div>
+                    )}
+                </div>
+
+                {/* Controls */}
+                <div className="bg-bg-secondary border-2 border-border rounded-lg p-8">
+                    <div className="mb-8">
+                        <div className="flex justify-between mb-2">
+                            <label className="text-lg font-semibold text-text-primary">Password Length</label>
+                            <span className="text-primary font-bold text-xl">{length}</span>
+                        </div>
+                        <input
+                            type="range"
+                            min="4"
+                            max="64"
+                            value={length}
+                            onChange={(e) => setLength(Number(e.target.value))}
+                            className="w-full h-2 bg-bg-tertiary rounded-lg appearance-none cursor-pointer accent-primary"
+                        />
                     </div>
-                )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {Object.entries(options).map(([key, value]) => (
+                            <label key={key} className="flex items-center p-4 bg-bg-tertiary rounded-lg cursor-pointer transition-all duration-150 hover:bg-bg-elevated border border-transparent hover:border-primary/30">
+                                <input
+                                    type="checkbox"
+                                    checked={value}
+                                    onChange={() => setOptions(prev => ({ ...prev, [key]: !prev[key as keyof typeof options] }))}
+                                    className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 bg-bg-primary"
+                                />
+                                <span className="ml-3 text-text-primary capitalize font-medium">{key}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
             </div>
-
-            <style jsx>{`
-        .slider {
-          width: 100%;
-          height: 8px;
-          border-radius: var(--radius-full);
-          background: var(--bg-tertiary);
-          outline: none;
-          margin: 1rem 0;
-        }
-
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--color-primary);
-          cursor: pointer;
-        }
-
-        .checkboxGroup {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          margin-top: 1.5rem;
-        }
-
-        .checkbox {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          cursor: pointer;
-          color: var(--text-secondary);
-          font-size: 1rem;
-        }
-
-        .checkbox input[type="checkbox"] {
-          width: 20px;
-          height: 20px;
-          cursor: pointer;
-        }
-
-        .passwordDisplay {
-          padding: 1.5rem;
-          background: var(--bg-tertiary);
-          border: 2px solid var(--border-color);
-          border-radius: var(--radius-lg);
-          font-family: var(--font-mono);
-          font-size: 1.5rem;
-          text-align: center;
-          word-break: break-all;
-          color: var(--color-primary-light);
-        }
-
-        .strengthBadge {
-          margin-top: 1rem;
-          padding: 0.75rem;
-          border-radius: var(--radius-md);
-          text-align: center;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-        }
-
-        .weak {
-          background: rgba(239, 68, 68, 0.1);
-          color: var(--color-error);
-          border: 2px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .medium {
-          background: rgba(251, 191, 36, 0.1);
-          color: var(--color-warning);
-          border: 2px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .strong {
-          background: rgba(34, 197, 94, 0.1);
-          color: var(--color-success);
-          border: 2px solid rgba(34, 197, 94, 0.3);
-        }
-      `}</style>
         </ToolLayout>
     );
 }
