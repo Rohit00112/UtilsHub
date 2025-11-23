@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import ToolLayout from '@/components/ToolLayout';
 
 export default function QRCodeGenerator() {
@@ -76,7 +77,14 @@ export default function QRCodeGenerator() {
                         {qrCodeUrl ? (
                             <>
                                 <div className="bg-white p-4 rounded-lg shadow-lg mb-6">
-                                    <img src={qrCodeUrl} alt="QR Code" className="max-w-full h-auto block" />
+                                    <Image
+                                        src={qrCodeUrl}
+                                        alt="QR Code"
+                                        width={size}
+                                        height={size}
+                                        className="max-w-full h-auto block"
+                                        unoptimized
+                                    />
                                 </div>
                                 <button
                                     onClick={downloadQRCode}
