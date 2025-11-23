@@ -21,14 +21,14 @@ const developerTools = [
     },
     {
         name: 'Regex Tester',
-        description: 'Test and debug regular expressions (Coming Soon)',
-        href: '#',
+        description: 'Test and debug regular expressions with real-time matching',
+        href: '/tools/developer/regex-tester',
         icon: '🔍',
     },
     {
         name: 'Lorem Ipsum Generator',
-        description: 'Generate placeholder text (Coming Soon)',
-        href: '#',
+        description: 'Generate placeholder text for your designs and mockups',
+        href: '/tools/developer/lorem-ipsum',
         icon: '📝',
     },
 ];
