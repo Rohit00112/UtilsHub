@@ -3,11 +3,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import * as Diff from 'diff';
-import * as pdfjsLib from 'pdfjs-dist';
-
-// Set worker source
-// We use a CDN for the worker to avoid complex build configuration
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 export default function PdfCompare() {
     const [originalFile, setOriginalFile] = useState<File | null>(null);
@@ -17,8 +12,22 @@ export default function PdfCompare() {
     const [diffResult, setDiffResult] = useState<Diff.Change[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [pdfjsLib, setPdfjsLib] = useState<any>(null);
+
+    // Load pdfjs-dist dynamically only on client side
+    useEffect(() => {
+        const loadPdfJs = async () => {
+            const pdfjs = await import('pdfjs-dist');
+            // Set worker source
+            pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+            setPdfjsLib(pdfjs);
+        };
+        loadPdfJs();
+    }, []);
 
     const extractText = async (file: File): Promise<string> => {
+        if (!pdfjsLib) throw new Error('PDF library not loaded');
+
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
         let fullText = '';
