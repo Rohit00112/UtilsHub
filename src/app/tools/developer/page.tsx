@@ -31,6 +31,18 @@ const developerTools = [
         href: '/tools/developer/lorem-ipsum',
         icon: '📝',
     },
+    {
+        name: 'YAML ↔ JSON Converter',
+        description: 'Convert between YAML and JSON formats instantly',
+        href: '/tools/developer/yaml-json',
+        icon: '🔄',
+    },
+    {
+        name: 'XML Formatter',
+        description: 'Format, validate, and minify XML data',
+        href: '/tools/developer/xml-formatter',
+        icon: '📄',
+    },
 ];
 
 export default function DeveloperToolsPage() {
