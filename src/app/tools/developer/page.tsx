@@ -43,6 +43,12 @@ const developerTools = [
         href: '/tools/developer/xml-formatter',
         icon: '📄',
     },
+    {
+        name: 'Markdown Editor',
+        description: 'Write and preview Markdown in real-time',
+        href: '/tools/developer/markdown-editor',
+        icon: '📝',
+    },
 ];
 
 export default function DeveloperToolsPage() {
