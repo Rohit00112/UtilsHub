@@ -25,6 +25,18 @@ const textTools = [
         href: '/tools/text/url-encoder',
         icon: '🔗',
     },
+    {
+        name: 'Remove Duplicate Lines',
+        description: 'Remove duplicate lines from text with customization options',
+        href: '/tools/text/remove-duplicate-lines',
+        icon: '✂️',
+    },
+    {
+        name: 'Text Diff Checker',
+        description: 'Compare two texts and highlight the differences',
+        href: '/tools/text/diff-checker',
+        icon: '↔️',
+    },
 ];
 
 export default function TextToolsPage() {
