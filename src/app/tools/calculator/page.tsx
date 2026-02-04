@@ -15,14 +15,14 @@ const calculatorTools = [
     },
     {
         name: 'EMI Calculator',
-        description: 'Calculate loan EMI payments (Coming Soon)',
-        href: '#',
+        description: 'Calculate loan EMI payments with detailed amortization schedule',
+        href: '/tools/calculator/emi',
         icon: '💰',
     },
     {
         name: 'Unit Converter',
-        description: 'Convert between different units (Coming Soon)',
-        href: '#',
+        description: 'Convert length, weight, temperature, data and more',
+        href: '/tools/calculator/unit-converter',
         icon: '📏',
     },
 ];

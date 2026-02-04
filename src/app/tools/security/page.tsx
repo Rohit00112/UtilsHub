@@ -15,14 +15,14 @@ const securityTools = [
     },
     {
         name: 'Hash Generator',
-        description: 'Generate MD5, SHA-1, SHA-256 hashes (Coming Soon)',
-        href: '#',
+        description: 'Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes',
+        href: '/tools/security/hash-generator',
         icon: '#️⃣',
     },
     {
         name: 'JWT Decoder',
-        description: 'Decode and inspect JWT tokens (Coming Soon)',
-        href: '#',
+        description: 'Decode and inspect JSON Web Tokens (JWT)',
+        href: '/tools/security/jwt-decoder',
         icon: '🎫',
     },
 ];
