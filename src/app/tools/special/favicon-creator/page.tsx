@@ -7,7 +7,7 @@ const FAVICON_SIZES = [16, 32, 48, 64, 128, 256];
 
 export default function FaviconCreator() {
     const [sourceImage, setSourceImage] = useState<HTMLImageElement | null>(null);
-    const [sourceUrl, setSourceUrl] = useState('');
+    const [_sourceUrl, setSourceUrl] = useState('');
     const canvasRefs = useRef<{ [key: number]: HTMLCanvasElement | null }>({});
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
