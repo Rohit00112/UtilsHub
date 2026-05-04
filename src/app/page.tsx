@@ -9,13 +9,6 @@ const categories = [
         tools: ['PDF Merger', 'PDF Splitter', 'PDF Compressor', 'PDF to Word', 'Word to PDF', 'Image to PDF', 'PDF to Image', 'PDF Reorder', 'PDF Delete', 'PDF Rotate', 'PDF Unlock', 'PDF Watermark', 'PDF Viewer'],
     },
     {
-        id: 'document',
-        name: 'Document Tools',
-        icon: '📝',
-        description: 'Convert documents between formats',
-        tools: ['DOCX ↔ PDF', 'DOCX ↔ TXT', 'PPTX ↔ PDF', 'XLSX ↔ PDF', 'CSV ↔ XLSX', 'Markdown ↔ HTML', 'Markdown ↔ PDF'],
-    },
-    {
         id: 'text',
         name: 'Text Tools',
         icon: '✍️',
@@ -37,25 +30,11 @@ const categories = [
         tools: ['Password Generator', 'Hash Generator', 'JWT Decoder', 'QR Code Generator', 'QR Scanner', 'Barcode Generator', 'ZIP Creator', 'ZIP Extractor', 'Metadata Viewer', 'EXIF Remover'],
     },
     {
-        id: 'web',
-        name: 'Web Tools',
-        icon: '🌐',
-        description: 'URL and web utilities',
-        tools: ['URL Shortener', 'Open Graph Preview', 'HTTP Header Checker', 'Status Checker', 'DNS Lookup', 'WHOIS Lookup'],
-    },
-    {
         id: 'calculator',
         name: 'Calculators',
         icon: '🧮',
         description: 'Financial and unit calculators',
         tools: ['EMI Calculator', 'GST Calculator', 'Age Calculator', 'BMI Calculator', 'CGPA Converter', 'Unit Converter'],
-    },
-    {
-        id: 'ai',
-        name: 'AI Tools',
-        icon: '🤖',
-        description: 'AI-powered utilities',
-        tools: ['Image Upscaler', 'Text Summarizer', 'Paraphraser', 'Resume Analyzer', 'Chat PDF', 'Speech-to-Text', 'Text-to-Speech', 'Translator', 'OCR'],
     },
     {
         id: 'developer',
@@ -84,17 +63,17 @@ export default function Home() {
                     </h1>
                     <p className="text-xl text-text-secondary mb-8 animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'backwards' }}>
                         Your All-in-One Toolkit for Everything. <br className="hidden sm:block" />
-                        50+ Free Online Tools.
+                        Free Online Tools — No Signup Required.
                     </p>
 
                     {/* Stats */}
                     <div className="flex justify-center gap-8 sm:gap-16 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'backwards' }}>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-text-primary mb-1">50+</div>
+                            <div className="text-3xl font-bold text-text-primary mb-1">30+</div>
                             <div className="text-xs text-text-tertiary uppercase tracking-wider">Tools</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-text-primary mb-1">10</div>
+                            <div className="text-3xl font-bold text-text-primary mb-1">7</div>
                             <div className="text-xs text-text-tertiary uppercase tracking-wider">Categories</div>
                         </div>
                         <div className="text-center">
