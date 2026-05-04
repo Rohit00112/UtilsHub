@@ -2,52 +2,44 @@
 
 **Your All-in-One Toolkit for Everything**
 
-UtilsHub is a comprehensive web application featuring 50+ free online tools for PDF manipulation, image editing, text processing, document conversion, AI-powered utilities, and much more.
+UtilsHub is a high-performance web application featuring a collection of free online tools for PDF manipulation, image processing, security utilities, financial calculators, and developer tools.
 
 ## ✨ Features
 
-- **50+ Tools** across 10 different categories
-- **100% Free** - No limits, no subscriptions
-- **Privacy First** - All processing happens in your browser
-- **Lightning Fast** - Instant results with client-side processing
-- **Fully Responsive** - Works on desktop, tablet, and mobile
+- **Standardized Toolkit**: Focused set of functional tools across 7 core categories
+- **100% Free**: No limits, no subscriptions, no data tracking
+- **Privacy First**: All processing happens client-side in your browser; your files never leave your device
+- **Lightning Fast**: Instant results powered by Next.js 15 and local browser APIs
+- **Fully Responsive**: Optimized for desktop, tablet, and mobile devices
 
 ## 🛠️ Tool Categories
 
 ### 📄 PDF Tools
-Merge, split, compress, convert, rotate, watermark, and more
-
-### 📝 Document Tools
-Convert between DOCX, PDF, TXT, PPTX, XLSX, Markdown, and more
+Merge, split, and compare PDF text content locally.
 
 ### ✍️ Text Tools
-Case converter, word counter, grammar checker, encryption, encoding
+Case conversion, word counting, Base64 encoding, and text diffing.
 
 ### 🎨 Image Tools
-Convert, resize, crop, compress, remove backgrounds, add watermarks
+Image merging, favicon generation, and conversion.
 
 ### 🔐 Security Tools
-Password generator, hash generator, JWT decoder, QR codes, encryption
-
-### 🌐 Web Tools
-URL shortener, Open Graph preview, HTTP headers, DNS lookup
+Password generation, hash calculation (MD5, SHA), and JWT decoding.
 
 ### 🧮 Calculators
-EMI, GST, Age, BMI, CGPA, Unit conversions
-
-### 🤖 AI Tools
-Image upscaler, text summarizer, paraphraser, OCR, speech-to-text
+EMI, GST, Age, and BMI calculators with instant results.
 
 ### 💻 Developer Tools
-JSON/XML formatter, YAML converter, regex tester, UUID generator
+JSON/XML formatting, YAML conversion, Regex testing, and UUID generation.
 
 ### 💡 Special Tools
-Text diff, PDF compare, image merger, favicon creator, and more
+Duplicate removal, text comparison, and unique utility combinations.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ and npm
+- Node.js 18+
+- npm (standard package manager)
 
 ### Installation
 
@@ -69,35 +61,17 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📦 Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Vanilla CSS with CSS Modules
-- **PDF Processing**: pdf-lib
-- **Image Processing**: Canvas API, sharp
-- **Deployment**: Vercel
-
-## 🗂️ Project Structure
-
-```
-UtilsHub/
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx          # Root layout with SEO
-│   │   ├── page.tsx            # Homepage
-│   │   ├── globals.css         # Design system
-│   │   └── tools/              # Tool pages
-│   ├── components/             # Reusable components
-│   └── lib/                    # Utility functions
-├── public/                     # Static assets
-└── package.json
-```
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Processing**: Client-side (Canvas API, pdf-lib, crypto-js)
+- **Deployment**: [Vercel](https://vercel.com/)
 
 ## 🎨 Design Philosophy
 
-- **Modern & Vibrant**: Rich color palettes with gradients
-- **Glassmorphism**: Subtle blur effects and transparency
-- **Smooth Animations**: Micro-interactions for better UX
-- **Dark Mode**: Eye-friendly dark theme by default
+- **Minimalist & Clean**: Focus on utility and clarity with a grayscale design system
+- **Performance-First**: Zero-server processing for maximum speed and privacy
+- **Accessibility**: High contrast and responsive layouts for all users
 
 ## 📝 License
 

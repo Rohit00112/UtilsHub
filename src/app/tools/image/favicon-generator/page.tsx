@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import JSZip from 'jszip';
 import ToolLayout from '@/components/ToolLayout';
 
@@ -15,7 +15,7 @@ const SIZES = [
 export default function FaviconCreator() {
     const [image, setImage] = useState<string | null>(null);
     const [isGenerating, setIsGenerating] = useState(false);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

@@ -81,7 +81,6 @@ export default function ImageMerger() {
             totalWidth = images.reduce((sum, img) => sum + img.width, 0) + (images.length - 1) * gap;
             totalHeight = Math.max(...images.map(img => img.height));
         } else if (layout === 'grid') {
-            const rows = Math.ceil(images.length / columns);
             // Simple grid: assuming all images might have different sizes, 
             // we calculate row heights and column widths based on max in that row/col?
             // Or simpler: just stack them in rows. 

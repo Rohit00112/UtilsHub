@@ -7,8 +7,8 @@ import * as Diff from 'diff';
 export default function PdfCompare() {
     const [originalFile, setOriginalFile] = useState<File | null>(null);
     const [modifiedFile, setModifiedFile] = useState<File | null>(null);
-    const [originalText, setOriginalText] = useState('');
-    const [modifiedText, setModifiedText] = useState('');
+    const [_originalText, setOriginalText] = useState('');
+    const [_modifiedText, setModifiedText] = useState('');
     const [diffResult, setDiffResult] = useState<Diff.Change[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
