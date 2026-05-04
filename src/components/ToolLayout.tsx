@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { ChevronRight, Home } from 'lucide-react';
+import { getCategoryById } from '@/lib/tools';
 
 interface ToolLayoutProps {
     children: React.ReactNode;
@@ -8,53 +10,51 @@ interface ToolLayoutProps {
 }
 
 export default function ToolLayout({ children, title, description, category }: ToolLayoutProps) {
+    const categoryInfo = getCategoryById(category);
+    
     return (
-        <div className="min-h-screen flex flex-col bg-bg-primary">
-            {/* Header */}
-            <div className="bg-bg-elevated border-b border-border">
-                <div className="container py-8">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary hover:text-primary transition-colors mb-6"
-                    >
-                        ← Back to Home
-                    </Link>
-
+        <div className="flex flex-col min-h-[calc(100vh-3.5rem)] bg-muted/30">
+            {/* Header / Hero Area for the Tool */}
+            <div className="bg-background border-b border-border/40">
+                <div className="container py-10">
                     {/* Breadcrumb */}
-                    <div className="flex items-center gap-2 text-xs text-text-tertiary mb-4 uppercase tracking-wider">
-                        <Link href="/" className="hover:text-text-primary transition-colors">
-                            Home
+                    <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
+                        <Link href="/" className="hover:text-foreground transition-colors flex items-center gap-1">
+                            <Home className="h-3.5 w-3.5" />
+                            <span>Home</span>
                         </Link>
-                        <span>/</span>
-                        <Link href={`/tools/${category}`} className="hover:text-text-primary transition-colors">
-                            {category}
+                        <ChevronRight className="h-3.5 w-3.5" />
+                        <Link href={`/tools/${category}`} className="hover:text-foreground transition-colors">
+                            {categoryInfo?.name || category}
                         </Link>
-                        <span>/</span>
-                        <span className="text-text-primary">{title}</span>
-                    </div>
+                        <ChevronRight className="h-3.5 w-3.5" />
+                        <span className="text-foreground font-medium truncate">{title}</span>
+                    </nav>
 
-                    <h1 className="text-3xl sm:text-4xl font-bold mb-3 text-text-primary">{title}</h1>
-                    <p className="text-lg text-text-secondary max-w-2xl">{description}</p>
+                    <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
+                        {title}
+                    </h1>
+                    <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+                        {description}
+                    </p>
                 </div>
             </div>
 
-            {/* Main Content */}
-            <main className="flex-1 py-12 bg-bg-secondary/30">
+            {/* Main Content Area */}
+            <main className="flex-1 py-12">
                 <div className="container">
-                    <div className="bg-bg-primary rounded-xl border border-border p-6 sm:p-8 shadow-sm">
+                    <div className="bg-card rounded-xl border shadow-sm p-6 sm:p-10">
                         {children}
+                    </div>
+                    
+                    {/* Privacy Notice */}
+                    <div className="mt-8 text-center">
+                        <p className="text-xs text-muted-foreground">
+                            Privacy Note: This tool processes your data locally in your browser. Nothing is uploaded to our servers.
+                        </p>
                     </div>
                 </div>
             </main>
-
-            {/* Footer */}
-            <footer className="bg-bg-elevated border-t border-border py-8 text-center">
-                <div className="container">
-                    <p className="text-text-tertiary text-sm">
-                        © 2024 UtilsHub - All tools are free and process data locally in your browser
-                    </p>
-                </div>
-            </footer>
         </div>
     );
 }
