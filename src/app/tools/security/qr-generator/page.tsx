@@ -2,21 +2,24 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { Download, QrCode } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
 
 export default function QRCodeGenerator() {
     const [text, setText] = useState('');
     const [qrCodeUrl, setQrCodeUrl] = useState('');
     const [size, setSize] = useState(256);
+    const [error, setError] = useState('');
 
     const generateQRCode = () => {
         if (!text.trim()) {
-            alert('Please enter some text or URL');
+            setError('Enter text, a URL, or other data before generating a QR code.');
             return;
         }
+        setError('');
         const encodedText = encodeURIComponent(text);
-        const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodedText}`;
-        setQrCodeUrl(url);
+        setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodedText}`);
     };
 
     const downloadQRCode = () => {
@@ -32,74 +35,68 @@ export default function QRCodeGenerator() {
             description="Generate QR codes from text, URLs, or any data"
             category="security"
         >
-            <div className="max-w-4xl mx-auto space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Input Section */}
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 h-fit">
-                        <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
-                            Enter Text or URL
-                        </label>
+            <div className="mx-auto max-w-4xl space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                    <ToolPanel title="QR content" description="Enter the data you want encoded.">
                         <textarea
                             id="input"
-                            className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary mb-6"
+                            className="min-h-40 w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring"
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={(event) => setText(event.target.value)}
                             placeholder="Enter text, URL, phone number, or any data..."
-                            rows={6}
                         />
 
-                        <div className="mb-6">
-                            <div className="flex justify-between mb-2">
-                                <label className="text-text-secondary font-medium">Size</label>
-                                <span className="text-primary font-bold">{size}x{size}px</span>
+                        <div className="mt-5">
+                            <div className="mb-2 flex justify-between">
+                                <label htmlFor="size" className="text-sm font-medium text-muted-foreground">Size</label>
+                                <span className="text-sm font-semibold text-foreground">{size}x{size}px</span>
                             </div>
                             <input
+                                id="size"
                                 type="range"
                                 min="128"
                                 max="512"
                                 step="64"
                                 value={size}
-                                onChange={(e) => setSize(Number(e.target.value))}
-                                className="w-full h-2 bg-bg-tertiary rounded-lg appearance-none cursor-pointer accent-primary"
+                                onChange={(event) => setSize(Number(event.target.value))}
+                                className="w-full accent-current"
                             />
                         </div>
 
-                        <button
-                            onClick={generateQRCode}
-                            className="btn btn-primary w-full"
-                        >
-                            🔲 Generate QR Code
+                        <button onClick={generateQRCode} className="btn btn-primary mt-5 w-full gap-2">
+                            <QrCode className="h-4 w-4" />
+                            Generate QR code
                         </button>
-                    </div>
+                        {error && <ToolStatus tone="error" className="mt-4">{error}</ToolStatus>}
+                    </ToolPanel>
 
-                    {/* Output Section */}
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 flex flex-col items-center justify-center min-h-[400px]">
-                        {qrCodeUrl ? (
-                            <>
-                                <div className="bg-white p-4 rounded-lg shadow-lg mb-6">
-                                    <Image
-                                        src={qrCodeUrl}
-                                        alt="QR Code"
-                                        width={size}
-                                        height={size}
-                                        className="max-w-full h-auto block"
-                                        unoptimized
-                                    />
+                    <ToolPanel title="Preview">
+                        <div className="flex min-h-80 flex-col items-center justify-center rounded-md border bg-muted/30 p-6 text-center">
+                            {qrCodeUrl ? (
+                                <>
+                                    <div className="mb-5 rounded-md bg-white p-4 shadow-sm">
+                                        <Image
+                                            src={qrCodeUrl}
+                                            alt="QR Code"
+                                            width={size}
+                                            height={size}
+                                            className="block h-auto max-w-full"
+                                            unoptimized
+                                        />
+                                    </div>
+                                    <button onClick={downloadQRCode} className="btn btn-secondary w-full gap-2">
+                                        <Download className="h-4 w-4" />
+                                        Download PNG
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="text-sm text-muted-foreground">
+                                    <QrCode className="mx-auto mb-3 h-10 w-10" />
+                                    Generated QR code will appear here.
                                 </div>
-                                <button
-                                    onClick={downloadQRCode}
-                                    className="btn btn-secondary w-full"
-                                >
-                                    💾 Download PNG
-                                </button>
-                            </>
-                        ) : (
-                            <div className="text-center text-text-tertiary">
-                                <div className="text-6xl mb-4 opacity-20">🔲</div>
-                                <p>Generated QR code will appear here</p>
-                            </div>
-                        )}
-                    </div>
+                            )}
+                        </div>
+                    </ToolPanel>
                 </div>
             </div>
         </ToolLayout>

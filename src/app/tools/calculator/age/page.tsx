@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { CalendarDays } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel } from '@/components/tools/ToolPrimitives';
 
 export default function AgeCalculator() {
     const [birthDate, setBirthDate] = useState('');
@@ -37,41 +39,39 @@ export default function AgeCalculator() {
             description="Calculate your exact age in years, months, and days"
             category="calculator"
         >
-            <div className="max-w-4xl mx-auto space-y-8">
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center">
-                    <label className="block text-xl font-semibold text-text-primary mb-4">
-                        Select Your Date of Birth
-                    </label>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto mb-6">
+            <div className="mx-auto max-w-4xl space-y-6">
+                <ToolPanel title="Date of birth" description="Select a date, then calculate the elapsed time.">
+                    <div className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row">
                         <input
                             type="date"
                             value={birthDate}
-                            onChange={(e) => setBirthDate(e.target.value)}
-                            className="input text-center text-lg"
+                            onChange={(event) => setBirthDate(event.target.value)}
+                            className="input h-10 text-center"
                         />
-                        <button onClick={calculateAge} className="btn btn-primary w-full sm:w-auto">
-                            Calculate Age
+                        <button onClick={calculateAge} className="btn btn-primary gap-2">
+                            <CalendarDays className="h-4 w-4" />
+                            Calculate
                         </button>
                     </div>
-                </div>
+                </ToolPanel>
 
                 {age && (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in">
-                        <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center transition-all duration-250 hover:-translate-y-1 hover:border-primary">
-                            <div className="text-6xl font-extrabold text-gradient mb-2">{age.years}</div>
-                            <div className="text-text-secondary uppercase tracking-wider font-semibold">Years</div>
-                        </div>
-                        <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center transition-all duration-250 hover:-translate-y-1 hover:border-primary">
-                            <div className="text-6xl font-extrabold text-gradient mb-2">{age.months}</div>
-                            <div className="text-text-secondary uppercase tracking-wider font-semibold">Months</div>
-                        </div>
-                        <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center transition-all duration-250 hover:-translate-y-1 hover:border-primary">
-                            <div className="text-6xl font-extrabold text-gradient mb-2">{age.days}</div>
-                            <div className="text-text-secondary uppercase tracking-wider font-semibold">Days</div>
-                        </div>
+                    <div className="grid gap-4 md:grid-cols-3">
+                        <AgeMetric label="Years" value={age.years} />
+                        <AgeMetric label="Months" value={age.months} />
+                        <AgeMetric label="Days" value={age.days} />
                     </div>
                 )}
             </div>
         </ToolLayout>
+    );
+}
+
+function AgeMetric({ label, value }: { label: string; value: number }) {
+    return (
+        <div className="rounded-lg border bg-card p-6 text-center">
+            <div className="text-5xl font-semibold text-foreground">{value}</div>
+            <div className="mt-2 text-sm font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
+        </div>
     );
 }

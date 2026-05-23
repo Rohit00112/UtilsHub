@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { ArrowLeftRight } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel } from '@/components/tools/ToolPrimitives';
 
 type UnitCategory = 'length' | 'weight' | 'temperature' | 'area' | 'volume' | 'time' | 'speed' | 'data';
 
@@ -202,9 +204,9 @@ export default function UnitConverter() {
             description="Convert between different units of measurement: length, weight, temperature, area, volume, time, speed, and data"
             category="calculator"
         >
-            <div className="max-w-5xl mx-auto space-y-8">
+            <div className="mx-auto max-w-5xl space-y-6">
                 {/* Category Selection */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-4">
+                <ToolPanel>
                     <div className="flex flex-wrap gap-2">
                         {(Object.keys(categories) as UnitCategory[]).map((cat) => (
                             <button
@@ -215,26 +217,25 @@ export default function UnitConverter() {
                                     setToUnit(1);
                                     setInputValue('1');
                                 }}
-                                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 ${category === cat
-                                        ? 'bg-primary text-white'
-                                        : 'bg-bg-tertiary text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
+                                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${category === cat
+                                        ? 'bg-primary text-primary-foreground'
+                                        : 'bg-muted text-muted-foreground hover:text-foreground'
                                     }`}
                             >
-                                {categories[cat].icon} {categories[cat].name}
+                                {categories[cat].name}
                             </button>
                         ))}
                     </div>
-                </div>
+                </ToolPanel>
 
                 {/* Converter Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 items-center">
+                <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-[1fr_auto_1fr]">
                     {/* From Unit */}
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                        <label className="block text-sm font-medium text-text-secondary mb-2">From</label>
+                    <ToolPanel title="From">
                         <select
                             value={fromUnit}
                             onChange={(e) => setFromUnit(Number(e.target.value))}
-                            className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary font-medium mb-4 focus:outline-none focus:border-primary"
+                            className="input h-10 mb-4"
                         >
                             {currentCategory.units.map((unit, idx) => (
                                 <option key={idx} value={idx}>
@@ -246,30 +247,29 @@ export default function UnitConverter() {
                             type="number"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            className="w-full px-4 py-4 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-2xl font-bold focus:outline-none focus:border-primary"
+                            className="w-full rounded-md border border-input bg-background px-4 py-4 text-2xl font-semibold text-foreground shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             placeholder="Enter value"
                         />
-                        <p className="mt-2 text-sm text-text-tertiary">
+                        <p className="mt-2 text-sm text-muted-foreground">
                             {currentCategory.units[fromUnit].symbol}
                         </p>
-                    </div>
+                    </ToolPanel>
 
                     {/* Swap Button */}
                     <button
                         onClick={swapUnits}
-                        className="w-12 h-12 mx-auto bg-primary hover:bg-primary-dark rounded-full flex items-center justify-center text-white text-xl transition-all duration-150 hover:scale-110"
+                        className="btn btn-secondary mx-auto h-12 w-12 rounded-full p-0"
                         title="Swap units"
                     >
-                        ⇄
+                        <ArrowLeftRight className="h-5 w-5" />
                     </button>
 
                     {/* To Unit */}
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                        <label className="block text-sm font-medium text-text-secondary mb-2">To</label>
+                    <ToolPanel title="To">
                         <select
                             value={toUnit}
                             onChange={(e) => setToUnit(Number(e.target.value))}
-                            className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary font-medium mb-4 focus:outline-none focus:border-primary"
+                            className="input h-10 mb-4"
                         >
                             {currentCategory.units.map((unit, idx) => (
                                 <option key={idx} value={idx}>
@@ -277,42 +277,38 @@ export default function UnitConverter() {
                                 </option>
                             ))}
                         </select>
-                        <div className="w-full px-4 py-4 bg-primary/10 border-2 border-primary/30 rounded-md text-primary text-2xl font-bold min-h-[68px] flex items-center">
+                        <div className="flex min-h-[68px] w-full items-center rounded-md border border-primary/30 bg-primary/10 px-4 py-4 text-2xl font-semibold text-foreground">
                             {convertedValue || '—'}
                         </div>
-                        <p className="mt-2 text-sm text-text-tertiary">
+                        <p className="mt-2 text-sm text-muted-foreground">
                             {currentCategory.units[toUnit].symbol}
                         </p>
-                    </div>
+                    </ToolPanel>
                 </div>
 
                 {/* All Conversions */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-text-primary mb-4">
-                        All {currentCategory.name} Conversions
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <ToolPanel title={`All ${currentCategory.name} conversions`}>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                         {allConversions.map((conversion, idx) => (
                             <div
                                 key={idx}
-                                className={`p-3 rounded-lg border ${conversion.isSource
+                                className={`rounded-md border p-3 ${conversion.isSource
                                         ? 'bg-primary/10 border-primary/30'
-                                        : 'bg-bg-tertiary border-border'
+                                        : 'bg-muted/30 border-border'
                                     }`}
                             >
-                                <p className="text-xs text-text-tertiary mb-1">{conversion.name}</p>
-                                <p className="text-lg font-bold text-text-primary">
-                                    {formatValue(conversion.value)} <span className="text-sm font-normal text-text-secondary">{conversion.symbol}</span>
+                                <p className="mb-1 text-xs text-muted-foreground">{conversion.name}</p>
+                                <p className="text-lg font-semibold text-foreground">
+                                    {formatValue(conversion.value)} <span className="text-sm font-normal text-muted-foreground">{conversion.symbol}</span>
                                 </p>
                             </div>
                         ))}
                     </div>
-                </div>
+                </ToolPanel>
 
                 {/* Quick Reference */}
-                <div className="bg-bg-secondary border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-text-primary mb-3">Quick Reference</h3>
-                    <div className="text-sm text-text-secondary space-y-2">
+                <ToolPanel title="Quick reference">
+                    <div className="space-y-2 text-sm text-muted-foreground">
                         {category === 'length' && (
                             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <li>1 mile = 1.609 kilometers</li>
@@ -349,7 +345,7 @@ export default function UnitConverter() {
                             <p>Select a value above to see all conversions for {currentCategory.name.toLowerCase()}.</p>
                         )}
                     </div>
-                </div>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );
