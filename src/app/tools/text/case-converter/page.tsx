@@ -1,99 +1,92 @@
 'use client';
 
 import { useState } from 'react';
+import { Clipboard, Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+
+const textareaClass = 'min-h-56 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function CaseConverter() {
     const [inputText, setInputText] = useState('');
     const [outputText, setOutputText] = useState('');
+    const [copied, setCopied] = useState(false);
 
-    const convertToUpperCase = () => setOutputText(inputText.toUpperCase());
-    const convertToLowerCase = () => setOutputText(inputText.toLowerCase());
-    const convertToTitleCase = () => {
-        const titleCase = inputText.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-        setOutputText(titleCase);
+    const conversions = [
+        { label: 'UPPER CASE', convert: () => inputText.toUpperCase() },
+        { label: 'lower case', convert: () => inputText.toLowerCase() },
+        { label: 'Title Case', convert: () => inputText.toLowerCase().split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') },
+        { label: 'Sentence case', convert: () => inputText.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, (char) => char.toUpperCase()) },
+        { label: 'camelCase', convert: () => inputText.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, char) => char.toUpperCase()) },
+        { label: 'snake_case', convert: () => inputText.trim().replace(/\s+/g, '_').replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`).replace(/^_/, '') },
+        { label: 'kebab-case', convert: () => inputText.trim().replace(/\s+/g, '-').replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`).replace(/^-/, '').toLowerCase() },
+    ];
+
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(outputText);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
     };
-    const convertToSentenceCase = () => {
-        const sentenceCase = inputText.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
-        setOutputText(sentenceCase);
+
+    const clearAll = () => {
+        setInputText('');
+        setOutputText('');
+        setCopied(false);
     };
-    const convertToCamelCase = () => {
-        const camelCase = inputText.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
-        setOutputText(camelCase);
-    };
-    const convertToSnakeCase = () => {
-        const snakeCase = inputText.trim().replace(/\s+/g, '_').replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`).replace(/^_/, '');
-        setOutputText(snakeCase);
-    };
-    const convertToKebabCase = () => {
-        const kebabCase = inputText.trim().replace(/\s+/g, '-').replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`).replace(/^-/, '').toLowerCase();
-        setOutputText(kebabCase);
-    };
-    const copyToClipboard = () => navigator.clipboard.writeText(outputText);
-    const clearAll = () => { setInputText(''); setOutputText(''); };
 
     return (
         <ToolLayout
             title="Text Case Converter"
-            description="Convert text between different cases: UPPER, lower, Title, Sentence, camelCase, snake_case, kebab-case"
+            description="Convert text between upper, lower, title, sentence, camel, snake, and kebab case"
             category="text"
         >
-            <div className="max-w-5xl mx-auto space-y-8">
-                {/* Input Section */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 transition-all duration-250 hover:border-primary/50">
-                    <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
-                        Input Text
-                    </label>
+            <div className="mx-auto max-w-5xl space-y-6">
+                <ToolPanel title="Input text" description="Paste text, then choose a conversion.">
                     <textarea
                         id="input"
-                        className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
+                        className={textareaClass}
                         value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
+                        onChange={(event) => setInputText(event.target.value)}
                         placeholder="Enter your text here..."
-                        rows={8}
                     />
-                    <div className="flex gap-6 mt-3 text-sm text-text-tertiary">
-                        <span className="font-medium">Characters: <span className="text-primary-light">{inputText.length}</span></span>
-                        <span className="font-medium">Words: <span className="text-primary-light">{inputText.trim() ? inputText.trim().split(/\s+/).length : 0}</span></span>
+                    <div className="mt-3 flex gap-4 text-sm text-muted-foreground">
+                        <span>Characters: {inputText.length}</span>
+                        <span>Words: {inputText.trim() ? inputText.trim().split(/\s+/).length : 0}</span>
                     </div>
-                </div>
+                </ToolPanel>
 
-                {/* Controls */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <button onClick={convertToUpperCase} className="btn btn-primary">UPPER CASE</button>
-                    <button onClick={convertToLowerCase} className="btn btn-primary">lower case</button>
-                    <button onClick={convertToTitleCase} className="btn btn-primary">Title Case</button>
-                    <button onClick={convertToSentenceCase} className="btn btn-primary">Sentence case</button>
-                    <button onClick={convertToCamelCase} className="btn btn-primary">camelCase</button>
-                    <button onClick={convertToSnakeCase} className="btn btn-primary">snake_case</button>
-                    <button onClick={convertToKebabCase} className="btn btn-primary">kebab-case</button>
-                    <button onClick={clearAll} className="btn btn-secondary">Clear All</button>
-                </div>
-
-                {/* Output Section */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 transition-all duration-250 hover:border-primary/50">
-                    <div className="flex items-center justify-between mb-3">
-                        <label htmlFor="output" className="text-lg font-semibold text-text-primary">
-                            Output Text
-                        </label>
-                        {outputText && (
-                            <button
-                                onClick={copyToClipboard}
-                                className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-md text-primary-light font-semibold text-sm transition-all duration-150 hover:scale-105"
-                            >
-                                📋 Copy
+                <ToolPanel title="Conversions">
+                    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                        {conversions.map((conversion) => (
+                            <button key={conversion.label} onClick={() => setOutputText(conversion.convert())} className="btn btn-primary">
+                                {conversion.label}
                             </button>
-                        )}
+                        ))}
+                        <button onClick={clearAll} className="btn btn-secondary gap-2">
+                            <Eraser className="h-4 w-4" />
+                            Clear
+                        </button>
                     </div>
+                </ToolPanel>
+
+                <ToolPanel
+                    title="Output text"
+                    actions={outputText && (
+                        <button onClick={copyToClipboard} className="btn btn-secondary gap-2">
+                            <Clipboard className="h-4 w-4" />
+                            {copied ? 'Copied' : 'Copy'}
+                        </button>
+                    )}
+                >
                     <textarea
                         id="output"
-                        className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none focus:outline-none placeholder:text-text-tertiary"
+                        className={textareaClass}
                         value={outputText}
                         readOnly
                         placeholder="Converted text will appear here..."
-                        rows={8}
                     />
-                </div>
+                    {copied && <ToolStatus tone="success" className="mt-3">Output copied to clipboard.</ToolStatus>}
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

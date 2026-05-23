@@ -1,22 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import { Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel } from '@/components/tools/ToolPrimitives';
+
+const textareaClass = 'min-h-80 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function WordCounter() {
     const [text, setText] = useState('');
 
-    const stats = {
-        characters: text.length,
-        charactersNoSpaces: text.replace(/\s/g, '').length,
-        words: text.trim() ? text.trim().split(/\s+/).length : 0,
-        sentences: text.trim() ? text.split(/[.!?]+/).filter(s => s.trim()).length : 0,
-        paragraphs: text.trim() ? text.split(/\n\n+/).filter(p => p.trim()).length : 0,
-        lines: text.split('\n').length,
-        readingTime: Math.ceil((text.trim() ? text.trim().split(/\s+/).length : 0) / 200),
-    };
-
-    const clearText = () => setText('');
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    const stats = [
+        { label: 'Words', value: words },
+        { label: 'Characters', value: text.length },
+        { label: 'No spaces', value: text.replace(/\s/g, '').length },
+        { label: 'Sentences', value: text.trim() ? text.split(/[.!?]+/).filter((sentence) => sentence.trim()).length : 0 },
+        { label: 'Paragraphs', value: text.trim() ? text.split(/\n\n+/).filter((paragraph) => paragraph.trim()).length : 0 },
+        { label: 'Lines', value: text.split('\n').length },
+        { label: 'Reading time', value: `${Math.ceil(words / 200)} min` },
+    ];
 
     return (
         <ToolLayout
@@ -24,48 +27,36 @@ export default function WordCounter() {
             description="Count words, characters, sentences, paragraphs, and estimate reading time"
             category="text"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
-                {/* Input Section */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                    <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
-                        Enter Your Text
-                    </label>
+            <div className="mx-auto max-w-6xl space-y-6">
+                <ToolPanel
+                    title="Text"
+                    description="Type or paste content to calculate live writing statistics."
+                    actions={(
+                        <button onClick={() => setText('')} className="btn btn-secondary gap-2">
+                            <Eraser className="h-4 w-4" />
+                            Clear
+                        </button>
+                    )}
+                >
                     <textarea
                         id="input"
-                        className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
+                        className={textareaClass}
                         value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        onChange={(event) => setText(event.target.value)}
                         placeholder="Start typing or paste your text here..."
-                        rows={12}
                     />
-                    <button onClick={clearText} className="btn btn-secondary mt-4">
-                        Clear Text
-                    </button>
-                </div>
+                </ToolPanel>
 
-                {/* Statistics */}
-                <div>
-                    <h2 className="text-2xl font-bold text-text-primary mb-4">Statistics</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-                        {[
-                            { label: 'Words', value: stats.words },
-                            { label: 'Characters', value: stats.characters },
-                            { label: 'Characters (no spaces)', value: stats.charactersNoSpaces },
-                            { label: 'Sentences', value: stats.sentences },
-                            { label: 'Paragraphs', value: stats.paragraphs },
-                            { label: 'Lines', value: stats.lines },
-                            { label: 'Reading Time', value: `${stats.readingTime} min` },
-                        ].map((stat, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-bg-secondary border-2 border-border rounded-lg p-6 text-center transition-all duration-250 hover:border-primary hover:-translate-y-1 hover:shadow-md"
-                            >
-                                <div className="text-4xl font-extrabold text-gradient mb-2">{stat.value}</div>
-                                <div className="text-sm text-text-secondary uppercase tracking-wider">{stat.label}</div>
+                <ToolPanel title="Statistics">
+                    <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-7">
+                        {stats.map((stat) => (
+                            <div key={stat.label} className="rounded-md border bg-muted/30 p-4 text-center">
+                                <div className="text-2xl font-semibold text-foreground">{stat.value}</div>
+                                <div className="mt-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">{stat.label}</div>
                             </div>
                         ))}
                     </div>
-                </div>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );
