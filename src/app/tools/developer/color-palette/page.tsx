@@ -12,8 +12,8 @@ export default function ColorPalette() {
     return (
         <ToolLayout title="Color Palette Generator" description="Generate beautiful color palettes and harmonies" category="developer">
             <div className="max-w-4xl mx-auto space-y-8">
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center">
-                    <label className="block text-xl font-semibold text-text-primary mb-6">Pick a Base Color</label>
+                <div className="bg-card border-2 border-border rounded-lg p-8 text-center">
+                    <label className="block text-xl font-semibold text-foreground mb-6">Pick a Base Color</label>
                     <div className="flex justify-center gap-4 items-center">
                         <input
                             type="color"
@@ -31,7 +31,7 @@ export default function ColorPalette() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                    <div className="bg-card border-2 border-border rounded-lg p-6">
                         <h3 className="text-lg font-bold mb-4">Shades</h3>
                         <div className="space-y-2">
                             {[0.9, 0.8, 0.7, 0.6, 0.5].map((opacity, i) => (
@@ -41,7 +41,7 @@ export default function ColorPalette() {
                             ))}
                         </div>
                     </div>
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                    <div className="bg-card border-2 border-border rounded-lg p-6">
                         <h3 className="text-lg font-bold mb-4">Tints (White Overlay)</h3>
                         <div className="space-y-2">
                             {[0.1, 0.3, 0.5, 0.7, 0.9].map((opacity, i) => (

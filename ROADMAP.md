@@ -28,10 +28,10 @@ This roadmap outlines the systematic transformation of UtilsHub into a premium, 
 ## Phase 4: Content & Tool Expansion (IN PROGRESS 🏗️)
 *Goal: Add high-traffic, production-ready tools.*
 
-- [ ] **Modernize Existing Tools**: Update all utilities to use the new design system.
-- [ ] **PDF Suite**: Implement Compressor and Splitter using client-side libraries.
-- [ ] **Image Toolkit**: Add WebP Converter and Resizer.
-- [ ] **Developer Utilities**: Add JWT Decoder and UUID Generator enhancements.
+- [x] **Modernize Existing Tools**: Update all utilities to use the new design system.
+- [x] **PDF Suite**: Implement Compressor and Splitter using client-side libraries.
+- [x] **Image Toolkit**: Add WebP Converter and Resizer.
+- [x] **Developer Utilities**: Add JWT Decoder and UUID Generator enhancements.
 
 ## Phase 5: SEO & Final Polish (PLANNED 🚀)
 *Goal: Rank on search engines and finalize for public launch.*

@@ -71,29 +71,29 @@ export default function RemoveDuplicates() {
         >
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Options Bar */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-4 flex flex-wrap gap-6 items-center justify-between">
+                <div className="bg-card border-2 border-border rounded-lg p-4 flex flex-wrap gap-6 items-center justify-between">
                     <div className="flex flex-wrap gap-4">
                         <label className="flex items-center gap-2 cursor-pointer select-none">
                             <input
                                 type="checkbox"
                                 checked={caseSensitive}
                                 onChange={(e) => setCaseSensitive(e.target.checked)}
-                                className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 bg-bg-tertiary"
+                                className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 bg-muted/30"
                             />
-                            <span className="text-text-primary">Case Sensitive</span>
+                            <span className="text-foreground">Case Sensitive</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer select-none">
                             <input
                                 type="checkbox"
                                 checked={ignoreWhitespace}
                                 onChange={(e) => setIgnoreWhitespace(e.target.checked)}
-                                className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 bg-bg-tertiary"
+                                className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 bg-muted/30"
                             />
-                            <span className="text-text-primary">Ignore Whitespace</span>
+                            <span className="text-foreground">Ignore Whitespace</span>
                         </label>
                     </div>
-                    <div className="flex gap-4 text-sm text-text-secondary font-mono">
-                        <span>Original: <strong className="text-text-primary">{stats.original}</strong></span>
+                    <div className="flex gap-4 text-sm text-muted-foreground font-mono">
+                        <span>Original: <strong className="text-foreground">{stats.original}</strong></span>
                         <span>Unique: <strong className="text-primary">{stats.unique}</strong></span>
                         <span>Removed: <strong className="text-red-400">{stats.removed}</strong></span>
                     </div>
@@ -103,16 +103,16 @@ export default function RemoveDuplicates() {
                     {/* Input Section */}
                     <div className="flex flex-col h-full">
                         <div className="flex justify-between items-center mb-3">
-                            <label className="text-lg font-semibold text-text-primary">Input Text</label>
+                            <label className="text-lg font-semibold text-foreground">Input Text</label>
                             <button
                                 onClick={clearAll}
-                                className="text-sm text-text-secondary hover:text-red-400 transition-colors"
+                                className="text-sm text-muted-foreground hover:text-red-400 transition-colors"
                             >
                                 Clear
                             </button>
                         </div>
                         <textarea
-                            className="flex-1 w-full p-4 bg-bg-secondary border-2 border-border rounded-lg resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 font-mono text-sm leading-relaxed"
+                            className="flex-1 w-full p-4 bg-card border-2 border-border rounded-lg resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 font-mono text-sm leading-relaxed"
                             placeholder="Paste your text here..."
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
@@ -122,7 +122,7 @@ export default function RemoveDuplicates() {
                     {/* Output Section */}
                     <div className="flex flex-col h-full">
                         <div className="flex justify-between items-center mb-3">
-                            <label className="text-lg font-semibold text-text-primary">Unique Lines</label>
+                            <label className="text-lg font-semibold text-foreground">Unique Lines</label>
                             <button
                                 onClick={copyToClipboard}
                                 disabled={!outputText}
@@ -133,7 +133,7 @@ export default function RemoveDuplicates() {
                         </div>
                         <textarea
                             readOnly
-                            className="flex-1 w-full p-4 bg-bg-tertiary border-2 border-border rounded-lg resize-none focus:outline-none font-mono text-sm leading-relaxed text-text-primary"
+                            className="flex-1 w-full p-4 bg-muted/30 border-2 border-border rounded-lg resize-none focus:outline-none font-mono text-sm leading-relaxed text-foreground"
                             placeholder="Result will appear here..."
                             value={outputText}
                         />

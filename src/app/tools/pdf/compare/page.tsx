@@ -67,10 +67,10 @@ export default function PDFCompare() {
                 <div className="grid md:grid-cols-2 gap-8">
                     {/* File 1 Input */}
                     <div className="space-y-4">
-                        <label className="block text-lg font-semibold text-text-primary">
+                        <label className="block text-lg font-semibold text-foreground">
                             First PDF (Original)
                         </label>
-                        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-bg-secondary hover:border-primary transition-colors cursor-pointer relative">
+                        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-card hover:border-primary transition-colors cursor-pointer relative">
                             <input
                                 type="file"
                                 accept=".pdf"
@@ -79,7 +79,7 @@ export default function PDFCompare() {
                             />
                             <div className="space-y-2 pointer-events-none">
                                 <span className="text-4xl">📄</span>
-                                <p className="text-text-primary font-medium">
+                                <p className="text-foreground font-medium">
                                     {file1 ? file1.name : 'Click or drop PDF here'}
                                 </p>
                             </div>
@@ -88,10 +88,10 @@ export default function PDFCompare() {
 
                     {/* File 2 Input */}
                     <div className="space-y-4">
-                        <label className="block text-lg font-semibold text-text-primary">
+                        <label className="block text-lg font-semibold text-foreground">
                             Second PDF (Changed)
                         </label>
-                        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-bg-secondary hover:border-primary transition-colors cursor-pointer relative">
+                        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-card hover:border-primary transition-colors cursor-pointer relative">
                             <input
                                 type="file"
                                 accept=".pdf"
@@ -100,7 +100,7 @@ export default function PDFCompare() {
                             />
                             <div className="space-y-2 pointer-events-none">
                                 <span className="text-4xl">📄</span>
-                                <p className="text-text-primary font-medium">
+                                <p className="text-foreground font-medium">
                                     {file2 ? file2.name : 'Click or drop PDF here'}
                                 </p>
                             </div>
@@ -123,10 +123,10 @@ export default function PDFCompare() {
                 {/* Diff Result */}
                 {diffResult && (
                     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <h2 className="text-2xl font-bold text-text-primary">Comparison Result</h2>
-                        <div className="bg-bg-tertiary border-2 border-border rounded-lg p-6 font-mono text-base overflow-x-auto whitespace-pre-wrap">
+                        <h2 className="text-2xl font-bold text-foreground">Comparison Result</h2>
+                        <div className="bg-muted/30 border-2 border-border rounded-lg p-6 font-mono text-base overflow-x-auto whitespace-pre-wrap">
                             {diffResult.map((part, index) => {
-                                let className = 'text-text-primary';
+                                let className = 'text-foreground';
                                 if (part.added) {
                                     className = 'bg-green-500/20 text-green-700 dark:text-green-400 block';
                                 } else if (part.removed) {

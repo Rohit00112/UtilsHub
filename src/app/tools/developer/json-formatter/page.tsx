@@ -38,11 +38,11 @@ export default function JsonFormatter() {
                     {/* Input */}
                     <div className="flex flex-col h-[600px]">
                         <div className="flex justify-between items-center mb-2">
-                            <label className="font-semibold text-text-primary">Input JSON</label>
-                            <button onClick={clearAll} className="text-sm text-error hover:underline">Clear</button>
+                            <label className="font-semibold text-foreground">Input JSON</label>
+                            <button onClick={clearAll} className="text-sm text-destructive hover:underline">Clear</button>
                         </div>
                         <textarea
-                            className="flex-1 w-full p-4 bg-bg-tertiary border-2 border-border rounded-lg font-mono text-sm resize-none focus:outline-none focus:border-primary"
+                            className="flex-1 w-full p-4 bg-muted/30 border-2 border-border rounded-lg font-mono text-sm resize-none focus:outline-none focus:border-primary"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Paste your JSON here..."
@@ -52,11 +52,11 @@ export default function JsonFormatter() {
                     {/* Output */}
                     <div className="flex flex-col h-[600px]">
                         <div className="flex justify-between items-center mb-2">
-                            <label className="font-semibold text-text-primary">Output</label>
+                            <label className="font-semibold text-foreground">Output</label>
                             {output && <button onClick={copyToClipboard} className="text-sm text-primary hover:underline">Copy Output</button>}
                         </div>
                         <textarea
-                            className={`flex-1 w-full p-4 bg-bg-tertiary border-2 rounded-lg font-mono text-sm resize-none focus:outline-none ${error ? 'border-error' : 'border-border'}`}
+                            className={`flex-1 w-full p-4 bg-muted/30 border-2 rounded-lg font-mono text-sm resize-none focus:outline-none ${error ? 'border-destructive' : 'border-border'}`}
                             value={error || output}
                             readOnly
                             placeholder="Formatted JSON will appear here..."

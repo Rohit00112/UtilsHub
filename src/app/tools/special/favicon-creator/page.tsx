@@ -139,15 +139,15 @@ export default function FaviconCreator() {
         >
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Upload Section */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                <div className="bg-card border-2 border-border rounded-lg p-6">
                     <div className="flex flex-wrap gap-4 items-center justify-between">
                         <div className="flex-1">
-                            <label className="block text-lg font-semibold text-text-primary mb-4">Upload Image</label>
+                            <label className="block text-lg font-semibold text-foreground mb-4">Upload Image</label>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={handleImageUpload}
-                                className="block w-full text-sm text-text-secondary
+                                className="block w-full text-sm text-muted-foreground
                                     file:mr-4 file:py-2 file:px-4
                                     file:rounded-full file:border-0
                                     file:text-sm file:font-semibold
@@ -162,7 +162,7 @@ export default function FaviconCreator() {
                                     onClick={downloadAll}
                                     className="btn btn-primary"
                                 >
-                                    💾 Download All Sizes
+                                    Download All Sizes
                                 </button>
                                 <button
                                     onClick={clearImage}
@@ -179,15 +179,15 @@ export default function FaviconCreator() {
                 {sourceImage ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                         {FAVICON_SIZES.map(size => (
-                            <div key={size} className="bg-bg-secondary border-2 border-border rounded-lg p-4 flex flex-col items-center">
-                                <div className="mb-3 flex items-center justify-center bg-bg-tertiary rounded-lg p-4 w-full aspect-square">
+                            <div key={size} className="bg-card border-2 border-border rounded-lg p-4 flex flex-col items-center">
+                                <div className="mb-3 flex items-center justify-center bg-muted/30 rounded-lg p-4 w-full aspect-square">
                                     <canvas
                                         ref={el => { canvasRefs.current[size] = el; }}
                                         className="max-w-full max-h-full"
                                         style={{ imageRendering: size <= 32 ? 'pixelated' : 'auto' }}
                                     />
                                 </div>
-                                <p className="text-sm font-semibold text-text-primary mb-2">{size}x{size}</p>
+                                <p className="text-sm font-semibold text-foreground mb-2">{size}x{size}</p>
                                 <button
                                     onClick={() => downloadFavicon(size)}
                                     className="text-xs px-3 py-1 bg-primary/10 text-primary rounded hover:bg-primary/20 transition-colors font-medium"
@@ -198,17 +198,17 @@ export default function FaviconCreator() {
                         ))}
                     </div>
                 ) : (
-                    <div className="bg-bg-secondary border-2 border-dashed border-border rounded-lg p-16 text-center">
+                    <div className="bg-card border-2 border-dashed border-border rounded-lg p-16 text-center">
                         <div className="text-8xl mb-6 opacity-20">🎨</div>
-                        <h3 className="text-2xl font-bold text-text-primary mb-2">No Image Uploaded</h3>
-                        <p className="text-text-secondary">Upload an image to generate favicons in multiple sizes</p>
+                        <h3 className="text-2xl font-bold text-foreground mb-2">No Image Uploaded</h3>
+                        <p className="text-muted-foreground">Upload an image to generate favicons in multiple sizes</p>
                     </div>
                 )}
 
                 {/* Info Section */}
-                <div className="bg-bg-secondary/50 border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-text-primary mb-3">💡 Tips</h3>
-                    <ul className="space-y-2 text-text-secondary text-sm">
+                <div className="bg-card/50 border border-border rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-foreground mb-3">💡 Tips</h3>
+                    <ul className="space-y-2 text-muted-foreground text-sm">
                         <li className="flex items-start gap-2">
                             <span className="text-primary font-bold">•</span>
                             <span>Use a square image (1:1 aspect ratio) for best results</span>
