@@ -1,10 +1,19 @@
 import Link from 'next/link';
 import { Zap, Shield, Target, Smartphone, ArrowRight } from 'lucide-react';
 import { categories, getToolsByCategory } from '@/lib/tools';
+import { createMetadata, websiteJsonLd } from '@/lib/seo';
+
+export const metadata = createMetadata({});
 
 export default function Home() {
+    const jsonLd = websiteJsonLd();
+
     return (
         <div className="flex flex-col">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Section */}
             <section className="py-24 px-6 text-center border-b border-border/40">
                 <div className="max-w-3xl mx-auto">

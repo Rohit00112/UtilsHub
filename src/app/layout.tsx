@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    title: "UtilsHub - All-in-One Utility Tools",
-    description: "Free online tools for PDF, Image, Text, Document conversion, AI-powered utilities, and more. Over 50+ tools in one place.",
-    keywords: ["PDF tools", "image converter", "text tools", "online utilities", "free tools"],
-    authors: [{ name: "UtilsHub" }],
-    openGraph: {
-        title: "UtilsHub - All-in-One Utility Tools",
-        description: "Free online tools for PDF, Image, Text, Document conversion, and more",
-        type: "website",
-    },
-};
+export const metadata: Metadata = createMetadata({});
 
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";

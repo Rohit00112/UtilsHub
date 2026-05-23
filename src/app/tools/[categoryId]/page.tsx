@@ -2,11 +2,17 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { getCategoryById, getToolsByCategory, categories } from '@/lib/tools';
+import { categoryJsonLd, getCategoryMetadata } from '@/lib/seo';
 
 export async function generateStaticParams() {
   return categories.map((category) => ({
     categoryId: category.id,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ categoryId: string }> }) {
+  const { categoryId } = await params;
+  return getCategoryMetadata(categoryId);
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ categoryId: string }> }) {
@@ -18,8 +24,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
     notFound();
   }
 
+  const jsonLd = categoryJsonLd(category);
+
   return (
     <div className="flex flex-col min-h-[calc(100vh-3.5rem)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Category Header */}
       <div className="bg-background border-b border-border/40">
         <div className="container py-16">
