@@ -2,7 +2,17 @@
 
 import { useState } from 'react';
 import * as Diff from 'diff';
+import { FileText, GitCompareArrows } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import {
+    ToolActionBar,
+    ToolEmptyState,
+    ToolPanel,
+    ToolStatus,
+    ToolUploadZone,
+} from '@/components/tools/ToolPrimitives';
+
+type TextItem = { str?: string };
 
 export default function PDFCompare() {
     const [file1, setFile1] = useState<File | null>(null);
@@ -13,7 +23,6 @@ export default function PDFCompare() {
 
     const extractText = async (file: File): Promise<string> => {
         try {
-            // Dynamic import to avoid SSR issues with canvas/DOMMatrix
             const pdfjsLib = await import('pdfjs-dist');
             pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
@@ -24,13 +33,12 @@ export default function PDFCompare() {
             for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const textContent = await page.getTextContent();
-                const pageText = textContent.items.map((item: any) => item.str).join(' ');
+                const pageText = textContent.items.map((item) => (item as TextItem).str || '').join(' ');
                 fullText += `[Page ${i}]\n${pageText}\n\n`;
             }
 
             return fullText;
-        } catch (err) {
-            console.error('Error extracting text from PDF:', err);
+        } catch {
             throw new Error(`Failed to extract text from ${file.name}`);
         }
     };
@@ -45,13 +53,12 @@ export default function PDFCompare() {
         try {
             const [text1, text2] = await Promise.all([
                 extractText(file1),
-                extractText(file2)
+                extractText(file2),
             ]);
 
-            const diff = Diff.diffLines(text1, text2);
-            setDiffResult(diff);
-        } catch (err: any) {
-            setError(err.message || 'An error occurred while processing the PDFs.');
+            setDiffResult(Diff.diffLines(text1, text2));
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred while processing the PDFs.');
         } finally {
             setIsProcessing(false);
         }
@@ -63,75 +70,47 @@ export default function PDFCompare() {
             description="Compare the text content of two PDF files"
             category="pdf"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* File 1 Input */}
-                    <div className="space-y-4">
-                        <label className="block text-lg font-semibold text-foreground">
-                            First PDF (Original)
-                        </label>
-                        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-card hover:border-primary transition-colors cursor-pointer relative">
-                            <input
-                                type="file"
-                                accept=".pdf"
-                                onChange={(e) => setFile1(e.target.files?.[0] || null)}
-                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                            />
-                            <div className="space-y-2 pointer-events-none">
-                                <span className="text-4xl">📄</span>
-                                <p className="text-foreground font-medium">
-                                    {file1 ? file1.name : 'Click or drop PDF here'}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            <div className="mx-auto max-w-6xl space-y-6">
+                <div className="grid gap-4 md:grid-cols-2">
+                    <ToolPanel title="Original PDF">
+                        <ToolUploadZone
+                            title={file1 ? file1.name : 'Choose original PDF'}
+                            description="Text will be extracted locally for comparison."
+                            icon={<FileText className="h-8 w-8" />}
+                            inputProps={{ type: 'file', accept: '.pdf,application/pdf', onChange: (event) => setFile1(event.target.files?.[0] || null) }}
+                        />
+                    </ToolPanel>
 
-                    {/* File 2 Input */}
-                    <div className="space-y-4">
-                        <label className="block text-lg font-semibold text-foreground">
-                            Second PDF (Changed)
-                        </label>
-                        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-card hover:border-primary transition-colors cursor-pointer relative">
-                            <input
-                                type="file"
-                                accept=".pdf"
-                                onChange={(e) => setFile2(e.target.files?.[0] || null)}
-                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                            />
-                            <div className="space-y-2 pointer-events-none">
-                                <span className="text-4xl">📄</span>
-                                <p className="text-foreground font-medium">
-                                    {file2 ? file2.name : 'Click or drop PDF here'}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <ToolPanel title="Changed PDF">
+                        <ToolUploadZone
+                            title={file2 ? file2.name : 'Choose changed PDF'}
+                            description="Use a second PDF with comparable text content."
+                            icon={<FileText className="h-8 w-8" />}
+                            inputProps={{ type: 'file', accept: '.pdf,application/pdf', onChange: (event) => setFile2(event.target.files?.[0] || null) }}
+                        />
+                    </ToolPanel>
                 </div>
 
-                <div className="flex justify-center flex-col items-center gap-4">
+                <ToolActionBar className="justify-center">
                     <button
                         onClick={handleCompare}
                         disabled={!file1 || !file2 || isProcessing}
-                        className={`bg-primary hover:bg-primary-dark text-white font-bold py-3 px-10 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-lg ${(!file1 || !file2 || isProcessing) ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''
-                            }`}
+                        className="btn btn-primary gap-2"
                     >
-                        {isProcessing ? 'Processing...' : 'Compare PDFs'}
+                        <GitCompareArrows className="h-4 w-4" />
+                        {isProcessing ? 'Comparing' : 'Compare PDFs'}
                     </button>
-                    {error && <p className="text-red-500 font-medium">{error}</p>}
-                </div>
+                </ToolActionBar>
 
-                {/* Diff Result */}
-                {diffResult && (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <h2 className="text-2xl font-bold text-foreground">Comparison Result</h2>
-                        <div className="bg-muted/30 border-2 border-border rounded-lg p-6 font-mono text-base overflow-x-auto whitespace-pre-wrap">
+                {error && <ToolStatus tone="error">{error}</ToolStatus>}
+
+                <ToolPanel title="Comparison result">
+                    {diffResult ? (
+                        <div className="max-h-[560px] overflow-auto rounded-md border bg-background p-4 font-mono text-sm leading-6 whitespace-pre-wrap">
                             {diffResult.map((part, index) => {
                                 let className = 'text-foreground';
-                                if (part.added) {
-                                    className = 'bg-green-500/20 text-green-700 dark:text-green-400 block';
-                                } else if (part.removed) {
-                                    className = 'bg-red-500/20 text-red-700 dark:text-red-400 block decoration-wavy line-through decoration-red-500/50';
-                                }
+                                if (part.added) className = 'block bg-emerald-500/10 text-emerald-700 dark:text-emerald-300';
+                                if (part.removed) className = 'block bg-destructive/10 text-destructive line-through decoration-destructive/60';
 
                                 return (
                                     <span key={index} className={className}>
@@ -140,8 +119,14 @@ export default function PDFCompare() {
                                 );
                             })}
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <ToolEmptyState
+                            icon={<GitCompareArrows className="h-8 w-8" />}
+                            title="No comparison yet"
+                            description="Choose two PDFs and run a comparison to see text-level differences."
+                        />
+                    )}
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

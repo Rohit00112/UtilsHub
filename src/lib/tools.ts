@@ -11,7 +11,6 @@ export interface Tool {
 export interface Category {
   id: string;
   name: string;
-  icon: string;
   description: string;
   keywords?: string[];
 }
@@ -20,49 +19,42 @@ export const categories: Category[] = [
   {
     id: 'pdf',
     name: 'PDF Tools',
-    icon: '📄',
     description: 'Merge, split, compress, and compare PDF files.',
     keywords: ['PDF tools', 'split PDF', 'compress PDF', 'compare PDF'],
   },
   {
     id: 'text',
     name: 'Text Tools',
-    icon: '✍️',
     description: 'Format, transform, and analyze text data.',
     keywords: ['text tools', 'word counter', 'base64', 'text diff'],
   },
   {
     id: 'image',
     name: 'Image Tools',
-    icon: '🎨',
     description: 'Convert, resize, and edit images in your browser.',
     keywords: ['image tools', 'WebP converter', 'image resizer', 'favicon generator'],
   },
   {
     id: 'security',
     name: 'Security Tools',
-    icon: '🔐',
     description: 'Encryption, hashing, and password utilities.',
     keywords: ['security tools', 'JWT decoder', 'hash generator', 'password generator'],
   },
   {
     id: 'calculator',
     name: 'Calculators',
-    icon: '🧮',
     description: 'Quick financial and mathematical calculations.',
     keywords: ['online calculators', 'EMI calculator', 'BMI calculator', 'unit converter'],
   },
   {
     id: 'developer',
     name: 'Developer Tools',
-    icon: '💻',
     description: 'Formatters, generators, and testers for engineers.',
     keywords: ['developer tools', 'JSON formatter', 'UUID generator', 'regex tester'],
   },
   {
     id: 'special',
     name: 'Special Tools',
-    icon: '💡',
     description: 'Unique utilities and niche file processors.',
     keywords: ['utility tools', 'duplicate remover', 'text comparison', 'PDF comparison'],
   },

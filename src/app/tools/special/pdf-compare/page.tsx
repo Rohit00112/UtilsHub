@@ -1,8 +1,12 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import { FileText } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolEmptyState, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
 import * as Diff from 'diff';
+
+type TextItem = { str?: string };
 
 export default function PdfCompare() {
     const [originalFile, setOriginalFile] = useState<File | null>(null);
@@ -12,7 +16,7 @@ export default function PdfCompare() {
     const [diffResult, setDiffResult] = useState<Diff.Change[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [pdfjsLib, setPdfjsLib] = useState<any>(null);
+    const [pdfjsLib, setPdfjsLib] = useState<typeof import('pdfjs-dist') | null>(null);
 
     // Load pdfjs-dist dynamically only on client side
     useEffect(() => {
@@ -25,7 +29,7 @@ export default function PdfCompare() {
         loadPdfJs();
     }, []);
 
-    const extractText = async (file: File): Promise<string> => {
+    const extractText = useCallback(async (file: File): Promise<string> => {
         if (!pdfjsLib) throw new Error('PDF library not loaded');
 
         const arrayBuffer = await file.arrayBuffer();
@@ -35,12 +39,12 @@ export default function PdfCompare() {
         for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
-            const pageText = textContent.items.map((item: any) => item.str).join(' ');
+            const pageText = textContent.items.map((item) => (item as TextItem).str || '').join(' ');
             fullText += pageText + '\n\n';
         }
 
         return fullText;
-    };
+    }, [pdfjsLib]);
 
     const handleCompare = useCallback(async () => {
         if (!originalFile || !modifiedFile) return;
@@ -66,7 +70,7 @@ export default function PdfCompare() {
         } finally {
             setLoading(false);
         }
-    }, [originalFile, modifiedFile]);
+    }, [extractText, originalFile, modifiedFile]);
 
     useEffect(() => {
         if (originalFile && modifiedFile) {
@@ -88,46 +92,26 @@ export default function PdfCompare() {
             description="Upload two PDF files to compare their text content and highlight differences"
             category="special"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="mx-auto max-w-6xl space-y-6">
                 {/* File Upload Section */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="bg-card border-2 border-border rounded-lg p-6">
-                        <label className="block text-lg font-semibold text-foreground mb-4">Original PDF</label>
-                        <input
-                            type="file"
-                            accept=".pdf"
-                            onChange={(e) => handleFileChange(e, 'original')}
-                            className="block w-full text-sm text-muted-foreground
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-full file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-primary/10 file:text-primary
-                                hover:file:bg-primary/20
-                                cursor-pointer"
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <ToolPanel title="Original PDF">
+                        <ToolUploadZone
+                            title={originalFile ? originalFile.name : 'Choose original PDF'}
+                            description="The original document to compare from."
+                            icon={<FileText className="h-8 w-8" />}
+                            inputProps={{ type: 'file', accept: '.pdf,application/pdf', onChange: (event) => handleFileChange(event, 'original') }}
                         />
-                        {originalFile && (
-                            <p className="mt-2 text-sm text-muted-foreground">Selected: {originalFile.name}</p>
-                        )}
-                    </div>
+                    </ToolPanel>
 
-                    <div className="bg-card border-2 border-border rounded-lg p-6">
-                        <label className="block text-lg font-semibold text-foreground mb-4">Modified PDF</label>
-                        <input
-                            type="file"
-                            accept=".pdf"
-                            onChange={(e) => handleFileChange(e, 'modified')}
-                            className="block w-full text-sm text-muted-foreground
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-full file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-primary/10 file:text-primary
-                                hover:file:bg-primary/20
-                                cursor-pointer"
+                    <ToolPanel title="Modified PDF">
+                        <ToolUploadZone
+                            title={modifiedFile ? modifiedFile.name : 'Choose modified PDF'}
+                            description="The changed document to compare against."
+                            icon={<FileText className="h-8 w-8" />}
+                            inputProps={{ type: 'file', accept: '.pdf,application/pdf', onChange: (event) => handleFileChange(event, 'modified') }}
                         />
-                        {modifiedFile && (
-                            <p className="mt-2 text-sm text-muted-foreground">Selected: {modifiedFile.name}</p>
-                        )}
-                    </div>
+                    </ToolPanel>
                 </div>
 
                 {/* Loading & Error */}
@@ -139,19 +123,16 @@ export default function PdfCompare() {
                 )}
 
                 {error && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg text-center">
-                        {error}
-                    </div>
+                    <ToolStatus tone="error">{error}</ToolStatus>
                 )}
 
                 {/* Results Section */}
-                {diffResult.length > 0 && !loading && (
-                    <div className="bg-card border-2 border-border rounded-lg p-6">
-                        <h3 className="text-lg font-semibold text-foreground mb-4">Comparison Result</h3>
-                        <div className="bg-muted/30 p-6 rounded-lg font-mono text-sm leading-relaxed whitespace-pre-wrap break-words border border-border max-h-[600px] overflow-y-auto">
+                <ToolPanel title="Comparison result">
+                    {diffResult.length > 0 && !loading ? (
+                        <div className="max-h-[600px] overflow-y-auto rounded-md border bg-muted/20 p-4 font-mono text-sm leading-6 whitespace-pre-wrap break-words">
                             {diffResult.map((part, index) => {
-                                const color = part.added ? 'bg-green-500/20 text-green-700 dark:text-green-400' :
-                                    part.removed ? 'bg-red-500/20 text-red-700 dark:text-red-400 decoration-wavy line-through decoration-red-400/50' :
+                                const color = part.added ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' :
+                                    part.removed ? 'bg-destructive/10 text-destructive line-through decoration-destructive/60' :
                                         'text-foreground';
                                 return (
                                     <span key={index} className={`${color} px-0.5 rounded`}>
@@ -160,8 +141,10 @@ export default function PdfCompare() {
                                 );
                             })}
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <ToolEmptyState title="No comparison yet" description="Choose two PDFs to compare their extracted text." />
+                    )}
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

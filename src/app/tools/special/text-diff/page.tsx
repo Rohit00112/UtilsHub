@@ -1,14 +1,18 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import ToolLayout from '@/components/ToolLayout';
+import { useCallback, useEffect, useState } from 'react';
 import * as Diff from 'diff';
+import { Eraser } from 'lucide-react';
+import ToolLayout from '@/components/ToolLayout';
+import { ToolEmptyState, ToolPanel, ToolSegmentedControl, ToolTextarea } from '@/components/tools/ToolPrimitives';
+
+type DiffMode = 'chars' | 'words' | 'lines';
 
 export default function TextDiffChecker() {
     const [originalText, setOriginalText] = useState('');
     const [modifiedText, setModifiedText] = useState('');
     const [diffResult, setDiffResult] = useState<Diff.Change[]>([]);
-    const [diffMode, setDiffMode] = useState<'chars' | 'words' | 'lines'>('words');
+    const [diffMode, setDiffMode] = useState<DiffMode>('words');
 
     const calculateDiff = useCallback(() => {
         if (!originalText && !modifiedText) {
@@ -16,22 +20,10 @@ export default function TextDiffChecker() {
             return;
         }
 
-        let diff;
-        switch (diffMode) {
-            case 'chars':
-                diff = Diff.diffChars(originalText, modifiedText);
-                break;
-            case 'words':
-                diff = Diff.diffWords(originalText, modifiedText);
-                break;
-            case 'lines':
-                diff = Diff.diffLines(originalText, modifiedText);
-                break;
-            default:
-                diff = Diff.diffWords(originalText, modifiedText);
-        }
-        setDiffResult(diff);
-    }, [originalText, modifiedText, diffMode]);
+        if (diffMode === 'chars') setDiffResult(Diff.diffChars(originalText, modifiedText));
+        else if (diffMode === 'lines') setDiffResult(Diff.diffLines(originalText, modifiedText));
+        else setDiffResult(Diff.diffWords(originalText, modifiedText));
+    }, [diffMode, modifiedText, originalText]);
 
     useEffect(() => {
         calculateDiff();
@@ -45,79 +37,67 @@ export default function TextDiffChecker() {
     return (
         <ToolLayout
             title="Text Diff Checker"
-            description="Compare two texts and highlight the differences instantly"
+            description="Compare two texts and highlight differences instantly"
             category="special"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
-                {/* Controls */}
-                <div className="bg-card border-2 border-border rounded-lg p-4 flex flex-wrap gap-6 items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <span className="text-muted-foreground font-medium">Compare by:</span>
-                        <div className="flex bg-muted/30 rounded-lg p-1 border border-border">
-                            {(['chars', 'words', 'lines'] as const).map((mode) => (
-                                <button
-                                    key={mode}
-                                    onClick={() => setDiffMode(mode)}
-                                    className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${diffMode === mode
-                                            ? 'bg-primary text-white shadow-sm'
-                                            : 'text-muted-foreground hover:text-foreground'
-                                        }`}
-                                >
-                                    {mode.charAt(0).toUpperCase() + mode.slice(1)}
-                                </button>
-                            ))}
-                        </div>
+            <div className="mx-auto max-w-6xl space-y-6">
+                <ToolPanel title="Compare settings">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <ToolSegmentedControl
+                            value={diffMode}
+                            onChange={setDiffMode}
+                            options={[
+                                { label: 'Characters', value: 'chars' },
+                                { label: 'Words', value: 'words' },
+                                { label: 'Lines', value: 'lines' },
+                            ]}
+                        />
+                        <button onClick={clearAll} className="btn btn-secondary gap-2">
+                            <Eraser className="h-4 w-4" />
+                            Clear all
+                        </button>
                     </div>
-                    <button
-                        onClick={clearAll}
-                        className="text-sm text-muted-foreground hover:text-red-400 transition-colors"
-                    >
-                        Clear All
-                    </button>
-                </div>
+                </ToolPanel>
 
-                {/* Input Section */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[400px]">
-                    <div className="flex flex-col h-full">
-                        <label className="text-lg font-semibold text-foreground mb-3">Original Text</label>
-                        <textarea
-                            className="flex-1 w-full p-4 bg-card border-2 border-border rounded-lg resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 font-mono text-sm leading-relaxed"
-                            placeholder="Paste original text here..."
+                <div className="grid gap-4 md:grid-cols-2">
+                    <ToolPanel title="Original text">
+                        <ToolTextarea
+                            className="min-h-[320px]"
+                            placeholder="Paste original text here"
                             value={originalText}
-                            onChange={(e) => setOriginalText(e.target.value)}
+                            onChange={(event) => setOriginalText(event.target.value)}
                         />
-                    </div>
-                    <div className="flex flex-col h-full">
-                        <label className="text-lg font-semibold text-foreground mb-3">Modified Text</label>
-                        <textarea
-                            className="flex-1 w-full p-4 bg-card border-2 border-border rounded-lg resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 font-mono text-sm leading-relaxed"
-                            placeholder="Paste modified text here..."
+                    </ToolPanel>
+                    <ToolPanel title="Modified text">
+                        <ToolTextarea
+                            className="min-h-[320px]"
+                            placeholder="Paste modified text here"
                             value={modifiedText}
-                            onChange={(e) => setModifiedText(e.target.value)}
+                            onChange={(event) => setModifiedText(event.target.value)}
                         />
-                    </div>
+                    </ToolPanel>
                 </div>
 
-                {/* Output Section */}
-                <div className="bg-card border-2 border-border rounded-lg p-6 min-h-[200px]">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Differences</h3>
-                    <div className="bg-muted/30 p-6 rounded-lg font-mono text-sm leading-relaxed whitespace-pre-wrap break-words border border-border">
-                        {diffResult.length > 0 ? (
-                            diffResult.map((part, index) => {
-                                const color = part.added ? 'bg-green-500/20 text-green-700 dark:text-green-400' :
-                                    part.removed ? 'bg-red-500/20 text-red-700 dark:text-red-400 decoration-wavy line-through decoration-red-400/50' :
-                                        'text-foreground';
+                <ToolPanel title="Differences">
+                    {diffResult.length > 0 ? (
+                        <div className="rounded-md border bg-muted/20 p-4 font-mono text-sm leading-6 whitespace-pre-wrap break-words">
+                            {diffResult.map((part, index) => {
+                                const color = part.added
+                                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
+                                    : part.removed
+                                        ? 'bg-destructive/10 text-destructive line-through decoration-destructive/60'
+                                        : 'text-foreground';
                                 return (
-                                    <span key={index} className={`${color} px-0.5 rounded`}>
+                                    <span key={index} className={`${color} rounded px-0.5`}>
                                         {part.value}
                                     </span>
                                 );
-                            })
-                        ) : (
-                            <span className="text-muted-foreground italic">Result will appear here...</span>
-                        )}
-                    </div>
-                </div>
+                            })}
+                        </div>
+                    ) : (
+                        <ToolEmptyState title="No differences yet" description="Enter text in either panel to see a comparison." />
+                    )}
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

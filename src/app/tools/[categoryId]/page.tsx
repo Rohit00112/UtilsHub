@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight, ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronRight, Plus } from 'lucide-react';
+import { CategoryIcon } from '@/components/CategoryIcon';
 import { getCategoryById, getToolsByCategory, categories } from '@/lib/tools';
 import { categoryJsonLd, getCategoryMetadata } from '@/lib/seo';
 
@@ -27,64 +28,69 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const jsonLd = categoryJsonLd(category);
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-3.5rem)]">
+    <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Category Header */}
-      <div className="bg-background border-b border-border/40">
-        <div className="container py-16">
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+      <div className="border-b border-border/60 bg-background">
+        <div className="container py-10">
+          <nav className="mb-6 flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-foreground font-medium">{category.name}</span>
           </nav>
           
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-5xl">{category.icon}</span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-              {category.name}
-            </h1>
+          <div className="flex items-center gap-4">
+            <span className="flex h-12 w-12 items-center justify-center rounded-lg border bg-muted/20 text-muted-foreground">
+              <CategoryIcon categoryId={category.id} className="h-6 w-6" />
+            </span>
+            <div>
+              <h1 className="text-3xl font-semibold text-foreground text-balance sm:text-4xl">
+                {category.name}
+              </h1>
+              <p className="mt-2 text-base leading-7 text-muted-foreground text-pretty">
+                {category.description}
+              </p>
+            </div>
           </div>
-          <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            {category.description}
-          </p>
         </div>
       </div>
 
-      {/* Tools Grid */}
-      <main className="flex-1 py-16 bg-muted/30">
+      <main className="flex-1 bg-muted/20 py-10">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <h2 className="text-lg font-semibold text-foreground">Available tools</h2>
+            <span className="rounded-md border bg-background px-2.5 py-1 text-sm text-muted-foreground tabular-nums">{tools.length} tools</span>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => (
               <Link
                 href={`/tools/${categoryId}/${tool.slug}`}
                 key={tool.id}
-                className="group relative flex flex-col rounded-xl border bg-card p-8 transition-all hover:shadow-md hover:border-primary/20"
+                className="group flex min-h-40 flex-col rounded-lg border bg-card p-5 shadow-sm transition-colors hover:border-primary/40"
               >
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors flex items-center justify-between">
+                <h3 className="flex items-center justify-between gap-3 text-lg font-semibold text-foreground">
                   {tool.name}
-                  <ArrowRight className="h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  <ArrowRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-foreground" />
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="mt-2 text-sm leading-6 text-muted-foreground text-pretty">
                   {tool.description}
                 </p>
                 <div className="mt-auto pt-6">
-                  <span className="text-xs font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
                     Open Tool
                   </span>
                 </div>
               </Link>
             ))}
             
-            {/* Future Placeholder */}
-            <div className="border-2 border-dashed border-border rounded-xl p-8 flex flex-col items-center justify-center text-center opacity-60 hover:opacity-100 transition-all bg-background/50">
-              <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4 text-2xl">
-                ➕
+            <div className="flex min-h-40 flex-col items-center justify-center rounded-lg border border-dashed border-border bg-background/60 p-5 text-center">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md border bg-muted/20 text-muted-foreground">
+                <Plus className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold mb-1">More Coming Soon</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-semibold text-foreground">More coming soon</h3>
+              <p className="mt-1 text-sm text-muted-foreground text-pretty">
                 We&apos;re constantly adding new tools to the {category.name} suite.
               </p>
             </div>
