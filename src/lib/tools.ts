@@ -76,6 +76,7 @@ export const tools: Tool[] = [
   { id: 'favicon-generator', name: 'Favicon Generator', description: 'Create favicons from any image.', slug: 'favicon-generator', categoryId: 'image', status: 'active' },
   { id: 'image-merger', name: 'Image Merger', description: 'Merge multiple images into one.', slug: 'merger', categoryId: 'image', status: 'active' },
   { id: 'webp-converter', name: 'WebP Converter', description: 'Convert images to WebP with quality control.', slug: 'webp-converter', categoryId: 'image', status: 'active' },
+  { id: 'image-resizer', name: 'Image Resizer', description: 'Resize images by dimensions or percentage.', slug: 'resizer', categoryId: 'image', status: 'active' },
   
   // Security
   { id: 'password-generator', name: 'Password Generator', description: 'Generate strong, secure passwords.', slug: 'password-generator', categoryId: 'security', status: 'active' },
