@@ -86,6 +86,9 @@ export function createMetadata({
     formatDetection: {
       telephone: false,
     },
+    other: {
+      'google-adsense-account': 'ca-pub-9243015758853816',
+    },
     keywords: Array.from(new Set([...defaultKeywords, ...keywords])),
     alternates: {
       canonical: url,
