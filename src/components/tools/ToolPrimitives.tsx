@@ -21,7 +21,7 @@ export function ToolPanel({
     className?: string;
 }) {
     return (
-        <section className={cx('rounded-lg border bg-card p-5 sm:p-6', className)}>
+        <section className={cx('rounded-lg border bg-card p-5 transition-colors duration-200 hover:border-primary/30 sm:p-6', className)}>
             {(title || description || actions) && (
                 <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
@@ -112,7 +112,7 @@ export function ToolResultCard({
     children?: ReactNode;
 }) {
     return (
-        <div className="rounded-md border bg-muted/30 p-4">
+        <div className="rounded-md border bg-muted/30 p-4 transition-colors duration-200 hover:border-primary/30">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
                     <h4 className="truncate font-medium text-foreground">{title}</h4>

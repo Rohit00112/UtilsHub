@@ -43,12 +43,12 @@ export default function ToolLayout({ children, title, description, category }: T
             {/* Main Content Area */}
             <main className="flex-1 py-12">
                 <div className="container">
-                    <div className="bg-card rounded-xl border shadow-sm p-6 sm:p-10">
+                    <div className="animate-fade-in bg-card rounded-xl border shadow-sm p-6 sm:p-10">
                         {children}
                     </div>
                     
                     {/* Privacy Notice */}
-                    <div className="mt-8 text-center">
+                    <div className="mt-8 animate-fade-in text-center">
                         <p className="text-xs text-muted-foreground">
                             Privacy Note: This tool processes your data locally in your browser. Nothing is uploaded to our servers.
                         </p>
