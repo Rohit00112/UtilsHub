@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Check, Clipboard, Download, RefreshCw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
 import { v1 as uuidv1, v4 as uuidv4, v7 as uuidv7, validate, version as uuidVersion } from 'uuid';
 
 type UUIDVersion = 'v1' | 'v4' | 'v7';
@@ -99,7 +100,7 @@ export default function UuidGenerator() {
     return (
         <ToolLayout title="UUID Generator" description="Generate and format unique identifiers for applications" category="developer">
             <div className="mx-auto max-w-5xl space-y-6">
-                <section className="rounded-lg border bg-card p-5 sm:p-6">
+                <ToolPanel title="Generator settings">
                     <div className="grid gap-4 lg:grid-cols-[1fr_160px_auto]">
                         <div>
                             <label htmlFor="version" className="mb-2 block text-sm font-medium text-muted-foreground">
@@ -167,31 +168,21 @@ export default function UuidGenerator() {
                         </label>
                     </div>
 
-                    {error && (
-                        <p className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-                            {error}
-                        </p>
-                    )}
-                </section>
+                    {error && <ToolStatus tone="error" className="mt-4">{error}</ToolStatus>}
+                </ToolPanel>
 
-                <section className="rounded-lg border bg-card">
-                    <div className="flex flex-col gap-3 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <h3 className="text-lg font-semibold text-foreground">Generated UUIDs</h3>
-                            <p className="text-sm text-muted-foreground">{versionSummary}</p>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            <button onClick={copyAll} disabled={uuids.length === 0} className="btn btn-secondary gap-2">
-                                {copiedId === 'all' ? <Check className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
-                                {copiedId === 'all' ? 'Copied' : 'Copy all'}
-                            </button>
-                            <button onClick={downloadTxt} disabled={uuids.length === 0} className="btn btn-secondary gap-2">
-                                <Download className="h-4 w-4" />
-                                Download .txt
-                            </button>
-                        </div>
+                <ToolPanel title="Generated UUIDs" description={versionSummary} actions={
+                    <div className="flex flex-wrap gap-2">
+                        <button onClick={copyAll} disabled={uuids.length === 0} className="btn btn-secondary gap-2">
+                            {copiedId === 'all' ? <Check className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
+                            {copiedId === 'all' ? 'Copied' : 'Copy all'}
+                        </button>
+                        <button onClick={downloadTxt} disabled={uuids.length === 0} className="btn btn-secondary gap-2">
+                            <Download className="h-4 w-4" />
+                            Download .txt
+                        </button>
                     </div>
-
+                }>
                     {uuids.length === 0 ? (
                         <div className="p-8 text-center text-sm text-muted-foreground">
                             Choose a version and quantity, then generate a batch.
@@ -225,7 +216,7 @@ export default function UuidGenerator() {
                             })}
                         </div>
                     )}
-                </section>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

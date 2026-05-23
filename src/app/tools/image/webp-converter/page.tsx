@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Download, FileArchive, Image as ImageIcon, Upload, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolEmptyState, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
 
 interface SourceImage {
     id: string;
@@ -141,17 +143,16 @@ export default function WebPConverter() {
     return (
         <ToolLayout title="WebP Converter" description="Convert images to WebP with quality control" category="image">
             <div className="mx-auto max-w-6xl space-y-6">
-                <section className="rounded-lg border bg-card p-5 sm:p-6">
-                    <label className="block text-sm font-medium text-muted-foreground">Images</label>
-                    <label className="mt-3 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 px-6 py-10 text-center transition-colors hover:border-primary/40">
-                        <Upload className="mb-3 h-8 w-8 text-muted-foreground" />
-                        <span className="font-medium text-foreground">{images.length > 0 ? `${images.length} images selected` : 'Choose images'}</span>
-                        <span className="mt-1 text-sm text-muted-foreground">PNG, JPEG, and other browser-supported image formats</span>
-                        <input type="file" multiple accept="image/*" onChange={handleFiles} className="hidden" />
-                    </label>
-                </section>
+                <ToolPanel title="Images">
+                    <ToolUploadZone
+                        title={images.length > 0 ? `${images.length} images selected` : 'Choose images'}
+                        description="PNG, JPEG, and other browser-supported image formats"
+                        icon={<Upload className="h-8 w-8" />}
+                        inputProps={{ type: 'file', multiple: true, accept: 'image/*', onChange: handleFiles }}
+                    />
+                </ToolPanel>
 
-                <section className="rounded-lg border bg-card p-5 sm:p-6">
+                <ToolPanel title="Conversion settings">
                     <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
                         <div>
                             <label htmlFor="quality" className="mb-2 block text-sm font-medium text-muted-foreground">
@@ -178,20 +179,17 @@ export default function WebPConverter() {
                         </div>
                     </div>
 
-                    {error && (
-                        <p className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-                            {error}
-                        </p>
-                    )}
-                </section>
+                    {error && <ToolStatus tone="error" className="mt-4">{error}</ToolStatus>}
+                </ToolPanel>
 
                 {images.length > 0 && (
-                    <section className="rounded-lg border bg-card p-5">
-                        <h3 className="mb-4 text-lg font-semibold text-foreground">Preview</h3>
+                    <ToolPanel title="Preview">
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             {images.map((image) => (
                                 <div key={image.id} className="overflow-hidden rounded-md border bg-muted/30">
-                                    <img src={image.previewUrl} alt={image.file.name} className="h-36 w-full object-cover" />
+                                    <div className="relative h-36 w-full">
+                                        <Image src={image.previewUrl} alt={image.file.name} fill className="object-cover" unoptimized />
+                                    </div>
                                     <div className="p-3">
                                         <div className="truncate text-sm font-medium text-foreground">{image.file.name}</div>
                                         <div className="text-xs text-muted-foreground">{formatBytes(image.file.size)}</div>
@@ -199,29 +197,18 @@ export default function WebPConverter() {
                                 </div>
                             ))}
                         </div>
-                    </section>
+                    </ToolPanel>
                 )}
 
-                <section className="rounded-lg border bg-card">
-                    <div className="flex flex-col gap-3 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <h3 className="text-lg font-semibold text-foreground">Converted files</h3>
-                            <p className="text-sm text-muted-foreground">
-                                {converted.length > 0 ? `${converted.length} WebP images ready.` : 'Converted WebP files will appear here.'}
-                            </p>
-                        </div>
-                        <button onClick={downloadZip} disabled={converted.length === 0} className="btn btn-secondary gap-2">
-                            <FileArchive className="h-4 w-4" />
-                            Download ZIP
-                        </button>
-                    </div>
-
+                <ToolPanel
+                    title="Converted files"
+                    description={converted.length > 0 ? `${converted.length} WebP images ready.` : 'Converted WebP files will appear here.'}
+                    actions={<button onClick={downloadZip} disabled={converted.length === 0} className="btn btn-secondary gap-2"><FileArchive className="h-4 w-4" />Download ZIP</button>}
+                >
                     {converted.length === 0 ? (
-                        <div className="p-8 text-center text-sm text-muted-foreground">
-                            Upload images and run conversion.
-                        </div>
+                        <ToolEmptyState title="No converted files" description="Upload images and run conversion." />
                     ) : (
-                        <div className="divide-y">
+                        <div className="divide-y rounded-md border">
                             {converted.map((image) => {
                                 const change = ((image.originalSize - image.outputSize) / image.originalSize) * 100;
 
@@ -245,7 +232,7 @@ export default function WebPConverter() {
                             })}
                         </div>
                     )}
-                </section>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

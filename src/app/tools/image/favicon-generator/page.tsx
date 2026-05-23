@@ -1,8 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import JSZip from 'jszip';
+import Image from 'next/image';
+import { Download, ImageIcon, Package, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import {
+    ToolActionBar,
+    ToolEmptyState,
+    ToolPanel,
+    ToolResultCard,
+    ToolUploadZone,
+} from '@/components/tools/ToolPrimitives';
 
 const SIZES = [
     { size: 16, name: 'favicon-16x16.png' },
@@ -14,18 +22,19 @@ const SIZES = [
 
 export default function FaviconCreator() {
     const [image, setImage] = useState<string | null>(null);
+    const [fileName, setFileName] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
 
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
 
-    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                setImage(event.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
+        const reader = new FileReader();
+        reader.onload = (readerEvent) => {
+            setImage(readerEvent.target?.result as string);
+            setFileName(file.name);
+        };
+        reader.readAsDataURL(file);
     };
 
     const generateFavicons = async () => {
@@ -33,17 +42,19 @@ export default function FaviconCreator() {
         setIsGenerating(true);
 
         try {
+            const { default: JSZip } = await import('jszip');
             const zip = new JSZip();
-            const img = new Image();
+            const img = new window.Image();
             img.src = image;
 
-            await new Promise((resolve) => { img.onload = resolve; });
+            await new Promise<void>((resolve) => {
+                img.onload = () => resolve();
+            });
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             if (!ctx) return;
 
-            // Generate PNGs
             for (const { size, name } of SIZES) {
                 canvas.width = size;
                 canvas.height = size;
@@ -51,28 +62,16 @@ export default function FaviconCreator() {
                 ctx.drawImage(img, 0, 0, size, size);
 
                 const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
-                if (blob) {
-                    zip.file(name, blob);
-                }
+                if (blob) zip.file(name, blob);
             }
 
-            // Generate ICO (simplified, just 32x32 png labeled as ico is widely compatible, but better to use a library for true ICO if needed. 
-            // For now, we will just include the PNGs. Browsers handle PNG favicons well.)
-            // Actually, let's just create a 32x32 bitmap for favicon.ico roughly? No, real ICO format is binary.
-            // Let's create 'favicon.ico' as a copy of 32x32 png, which works in many modern cases, 
-            // but strictly speaking isn't a valid ICO container. 
-            // Ideally we need a converter. For this simple tool, we'll provide the PNG kit.
-            // Let's also verify if we can make a basic ICO.
-            // We'll skip complex ICO encoding for now and focus on the standard PNG set which is modern standard.
-
             const content = await zip.generateAsync({ type: 'blob' });
-
+            const url = URL.createObjectURL(content);
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(content);
+            link.href = url;
             link.download = 'favicons.zip';
             link.click();
-        } catch (error) {
-            console.error('Error generating favicons:', error);
+            URL.revokeObjectURL(url);
         } finally {
             setIsGenerating(false);
         }
@@ -81,65 +80,80 @@ export default function FaviconCreator() {
     return (
         <ToolLayout
             title="Favicon Creator"
-            description="Generate a complete set of favicons from a single image"
+            description="Generate a complete favicon kit from a single image"
             category="image"
         >
-            <div className="max-w-4xl mx-auto space-y-12 text-center">
-
-                {/* Upload Area */}
-                <div className="space-y-6">
-                    <div className={`border-4 border-dashed rounded-3xl p-12 transition-all duration-300 ${image ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-text-secondary'}`}>
-                        {image ? (
-                            <div className="relative inline-block group">
-                                <img src={image} alt="Preview" className="max-h-64 rounded-xl shadow-lg" />
-                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
-                                    <label className="btn btn-secondary cursor-pointer">
-                                        Change Image
+            <div className="mx-auto max-w-5xl space-y-6">
+                <ToolPanel title="Source image" description="Use a square PNG or SVG-style logo for the cleanest small icons.">
+                    {image ? (
+                        <div className="grid gap-4 md:grid-cols-[240px_1fr]">
+                            <div className="flex min-h-56 items-center justify-center rounded-lg border bg-muted/20 p-4">
+                                <Image
+                                    src={image}
+                                    alt="Selected favicon source"
+                                    width={220}
+                                    height={220}
+                                    className="max-h-56 w-auto rounded-md object-contain"
+                                    unoptimized
+                                />
+                            </div>
+                            <div className="flex flex-col justify-between gap-4">
+                                <div>
+                                    <p className="font-medium text-foreground">{fileName || 'Selected image'}</p>
+                                    <p className="mt-1 text-sm text-muted-foreground">
+                                        The generated ZIP includes browser, Apple touch, and Android icon sizes.
+                                    </p>
+                                </div>
+                                <ToolActionBar>
+                                    <label className="btn btn-secondary cursor-pointer gap-2">
+                                        <Upload className="h-4 w-4" />
+                                        Change image
                                         <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
                                     </label>
-                                </div>
+                                    <button onClick={generateFavicons} disabled={isGenerating} className="btn btn-primary gap-2">
+                                        <Package className="h-4 w-4" />
+                                        {isGenerating ? 'Generating' : 'Download kit'}
+                                    </button>
+                                </ToolActionBar>
                             </div>
-                        ) : (
-                            <label className="cursor-pointer flex flex-col items-center justify-center gap-4 h-full">
-                                <span className="text-8xl">💎</span>
-                                <span className="text-2xl font-bold text-foreground">Upload your Logo</span>
-                                <span className="text-muted-foreground">Recommended: 512x512 PNG</span>
-                                <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
-                            </label>
-                        )}
-                    </div>
-                </div>
+                        </div>
+                    ) : (
+                        <ToolUploadZone
+                            title="Choose an image"
+                            description="Recommended: 512x512 PNG. Files stay in your browser."
+                            icon={<ImageIcon className="h-8 w-8" />}
+                            inputProps={{ type: 'file', accept: 'image/*', onChange: handleFileUpload }}
+                        />
+                    )}
+                </ToolPanel>
 
-                {/* Preview Grid */}
-                {image && (
-                    <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
-                        <h3 className="text-2xl font-bold text-foreground mb-6">Preview Generated Icons</h3>
-                        <div className="flex flex-wrap justify-center gap-8 items-end bg-muted/30 p-8 rounded-2xl border border-border">
+                <ToolPanel title="Generated sizes">
+                    {image ? (
+                        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
                             {SIZES.map((item) => (
-                                <div key={item.size} className="flex flex-col items-center gap-3">
-                                    <div className="bg-white p-2 rounded-lg shadow-sm border border-border/50">
-                                        <img src={image} alt="" style={{ width: item.size, height: item.size }} />
+                                <ToolResultCard key={item.size} title={`${item.size}x${item.size}`} meta={item.name}>
+                                    <div className="flex h-24 items-center justify-center rounded-md border bg-background p-3">
+                                        <Image
+                                            src={image}
+                                            alt=""
+                                            width={item.size}
+                                            height={item.size}
+                                            className="object-contain"
+                                            style={{ width: item.size, height: item.size }}
+                                            unoptimized
+                                        />
                                     </div>
-                                    <span className="text-xs text-muted-foreground font-mono">{item.size}x{item.size}</span>
-                                </div>
+                                </ToolResultCard>
                             ))}
                         </div>
-                    </div>
-                )}
-
-                {/* Action */}
-                <div className="flex justify-center">
-                    <button
-                        onClick={generateFavicons}
-                        disabled={!image || isGenerating}
-                        className={`bg-primary hover:bg-primary-dark text-white font-bold py-4 px-16 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-xl flex items-center gap-3 ${(!image || isGenerating) ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''
-                            }`}
-                    >
-                        <span>📦</span>
-                        {isGenerating ? 'Generating...' : 'Download Favicon Kit'}
-                    </button>
-                </div>
-
+                    ) : (
+                        <ToolEmptyState
+                            icon={<Download className="h-8 w-8" />}
+                            title="No favicon preview yet"
+                            description="Upload an image to preview each generated icon size."
+                        />
+                    )}
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

@@ -73,7 +73,7 @@ export default function BMICalculator() {
                         <div className="flex min-h-72 flex-col items-center justify-center rounded-md border bg-muted/30 p-6 text-center">
                             {bmi ? (
                                 <div className="animate-fade-in">
-                                    <div className="text-sm font-medium uppercase tracking-wide text-muted-foreground">Your BMI</div>
+                                    <div className="text-sm font-medium text-muted-foreground">Your BMI</div>
                                     <div className="mt-2 text-7xl font-semibold text-foreground">{bmi}</div>
                                     <div className={`mt-4 text-2xl font-semibold ${categoryClass}`}>{category}</div>
                                 </div>

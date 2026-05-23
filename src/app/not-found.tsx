@@ -4,14 +4,14 @@ import { categories, getToolsByCategory } from '@/lib/tools';
 
 export default function NotFound() {
     return (
-        <div className="min-h-[calc(100vh-3.5rem)] bg-muted/30">
+        <div className="min-h-[calc(100dvh-3.5rem)] bg-muted/20">
             <div className="container py-16">
                 <div className="mx-auto max-w-3xl text-center">
-                    <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">404</p>
-                    <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+                    <p className="text-sm font-semibold text-muted-foreground">404</p>
+                    <h1 className="mt-3 text-3xl font-semibold text-foreground text-balance sm:text-4xl">
                         This tool page does not exist
                     </h1>
-                    <p className="mt-4 text-lg text-muted-foreground">
+                    <p className="mt-4 text-base leading-7 text-muted-foreground text-pretty">
                         The link may be outdated, or the utility may have moved into another category.
                     </p>
                     <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -31,7 +31,7 @@ export default function NotFound() {
                         <Link
                             key={category.id}
                             href={`/tools/${category.id}`}
-                            className="group rounded-lg border bg-card p-5 transition-colors hover:border-primary/40"
+                            className="group rounded-lg border bg-card p-5 shadow-sm transition-colors hover:border-primary/40"
                         >
                             <div className="flex items-center justify-between gap-3">
                                 <div>

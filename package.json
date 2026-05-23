@@ -11,8 +11,8 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@types/js-yaml": "^4.0.9",
+    "clsx": "^2.1.1",
     "diff": "^8.0.2",
-    "framer-motion": "^12.38.0",
     "js-yaml": "^4.1.1",
     "jszip": "^3.10.1",
     "lucide-react": "^1.14.0",
@@ -23,6 +23,7 @@
     "pdfjs-dist": "^5.4.394",
     "react": "^18",
     "react-dom": "^18",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.1.18",
     "uuid": "^13.0.0",
     "xml-formatter": "^3.6.7"

@@ -13,6 +13,7 @@ import {
     ShieldCheck,
 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPanel } from '@/components/tools/ToolPrimitives';
 
 interface JWTHeader {
     alg?: string;
@@ -287,16 +288,8 @@ export default function JWTDecoder() {
             category="security"
         >
             <div className="max-w-6xl mx-auto space-y-6">
-                <section className="rounded-lg border bg-card p-5 sm:p-6">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <label htmlFor="input" className="text-lg font-semibold text-foreground">
-                                JWT Token
-                            </label>
-                            <p className="text-sm text-muted-foreground">
-                                Paste a compact JWS token with header, payload, and signature segments.
-                            </p>
-                        </div>
+                <ToolPanel title="JWT token" description="Paste a compact JWS token with header, payload, and signature segments.">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
                         <button onClick={loadSample} className="btn btn-secondary gap-2 self-start">
                             <Play className="h-4 w-4" />
                             Load sample
@@ -340,7 +333,7 @@ export default function JWTDecoder() {
                             </button>
                         </div>
                     </div>
-                </section>
+                </ToolPanel>
 
                 {error && (
                     <div className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">

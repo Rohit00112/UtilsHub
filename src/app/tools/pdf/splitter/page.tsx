@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Download, FileArchive, FileText, Scissors, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolEmptyState, ToolField, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
 
 type SplitMode = 'ranges' | 'pages';
 
@@ -161,24 +162,18 @@ export default function PDFSplitter() {
     return (
         <ToolLayout title="PDF Splitter" description="Split a PDF into page ranges or individual files" category="pdf">
             <div className="mx-auto max-w-5xl space-y-6">
-                <section className="rounded-lg border bg-card p-5 sm:p-6">
-                    <label className="block text-sm font-medium text-muted-foreground">PDF file</label>
-                    <label className="mt-3 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 px-6 py-10 text-center transition-colors hover:border-primary/40">
-                        <Upload className="mb-3 h-8 w-8 text-muted-foreground" />
-                        <span className="font-medium text-foreground">{file ? file.name : 'Choose a PDF file'}</span>
-                        <span className="mt-1 text-sm text-muted-foreground">
-                            {file ? `${pageCount} pages, ${formatBytes(file.size)}` : 'Files stay in your browser'}
-                        </span>
-                        <input type="file" accept="application/pdf,.pdf" onChange={handleFileChange} className="hidden" />
-                    </label>
-                </section>
+                <ToolPanel title="PDF file">
+                    <ToolUploadZone
+                        title={file ? file.name : 'Choose a PDF file'}
+                        description={file ? `${pageCount} pages, ${formatBytes(file.size)}` : 'Files stay in your browser'}
+                        icon={<Upload className="h-8 w-8" />}
+                        inputProps={{ type: 'file', accept: 'application/pdf,.pdf', onChange: handleFileChange }}
+                    />
+                </ToolPanel>
 
-                <section className="rounded-lg border bg-card p-5 sm:p-6">
+                <ToolPanel title="Split settings">
                     <div className="grid gap-4 lg:grid-cols-[220px_1fr_auto]">
-                        <div>
-                            <label htmlFor="mode" className="mb-2 block text-sm font-medium text-muted-foreground">
-                                Split mode
-                            </label>
+                        <ToolField label="Split mode" htmlFor="mode">
                             <select
                                 id="mode"
                                 value={mode}
@@ -188,12 +183,9 @@ export default function PDFSplitter() {
                                 <option value="ranges">Custom ranges</option>
                                 <option value="pages">Every page</option>
                             </select>
-                        </div>
+                        </ToolField>
 
-                        <div>
-                            <label htmlFor="ranges" className="mb-2 block text-sm font-medium text-muted-foreground">
-                                Page ranges
-                            </label>
+                        <ToolField label="Page ranges" htmlFor="ranges">
                             <input
                                 id="ranges"
                                 value={ranges}
@@ -202,7 +194,7 @@ export default function PDFSplitter() {
                                 className="input h-10"
                                 placeholder="1-3, 5, 8-10"
                             />
-                        </div>
+                        </ToolField>
 
                         <div className="flex items-end">
                             <button onClick={splitPdf} disabled={!file || isProcessing} className="btn btn-primary h-10 gap-2">
@@ -212,33 +204,18 @@ export default function PDFSplitter() {
                         </div>
                     </div>
 
-                    {error && (
-                        <p className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-                            {error}
-                        </p>
-                    )}
-                </section>
+                    {error && <ToolStatus tone="error" className="mt-4">{error}</ToolStatus>}
+                </ToolPanel>
 
-                <section className="rounded-lg border bg-card">
-                    <div className="flex flex-col gap-3 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <h3 className="text-lg font-semibold text-foreground">Split files</h3>
-                            <p className="text-sm text-muted-foreground">
-                                {results.length > 0 ? `${results.length} PDFs ready to download.` : 'Split results will appear here.'}
-                            </p>
-                        </div>
-                        <button onClick={downloadZip} disabled={results.length === 0} className="btn btn-secondary gap-2">
-                            <FileArchive className="h-4 w-4" />
-                            Download ZIP
-                        </button>
-                    </div>
-
+                <ToolPanel
+                    title="Split files"
+                    description={results.length > 0 ? `${results.length} PDFs ready to download.` : 'Split results will appear here.'}
+                    actions={<button onClick={downloadZip} disabled={results.length === 0} className="btn btn-secondary gap-2"><FileArchive className="h-4 w-4" />Download ZIP</button>}
+                >
                     {results.length === 0 ? (
-                        <div className="p-8 text-center text-sm text-muted-foreground">
-                            Upload a PDF and choose how to split it.
-                        </div>
+                        <ToolEmptyState title="No split files" description="Upload a PDF and choose how to split it." />
                     ) : (
-                        <div className="divide-y">
+                        <div className="divide-y rounded-md border">
                             {results.map((result) => (
                                 <div key={result.url} className="grid gap-3 p-4 md:grid-cols-[1fr_auto] md:items-center">
                                     <div className="min-w-0">
@@ -258,7 +235,7 @@ export default function PDFSplitter() {
                             ))}
                         </div>
                     )}
-                </section>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

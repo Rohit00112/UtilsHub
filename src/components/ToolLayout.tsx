@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight, Home, ShieldCheck } from 'lucide-react';
 import { getCategoryById } from '@/lib/tools';
 
 interface ToolLayoutProps {
@@ -13,12 +13,10 @@ export default function ToolLayout({ children, title, description, category }: T
     const categoryInfo = getCategoryById(category);
     
     return (
-        <div className="flex flex-col min-h-[calc(100vh-3.5rem)] bg-muted/30">
-            {/* Header / Hero Area for the Tool */}
-            <div className="bg-background border-b border-border/40">
-                <div className="container py-10">
-                    {/* Breadcrumb */}
-                    <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
+        <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-muted/20">
+            <div className="border-b border-border/60 bg-background">
+                <div className="container py-8">
+                    <nav className="mb-5 flex min-w-0 items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
                         <Link href="/" className="hover:text-foreground transition-colors flex items-center gap-1">
                             <Home className="h-3.5 w-3.5" />
                             <span>Home</span>
@@ -31,28 +29,28 @@ export default function ToolLayout({ children, title, description, category }: T
                         <span className="text-foreground font-medium truncate">{title}</span>
                     </nav>
 
-                    <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-                        {title}
-                    </h1>
-                    <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                        {description}
-                    </p>
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                        <div className="max-w-3xl">
+                            <h1 className="text-3xl font-semibold text-foreground text-balance sm:text-4xl">{title}</h1>
+                            <p className="mt-3 text-base leading-7 text-muted-foreground text-pretty">{description}</p>
+                        </div>
+                        <div className="flex items-center gap-2 rounded-md border bg-muted/20 px-3 py-2 text-sm text-muted-foreground">
+                            <ShieldCheck className="h-4 w-4 text-foreground" />
+                            Browser-local processing
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Main Content Area */}
-            <main className="flex-1 py-12">
+            <main className="flex-1 py-8 sm:py-10">
                 <div className="container">
-                    <div className="animate-fade-in bg-card rounded-xl border shadow-sm p-6 sm:p-10">
+                    <div className="animate-fade-in">
                         {children}
                     </div>
-                    
-                    {/* Privacy Notice */}
-                    <div className="mt-8 animate-fade-in text-center">
-                        <p className="text-xs text-muted-foreground">
-                            Privacy Note: This tool processes your data locally in your browser. Nothing is uploaded to our servers.
-                        </p>
-                    </div>
+
+                    <p className="mt-6 text-center text-xs text-muted-foreground text-pretty">
+                        Your files and text stay on this device. UtilsHub does not upload tool input to a server.
+                    </p>
                 </div>
             </main>
         </div>

@@ -52,7 +52,7 @@ export default function WordCounter() {
                         {stats.map((stat) => (
                             <div key={stat.label} className="rounded-md border bg-muted/30 p-4 text-center">
                                 <div className="text-2xl font-semibold text-foreground">{stat.value}</div>
-                                <div className="mt-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">{stat.label}</div>
+                                <div className="mt-1 text-xs font-medium text-muted-foreground">{stat.label}</div>
                             </div>
                         ))}
                     </div>

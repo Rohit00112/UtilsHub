@@ -71,7 +71,7 @@ function AgeMetric({ label, value }: { label: string; value: number }) {
     return (
         <div className="rounded-lg border bg-card p-6 text-center">
             <div className="text-5xl font-semibold text-foreground">{value}</div>
-            <div className="mt-2 text-sm font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
+            <div className="mt-2 text-sm font-medium text-muted-foreground">{label}</div>
         </div>
     );
 }

@@ -16,7 +16,6 @@ interface Unit {
 
 interface CategoryInfo {
     name: string;
-    icon: string;
     baseUnit: string;
     units: Unit[];
 }
@@ -24,7 +23,6 @@ interface CategoryInfo {
 const categories: Record<UnitCategory, CategoryInfo> = {
     length: {
         name: 'Length',
-        icon: '📏',
         baseUnit: 'meter',
         units: [
             { name: 'Kilometer', symbol: 'km', toBase: (v) => v * 1000, fromBase: (v) => v / 1000 },
@@ -40,7 +38,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     weight: {
         name: 'Weight',
-        icon: '⚖️',
         baseUnit: 'kilogram',
         units: [
             { name: 'Tonne', symbol: 't', toBase: (v) => v * 1000, fromBase: (v) => v / 1000 },
@@ -54,7 +51,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     temperature: {
         name: 'Temperature',
-        icon: '🌡️',
         baseUnit: 'celsius',
         units: [
             { name: 'Celsius', symbol: '°C', toBase: (v) => v, fromBase: (v) => v },
@@ -64,7 +60,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     area: {
         name: 'Area',
-        icon: '📐',
         baseUnit: 'square meter',
         units: [
             { name: 'Square Kilometer', symbol: 'km²', toBase: (v) => v * 1000000, fromBase: (v) => v / 1000000 },
@@ -80,7 +75,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     volume: {
         name: 'Volume',
-        icon: '🧪',
         baseUnit: 'liter',
         units: [
             { name: 'Cubic Meter', symbol: 'm³', toBase: (v) => v * 1000, fromBase: (v) => v / 1000 },
@@ -98,7 +92,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     time: {
         name: 'Time',
-        icon: '⏱️',
         baseUnit: 'second',
         units: [
             { name: 'Year', symbol: 'yr', toBase: (v) => v * 31536000, fromBase: (v) => v / 31536000 },
@@ -115,7 +108,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     speed: {
         name: 'Speed',
-        icon: '🚀',
         baseUnit: 'meter per second',
         units: [
             { name: 'Meter per Second', symbol: 'm/s', toBase: (v) => v, fromBase: (v) => v },
@@ -129,7 +121,6 @@ const categories: Record<UnitCategory, CategoryInfo> = {
     },
     data: {
         name: 'Data',
-        icon: '💾',
         baseUnit: 'byte',
         units: [
             { name: 'Bit', symbol: 'b', toBase: (v) => v / 8, fromBase: (v) => v * 8 },

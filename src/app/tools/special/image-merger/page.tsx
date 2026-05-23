@@ -2,7 +2,9 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import NextImage from 'next/image';
+import { ChevronDown, ChevronUp, Download, ImagePlus, X } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolEmptyState, ToolField, ToolIconButton, ToolPanel, ToolUploadZone } from '@/components/tools/ToolPrimitives';
 
 interface ImageItem {
     id: string;
@@ -193,25 +195,23 @@ export default function ImageMerger() {
             description="Combine multiple images into a single file with custom layouts"
             category="special"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="mx-auto max-w-6xl space-y-6">
                 {/* Controls */}
-                <div className="bg-card border-2 border-border rounded-lg p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                        <div>
-                            <label className="block text-sm font-medium text-muted-foreground mb-2">Layout</label>
+                <ToolPanel title="Merge settings">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <ToolField label="Layout">
                             <select
                                 value={layout}
-                                onChange={(e) => setLayout(e.target.value as any)}
+                                onChange={(e) => setLayout(e.target.value as 'vertical' | 'horizontal' | 'grid')}
                                 className="input w-full"
                             >
                                 <option value="vertical">Vertical</option>
                                 <option value="horizontal">Horizontal</option>
                                 <option value="grid">Grid</option>
                             </select>
-                        </div>
+                        </ToolField>
                         {layout === 'grid' && (
-                            <div>
-                                <label className="block text-sm font-medium text-muted-foreground mb-2">Columns</label>
+                            <ToolField label="Columns">
                                 <input
                                     type="number"
                                     min="1"
@@ -220,10 +220,9 @@ export default function ImageMerger() {
                                     onChange={(e) => setColumns(Number(e.target.value))}
                                     className="input w-full"
                                 />
-                            </div>
+                            </ToolField>
                         )}
-                        <div>
-                            <label className="block text-sm font-medium text-muted-foreground mb-2">Gap (px)</label>
+                        <ToolField label="Gap (px)">
                             <input
                                 type="number"
                                 min="0"
@@ -231,9 +230,8 @@ export default function ImageMerger() {
                                 onChange={(e) => setGap(Number(e.target.value))}
                                 className="input w-full"
                             />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-muted-foreground mb-2">Background</label>
+                        </ToolField>
+                        <ToolField label="Background">
                             <div className="flex gap-2">
                                 <input
                                     type="color"
@@ -248,34 +246,31 @@ export default function ImageMerger() {
                                     className="input flex-1"
                                 />
                             </div>
-                        </div>
+                        </ToolField>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 justify-between items-center border-t border-border pt-6">
-                        <label className="btn btn-secondary cursor-pointer">
-                            <span>Add Images</span>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                multiple
-                                onChange={handleFileUpload}
-                                className="hidden"
-                            />
-                        </label>
+                    <div className="mt-5 grid gap-4 border-t border-border pt-5 md:grid-cols-[1fr_auto] md:items-center">
+                        <ToolUploadZone
+                            title="Add images"
+                            description={`${images.length} selected`}
+                            icon={<ImagePlus className="h-8 w-8" />}
+                            inputProps={{ type: 'file', accept: 'image/*', multiple: true, onChange: handleFileUpload }}
+                            className="py-5"
+                        />
                         <button
                             onClick={downloadImage}
                             disabled={images.length === 0}
-                            className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="btn btn-primary gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
+                            <Download className="h-4 w-4" />
                             Download Merged Image
                         </button>
                     </div>
-                </div>
+                </ToolPanel>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                     {/* Image List */}
-                    <div className="lg:col-span-1 bg-card border-2 border-border rounded-lg p-4 h-fit max-h-[600px] overflow-y-auto">
-                        <h3 className="text-lg font-semibold text-foreground mb-4">Images ({images.length})</h3>
+                    <ToolPanel title={`Images (${images.length})`} className="h-fit max-h-[600px] overflow-y-auto lg:col-span-1">
                         <div className="space-y-3">
                             {images.map((img, index) => (
                                 <div key={img.id} className="flex items-center gap-3 bg-muted/30 p-2 rounded border border-border group">
@@ -291,30 +286,35 @@ export default function ImageMerger() {
                                         <p className="text-sm text-foreground truncate">{img.file.name}</p>
                                         <p className="text-xs text-muted-foreground">{img.width}x{img.height}</p>
                                     </div>
-                                    <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button onClick={() => moveImage(index, 'up')} disabled={index === 0} className="text-muted-foreground hover:text-primary disabled:opacity-30">↑</button>
-                                        <button onClick={() => moveImage(index, 'down')} disabled={index === images.length - 1} className="text-muted-foreground hover:text-primary disabled:opacity-30">↓</button>
+                                    <div className="flex flex-col gap-1">
+                                        <ToolIconButton onClick={() => moveImage(index, 'up')} disabled={index === 0} className="h-7 w-7" aria-label="Move image up">
+                                            <ChevronUp className="h-3.5 w-3.5" />
+                                        </ToolIconButton>
+                                        <ToolIconButton onClick={() => moveImage(index, 'down')} disabled={index === images.length - 1} className="h-7 w-7" aria-label="Move image down">
+                                            <ChevronDown className="h-3.5 w-3.5" />
+                                        </ToolIconButton>
                                     </div>
-                                    <button onClick={() => removeImage(img.id)} className="text-muted-foreground hover:text-red-500 p-1">✕</button>
+                                    <ToolIconButton onClick={() => removeImage(img.id)} className="h-8 w-8 hover:text-destructive" aria-label="Remove image">
+                                        <X className="h-4 w-4" />
+                                    </ToolIconButton>
                                 </div>
                             ))}
                             {images.length === 0 && (
-                                <p className="text-muted-foreground text-center py-8 italic">No images added</p>
+                                <ToolEmptyState title="No images added" description="Add images to build a merged output." />
                             )}
                         </div>
-                    </div>
+                    </ToolPanel>
 
                     {/* Preview */}
-                    <div className="lg:col-span-2 bg-muted/30 border-2 border-border rounded-lg p-4 overflow-auto flex items-center justify-center min-h-[400px]">
+                    <ToolPanel title="Preview" className="lg:col-span-2">
+                        <div className="flex min-h-[400px] items-center justify-center overflow-auto rounded-lg border bg-muted/20 p-4">
                         {images.length > 0 ? (
                             <canvas ref={canvasRef} className="max-w-full shadow-lg" />
                         ) : (
-                            <div className="text-center text-muted-foreground">
-                                <div className="text-sm font-medium">No preview available</div>
-                                <p>Preview will appear here</p>
-                            </div>
+                            <ToolEmptyState title="No preview available" description="Preview will appear here after images are added." />
                         )}
-                    </div>
+                        </div>
+                    </ToolPanel>
                 </div>
             </div>
         </ToolLayout>
