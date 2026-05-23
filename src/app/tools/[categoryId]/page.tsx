@@ -73,7 +73,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
               </div>
               <h3 className="text-lg font-bold mb-1">More Coming Soon</h3>
               <p className="text-sm text-muted-foreground">
-                We're constantly adding new tools to the {category.name} suite.
+                We&apos;re constantly adding new tools to the {category.name} suite.
               </p>
             </div>
           </div>

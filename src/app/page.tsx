@@ -96,7 +96,7 @@ export default function Home() {
                                 <Zap className="h-6 w-6 text-primary" />
                             </div>
                             <h3 className="text-lg font-bold mb-2">Lightning Fast</h3>
-                            <p className="text-sm text-muted-foreground">Instant results powered by Web Workers and your browser's local processing engine.</p>
+                            <p className="text-sm text-muted-foreground">Instant results powered by Web Workers and your browser&apos;s local processing engine.</p>
                         </div>
                         <div className="flex flex-col items-center text-center">
                             <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
