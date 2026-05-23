@@ -54,6 +54,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
               </p>
             </div>
           </div>
+          {category.longDescription && (
+            <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground text-pretty">
+              {category.longDescription}
+            </p>
+          )}
         </div>
       </div>
 
@@ -79,7 +84,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                 </p>
                 <div className="mt-auto pt-6">
                   <span className="text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-                    Open Tool
+                    Open {tool.name}
                   </span>
                 </div>
               </Link>

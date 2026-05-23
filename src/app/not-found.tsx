@@ -43,7 +43,7 @@ export default function NotFound() {
                                 </span>
                             </div>
                             <div className="mt-4 flex items-center gap-1 text-sm font-medium text-muted-foreground group-hover:text-foreground">
-                                Browse category
+                                Browse {category.name}
                                 <ArrowRight className="h-4 w-4" />
                             </div>
                         </Link>

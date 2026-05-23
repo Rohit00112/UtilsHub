@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle2, LockKeyhole, Search, ShieldCheck, Zap } from 
 import { CategoryIcon } from '@/components/CategoryIcon';
 import SearchLauncher from '@/components/SearchLauncher';
 import { categories, getAllActiveTools, getToolsByCategory } from '@/lib/tools';
-import { createMetadata, websiteJsonLd } from '@/lib/seo';
+import { createMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
 export const metadata = createMetadata({});
 
@@ -17,7 +17,8 @@ const commonToolIds = [
 ];
 
 export default function Home() {
-    const jsonLd = websiteJsonLd();
+    const websiteLd = websiteJsonLd();
+    const orgLd = organizationJsonLd();
     const activeTools = getAllActiveTools();
     const commonTools = commonToolIds
         .map((id) => activeTools.find((tool) => tool.id === id))
@@ -27,7 +28,11 @@ export default function Home() {
         <div className="flex flex-col bg-background">
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
             />
 
             <section className="border-b border-border/60">

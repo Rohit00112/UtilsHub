@@ -11,6 +11,10 @@ export default function Footer() {
             Browser-local utilities for everyday work.
           </p>
           <p className="text-center text-sm leading-6 text-muted-foreground md:text-left">
+            <Link href="/about" className="font-medium underline underline-offset-4">
+              About
+            </Link>
+            {' · '}
             Built by{' '}
             <Link
               href="https://github.com/Rohit00112"
@@ -20,14 +24,14 @@ export default function Footer() {
             >
               Rohit
             </Link>
-            {' - '}
+            {' · '}
             <Link
               href="https://github.com/Rohit00112/UtilsHub"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              Source code
+              Source
             </Link>
           </p>
         </div>
