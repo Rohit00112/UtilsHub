@@ -46,7 +46,7 @@ export default function Home() {
                             Useful tools for everyday file, text, image, and developer work.
                         </h1>
                         <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground text-pretty">
-                            UtilsHub keeps common tasks fast and private. Format data, process files, generate secure values, and convert media without uploading your input.
+                            UtilsHub keeps common tasks fast and local. Format data, process files, generate secure values, and convert media without uploading your input to a server.
                         </p>
                         <div className="mt-6 max-w-xl">
                             <SearchLauncher label="Search 30+ tools by task or format" className="h-12 px-4" />

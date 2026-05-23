@@ -15,6 +15,7 @@ const inter = Inter({
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 
 export default function RootLayout({
     children,
@@ -35,6 +36,7 @@ export default function RootLayout({
                         <main className="flex-1">{children}</main>
                         <Footer />
                     </div>
+                    <CookieConsent />
                 </ThemeProvider>
             </body>
         </html>

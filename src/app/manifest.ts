@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'UtilsHub',
     short_name: 'UtilsHub',
-    description: 'Free browser-based utilities for PDF, image, text, security, calculators, and developer workflows.',
+    description: 'Free browser-based utilities for PDF, image, text, security, calculators, and developer workflows. Tool input is processed locally.',
     start_url: '/',
     scope: '/',
     display: 'standalone',

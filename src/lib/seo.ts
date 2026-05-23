@@ -11,7 +11,7 @@ import {
 
 export const siteName = 'UtilsHub';
 export const defaultDescription =
-  'Free browser-based tools for PDF, image, text, security, calculators, and developer workflows. Nothing is uploaded — every tool runs on your device.';
+  'Free browser-based tools for PDF, image, text, security, calculators, and developer workflows. Tool input is processed locally in your browser, not uploaded to a server.';
 export const defaultKeywords = [
   'online tools',
   'free utilities',
@@ -230,6 +230,7 @@ export function allSitemapEntries() {
   return [
     { url: absoluteUrl('/'), lastModified: now, priority: 1 },
     { url: absoluteUrl('/about'), lastModified: now, priority: 0.5 },
+    { url: absoluteUrl('/privacy'), lastModified: now, priority: 0.3 },
     ...categories.map((category) => ({
       url: absoluteUrl(categoryPath(category)),
       lastModified: now,

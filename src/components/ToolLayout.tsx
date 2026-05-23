@@ -49,7 +49,7 @@ export default function ToolLayout({ children, title, description, category }: T
                     </div>
 
                     <p className="mt-6 text-center text-xs text-muted-foreground text-pretty">
-                        Your files and text stay on this device. UtilsHub does not upload tool input to a server.
+                        Tool input is processed in your browser and is not uploaded to a UtilsHub server.
                     </p>
                 </div>
             </main>

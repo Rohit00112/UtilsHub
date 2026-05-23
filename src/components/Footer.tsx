@@ -15,6 +15,10 @@ export default function Footer() {
               About
             </Link>
             {' · '}
+            <Link href="/privacy" className="font-medium underline underline-offset-4">
+              Privacy
+            </Link>
+            {' · '}
             Built by{' '}
             <Link
               href="https://github.com/Rohit00112"

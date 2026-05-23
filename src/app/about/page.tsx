@@ -5,7 +5,7 @@ import { categories } from '@/lib/tools';
 
 export const metadata = createMetadata({
     title: 'About',
-    description: 'UtilsHub is a free collection of browser-based utility tools. No uploads, no tracking — every tool runs locally on your device.',
+    description: 'UtilsHub is a free collection of browser-based utility tools. Files stay on your device — every tool runs locally in your browser.',
     path: '/about',
 });
 
@@ -16,15 +16,17 @@ export default function AboutPage() {
                 <h1 className="text-4xl font-semibold text-foreground text-balance">About UtilsHub</h1>
                 <p className="mt-4 text-lg leading-8 text-muted-foreground text-pretty">
                     UtilsHub is a free collection of everyday utility tools that run entirely in your
-                    browser. There&apos;s no sign-up, no upload, no quota, and nothing is logged.
+                    browser. There&apos;s no sign-up, no upload, and no quota — your files and pasted
+                    text stay on your device.
                 </p>
 
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
                     <div className="rounded-lg border bg-card p-5">
                         <LockKeyhole className="h-5 w-5 text-muted-foreground" />
-                        <h2 className="mt-3 font-semibold text-foreground">Privacy by default</h2>
+                        <h2 className="mt-3 font-semibold text-foreground">Local processing</h2>
                         <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                            Processing happens locally. Files and pasted text never leave your device.
+                            Tool input is processed in your browser. Files and pasted text are not
+                            uploaded to a server.
                         </p>
                     </div>
                     <div className="rounded-lg border bg-card p-5">

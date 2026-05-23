@@ -7,8 +7,8 @@ UtilsHub is a high-performance web application featuring a collection of free on
 ## ✨ Features
 
 - **Standardized Toolkit**: Focused set of functional tools across 7 core categories
-- **100% Free**: No limits, no subscriptions, no data tracking
-- **Privacy First**: All processing happens client-side in your browser; your files never leave your device
+- **100% Free**: No limits, no subscriptions, no sign-up
+- **Local Processing**: Tool input is processed client-side in your browser; files are not uploaded to a UtilsHub server. (Note: the site uses Google AdSense, which sets cookies — see /privacy for details.)
 - **Lightning Fast**: Instant results powered by Next.js 15 and local browser APIs
 - **Fully Responsive**: Optimized for desktop, tablet, and mobile devices
 
