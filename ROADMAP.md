@@ -37,7 +37,7 @@ This roadmap outlines the systematic transformation of UtilsHub into a premium, 
 *Goal: Rank on search engines and finalize for public launch.*
 
 - [ ] **Dynamic SEO**: Per-page metadata and JSON-LD structured data.
-- [ ] **Performance Audit**: Lighthouse 95+ score across LCP and FID.
+- [x] **Performance Audit**: Lighthouse 95+ score across LCP and FID.
 - [ ] **Sitemap**: Automated generation and crawl optimization.
 - [ ] **Launch Details**: Custom 404, PWA support, and final micro-animations.
 

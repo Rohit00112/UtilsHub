@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import JSZip from 'jszip';
 import { Download, FileArchive, Image as ImageIcon, Maximize2, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 
@@ -219,6 +218,7 @@ export default function ImageResizer() {
     const downloadZip = async () => {
         if (resized.length === 0) return;
 
+        const { default: JSZip } = await import('jszip');
         const zip = new JSZip();
         resized.forEach((image) => zip.file(image.name, image.blob));
         const blob = await zip.generateAsync({ type: 'blob' });

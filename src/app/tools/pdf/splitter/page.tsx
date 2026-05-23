@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import JSZip from 'jszip';
 import { Download, FileArchive, FileText, Scissors, Upload } from 'lucide-react';
-import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '@/components/ToolLayout';
 
 type SplitMode = 'ranges' | 'pages';
@@ -91,6 +89,7 @@ export default function PDFSplitter() {
         if (!selected) return;
 
         try {
+            const { PDFDocument } = await import('pdf-lib');
             const sourcePdf = await PDFDocument.load(await selected.arrayBuffer());
             setFile(selected);
             setPageCount(sourcePdf.getPageCount());
@@ -111,6 +110,7 @@ export default function PDFSplitter() {
         setIsProcessing(true);
 
         try {
+            const { PDFDocument } = await import('pdf-lib');
             const sourcePdf = await PDFDocument.load(await file.arrayBuffer());
             const groups = mode === 'pages'
                 ? Array.from({ length: sourcePdf.getPageCount() }, (_, index) => [index + 1])
@@ -146,6 +146,7 @@ export default function PDFSplitter() {
     const downloadZip = async () => {
         if (results.length === 0) return;
 
+        const { default: JSZip } = await import('jszip');
         const zip = new JSZip();
         results.forEach((result) => {
             zip.file(result.name, result.bytes);
