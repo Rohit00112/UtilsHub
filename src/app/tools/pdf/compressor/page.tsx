@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Download, FileText, Gauge, Upload } from 'lucide-react';
-import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '@/components/ToolLayout';
 
 interface CompressionResult {
@@ -56,6 +55,7 @@ export default function PDFCompressor() {
         if (!selected) return;
 
         try {
+            const { PDFDocument } = await import('pdf-lib');
             const pdfDoc = await PDFDocument.load(await selected.arrayBuffer());
             setFile(selected);
             setPageCount(pdfDoc.getPageCount());
@@ -75,6 +75,7 @@ export default function PDFCompressor() {
         setIsProcessing(true);
 
         try {
+            const { PDFDocument } = await import('pdf-lib');
             const sourceBytes = await file.arrayBuffer();
             const pdfDoc = await PDFDocument.load(sourceBytes);
             pdfDoc.setProducer('UtilsHub PDF Compressor');
