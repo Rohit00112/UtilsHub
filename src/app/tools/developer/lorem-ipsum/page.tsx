@@ -104,10 +104,10 @@ export default function LoremIpsumGenerator() {
         >
             <div className="max-w-4xl mx-auto space-y-8">
                 {/* Controls */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                <div className="bg-card border-2 border-border rounded-lg p-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-2">Type</label>
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">Type</label>
                             <select
                                 value={mode}
                                 onChange={(e) => setMode(e.target.value as any)}
@@ -119,7 +119,7 @@ export default function LoremIpsumGenerator() {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-2">
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">
                                 Count
                             </label>
                             <input
@@ -139,7 +139,7 @@ export default function LoremIpsumGenerator() {
                                     onChange={(e) => setStartWithLorem(e.target.checked)}
                                     className="w-4 h-4 rounded border-border text-primary focus:ring-primary/20"
                                 />
-                                <span className="text-text-primary text-sm">Start with &ldquo;Lorem ipsum&rdquo;</span>
+                                <span className="text-foreground text-sm">Start with &ldquo;Lorem ipsum&rdquo;</span>
                             </label>
                         </div>
                     </div>
@@ -154,22 +154,22 @@ export default function LoremIpsumGenerator() {
 
                 {/* Output */}
                 {generatedText && (
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                    <div className="bg-card border-2 border-border rounded-lg p-6">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-semibold text-text-primary">Generated Text</h3>
+                            <h3 className="text-lg font-semibold text-foreground">Generated Text</h3>
                             <button
                                 onClick={copyToClipboard}
                                 className="btn btn-secondary py-2 px-4"
                             >
-                                📋 Copy
+                                Copy
                             </button>
                         </div>
-                        <div className="p-4 bg-bg-tertiary rounded-lg border border-border">
-                            <p className="text-text-primary leading-relaxed whitespace-pre-wrap">
+                        <div className="p-4 bg-muted/30 rounded-lg border border-border">
+                            <p className="text-foreground leading-relaxed whitespace-pre-wrap">
                                 {generatedText}
                             </p>
                         </div>
-                        <div className="mt-3 text-sm text-text-secondary">
+                        <div className="mt-3 text-sm text-muted-foreground">
                             {mode === 'words' && `${generatedText.split(' ').length} words`}
                             {mode === 'sentences' && `${generatedText.split('. ').length} sentences`}
                             {mode === 'paragraphs' && `${generatedText.split('\n\n').length} paragraphs`}
@@ -180,10 +180,10 @@ export default function LoremIpsumGenerator() {
                 )}
 
                 {!generatedText && (
-                    <div className="bg-bg-secondary border-2 border-dashed border-border rounded-lg p-16 text-center">
+                    <div className="bg-card border-2 border-dashed border-border rounded-lg p-16 text-center">
                         <div className="text-8xl mb-6 opacity-20">📝</div>
-                        <h3 className="text-2xl font-bold text-text-primary mb-2">No Text Generated</h3>
-                        <p className="text-text-secondary">Click &ldquo;Generate Lorem Ipsum&rdquo; to create placeholder text</p>
+                        <h3 className="text-2xl font-bold text-foreground mb-2">No Text Generated</h3>
+                        <p className="text-muted-foreground">Click &ldquo;Generate Lorem Ipsum&rdquo; to create placeholder text</p>
                     </div>
                 )}
             </div>

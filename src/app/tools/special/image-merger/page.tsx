@@ -195,10 +195,10 @@ export default function ImageMerger() {
         >
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Controls */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
+                <div className="bg-card border-2 border-border rounded-lg p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-2">Layout</label>
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">Layout</label>
                             <select
                                 value={layout}
                                 onChange={(e) => setLayout(e.target.value as any)}
@@ -211,7 +211,7 @@ export default function ImageMerger() {
                         </div>
                         {layout === 'grid' && (
                             <div>
-                                <label className="block text-sm font-medium text-text-secondary mb-2">Columns</label>
+                                <label className="block text-sm font-medium text-muted-foreground mb-2">Columns</label>
                                 <input
                                     type="number"
                                     min="1"
@@ -223,7 +223,7 @@ export default function ImageMerger() {
                             </div>
                         )}
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-2">Gap (px)</label>
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">Gap (px)</label>
                             <input
                                 type="number"
                                 min="0"
@@ -233,7 +233,7 @@ export default function ImageMerger() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-2">Background</label>
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">Background</label>
                             <div className="flex gap-2">
                                 <input
                                     type="color"
@@ -253,7 +253,7 @@ export default function ImageMerger() {
 
                     <div className="flex flex-wrap gap-4 justify-between items-center border-t border-border pt-6">
                         <label className="btn btn-secondary cursor-pointer">
-                            <span>➕ Add Images</span>
+                            <span>Add Images</span>
                             <input
                                 type="file"
                                 accept="image/*"
@@ -267,50 +267,50 @@ export default function ImageMerger() {
                             disabled={images.length === 0}
                             className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            💾 Download Merged Image
+                            Download Merged Image
                         </button>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Image List */}
-                    <div className="lg:col-span-1 bg-bg-secondary border-2 border-border rounded-lg p-4 h-fit max-h-[600px] overflow-y-auto">
-                        <h3 className="text-lg font-semibold text-text-primary mb-4">Images ({images.length})</h3>
+                    <div className="lg:col-span-1 bg-card border-2 border-border rounded-lg p-4 h-fit max-h-[600px] overflow-y-auto">
+                        <h3 className="text-lg font-semibold text-foreground mb-4">Images ({images.length})</h3>
                         <div className="space-y-3">
                             {images.map((img, index) => (
-                                <div key={img.id} className="flex items-center gap-3 bg-bg-tertiary p-2 rounded border border-border group">
+                                <div key={img.id} className="flex items-center gap-3 bg-muted/30 p-2 rounded border border-border group">
                                     <NextImage
                                         src={img.url}
                                         alt="thumbnail"
                                         width={48}
                                         height={48}
-                                        className="w-12 h-12 object-cover rounded bg-bg-primary"
+                                        className="w-12 h-12 object-cover rounded bg-background"
                                         unoptimized
                                     />
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-sm text-text-primary truncate">{img.file.name}</p>
-                                        <p className="text-xs text-text-secondary">{img.width}x{img.height}</p>
+                                        <p className="text-sm text-foreground truncate">{img.file.name}</p>
+                                        <p className="text-xs text-muted-foreground">{img.width}x{img.height}</p>
                                     </div>
                                     <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button onClick={() => moveImage(index, 'up')} disabled={index === 0} className="text-text-secondary hover:text-primary disabled:opacity-30">↑</button>
-                                        <button onClick={() => moveImage(index, 'down')} disabled={index === images.length - 1} className="text-text-secondary hover:text-primary disabled:opacity-30">↓</button>
+                                        <button onClick={() => moveImage(index, 'up')} disabled={index === 0} className="text-muted-foreground hover:text-primary disabled:opacity-30">↑</button>
+                                        <button onClick={() => moveImage(index, 'down')} disabled={index === images.length - 1} className="text-muted-foreground hover:text-primary disabled:opacity-30">↓</button>
                                     </div>
-                                    <button onClick={() => removeImage(img.id)} className="text-text-secondary hover:text-red-500 p-1">✕</button>
+                                    <button onClick={() => removeImage(img.id)} className="text-muted-foreground hover:text-red-500 p-1">✕</button>
                                 </div>
                             ))}
                             {images.length === 0 && (
-                                <p className="text-text-tertiary text-center py-8 italic">No images added</p>
+                                <p className="text-muted-foreground text-center py-8 italic">No images added</p>
                             )}
                         </div>
                     </div>
 
                     {/* Preview */}
-                    <div className="lg:col-span-2 bg-bg-tertiary border-2 border-border rounded-lg p-4 overflow-auto flex items-center justify-center min-h-[400px]">
+                    <div className="lg:col-span-2 bg-muted/30 border-2 border-border rounded-lg p-4 overflow-auto flex items-center justify-center min-h-[400px]">
                         {images.length > 0 ? (
                             <canvas ref={canvasRef} className="max-w-full shadow-lg" />
                         ) : (
-                            <div className="text-center text-text-tertiary">
-                                <div className="text-6xl mb-4 opacity-20">🖼️</div>
+                            <div className="text-center text-muted-foreground">
+                                <div className="text-sm font-medium">No preview available</div>
                                 <p>Preview will appear here</p>
                             </div>
                         )}

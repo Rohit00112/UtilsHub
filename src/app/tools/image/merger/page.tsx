@@ -134,26 +134,25 @@ export default function ImageMerger() {
         >
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Controls */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 flex flex-wrap gap-8 items-end">
+                <div className="bg-card border-2 border-border rounded-lg p-6 flex flex-wrap gap-8 items-end">
                     <div className="space-y-2">
-                        <label className="block text-sm font-semibold text-text-secondary uppercase tracking-wider">Upload Images</label>
+                        <label className="block text-sm font-semibold text-muted-foreground uppercase tracking-wider">Upload Images</label>
                         <label className="btn btn-secondary cursor-pointer inline-flex items-center gap-2">
-                            <span>📂</span>
                             Add Images
                             <input type="file" multiple accept="image/*" onChange={handleFileUpload} className="hidden" />
                         </label>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="block text-sm font-semibold text-text-secondary uppercase tracking-wider">Layout</label>
-                        <div className="flex bg-bg-tertiary rounded-lg p-1 border border-border">
+                        <label className="block text-sm font-semibold text-muted-foreground uppercase tracking-wider">Layout</label>
+                        <div className="flex bg-muted/30 rounded-lg p-1 border border-border">
                             {(['vertical', 'horizontal', 'grid'] as LayoutMode[]).map(mode => (
                                 <button
                                     key={mode}
                                     onClick={() => setLayout(mode)}
                                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${layout === mode
                                             ? 'bg-primary text-white shadow-md'
-                                            : 'text-text-secondary hover:text-text-primary hover:bg-bg-secondary'
+                                            : 'text-muted-foreground hover:text-foreground hover:bg-card'
                                         }`}
                                 >
                                     {mode.charAt(0).toUpperCase() + mode.slice(1)}
@@ -163,7 +162,7 @@ export default function ImageMerger() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="block text-sm font-semibold text-text-secondary uppercase tracking-wider">Gap (px): {gap}</label>
+                        <label className="block text-sm font-semibold text-muted-foreground uppercase tracking-wider">Gap (px): {gap}</label>
                         <input
                             type="range"
                             min="0"
@@ -176,7 +175,7 @@ export default function ImageMerger() {
 
                     <button
                         onClick={() => setImages([])}
-                        className="text-text-secondary hover:text-red-500 text-sm font-semibold transition-colors"
+                        className="text-muted-foreground hover:text-red-500 text-sm font-semibold transition-colors"
                     >
                         Reset All
                     </button>
@@ -186,7 +185,7 @@ export default function ImageMerger() {
                 {images.length > 0 && (
                     <div className="flex gap-4 overflow-x-auto pb-4">
                         {images.map((img, idx) => (
-                            <div key={idx} className="relative group flex-shrink-0 w-24 h-24 border-2 border-border bg-bg-tertiary rounded-lg overflow-hidden">
+                            <div key={idx} className="relative group flex-shrink-0 w-24 h-24 border-2 border-border bg-muted/30 rounded-lg overflow-hidden">
                                 <img src={img.src} alt="" className="w-full h-full object-cover" />
                                 <button
                                     onClick={() => removeImage(idx)}
@@ -200,10 +199,9 @@ export default function ImageMerger() {
                 )}
 
                 {/* Preview / Canvas */}
-                <div className="bg-bg-tertiary border-2 border-dashed border-border rounded-xl p-8 flex items-center justify-center min-h-[400px] overflow-auto">
+                <div className="bg-muted/30 border-2 border-dashed border-border rounded-xl p-8 flex items-center justify-center min-h-[400px] overflow-auto">
                     {images.length === 0 ? (
-                        <div className="text-center text-text-tertiary">
-                            <div className="text-6xl mb-4">🖼️</div>
+                        <div className="text-center text-muted-foreground">
                             <p className="text-xl">Upload images to see preview</p>
                         </div>
                     ) : (
@@ -220,7 +218,7 @@ export default function ImageMerger() {
                         className={`bg-primary hover:bg-primary-dark text-white font-bold py-4 px-12 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-lg flex items-center gap-2 ${images.length === 0 ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''
                             }`}
                     >
-                        <span>💾</span> Download Merged Image
+                        Download Merged Image
                     </button>
                 </div>
             </div>

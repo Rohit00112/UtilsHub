@@ -88,7 +88,7 @@ export default function FaviconCreator() {
 
                 {/* Upload Area */}
                 <div className="space-y-6">
-                    <div className={`border-4 border-dashed rounded-3xl p-12 transition-all duration-300 ${image ? 'border-primary bg-primary/5' : 'border-border bg-bg-secondary hover:border-text-secondary'}`}>
+                    <div className={`border-4 border-dashed rounded-3xl p-12 transition-all duration-300 ${image ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-text-secondary'}`}>
                         {image ? (
                             <div className="relative inline-block group">
                                 <img src={image} alt="Preview" className="max-h-64 rounded-xl shadow-lg" />
@@ -102,8 +102,8 @@ export default function FaviconCreator() {
                         ) : (
                             <label className="cursor-pointer flex flex-col items-center justify-center gap-4 h-full">
                                 <span className="text-8xl">💎</span>
-                                <span className="text-2xl font-bold text-text-primary">Upload your Logo</span>
-                                <span className="text-text-secondary">Recommended: 512x512 PNG</span>
+                                <span className="text-2xl font-bold text-foreground">Upload your Logo</span>
+                                <span className="text-muted-foreground">Recommended: 512x512 PNG</span>
                                 <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
                             </label>
                         )}
@@ -113,14 +113,14 @@ export default function FaviconCreator() {
                 {/* Preview Grid */}
                 {image && (
                     <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
-                        <h3 className="text-2xl font-bold text-text-primary mb-6">Preview Generated Icons</h3>
-                        <div className="flex flex-wrap justify-center gap-8 items-end bg-bg-tertiary p-8 rounded-2xl border border-border">
+                        <h3 className="text-2xl font-bold text-foreground mb-6">Preview Generated Icons</h3>
+                        <div className="flex flex-wrap justify-center gap-8 items-end bg-muted/30 p-8 rounded-2xl border border-border">
                             {SIZES.map((item) => (
                                 <div key={item.size} className="flex flex-col items-center gap-3">
                                     <div className="bg-white p-2 rounded-lg shadow-sm border border-border/50">
                                         <img src={image} alt="" style={{ width: item.size, height: item.size }} />
                                     </div>
-                                    <span className="text-xs text-text-secondary font-mono">{item.size}x{item.size}</span>
+                                    <span className="text-xs text-muted-foreground font-mono">{item.size}x{item.size}</span>
                                 </div>
                             ))}
                         </div>

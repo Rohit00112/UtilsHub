@@ -54,17 +54,17 @@ export default function YamlJsonConverter() {
                     {/* YAML Section */}
                     <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                            <label className="text-text-secondary font-medium">YAML</label>
+                            <label className="text-muted-foreground font-medium">YAML</label>
                             <div className="space-x-2">
                                 <button 
                                     onClick={() => copyToClipboard(yamlInput)}
-                                    className="text-xs px-2 py-1 bg-bg-tertiary rounded hover:bg-bg-primary transition-colors text-text-secondary"
+                                    className="text-xs px-2 py-1 bg-muted/30 rounded hover:bg-background transition-colors text-muted-foreground"
                                 >
                                     Copy
                                 </button>
                                 <button 
                                     onClick={() => setYamlInput('')}
-                                    className="text-xs px-2 py-1 bg-bg-tertiary rounded hover:bg-bg-primary transition-colors text-text-secondary"
+                                    className="text-xs px-2 py-1 bg-muted/30 rounded hover:bg-background transition-colors text-muted-foreground"
                                 >
                                     Clear
                                 </button>
@@ -73,7 +73,7 @@ export default function YamlJsonConverter() {
                         <textarea
                             value={yamlInput}
                             onChange={(e) => setYamlInput(e.target.value)}
-                            className="w-full h-[500px] p-4 bg-bg-secondary border-2 border-border rounded-lg font-mono text-sm resize-none focus:border-primary focus:outline-none transition-colors"
+                            className="w-full h-[500px] p-4 bg-card border-2 border-border rounded-lg font-mono text-sm resize-none focus:border-primary focus:outline-none transition-colors"
                             placeholder="Paste your YAML here..."
                         />
                     </div>
@@ -81,17 +81,17 @@ export default function YamlJsonConverter() {
                     {/* JSON Section */}
                     <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                            <label className="text-text-secondary font-medium">JSON</label>
+                            <label className="text-muted-foreground font-medium">JSON</label>
                             <div className="space-x-2">
                                 <button 
                                     onClick={() => copyToClipboard(jsonInput)}
-                                    className="text-xs px-2 py-1 bg-bg-tertiary rounded hover:bg-bg-primary transition-colors text-text-secondary"
+                                    className="text-xs px-2 py-1 bg-muted/30 rounded hover:bg-background transition-colors text-muted-foreground"
                                 >
                                     Copy
                                 </button>
                                 <button 
                                     onClick={() => setJsonInput('')}
-                                    className="text-xs px-2 py-1 bg-bg-tertiary rounded hover:bg-bg-primary transition-colors text-text-secondary"
+                                    className="text-xs px-2 py-1 bg-muted/30 rounded hover:bg-background transition-colors text-muted-foreground"
                                 >
                                     Clear
                                 </button>
@@ -100,7 +100,7 @@ export default function YamlJsonConverter() {
                         <textarea
                             value={jsonInput}
                             onChange={(e) => setJsonInput(e.target.value)}
-                            className="w-full h-[500px] p-4 bg-bg-secondary border-2 border-border rounded-lg font-mono text-sm resize-none focus:border-primary focus:outline-none transition-colors"
+                            className="w-full h-[500px] p-4 bg-card border-2 border-border rounded-lg font-mono text-sm resize-none focus:border-primary focus:outline-none transition-colors"
                             placeholder="Paste your JSON here..."
                         />
                     </div>

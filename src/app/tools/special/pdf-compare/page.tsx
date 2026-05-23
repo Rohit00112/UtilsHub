@@ -91,13 +91,13 @@ export default function PdfCompare() {
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* File Upload Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                        <label className="block text-lg font-semibold text-text-primary mb-4">Original PDF</label>
+                    <div className="bg-card border-2 border-border rounded-lg p-6">
+                        <label className="block text-lg font-semibold text-foreground mb-4">Original PDF</label>
                         <input
                             type="file"
                             accept=".pdf"
                             onChange={(e) => handleFileChange(e, 'original')}
-                            className="block w-full text-sm text-text-secondary
+                            className="block w-full text-sm text-muted-foreground
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
                                 file:text-sm file:font-semibold
@@ -106,17 +106,17 @@ export default function PdfCompare() {
                                 cursor-pointer"
                         />
                         {originalFile && (
-                            <p className="mt-2 text-sm text-text-secondary">Selected: {originalFile.name}</p>
+                            <p className="mt-2 text-sm text-muted-foreground">Selected: {originalFile.name}</p>
                         )}
                     </div>
 
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                        <label className="block text-lg font-semibold text-text-primary mb-4">Modified PDF</label>
+                    <div className="bg-card border-2 border-border rounded-lg p-6">
+                        <label className="block text-lg font-semibold text-foreground mb-4">Modified PDF</label>
                         <input
                             type="file"
                             accept=".pdf"
                             onChange={(e) => handleFileChange(e, 'modified')}
-                            className="block w-full text-sm text-text-secondary
+                            className="block w-full text-sm text-muted-foreground
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
                                 file:text-sm file:font-semibold
@@ -125,7 +125,7 @@ export default function PdfCompare() {
                                 cursor-pointer"
                         />
                         {modifiedFile && (
-                            <p className="mt-2 text-sm text-text-secondary">Selected: {modifiedFile.name}</p>
+                            <p className="mt-2 text-sm text-muted-foreground">Selected: {modifiedFile.name}</p>
                         )}
                     </div>
                 </div>
@@ -134,7 +134,7 @@ export default function PdfCompare() {
                 {loading && (
                     <div className="text-center py-8">
                         <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
-                        <p className="mt-2 text-text-secondary">Extracting text and comparing...</p>
+                        <p className="mt-2 text-muted-foreground">Extracting text and comparing...</p>
                     </div>
                 )}
 
@@ -146,13 +146,13 @@ export default function PdfCompare() {
 
                 {/* Results Section */}
                 {diffResult.length > 0 && !loading && (
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                        <h3 className="text-lg font-semibold text-text-primary mb-4">Comparison Result</h3>
-                        <div className="bg-bg-tertiary p-6 rounded-lg font-mono text-sm leading-relaxed whitespace-pre-wrap break-words border border-border max-h-[600px] overflow-y-auto">
+                    <div className="bg-card border-2 border-border rounded-lg p-6">
+                        <h3 className="text-lg font-semibold text-foreground mb-4">Comparison Result</h3>
+                        <div className="bg-muted/30 p-6 rounded-lg font-mono text-sm leading-relaxed whitespace-pre-wrap break-words border border-border max-h-[600px] overflow-y-auto">
                             {diffResult.map((part, index) => {
                                 const color = part.added ? 'bg-green-500/20 text-green-700 dark:text-green-400' :
                                     part.removed ? 'bg-red-500/20 text-red-700 dark:text-red-400 decoration-wavy line-through decoration-red-400/50' :
-                                        'text-text-primary';
+                                        'text-foreground';
                                 return (
                                     <span key={index} className={`${color} px-0.5 rounded`}>
                                         {part.value}

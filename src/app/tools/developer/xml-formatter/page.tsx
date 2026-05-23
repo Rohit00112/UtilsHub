@@ -67,10 +67,10 @@ export default function XmlFormatter() {
                     {/* Input Section */}
                     <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                            <label className="text-text-secondary font-medium">Input XML</label>
+                            <label className="text-muted-foreground font-medium">Input XML</label>
                             <button
                                 onClick={() => setInput('')}
-                                className="text-xs px-2 py-1 bg-bg-tertiary rounded hover:bg-bg-primary transition-colors text-text-secondary"
+                                className="text-xs px-2 py-1 bg-muted/30 rounded hover:bg-background transition-colors text-muted-foreground"
                             >
                                 Clear
                             </button>
@@ -78,7 +78,7 @@ export default function XmlFormatter() {
                         <textarea
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            className="w-full h-[500px] p-4 bg-bg-secondary border-2 border-border rounded-lg font-mono text-sm resize-none focus:border-primary focus:outline-none transition-colors"
+                            className="w-full h-[500px] p-4 bg-card border-2 border-border rounded-lg font-mono text-sm resize-none focus:border-primary focus:outline-none transition-colors"
                             placeholder="Paste your XML here..."
                         />
                     </div>
@@ -86,10 +86,10 @@ export default function XmlFormatter() {
                     {/* Output Section */}
                     <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                            <label className="text-text-secondary font-medium">Formatted XML</label>
+                            <label className="text-muted-foreground font-medium">Formatted XML</label>
                             <button
                                 onClick={copyToClipboard}
-                                className="text-xs px-2 py-1 bg-bg-tertiary rounded hover:bg-bg-primary transition-colors text-text-secondary"
+                                className="text-xs px-2 py-1 bg-muted/30 rounded hover:bg-background transition-colors text-muted-foreground"
                             >
                                 Copy
                             </button>
@@ -97,17 +97,17 @@ export default function XmlFormatter() {
                         <textarea
                             value={output}
                             readOnly
-                            className="w-full h-[500px] p-4 bg-bg-tertiary border-2 border-border rounded-lg font-mono text-sm resize-none focus:outline-none"
+                            className="w-full h-[500px] p-4 bg-muted/30 border-2 border-border rounded-lg font-mono text-sm resize-none focus:outline-none"
                             placeholder="Formatted output will appear here..."
                         />
                     </div>
                 </div>
 
                 {/* Controls */}
-                <div className="bg-bg-secondary border border-border rounded-lg p-6">
+                <div className="bg-card border border-border rounded-lg p-6">
                     <div className="flex flex-wrap items-center gap-6">
                         <div className="flex items-center gap-2">
-                            <label className="text-sm text-text-secondary">Indentation:</label>
+                            <label className="text-sm text-muted-foreground">Indentation:</label>
                             <select
                                 value={options.indentation}
                                 onChange={(e) => setOptions({ ...options, indentation: e.target.value })}
@@ -125,9 +125,9 @@ export default function XmlFormatter() {
                                 id="collapse"
                                 checked={options.collapseContent}
                                 onChange={(e) => setOptions({ ...options, collapseContent: e.target.checked })}
-                                className="rounded border-border bg-bg-tertiary text-primary focus:ring-primary"
+                                className="rounded border-border bg-muted/30 text-primary focus:ring-primary"
                             />
-                            <label htmlFor="collapse" className="text-sm text-text-secondary">Collapse Content</label>
+                            <label htmlFor="collapse" className="text-sm text-muted-foreground">Collapse Content</label>
                         </div>
 
                         <div className="flex-1"></div>
