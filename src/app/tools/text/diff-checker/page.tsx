@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 import * as Diff from 'diff';
+import { Eraser, GitCompare } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel } from '@/components/tools/ToolPrimitives';
+
+const textareaClass = 'h-80 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function DiffChecker() {
     const [original, setOriginal] = useState('');
@@ -10,8 +14,7 @@ export default function DiffChecker() {
     const [diffResult, setDiffResult] = useState<Diff.Change[] | null>(null);
 
     const compareText = () => {
-        const diff = Diff.diffLines(original, changed);
-        setDiffResult(diff);
+        setDiffResult(Diff.diffLines(original, changed));
     };
 
     const clearText = () => {
@@ -26,64 +29,49 @@ export default function DiffChecker() {
             description="Compare two blocks of text and highlight the differences"
             category="text"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* Original Input */}
-                    <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                            <label htmlFor="original" className="text-lg font-semibold text-text-primary">
-                                Original Text
-                            </label>
-                        </div>
+            <div className="mx-auto max-w-6xl space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                    <ToolPanel title="Original text">
                         <textarea
                             id="original"
-                            className="w-full h-[300px] px-4 py-3 bg-bg-secondary border-2 border-border rounded-lg text-text-primary text-base font-mono resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
+                            className={textareaClass}
                             value={original}
-                            onChange={(e) => setOriginal(e.target.value)}
+                            onChange={(event) => setOriginal(event.target.value)}
                             placeholder="Paste original text here..."
                         />
-                    </div>
+                    </ToolPanel>
 
-                    {/* Changed Input */}
-                    <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                            <label htmlFor="changed" className="text-lg font-semibold text-text-primary">
-                                Changed Text
-                            </label>
-                            <button onClick={clearText} className="text-sm text-text-secondary hover:text-red-500 transition-colors">
-                                Clear All
-                            </button>
-                        </div>
+                    <ToolPanel title="Changed text">
                         <textarea
                             id="changed"
-                            className="w-full h-[300px] px-4 py-3 bg-bg-secondary border-2 border-border rounded-lg text-text-primary text-base font-mono resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
+                            className={textareaClass}
                             value={changed}
-                            onChange={(e) => setChanged(e.target.value)}
+                            onChange={(event) => setChanged(event.target.value)}
                             placeholder="Paste changed text here..."
                         />
-                    </div>
+                    </ToolPanel>
                 </div>
 
-                <div className="flex justify-center">
-                    <button
-                        onClick={compareText}
-                        className="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-10 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-lg"
-                    >
-                        Compare Texts
+                <ToolActionBar className="justify-center">
+                    <button onClick={compareText} className="btn btn-primary gap-2">
+                        <GitCompare className="h-4 w-4" />
+                        Compare
                     </button>
-                </div>
+                    <button onClick={clearText} className="btn btn-secondary gap-2">
+                        <Eraser className="h-4 w-4" />
+                        Clear
+                    </button>
+                </ToolActionBar>
 
-                {/* Diff Result */}
                 {diffResult && (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <h2 className="text-2xl font-bold text-text-primary">Comparison Result</h2>
-                        <div className="bg-bg-tertiary border-2 border-border rounded-lg p-6 font-mono text-base overflow-x-auto whitespace-pre-wrap">
+                    <ToolPanel title="Comparison result">
+                        <div className="overflow-x-auto whitespace-pre-wrap rounded-md border bg-muted/30 p-4 font-mono text-sm">
                             {diffResult.map((part, index) => {
-                                let className = 'text-text-primary';
+                                let className = 'text-foreground';
                                 if (part.added) {
-                                    className = 'bg-green-500/20 text-green-700 dark:text-green-400 block';
+                                    className = 'block bg-emerald-500/20 text-emerald-700 dark:text-emerald-300';
                                 } else if (part.removed) {
-                                    className = 'bg-red-500/20 text-red-700 dark:text-red-400 block decoration-wavy line-through decoration-red-500/50';
+                                    className = 'block bg-destructive/20 text-destructive line-through decoration-destructive/50';
                                 }
 
                                 return (
@@ -93,7 +81,7 @@ export default function DiffChecker() {
                                 );
                             })}
                         </div>
-                    </div>
+                    </ToolPanel>
                 )}
             </div>
         </ToolLayout>

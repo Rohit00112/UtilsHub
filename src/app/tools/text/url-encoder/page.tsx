@@ -1,46 +1,97 @@
 'use client';
 
 import { useState } from 'react';
+import { Clipboard, Eraser, Lock, Unlock } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+
+const textareaClass = 'min-h-56 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function URLEncoder() {
     const [inputText, setInputText] = useState('');
     const [outputText, setOutputText] = useState('');
     const [mode, setMode] = useState<'encode' | 'decode'>('encode');
+    const [error, setError] = useState('');
+    const [copied, setCopied] = useState(false);
 
     const handleProcess = () => {
         try {
+            setError('');
+            setCopied(false);
             setOutputText(mode === 'encode' ? encodeURIComponent(inputText) : decodeURIComponent(inputText));
-        } catch (e) {
-            setOutputText('Error decoding URL');
+        } catch {
+            setOutputText('');
+            setError('Failed to decode. Check for malformed percent encoding.');
         }
     };
 
-    const copyToClipboard = () => navigator.clipboard.writeText(outputText);
-    const clearAll = () => { setInputText(''); setOutputText(''); };
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(outputText);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
+    };
+
+    const clearAll = () => {
+        setInputText('');
+        setOutputText('');
+        setError('');
+        setCopied(false);
+    };
 
     return (
         <ToolLayout title="URL Encoder/Decoder" description="Encode URLs for safe transmission or decode URL-encoded strings" category="text">
-            <div className="max-w-5xl mx-auto space-y-6">
-                <div className="flex gap-4">
-                    <button className={`btn ${mode === 'encode' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setMode('encode')}>Encode</button>
-                    <button className={`btn ${mode === 'decode' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setMode('decode')}>Decode</button>
-                </div>
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                    <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">{mode === 'encode' ? 'URL to Encode' : 'URL to Decode'}</label>
-                    <textarea id="input" className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder={mode === 'encode' ? 'Enter URL to encode...' : 'Enter encoded URL to decode...'} rows={8} />
-                </div>
-                <div className="flex gap-3">
-                    <button onClick={handleProcess} className="btn btn-primary">{mode === 'encode' ? '🔒 Encode URL' : '🔓 Decode URL'}</button>
-                    <button onClick={clearAll} className="btn btn-secondary">Clear All</button>
-                </div>
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                    <div className="flex items-center justify-between mb-3">
-                        <label htmlFor="output" className="text-lg font-semibold text-text-primary">{mode === 'encode' ? 'Encoded URL' : 'Decoded URL'}</label>
-                        {outputText && <button onClick={copyToClipboard} className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-md text-primary-light font-semibold text-sm transition-all duration-150 hover:scale-105">📋 Copy</button>}
-                    </div>
-                    <textarea id="output" className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none focus:outline-none placeholder:text-text-tertiary" value={outputText} readOnly placeholder="Result will appear here..." rows={8} />
-                </div>
+            <div className="mx-auto max-w-5xl space-y-6">
+                <ToolActionBar>
+                    <button className={`btn ${mode === 'encode' ? 'btn-primary' : 'btn-secondary'} gap-2`} onClick={() => setMode('encode')}>
+                        <Lock className="h-4 w-4" />
+                        Encode
+                    </button>
+                    <button className={`btn ${mode === 'decode' ? 'btn-primary' : 'btn-secondary'} gap-2`} onClick={() => setMode('decode')}>
+                        <Unlock className="h-4 w-4" />
+                        Decode
+                    </button>
+                </ToolActionBar>
+
+                <ToolPanel title={mode === 'encode' ? 'URL to encode' : 'URL to decode'}>
+                    <textarea
+                        id="input"
+                        className={textareaClass}
+                        value={inputText}
+                        onChange={(event) => setInputText(event.target.value)}
+                        placeholder={mode === 'encode' ? 'Enter URL to encode...' : 'Enter encoded URL to decode...'}
+                    />
+                </ToolPanel>
+
+                <ToolActionBar>
+                    <button onClick={handleProcess} className="btn btn-primary gap-2">
+                        {mode === 'encode' ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+                        {mode === 'encode' ? 'Encode URL' : 'Decode URL'}
+                    </button>
+                    <button onClick={clearAll} className="btn btn-secondary gap-2">
+                        <Eraser className="h-4 w-4" />
+                        Clear
+                    </button>
+                </ToolActionBar>
+
+                {error && <ToolStatus tone="error">{error}</ToolStatus>}
+
+                <ToolPanel
+                    title={mode === 'encode' ? 'Encoded URL' : 'Decoded URL'}
+                    actions={outputText && (
+                        <button onClick={copyToClipboard} className="btn btn-secondary gap-2">
+                            <Clipboard className="h-4 w-4" />
+                            {copied ? 'Copied' : 'Copy'}
+                        </button>
+                    )}
+                >
+                    <textarea
+                        id="output"
+                        className={textareaClass}
+                        value={outputText}
+                        readOnly
+                        placeholder="Result will appear here..."
+                    />
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

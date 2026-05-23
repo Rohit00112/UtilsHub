@@ -1,70 +1,97 @@
 'use client';
 
 import { useState } from 'react';
+import { Clipboard, Eraser, Lock, Unlock } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+
+const textareaClass = 'min-h-56 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function Base64Encoder() {
     const [inputText, setInputText] = useState('');
     const [outputText, setOutputText] = useState('');
     const [mode, setMode] = useState<'encode' | 'decode'>('encode');
     const [error, setError] = useState('');
+    const [copied, setCopied] = useState(false);
 
-    const handleEncode = () => {
+    const handleProcess = () => {
         try {
             setError('');
-            setOutputText(btoa(inputText));
-        } catch (err) {
-            setError('Failed to encode. Please check your input.');
+            setCopied(false);
+            setOutputText(mode === 'encode' ? btoa(inputText) : atob(inputText));
+        } catch {
+            setOutputText('');
+            setError(mode === 'encode' ? 'Failed to encode. Please check your input.' : 'Failed to decode. Invalid Base64 string.');
         }
     };
 
-    const handleDecode = () => {
-        try {
-            setError('');
-            setOutputText(atob(inputText));
-        } catch (err) {
-            setError('Failed to decode. Invalid Base64 string.');
-        }
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(outputText);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
     };
 
-    const handleProcess = () => mode === 'encode' ? handleEncode() : handleDecode();
-    const copyToClipboard = () => navigator.clipboard.writeText(outputText);
-    const clearAll = () => { setInputText(''); setOutputText(''); setError(''); };
+    const clearAll = () => {
+        setInputText('');
+        setOutputText('');
+        setError('');
+        setCopied(false);
+    };
 
     return (
         <ToolLayout title="Base64 Encoder/Decoder" description="Encode text to Base64 or decode Base64 strings back to text" category="text">
-            <div className="max-w-5xl mx-auto space-y-6">
-                {/* Mode Selector */}
-                <div className="flex gap-4">
-                    <button className={`btn ${mode === 'encode' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setMode('encode')}>Encode</button>
-                    <button className={`btn ${mode === 'decode' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setMode('decode')}>Decode</button>
-                </div>
+            <div className="mx-auto max-w-5xl space-y-6">
+                <ToolActionBar>
+                    <button className={`btn ${mode === 'encode' ? 'btn-primary' : 'btn-secondary'} gap-2`} onClick={() => setMode('encode')}>
+                        <Lock className="h-4 w-4" />
+                        Encode
+                    </button>
+                    <button className={`btn ${mode === 'decode' ? 'btn-primary' : 'btn-secondary'} gap-2`} onClick={() => setMode('decode')}>
+                        <Unlock className="h-4 w-4" />
+                        Decode
+                    </button>
+                </ToolActionBar>
 
-                {/* Input */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                    <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
-                        {mode === 'encode' ? 'Text to Encode' : 'Base64 to Decode'}
-                    </label>
-                    <textarea id="input" className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder={mode === 'encode' ? 'Enter text to encode...' : 'Enter Base64 string to decode...'} rows={8} />
-                </div>
+                <ToolPanel title={mode === 'encode' ? 'Text to encode' : 'Base64 to decode'}>
+                    <textarea
+                        id="input"
+                        className={textareaClass}
+                        value={inputText}
+                        onChange={(event) => setInputText(event.target.value)}
+                        placeholder={mode === 'encode' ? 'Enter text to encode...' : 'Enter Base64 string to decode...'}
+                    />
+                </ToolPanel>
 
-                {/* Controls */}
-                <div className="flex gap-3">
-                    <button onClick={handleProcess} className="btn btn-primary">{mode === 'encode' ? '🔒 Encode to Base64' : '🔓 Decode from Base64'}</button>
-                    <button onClick={clearAll} className="btn btn-secondary">Clear All</button>
-                </div>
+                <ToolActionBar>
+                    <button onClick={handleProcess} className="btn btn-primary gap-2">
+                        {mode === 'encode' ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+                        {mode === 'encode' ? 'Encode to Base64' : 'Decode from Base64'}
+                    </button>
+                    <button onClick={clearAll} className="btn btn-secondary gap-2">
+                        <Eraser className="h-4 w-4" />
+                        Clear
+                    </button>
+                </ToolActionBar>
 
-                {/* Error */}
-                {error && <div className="p-4 bg-error/10 border border-error/30 rounded-md text-error">⚠️ {error}</div>}
+                {error && <ToolStatus tone="error">{error}</ToolStatus>}
 
-                {/* Output */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6">
-                    <div className="flex items-center justify-between mb-3">
-                        <label htmlFor="output" className="text-lg font-semibold text-text-primary">{mode === 'encode' ? 'Encoded Base64' : 'Decoded Text'}</label>
-                        {outputText && <button onClick={copyToClipboard} className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-md text-primary-light font-semibold text-sm transition-all duration-150 hover:scale-105">📋 Copy</button>}
-                    </div>
-                    <textarea id="output" className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none focus:outline-none placeholder:text-text-tertiary" value={outputText} readOnly placeholder="Result will appear here..." rows={8} />
-                </div>
+                <ToolPanel
+                    title={mode === 'encode' ? 'Encoded Base64' : 'Decoded text'}
+                    actions={outputText && (
+                        <button onClick={copyToClipboard} className="btn btn-secondary gap-2">
+                            <Clipboard className="h-4 w-4" />
+                            {copied ? 'Copied' : 'Copy'}
+                        </button>
+                    )}
+                >
+                    <textarea
+                        id="output"
+                        className={textareaClass}
+                        value={outputText}
+                        readOnly
+                        placeholder="Result will appear here..."
+                    />
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

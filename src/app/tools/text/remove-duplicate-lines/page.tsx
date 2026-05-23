@@ -1,11 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { Clipboard, Eraser, ListX } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+
+const textareaClass = 'h-96 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function RemoveDuplicateLines() {
     const [input, setInput] = useState('');
     const [output, setOutput] = useState('');
+    const [copied, setCopied] = useState(false);
     const [options, setOptions] = useState({
         caseSensitive: false,
         ignoreWhitespace: false,
@@ -20,12 +25,8 @@ export default function RemoveDuplicateLines() {
 
         lines.forEach((line) => {
             let key = line;
-            if (!options.caseSensitive) {
-                key = key.toLowerCase();
-            }
-            if (options.ignoreWhitespace) {
-                key = key.trim();
-            }
+            if (!options.caseSensitive) key = key.toLowerCase();
+            if (options.ignoreWhitespace) key = key.trim();
 
             if (!uniqueLines.has(key)) {
                 uniqueLines.add(key);
@@ -34,11 +35,19 @@ export default function RemoveDuplicateLines() {
         });
 
         setOutput(result.join('\n'));
+        setCopied(false);
     };
 
     const clearText = () => {
         setInput('');
         setOutput('');
+        setCopied(false);
+    };
+
+    const copyResult = async () => {
+        await navigator.clipboard.writeText(output);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
     };
 
     return (
@@ -47,81 +56,71 @@ export default function RemoveDuplicateLines() {
             description="Remove duplicate lines from your text with options for case sensitivity and whitespace"
             category="text"
         >
-            <div className="max-w-6xl mx-auto space-y-8">
-                {/* Options */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 flex flex-wrap gap-6 items-center">
-                    <label className="flex items-center gap-3 cursor-pointer group">
-                        <input
-                            type="checkbox"
-                            checked={options.caseSensitive}
-                            onChange={(e) => setOptions({ ...options, caseSensitive: e.target.checked })}
-                            className="w-5 h-5 rounded border-2 border-border text-primary focus:ring-primary/20 bg-bg-tertiary transition-colors"
-                        />
-                        <span className="text-text-primary group-hover:text-primary transition-colors font-medium">Case Sensitive</span>
-                    </label>
-                    <label className="flex items-center gap-3 cursor-pointer group">
-                        <input
-                            type="checkbox"
-                            checked={options.ignoreWhitespace}
-                            onChange={(e) => setOptions({ ...options, ignoreWhitespace: e.target.checked })}
-                            className="w-5 h-5 rounded border-2 border-border text-primary focus:ring-primary/20 bg-bg-tertiary transition-colors"
-                        />
-                        <span className="text-text-primary group-hover:text-primary transition-colors font-medium">Ignore Whitespace</span>
-                    </label>
-                </div>
+            <div className="mx-auto max-w-6xl space-y-6">
+                <ToolPanel title="Options">
+                    <div className="flex flex-wrap gap-4">
+                        <label className="inline-flex items-center gap-2 rounded-md border bg-muted/30 px-3 py-2 text-sm text-foreground">
+                            <input
+                                type="checkbox"
+                                checked={options.caseSensitive}
+                                onChange={(event) => setOptions({ ...options, caseSensitive: event.target.checked })}
+                                className="h-4 w-4 accent-current"
+                            />
+                            Case sensitive
+                        </label>
+                        <label className="inline-flex items-center gap-2 rounded-md border bg-muted/30 px-3 py-2 text-sm text-foreground">
+                            <input
+                                type="checkbox"
+                                checked={options.ignoreWhitespace}
+                                onChange={(event) => setOptions({ ...options, ignoreWhitespace: event.target.checked })}
+                                className="h-4 w-4 accent-current"
+                            />
+                            Ignore whitespace
+                        </label>
+                    </div>
+                </ToolPanel>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* Input */}
-                    <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                            <label htmlFor="input" className="text-lg font-semibold text-text-primary">
-                                Input Text
-                            </label>
-                            <button onClick={clearText} className="text-sm text-text-secondary hover:text-red-500 transition-colors">
-                                Clear
-                            </button>
-                        </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                    <ToolPanel title="Input text">
                         <textarea
                             id="input"
-                            className="w-full h-[500px] px-4 py-3 bg-bg-secondary border-2 border-border rounded-lg text-text-primary text-base font-mono resize-none focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
+                            className={textareaClass}
                             value={input}
-                            onChange={(e) => setInput(e.target.value)}
+                            onChange={(event) => setInput(event.target.value)}
                             placeholder="Paste your text here..."
                         />
-                    </div>
+                    </ToolPanel>
 
-                    {/* Output */}
-                    <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                            <label htmlFor="output" className="text-lg font-semibold text-text-primary">
-                                Unique Lines
-                            </label>
-                            <button
-                                onClick={() => navigator.clipboard.writeText(output)}
-                                className="text-sm text-primary hover:text-primary-dark transition-colors"
-                                disabled={!output}
-                            >
-                                Copy Result
+                    <ToolPanel
+                        title="Unique lines"
+                        actions={output && (
+                            <button onClick={copyResult} className="btn btn-secondary gap-2">
+                                <Clipboard className="h-4 w-4" />
+                                {copied ? 'Copied' : 'Copy'}
                             </button>
-                        </div>
+                        )}
+                    >
                         <textarea
                             id="output"
                             readOnly
-                            className="w-full h-[500px] px-4 py-3 bg-bg-tertiary border-2 border-border rounded-lg text-text-primary text-base font-mono resize-none focus:outline-none"
+                            className={textareaClass}
                             value={output}
                             placeholder="Result will appear here..."
                         />
-                    </div>
+                        {copied && <ToolStatus tone="success" className="mt-3">Result copied to clipboard.</ToolStatus>}
+                    </ToolPanel>
                 </div>
 
-                <div className="flex justify-center pt-4">
-                    <button
-                        onClick={processText}
-                        className="bg-primary hover:bg-primary-dark text-white font-bold py-4 px-12 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-lg"
-                    >
-                        Remove Duplicates
+                <ToolActionBar className="justify-center">
+                    <button onClick={processText} className="btn btn-primary gap-2">
+                        <ListX className="h-4 w-4" />
+                        Remove duplicates
                     </button>
-                </div>
+                    <button onClick={clearText} className="btn btn-secondary gap-2">
+                        <Eraser className="h-4 w-4" />
+                        Clear
+                    </button>
+                </ToolActionBar>
             </div>
         </ToolLayout>
     );
