@@ -62,6 +62,7 @@ export const categories: Category[] = [
 export const tools: Tool[] = [
   // PDF
   { id: 'pdf-compare', name: 'PDF Compare', description: 'Compare two PDF files for differences.', slug: 'compare', categoryId: 'pdf', status: 'active' },
+  { id: 'pdf-splitter', name: 'PDF Splitter', description: 'Split a PDF into page ranges or individual files.', slug: 'splitter', categoryId: 'pdf', status: 'active' },
   
   // Text
   { id: 'case-converter', name: 'Case Converter', description: 'Convert text between uppercase, lowercase, and more.', slug: 'case-converter', categoryId: 'text', status: 'active' },
