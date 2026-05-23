@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Clipboard, Eraser, Fingerprint } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel } from '@/components/tools/ToolPrimitives';
 
 type HashAlgorithm = 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512';
 
@@ -239,70 +241,56 @@ export default function HashGenerator() {
             description="Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text"
             category="security"
         >
-            <div className="max-w-4xl mx-auto space-y-8">
-                {/* Input Section */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-6 transition-all duration-250 hover:border-primary/50">
-                    <label htmlFor="input" className="block text-lg font-semibold text-text-primary mb-3">
-                        Input Text
-                    </label>
+            <div className="mx-auto max-w-4xl space-y-6">
+                <ToolPanel title="Input text" description="Hash text locally in your browser.">
                     <textarea
                         id="input"
-                        className="w-full px-4 py-3 bg-bg-tertiary border-2 border-border rounded-md text-text-primary text-base font-mono resize-none transition-all duration-150 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-text-tertiary"
+                        className="min-h-40 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring"
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={(event) => setInput(event.target.value)}
                         placeholder="Enter text to hash..."
-                        rows={6}
                     />
-                    <div className="flex gap-4 mt-4">
-                        <button
-                            onClick={generateHashes}
-                            disabled={isLoading}
-                            className="btn btn-primary"
-                        >
-                            {isLoading ? '⏳ Generating...' : '🔐 Generate Hashes'}
+                    <ToolActionBar className="mt-4">
+                        <button onClick={generateHashes} disabled={isLoading} className="btn btn-primary gap-2">
+                            <Fingerprint className="h-4 w-4" />
+                            {isLoading ? 'Generating' : 'Generate hashes'}
                         </button>
-                        <button onClick={clearAll} className="btn btn-secondary">
+                        <button onClick={clearAll} className="btn btn-secondary gap-2">
+                            <Eraser className="h-4 w-4" />
                             Clear
                         </button>
-                    </div>
-                </div>
+                    </ToolActionBar>
+                </ToolPanel>
 
-                {/* Hash Results */}
                 <div className="space-y-4">
                     {algorithms.map((algo) => (
-                        <div
+                        <ToolPanel
                             key={algo.name}
-                            className="bg-bg-secondary border-2 border-border rounded-lg p-4 transition-all duration-250 hover:border-primary/50"
+                            title={algo.name}
+                            actions={hashes[algo.name] && (
+                                <button onClick={() => copyToClipboard(algo.name)} className="btn btn-secondary h-8 gap-2 px-3">
+                                    <Clipboard className="h-4 w-4" />
+                                    {copiedAlgorithm === algo.name ? 'Copied' : 'Copy'}
+                                </button>
+                            )}
+                            className="p-4 sm:p-4"
                         >
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-text-primary">{algo.name}</span>
-                                {hashes[algo.name] && (
-                                    <button
-                                        onClick={() => copyToClipboard(algo.name)}
-                                        className="px-3 py-1 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-md text-primary-light font-medium text-sm transition-all duration-150"
-                                    >
-                                        {copiedAlgorithm === algo.name ? '✓ Copied!' : '📋 Copy'}
-                                    </button>
-                                )}
-                            </div>
-                            <div className="p-3 bg-bg-tertiary rounded-md font-mono text-sm text-text-secondary break-all min-h-[2.5rem] flex items-center">
+                            <div className="flex min-h-12 items-center break-all rounded-md bg-muted/30 p-3 font-mono text-sm text-muted-foreground">
                                 {hashes[algo.name] || 'Hash will appear here...'}
                             </div>
-                        </div>
+                        </ToolPanel>
                     ))}
                 </div>
 
-                {/* Info Section */}
-                <div className="bg-bg-secondary border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-text-primary mb-3">About Hash Functions</h3>
-                    <ul className="space-y-2 text-sm text-text-secondary">
-                        <li><strong className="text-text-primary">MD5:</strong> 128-bit hash, fast but not cryptographically secure</li>
-                        <li><strong className="text-text-primary">SHA-1:</strong> 160-bit hash, deprecated for security purposes</li>
-                        <li><strong className="text-text-primary">SHA-256:</strong> 256-bit hash, part of SHA-2 family, widely used</li>
-                        <li><strong className="text-text-primary">SHA-384:</strong> 384-bit hash, truncated version of SHA-512</li>
-                        <li><strong className="text-text-primary">SHA-512:</strong> 512-bit hash, strongest in SHA-2 family</li>
+                <ToolPanel title="About hash functions">
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li><strong className="text-foreground">MD5:</strong> 128-bit hash, fast but not cryptographically secure</li>
+                        <li><strong className="text-foreground">SHA-1:</strong> 160-bit hash, deprecated for security purposes</li>
+                        <li><strong className="text-foreground">SHA-256:</strong> 256-bit hash, part of SHA-2 family, widely used</li>
+                        <li><strong className="text-foreground">SHA-384:</strong> 384-bit hash, truncated version of SHA-512</li>
+                        <li><strong className="text-foreground">SHA-512:</strong> 512-bit hash, strongest in SHA-2 family</li>
                     </ul>
-                </div>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );

@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Calculator } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel } from '@/components/tools/ToolPrimitives';
 
 export default function BMICalculator() {
     const [weight, setWeight] = useState('');
@@ -13,18 +15,9 @@ export default function BMICalculator() {
     const calculateBMI = () => {
         const w = parseFloat(weight);
         const h = parseFloat(height);
-
         if (!w || !h) return;
 
-        let bmiValue = 0;
-        if (unit === 'metric') {
-            // Weight in kg, Height in cm
-            bmiValue = w / ((h / 100) * (h / 100));
-        } else {
-            // Weight in lbs, Height in inches
-            bmiValue = (w / (h * h)) * 703;
-        }
-
+        const bmiValue = unit === 'metric' ? w / ((h / 100) * (h / 100)) : (w / (h * h)) * 703;
         setBmi(parseFloat(bmiValue.toFixed(1)));
 
         if (bmiValue < 18.5) setCategory('Underweight');
@@ -33,15 +26,13 @@ export default function BMICalculator() {
         else setCategory('Obese');
     };
 
-    const getCategoryColor = (cat: string) => {
-        switch (cat) {
-            case 'Underweight': return 'text-blue-400';
-            case 'Normal weight': return 'text-green-400';
-            case 'Overweight': return 'text-yellow-400';
-            case 'Obese': return 'text-red-400';
-            default: return 'text-text-primary';
-        }
-    };
+    const categoryClass = category === 'Normal weight'
+        ? 'text-emerald-600 dark:text-emerald-300'
+        : category === 'Overweight'
+            ? 'text-amber-600 dark:text-amber-300'
+            : category
+                ? 'text-destructive'
+                : 'text-muted-foreground';
 
     return (
         <ToolLayout
@@ -49,74 +40,48 @@ export default function BMICalculator() {
             description="Calculate your Body Mass Index and check your weight category"
             category="calculator"
         >
-            <div className="max-w-4xl mx-auto space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Input Section */}
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-8">
-                        <div className="flex gap-4 mb-6">
-                            <button
-                                className={`btn flex-1 ${unit === 'metric' ? 'btn-primary' : 'btn-secondary'}`}
-                                onClick={() => setUnit('metric')}
-                            >
-                                Metric (kg/cm)
+            <div className="mx-auto max-w-4xl space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                    <ToolPanel title="Measurements">
+                        <ToolActionBar className="mb-5">
+                            <button className={`btn flex-1 ${unit === 'metric' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setUnit('metric')}>
+                                Metric
                             </button>
-                            <button
-                                className={`btn flex-1 ${unit === 'imperial' ? 'btn-primary' : 'btn-secondary'}`}
-                                onClick={() => setUnit('imperial')}
-                            >
-                                Imperial (lbs/in)
+                            <button className={`btn flex-1 ${unit === 'imperial' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setUnit('imperial')}>
+                                Imperial
                             </button>
+                        </ToolActionBar>
+
+                        <div className="space-y-4">
+                            <label className="block">
+                                <span className="mb-2 block text-sm font-medium text-muted-foreground">Weight ({unit === 'metric' ? 'kg' : 'lbs'})</span>
+                                <input type="number" value={weight} onChange={(event) => setWeight(event.target.value)} className="input h-10" placeholder="0" />
+                            </label>
+                            <label className="block">
+                                <span className="mb-2 block text-sm font-medium text-muted-foreground">Height ({unit === 'metric' ? 'cm' : 'inches'})</span>
+                                <input type="number" value={height} onChange={(event) => setHeight(event.target.value)} className="input h-10" placeholder="0" />
+                            </label>
                         </div>
 
-                        <div className="space-y-4 mb-8">
-                            <div>
-                                <label className="block text-text-secondary font-medium mb-2">
-                                    Weight ({unit === 'metric' ? 'kg' : 'lbs'})
-                                </label>
-                                <input
-                                    type="number"
-                                    value={weight}
-                                    onChange={(e) => setWeight(e.target.value)}
-                                    className="input"
-                                    placeholder="0"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-text-secondary font-medium mb-2">
-                                    Height ({unit === 'metric' ? 'cm' : 'inches'})
-                                </label>
-                                <input
-                                    type="number"
-                                    value={height}
-                                    onChange={(e) => setHeight(e.target.value)}
-                                    className="input"
-                                    placeholder="0"
-                                />
-                            </div>
-                        </div>
-
-                        <button onClick={calculateBMI} className="btn btn-primary w-full">
+                        <button onClick={calculateBMI} className="btn btn-primary mt-6 w-full gap-2">
+                            <Calculator className="h-4 w-4" />
                             Calculate BMI
                         </button>
-                    </div>
+                    </ToolPanel>
 
-                    {/* Result Section */}
-                    <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 flex flex-col items-center justify-center text-center">
-                        {bmi ? (
-                            <div className="animate-fade-in">
-                                <div className="text-text-secondary mb-2 uppercase tracking-wider font-semibold">Your BMI</div>
-                                <div className="text-8xl font-extrabold text-gradient mb-4">{bmi}</div>
-                                <div className={`text-2xl font-bold ${getCategoryColor(category)}`}>
-                                    {category}
+                    <ToolPanel title="Result">
+                        <div className="flex min-h-72 flex-col items-center justify-center rounded-md border bg-muted/30 p-6 text-center">
+                            {bmi ? (
+                                <div className="animate-fade-in">
+                                    <div className="text-sm font-medium uppercase tracking-wide text-muted-foreground">Your BMI</div>
+                                    <div className="mt-2 text-7xl font-semibold text-foreground">{bmi}</div>
+                                    <div className={`mt-4 text-2xl font-semibold ${categoryClass}`}>{category}</div>
                                 </div>
-                            </div>
-                        ) : (
-                            <div className="text-text-tertiary">
-                                <div className="text-6xl mb-4 opacity-20">⚖️</div>
-                                <p>Enter your details to see your BMI</p>
-                            </div>
-                        )}
-                    </div>
+                            ) : (
+                                <p className="text-sm text-muted-foreground">Enter your details to see your BMI.</p>
+                            )}
+                        </div>
+                    </ToolPanel>
                 </div>
             </div>
         </ToolLayout>

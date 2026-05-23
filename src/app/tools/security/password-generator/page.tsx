@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Clipboard, RefreshCw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
 
 export default function PasswordGenerator() {
     const [password, setPassword] = useState('');
@@ -13,6 +15,20 @@ export default function PasswordGenerator() {
         symbols: true,
     });
     const [strength, setStrength] = useState('');
+    const [copied, setCopied] = useState(false);
+
+    const calculateStrength = (pass: string) => {
+        let score = 0;
+        if (pass.length > 8) score++;
+        if (pass.length > 12) score++;
+        if (/[A-Z]/.test(pass)) score++;
+        if (/[0-9]/.test(pass)) score++;
+        if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+        if (score < 3) setStrength('Weak');
+        else if (score < 5) setStrength('Medium');
+        else setStrength('Strong');
+    };
 
     const generatePassword = useCallback(() => {
         const charset = {
@@ -40,29 +56,21 @@ export default function PasswordGenerator() {
         }
 
         setPassword(generatedPassword);
+        setCopied(false);
         calculateStrength(generatedPassword);
     }, [length, options]);
-
-    const calculateStrength = (pass: string) => {
-        let score = 0;
-        if (pass.length > 8) score++;
-        if (pass.length > 12) score++;
-        if (/[A-Z]/.test(pass)) score++;
-        if (/[0-9]/.test(pass)) score++;
-        if (/[^A-Za-z0-9]/.test(pass)) score++;
-
-        if (score < 3) setStrength('Weak');
-        else if (score < 5) setStrength('Medium');
-        else setStrength('Strong');
-    };
 
     useEffect(() => {
         generatePassword();
     }, [generatePassword]);
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(password);
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(password);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
     };
+
+    const strengthTone = strength === 'Strong' ? 'success' : strength === 'Medium' ? 'warning' : 'error';
 
     return (
         <ToolLayout
@@ -70,67 +78,63 @@ export default function PasswordGenerator() {
             description="Generate strong, random passwords with customizable options"
             category="security"
         >
-            <div className="max-w-4xl mx-auto space-y-8">
-                {/* Password Display */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-8 text-center transition-all duration-250 hover:border-primary/50">
-                    <div className="text-4xl font-mono font-bold text-text-primary break-all mb-4 min-h-[3rem] flex items-center justify-center">
-                        {password}
-                    </div>
-                    <div className="flex justify-center gap-4">
-                        <button
-                            onClick={generatePassword}
-                            className="btn btn-primary"
-                        >
-                            🔄 Generate New
-                        </button>
-                        <button
-                            onClick={copyToClipboard}
-                            className="btn btn-secondary"
-                        >
-                            📋 Copy
-                        </button>
+            <div className="mx-auto max-w-4xl space-y-6">
+                <ToolPanel
+                    title="Generated password"
+                    actions={(
+                        <ToolActionBar>
+                            <button onClick={generatePassword} className="btn btn-primary gap-2">
+                                <RefreshCw className="h-4 w-4" />
+                                Generate
+                            </button>
+                            <button onClick={copyToClipboard} disabled={!password} className="btn btn-secondary gap-2">
+                                <Clipboard className="h-4 w-4" />
+                                {copied ? 'Copied' : 'Copy'}
+                            </button>
+                        </ToolActionBar>
+                    )}
+                >
+                    <div className="min-h-20 rounded-md border bg-muted/30 p-4 text-center font-mono text-2xl font-semibold text-foreground break-all sm:text-3xl">
+                        {password || 'Select at least one character type.'}
                     </div>
                     {strength && (
-                        <div className={`mt-4 inline-block px-4 py-1 rounded-full text-sm font-bold ${strength === 'Strong' ? 'bg-success/20 text-success' :
-                                strength === 'Medium' ? 'bg-warning/20 text-warning' :
-                                    'bg-error/20 text-error'
-                            }`}>
+                        <ToolStatus tone={strengthTone} className="mt-4">
                             Strength: {strength}
-                        </div>
+                        </ToolStatus>
                     )}
-                </div>
+                </ToolPanel>
 
-                {/* Controls */}
-                <div className="bg-bg-secondary border-2 border-border rounded-lg p-8">
-                    <div className="mb-8">
-                        <div className="flex justify-between mb-2">
-                            <label className="text-lg font-semibold text-text-primary">Password Length</label>
-                            <span className="text-primary font-bold text-xl">{length}</span>
+                <ToolPanel title="Password settings">
+                    <div className="mb-6">
+                        <div className="mb-2 flex items-center justify-between">
+                            <label htmlFor="length" className="text-sm font-medium text-muted-foreground">Length</label>
+                            <span className="text-lg font-semibold text-foreground">{length}</span>
                         </div>
                         <input
+                            id="length"
                             type="range"
                             min="4"
                             max="64"
                             value={length}
-                            onChange={(e) => setLength(Number(e.target.value))}
-                            className="w-full h-2 bg-bg-tertiary rounded-lg appearance-none cursor-pointer accent-primary"
+                            onChange={(event) => setLength(Number(event.target.value))}
+                            className="w-full accent-current"
                         />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid gap-3 sm:grid-cols-2">
                         {Object.entries(options).map(([key, value]) => (
-                            <label key={key} className="flex items-center p-4 bg-bg-tertiary rounded-lg cursor-pointer transition-all duration-150 hover:bg-bg-elevated border border-transparent hover:border-primary/30">
+                            <label key={key} className="inline-flex items-center gap-2 rounded-md border bg-muted/30 px-3 py-3 text-sm font-medium capitalize text-foreground">
                                 <input
                                     type="checkbox"
                                     checked={value}
-                                    onChange={() => setOptions(prev => ({ ...prev, [key]: !prev[key as keyof typeof options] }))}
-                                    className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 bg-bg-primary"
+                                    onChange={() => setOptions((previous) => ({ ...previous, [key]: !previous[key as keyof typeof options] }))}
+                                    className="h-4 w-4 accent-current"
                                 />
-                                <span className="ml-3 text-text-primary capitalize font-medium">{key}</span>
+                                {key}
                             </label>
                         ))}
                     </div>
-                </div>
+                </ToolPanel>
             </div>
         </ToolLayout>
     );
