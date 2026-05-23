@@ -40,6 +40,20 @@ export function createMetadata({
     metadataBase: new URL(getSiteUrl()),
     title: resolvedTitle,
     description,
+    applicationName: siteName,
+    manifest: '/manifest.webmanifest',
+    icons: {
+      icon: '/icon.svg',
+      apple: '/apple-icon.svg',
+    },
+    appleWebApp: {
+      capable: true,
+      title: siteName,
+      statusBarStyle: 'default',
+    },
+    formatDetection: {
+      telephone: false,
+    },
     keywords: Array.from(new Set([...defaultKeywords, ...keywords])),
     alternates: {
       canonical: url,
