@@ -1,43 +1,50 @@
 import Link from 'next/link';
-import { ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="border-t border-border/60 bg-background">
-      <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
-        <div className="flex flex-col items-center gap-2 md:items-start">
-          <p className="flex items-center gap-2 text-sm text-muted-foreground">
-            <ShieldCheck className="h-4 w-4" />
-            Browser-local utilities for everyday work.
-          </p>
-          <p className="text-center text-sm leading-6 text-muted-foreground md:text-left">
-            <Link href="/about" className="font-medium underline underline-offset-4">
-              About
-            </Link>
-            {' · '}
-            <Link href="/privacy" className="font-medium underline underline-offset-4">
-              Privacy
-            </Link>
-            {' · '}
-            Built by{' '}
-            <Link
-              href="https://github.com/Rohit00112"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              Rohit
-            </Link>
-            {' · '}
-            <Link
-              href="https://github.com/Rohit00112/UtilsHub"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              Source
-            </Link>
-          </p>
+    <footer className="border-t border-foreground/15 bg-background">
+      <div className="container py-10">
+        <div className="grid gap-8 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="font-serif text-xl text-foreground">
+              Utils<span className="italic text-primary">Hub</span>
+            </p>
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              A small workshop of browser-local utilities. Made for the small tasks that shouldn't need a server.
+            </p>
+          </div>
+
+          <div className="md:col-span-3">
+            <p className="eyebrow mb-3">Pages</p>
+            <ul className="space-y-1.5 text-sm">
+              <li><Link href="/about" className="text-foreground/80 hover:text-primary">About</Link></li>
+              <li><Link href="/privacy" className="text-foreground/80 hover:text-primary">Privacy</Link></li>
+              <li><Link href="/#tool-directory" className="text-foreground/80 hover:text-primary">All tools</Link></li>
+            </ul>
+          </div>
+
+          <div className="md:col-span-4">
+            <p className="eyebrow mb-3">Off-paper</p>
+            <ul className="space-y-1.5 text-sm">
+              <li>
+                <Link href="https://github.com/Rohit00112/UtilsHub" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
+                  Source on GitHub
+                </Link>
+              </li>
+              <li>
+                <Link href="https://github.com/Rohit00112" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
+                  Built by Rohit
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-2 border-t border-foreground/10 pt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground md:flex-row md:items-center md:justify-between">
+          <span>© {year} UtilsHub · Set in Inter & system serif</span>
+          <span>Printed locally — your browser, your data</span>
         </div>
       </div>
     </footer>

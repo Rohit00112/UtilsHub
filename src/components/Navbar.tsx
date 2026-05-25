@@ -15,31 +15,31 @@ export default function Navbar() {
   }, []);
 
   return (
-      <nav className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="container flex h-14 items-center">
-          <div className="mr-4 flex">
-            <Link href="/" className="mr-6 flex items-center">
-              <span className="text-xl font-semibold">
-                Utils<span className="text-primary">Hub</span>
-              </span>
-            </Link>
+    <nav className="sticky top-0 z-50 w-full border-b border-foreground/15 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+      <div className="container flex h-14 items-center gap-6">
+        <Link href="/" className="group flex items-baseline gap-2">
+          <span className="font-serif text-2xl leading-none tracking-tight text-foreground">
+            Utils<span className="italic text-primary">Hub</span>
+          </span>
+          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:inline">
+            est. local
+          </span>
+        </Link>
+
+        <div className="ml-auto flex flex-1 items-center justify-end gap-3">
+          <div className="w-full max-w-xs">
+            <SearchLauncher className="h-9" showShortcut enableShortcut />
           </div>
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-              <SearchLauncher className="h-9 md:w-44 lg:w-72" showShortcut enableShortcut />
-            </div>
-            <div className="flex items-center">
-              <button
-                type="button"
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9"
-                aria-label="Toggle theme"
-              >
-                {mounted && (theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />)}
-              </button>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            aria-label="Toggle theme"
+          >
+            {mounted && (theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />)}
+          </button>
         </div>
-      </nav>
+      </div>
+    </nav>
   );
 }
