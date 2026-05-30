@@ -53,25 +53,26 @@ export default function CookieConsent() {
                     role="dialog"
                     aria-live="polite"
                     aria-label="Cookie consent"
-                    className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-lg border bg-background p-4 shadow-lg sm:p-5"
+                    className="fixed inset-x-3 z-50 rounded-md border border-border bg-popover p-4 text-popover-foreground shadow-lg sm:left-auto sm:right-5 sm:max-w-md sm:p-5"
+                    style={{ bottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
                 >
-                    <p className="text-sm leading-6 text-foreground">
+                    <p className="text-pretty text-sm leading-6">
                         UtilsHub uses Google AdSense to display ads, which sets cookies and may collect data per Google&apos;s policies. Tool input you paste or upload stays in your browser. See our{' '}
-                        <Link href="/privacy" className="font-medium underline underline-offset-2">
+                        <Link href="/privacy" className="font-medium text-foreground underline underline-offset-2">
                             privacy policy
                         </Link>{' '}
                         for details.
                     </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
+                    <div className="mt-4 flex flex-wrap gap-2 sm:justify-end">
                         <button
                             onClick={() => persist('accepted')}
-                            className="btn btn-primary h-9 px-4 text-sm"
+                            className="btn btn-primary min-w-24"
                         >
                             Accept
                         </button>
                         <button
                             onClick={() => persist('declined')}
-                            className="btn btn-secondary h-9 px-4 text-sm"
+                            className="btn btn-secondary min-w-24"
                         >
                             Decline
                         </button>
