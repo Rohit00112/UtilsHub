@@ -235,6 +235,25 @@ export const tools: Tool[] = [
     related: ['base64', 'json-formatter'],
   },
   {
+    id: 'html-entities',
+    name: 'HTML Entity Encoder',
+    description: 'Encode or decode HTML entities for safe markup display.',
+    slug: 'html-entities',
+    categoryId: 'text',
+    status: 'active',
+    keywords: ['HTML entity encoder', 'HTML entity decoder', 'escape HTML', 'decode HTML entities'],
+    longDescription:
+      'Escape reserved HTML characters like ampersands, angle brackets, quotes, and apostrophes so snippets can be displayed safely as text. Decode entities back into readable characters when inspecting copied markup or CMS content.',
+    steps: ['Paste the HTML or entity-encoded text.', 'Choose encode or decode.', 'Copy the converted result.'],
+    useCases: ['Show code snippets inside a web page', 'Decode copied CMS text', 'Escape template examples before publishing documentation'],
+    faqs: [
+      { q: 'Which characters are encoded?', a: 'The encoder escapes the reserved characters &, <, >, ", and \'. The decoder uses the browser to decode named and numeric entities.' },
+      { q: 'Does this sanitize unsafe HTML?', a: 'No. It converts text representations. Do not treat the result as a full security sanitizer for untrusted HTML.' },
+      commonFaqPrivacy,
+    ],
+    related: ['url-encoder', 'base64', 'markdown-editor'],
+  },
+  {
     id: 'base64',
     name: 'Base64 Encoder / Decoder',
     description: 'Encode text to Base64 or decode Base64 back to text.',
