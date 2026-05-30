@@ -616,6 +616,25 @@ export const tools: Tool[] = [
     related: ['password-generator', 'hash-generator'],
   },
   {
+    id: 'timestamp-converter',
+    name: 'Timestamp Converter',
+    description: 'Convert Unix timestamps, ISO strings, and local dates.',
+    slug: 'timestamp-converter',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['timestamp converter', 'Unix time converter', 'epoch converter', 'ISO date converter'],
+    longDescription:
+      'Convert Unix epoch values in seconds or milliseconds into readable local and UTC dates, or turn a picked local date into timestamps and ISO output. Useful when debugging logs, API payloads, cache headers, and scheduled jobs.',
+    steps: ['Paste a timestamp or ISO date.', 'Choose auto-detect or a specific input format.', 'Copy the converted local, UTC, ISO, or Unix value.'],
+    useCases: ['Read timestamps from API responses', 'Convert log times while debugging incidents', 'Generate epoch values for test data or scheduled jobs'],
+    faqs: [
+      { q: 'Does it support seconds and milliseconds?', a: 'Yes. Auto-detect handles common Unix seconds and milliseconds values, and you can force either format.' },
+      { q: 'Which timezone is used for local dates?', a: 'Local output uses your browser timezone. UTC output is shown separately for portable values.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'uuid-generator', 'regex-tester'],
+  },
+  {
     id: 'color-palette',
     name: 'Color Palette Generator',
     description: 'Generate shades, tints, and HEX/RGB/HSL values from a base color.',
