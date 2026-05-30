@@ -12,7 +12,7 @@ export default function Footer() {
               Utils<span className="italic text-primary">Hub</span>
             </p>
             <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              A small workshop of browser-local utilities. Made for the small tasks that shouldn't need a server.
+              A small workshop of browser-local utilities. Made for the small tasks that shouldn&apos;t need a server.
             </p>
           </div>
 
