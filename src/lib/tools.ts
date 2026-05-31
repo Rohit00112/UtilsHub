@@ -813,6 +813,25 @@ export const tools: Tool[] = [
     ],
     related: ['utm-builder', 'json-formatter', 'timestamp-converter'],
   },
+  {
+    id: 'robots-generator',
+    name: 'Robots.txt Generator',
+    description: 'Generate robots.txt rules with sitemap and crawl-delay options.',
+    slug: 'robots-generator',
+    categoryId: 'web',
+    status: 'active',
+    keywords: ['robots.txt generator', 'SEO robots', 'crawl directives', 'sitemap directive'],
+    longDescription:
+      'Create a robots.txt file with user-agent, allow, disallow, sitemap, and crawl-delay directives. Useful when launching a site, blocking staging paths, or preparing SEO crawl rules.',
+    steps: ['Enter user-agent and path rules.', 'Add sitemap and crawl-delay if needed.', 'Copy or download robots.txt.'],
+    useCases: ['Block staging or admin paths', 'Point crawlers to your sitemap', 'Prepare launch-ready crawl directives'],
+    faqs: [
+      { q: 'Does robots.txt enforce access control?', a: 'No. It is a crawler instruction file, not a security boundary. Private content needs authentication.' },
+      { q: 'Where should the file live?', a: 'Place robots.txt at the site root, for example https://example.com/robots.txt.' },
+      commonFaqPrivacy,
+    ],
+    related: ['utm-builder', 'http-status', 'slug-generator'],
+  },
 ];
 
 export function getToolsByCategory(categoryId: string) {
