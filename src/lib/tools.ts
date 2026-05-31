@@ -598,6 +598,25 @@ export const tools: Tool[] = [
     related: ['json-formatter', 'xml-formatter'],
   },
   {
+    id: 'csv-json',
+    name: 'CSV to JSON Converter',
+    description: 'Convert CSV rows to JSON, or export JSON arrays back to CSV.',
+    slug: 'csv-json',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['CSV to JSON', 'JSON to CSV', 'CSV converter', 'convert spreadsheet data'],
+    longDescription:
+      'Convert comma, semicolon, or tab-delimited data into formatted JSON, with support for quoted CSV fields and optional header rows. You can also convert JSON arrays or objects back into CSV for spreadsheets.',
+    steps: ['Paste CSV or JSON input.', 'Choose the conversion direction and delimiter.', 'Copy the generated output.'],
+    useCases: ['Turn exported spreadsheet rows into API fixtures', 'Convert JSON responses into spreadsheet-friendly CSV', 'Inspect delimiter-separated logs or reports'],
+    faqs: [
+      { q: 'Does it handle quoted commas?', a: 'Yes. Quoted fields and doubled quotes are parsed before conversion.' },
+      { q: 'What JSON shapes convert to CSV?', a: 'Arrays of objects become header-based CSV, arrays of arrays stay row-based, and a single object becomes key/value rows.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'yaml-json', 'xml-formatter'],
+  },
+  {
     id: 'regex-tester',
     name: 'Regex Tester',
     description: 'Test JavaScript regular expressions in real time with match groups.',
