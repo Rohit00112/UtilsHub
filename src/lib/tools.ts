@@ -692,6 +692,25 @@ export const tools: Tool[] = [
     related: ['json-formatter', 'uuid-generator', 'regex-tester'],
   },
   {
+    id: 'css-unit-converter',
+    name: 'CSS Unit Converter',
+    description: 'Convert px, rem, em, %, vw, and vh with live CSS context.',
+    slug: 'css-unit-converter',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['CSS unit converter', 'px to rem', 'rem to px', 'vw calculator', 'em converter'],
+    longDescription:
+      'Convert common CSS length units using configurable root font size, parent font size, parent width, and viewport dimensions. Useful when translating design specs into responsive CSS values.',
+    steps: ['Enter a value and source unit.', 'Adjust font, parent, or viewport context.', 'Copy the equivalent CSS unit you need.'],
+    useCases: ['Convert pixel specs to rem values', 'Translate responsive widths into vw or percent', 'Compare em and rem behavior for component typography'],
+    faqs: [
+      { q: 'Why do rem and em need different font sizes?', a: 'rem uses the root font size, while em depends on the current element or parent context.' },
+      { q: 'How are percent values calculated?', a: 'Percent output is relative to the parent size you provide.' },
+      commonFaqPrivacy,
+    ],
+    related: ['color-palette', 'unit-converter', 'timestamp-converter'],
+  },
+  {
     id: 'color-palette',
     name: 'Color Palette Generator',
     description: 'Generate shades, tints, and HEX/RGB/HSL values from a base color.',
