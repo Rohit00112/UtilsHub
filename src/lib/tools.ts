@@ -455,6 +455,25 @@ export const tools: Tool[] = [
     related: ['password-generator', 'base64', 'jwt-decoder'],
   },
   {
+    id: 'hmac-generator',
+    name: 'HMAC Generator',
+    description: 'Generate HMAC signatures with SHA-256, SHA-384, or SHA-512.',
+    slug: 'hmac-generator',
+    categoryId: 'security',
+    status: 'active',
+    keywords: ['HMAC generator', 'HMAC SHA-256', 'webhook signature', 'message authentication code'],
+    longDescription:
+      'Generate keyed HMAC signatures for text payloads using the browser Web Crypto API. Choose SHA-256, SHA-384, or SHA-512 and copy the signature as hex or Base64.',
+    steps: ['Paste the message payload.', 'Enter the secret key and choose an algorithm.', 'Generate and copy the HMAC signature.'],
+    useCases: ['Create webhook test signatures', 'Verify API signing examples', 'Generate message authentication codes for fixtures'],
+    faqs: [
+      { q: 'Is the secret sent anywhere?', a: 'No. The secret and message are processed locally in your browser with Web Crypto.' },
+      { q: 'Is HMAC the same as hashing?', a: 'No. HMAC uses a secret key plus a hash function, which makes it suitable for authenticating messages.' },
+      commonFaqPrivacy,
+    ],
+    related: ['hash-generator', 'jwt-decoder', 'password-generator'],
+  },
+  {
     id: 'jwt-decoder',
     name: 'JWT Decoder',
     description: 'Decode and inspect JSON Web Tokens — header, payload, and signature.',
