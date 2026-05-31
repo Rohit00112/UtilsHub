@@ -851,6 +851,25 @@ export const tools: Tool[] = [
     ],
     related: ['utm-builder', 'robots-generator', 'slug-generator'],
   },
+  {
+    id: 'sitemap-generator',
+    name: 'Sitemap XML Generator',
+    description: 'Generate sitemap.xml from a list of URLs.',
+    slug: 'sitemap-generator',
+    categoryId: 'web',
+    status: 'active',
+    keywords: ['sitemap generator', 'sitemap.xml', 'XML sitemap', 'SEO sitemap'],
+    longDescription:
+      'Generate a valid sitemap.xml document from one URL per line. Optionally include lastmod, changefreq, and priority fields, then copy or download the finished XML.',
+    steps: ['Paste page URLs, one per line.', 'Choose sitemap metadata options.', 'Copy or download sitemap.xml.'],
+    useCases: ['Prepare a small site sitemap', 'Generate XML for static pages', 'Create a quick sitemap for launch checks'],
+    faqs: [
+      { q: 'How many URLs can a sitemap contain?', a: 'Search engines commonly support up to 50,000 URLs per sitemap file, but this browser tool is intended for smaller manual lists.' },
+      { q: 'Should every URL have lastmod?', a: 'Only include lastmod when you can provide a reliable modification date.' },
+      commonFaqPrivacy,
+    ],
+    related: ['robots-generator', 'meta-tags', 'slug-generator'],
+  },
 ];
 
 export function getToolsByCategory(categoryId: string) {
