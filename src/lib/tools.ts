@@ -77,6 +77,14 @@ export const categories: Category[] = [
       'Format JSON, XML, and Markdown; convert between YAML and JSON; test regular expressions; generate UUIDs and Lorem Ipsum; explore color palettes. Built for fast checks during code reviews, debugging, and content drafting.',
     keywords: ['developer tools', 'JSON formatter', 'UUID generator', 'regex tester', 'YAML to JSON'],
   },
+  {
+    id: 'web',
+    name: 'Web Tools',
+    description: 'SEO, URL, and site-publishing utilities.',
+    longDescription:
+      'Small browser-local helpers for shipping and debugging web pages: build campaign URLs, prepare crawl directives, inspect HTTP references, and generate metadata without sending inputs to a server.',
+    keywords: ['web tools', 'UTM builder', 'SEO tools', 'robots.txt', 'HTTP status codes'],
+  },
 ];
 
 const commonFaqPrivacy: ToolFaq = {
@@ -764,6 +772,27 @@ export const tools: Tool[] = [
       commonFaqPrivacy,
     ],
     related: ['lorem-ipsum', 'word-counter', 'json-formatter'],
+  },
+
+  // Web
+  {
+    id: 'utm-builder',
+    name: 'UTM Builder',
+    description: 'Build campaign URLs with UTM parameters and custom query values.',
+    slug: 'utm-builder',
+    categoryId: 'web',
+    status: 'active',
+    keywords: ['UTM builder', 'campaign URL builder', 'utm_source', 'utm_campaign'],
+    longDescription:
+      'Create trackable campaign URLs by adding UTM source, medium, campaign, term, content, and custom query parameters to any base URL. Existing query strings are preserved and updated in place.',
+    steps: ['Paste the destination URL.', 'Fill in UTM campaign fields.', 'Copy the generated tracking URL.'],
+    useCases: ['Prepare newsletter links', 'Tag paid social campaigns', 'Create consistent analytics URLs for partner referrals'],
+    faqs: [
+      { q: 'Are existing query parameters preserved?', a: 'Yes. Existing parameters remain unless a UTM field uses the same key, in which case the new value replaces it.' },
+      { q: 'Do I need every UTM field?', a: 'No. Source, medium, and campaign are the most common; term and content are optional.' },
+      commonFaqPrivacy,
+    ],
+    related: ['url-encoder', 'slug-generator', 'timestamp-converter'],
   },
 ];
 
