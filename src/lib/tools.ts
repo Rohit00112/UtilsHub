@@ -832,6 +832,25 @@ export const tools: Tool[] = [
     ],
     related: ['utm-builder', 'http-status', 'slug-generator'],
   },
+  {
+    id: 'meta-tags',
+    name: 'Meta Tag Generator',
+    description: 'Generate SEO, Open Graph, and Twitter card meta tags.',
+    slug: 'meta-tags',
+    categoryId: 'web',
+    status: 'active',
+    keywords: ['meta tag generator', 'Open Graph generator', 'Twitter card tags', 'SEO metadata'],
+    longDescription:
+      'Create copy-ready HTML meta tags for search engines, Open Graph previews, and Twitter cards. Enter title, description, canonical URL, image URL, and robots preferences to generate a clean head snippet.',
+    steps: ['Enter page metadata.', 'Choose robots and card options.', 'Copy the generated HTML tags into your page head.'],
+    useCases: ['Prepare metadata for a landing page', 'Create social preview tags for a blog post', 'Generate robots directives for one page'],
+    faqs: [
+      { q: 'Does this validate social previews?', a: 'No. It generates the tags. Use platform debuggers after publishing to verify crawled previews.' },
+      { q: 'What title length is best?', a: 'Around 50 to 60 characters is a common target for search results, though display varies by query and device.' },
+      commonFaqPrivacy,
+    ],
+    related: ['utm-builder', 'robots-generator', 'slug-generator'],
+  },
 ];
 
 export function getToolsByCategory(categoryId: string) {
