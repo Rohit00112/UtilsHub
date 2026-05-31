@@ -794,6 +794,25 @@ export const tools: Tool[] = [
     ],
     related: ['url-encoder', 'slug-generator', 'timestamp-converter'],
   },
+  {
+    id: 'http-status',
+    name: 'HTTP Status Codes',
+    description: 'Search HTTP status codes with meanings and copyable status lines.',
+    slug: 'http-status',
+    categoryId: 'web',
+    status: 'active',
+    keywords: ['HTTP status codes', 'HTTP 404', 'HTTP 500', 'status code reference'],
+    longDescription:
+      'Search common HTTP status codes by number, phrase, or class. See what each code means, when to use it, and copy status lines for docs, tests, or mock responses.',
+    steps: ['Search by code or phrase.', 'Filter by status class if needed.', 'Copy the status line you want.'],
+    useCases: ['Pick the right API response code', 'Document mock server behavior', 'Debug browser and server logs'],
+    faqs: [
+      { q: 'Does this include every registered status code?', a: 'It focuses on common and widely useful HTTP status codes across the 1xx through 5xx classes.' },
+      { q: 'Can I copy a status line?', a: 'Yes. Each row has a copy action for values like 404 Not Found.' },
+      commonFaqPrivacy,
+    ],
+    related: ['utm-builder', 'json-formatter', 'timestamp-converter'],
+  },
 ];
 
 export function getToolsByCategory(categoryId: string) {
