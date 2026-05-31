@@ -217,6 +217,25 @@ export const tools: Tool[] = [
     related: ['case-converter', 'remove-duplicates-lines', 'diff-checker'],
   },
   {
+    id: 'slug-generator',
+    name: 'Slug Generator',
+    description: 'Turn titles or phrases into clean URL slugs.',
+    slug: 'slug-generator',
+    categoryId: 'text',
+    status: 'active',
+    keywords: ['slug generator', 'URL slug', 'SEO slug', 'permalink generator'],
+    longDescription:
+      'Generate URL-friendly slugs from titles, headings, filenames, or product names. Options let you pick separators, strip common stop words, remove accents, and limit the final length.',
+    steps: ['Paste a title or phrase.', 'Adjust separator and cleanup options.', 'Copy the generated slug.'],
+    useCases: ['Create blog post permalinks', 'Normalize product URLs', 'Prepare file-safe names for static assets'],
+    faqs: [
+      { q: 'Does it remove accents?', a: 'Yes. Accented Latin characters are normalized to their base characters before the slug is generated.' },
+      { q: 'Can I keep underscores instead of dashes?', a: 'Yes. Choose dash or underscore as the separator.' },
+      commonFaqPrivacy,
+    ],
+    related: ['case-converter', 'url-encoder', 'html-entities'],
+  },
+  {
     id: 'url-encoder',
     name: 'URL Encoder',
     description: 'Encode or decode URLs and query strings safely.',
