@@ -287,13 +287,14 @@ export const tools: Tool[] = [
     slug: 'base64',
     categoryId: 'text',
     status: 'active',
-    keywords: ['Base64 encode', 'Base64 decode', 'Base64 converter'],
+    keywords: ['Base64 encode', 'Base64 decode', 'Base64 converter', 'Base64URL', 'URL safe Base64'],
     longDescription:
-      'Convert UTF-8 text to Base64, or decode a Base64 string back to its original text. Handy for debugging tokens, embedded payloads, or quick data-URI inspection.',
-    steps: ['Paste text or a Base64 string.', 'Pick encode or decode.', 'Copy the output.'],
-    useCases: ['Inspect a Base64 JWT payload', 'Decode a data: URI', 'Encode a config value for storage'],
+      'Convert UTF-8 text to standard or URL-safe Base64, or decode Base64 back to its original text. Handy for debugging tokens, embedded payloads, config values, or Base64URL strings used in web-safe contexts.',
+    steps: ['Paste text or a Base64 string.', 'Pick encode or decode and choose the output variant.', 'Copy the output.'],
+    useCases: ['Inspect a Base64 JWT payload', 'Decode a data: URI', 'Encode a config value for storage', 'Create Base64URL strings for web-safe identifiers'],
     faqs: [
       { q: 'Does it handle Unicode (emoji, accents)?', a: 'Yes. Encoding goes through UTF-8 first so non-ASCII characters round-trip correctly.' },
+      { q: 'Can it decode Base64URL?', a: 'Yes. Decode mode accepts standard Base64 and URL-safe Base64 with optional padding.' },
       { q: 'Can I decode an image data: URI?', a: 'You can decode the Base64 portion to its raw bytes, but rendering an image requires saving those bytes as a file.' },
       commonFaqPrivacy,
     ],
