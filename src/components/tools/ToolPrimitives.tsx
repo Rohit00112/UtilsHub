@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from 'react';
 import { AlertCircle, CheckCircle2, Info, Upload, XCircle } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -150,12 +151,12 @@ export function ToolField({
     );
 }
 
-export function ToolTextarea({
-    className,
-    ...props
-}: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-    return <textarea {...props} className={cn('textarea font-mono leading-relaxed', className)} />;
-}
+export const ToolTextarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(function ToolTextarea(
+    { className, ...props },
+    ref
+) {
+    return <textarea ref={ref} {...props} className={cn('textarea font-mono leading-relaxed', className)} />;
+});
 
 export function ToolEmptyState({
     icon,
