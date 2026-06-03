@@ -100,6 +100,25 @@ const commonFaqFree: ToolFaq = {
 export const tools: Tool[] = [
   // PDF
   {
+    id: 'pdf-merger',
+    name: 'PDF Merger',
+    description: 'Combine multiple PDF files into one ordered document.',
+    slug: 'merger',
+    categoryId: 'pdf',
+    status: 'active',
+    keywords: ['merge PDF', 'combine PDF files', 'PDF merger online', 'join PDFs'],
+    longDescription:
+      'Merge two or more PDF files into a single document directly in your browser. Arrange files in the order you want, preserve all pages, and download one combined PDF without uploading documents to a server.',
+    steps: ['Upload two or more PDFs.', 'Arrange files from top to bottom in merge order.', 'Merge and download the combined PDF.'],
+    useCases: ['Combine invoices into one monthly packet', 'Join scanned documents before emailing', 'Merge report sections exported from separate apps'],
+    faqs: [
+      { q: 'Can I reorder files before merging?', a: 'Yes. Use the move controls to arrange the PDFs before creating the merged output.' },
+      { q: 'Does merging change page quality?', a: 'No. Pages are copied into a new PDF without rasterizing or down-sampling the content.' },
+      commonFaqPrivacy,
+    ],
+    related: ['pdf-splitter', 'pdf-compressor', 'pdf-compare'],
+  },
+  {
     id: 'pdf-compare',
     name: 'PDF Compare',
     description: 'Compare two PDF files for textual differences.',
@@ -124,7 +143,7 @@ export const tools: Tool[] = [
       { q: 'Are scanned PDFs supported?', a: 'Only if the scan has been OCR-processed and the PDF contains real text layers. Pure image scans produce no extractable text.' },
       commonFaqPrivacy,
     ],
-    related: ['pdf-splitter', 'pdf-compressor', 'diff-checker'],
+    related: ['pdf-merger', 'pdf-splitter', 'pdf-compressor', 'diff-checker'],
   },
   {
     id: 'pdf-splitter',
@@ -151,7 +170,7 @@ export const tools: Tool[] = [
       { q: 'Does splitting reduce quality?', a: 'No. Pages are copied byte-for-byte; there is no re-encoding.' },
       commonFaqPrivacy,
     ],
-    related: ['pdf-compressor', 'pdf-compare'],
+    related: ['pdf-merger', 'pdf-compressor', 'pdf-compare'],
   },
   {
     id: 'pdf-compressor',
@@ -178,7 +197,7 @@ export const tools: Tool[] = [
       { q: 'Is image quality reduced?', a: 'The current implementation focuses on structural optimization, not aggressive image down-sampling, so visual quality is preserved.' },
       commonFaqPrivacy,
     ],
-    related: ['pdf-splitter', 'pdf-compare'],
+    related: ['pdf-merger', 'pdf-splitter', 'pdf-compare'],
   },
 
   // Text
