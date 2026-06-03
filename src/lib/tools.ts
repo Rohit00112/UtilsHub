@@ -66,8 +66,8 @@ export const categories: Category[] = [
     name: 'Calculators',
     description: 'Quick financial and mathematical calculations.',
     longDescription:
-      'Common everyday calculators: monthly EMI for loans, BMI from height and weight, age from a date of birth, and unit conversions across length, weight, temperature, and more. Inputs are computed locally.',
-    keywords: ['online calculators', 'EMI calculator', 'BMI calculator', 'unit converter', 'age calculator'],
+      'Common everyday calculators: monthly EMI for loans, GST tax breakdowns, BMI from height and weight, age from a date of birth, and unit conversions across length, weight, temperature, and more. Inputs are computed locally.',
+    keywords: ['online calculators', 'EMI calculator', 'GST calculator', 'BMI calculator', 'unit converter', 'age calculator'],
   },
   {
     id: 'developer',
@@ -530,7 +530,27 @@ export const tools: Tool[] = [
       { q: 'How is EMI calculated?', a: 'Using the standard formula EMI = P × r × (1+r)ⁿ / ((1+r)ⁿ − 1), where P is principal, r is the monthly interest rate, and n is the number of months.' },
       { q: 'Does it handle floating rates?', a: 'It assumes a fixed rate for the full term. For floating rates, recalculate when the rate changes.' },
     ],
-    related: ['bmi-calculator', 'unit-converter'],
+    related: ['gst-calculator', 'bmi-calculator', 'unit-converter'],
+  },
+  {
+    id: 'gst-calculator',
+    name: 'GST Calculator',
+    description: 'Add or remove GST and split tax into CGST, SGST, IGST, and cess.',
+    slug: 'gst',
+    categoryId: 'calculator',
+    status: 'active',
+    keywords: ['GST calculator', 'CGST SGST calculator', 'IGST calculator', 'GST inclusive calculator', 'tax calculator India'],
+    longDescription:
+      'Calculate GST for tax-exclusive or tax-inclusive amounts. Choose standard GST rates, add optional compensation cess, and split the result into CGST + SGST for intra-state supplies or IGST for inter-state supplies.',
+    steps: ['Enter the taxable or tax-inclusive amount.', 'Choose add GST or remove GST, then select the GST rate and supply type.', 'Review the taxable value, tax split, cess, and invoice total.'],
+    useCases: ['Prepare an invoice total from a pre-tax amount', 'Extract taxable value from a GST-inclusive price', 'Split GST into CGST and SGST or IGST for accounting entries'],
+    faqs: [
+      { q: 'What is the difference between Add GST and Remove GST?', a: 'Add GST treats the entered amount as taxable value before tax. Remove GST treats it as an amount that already includes GST and backs out the taxable value.' },
+      { q: 'Does it tell me which GST rate applies?', a: 'No. It calculates with the rate you enter. GST rates depend on the item, service, exemption, and notification, so confirm the applicable rate before invoicing.' },
+      { q: 'When should I use CGST + SGST instead of IGST?', a: 'Use CGST + SGST for intra-state supplies and IGST for inter-state supplies. Confirm with your accountant for compliance-specific cases.' },
+      commonFaqPrivacy,
+    ],
+    related: ['emi-calculator', 'unit-converter'],
   },
   {
     id: 'bmi-calculator',
