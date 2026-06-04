@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, ChevronRight, Plus } from 'lucide-react';
+import { ArrowRight, ChevronRight, HelpCircle, Plus } from 'lucide-react';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import { getCategoryById, getToolsByCategory, categories } from '@/lib/tools';
 import { categoryJsonLd, getCategoryMetadata } from '@/lib/seo';
@@ -25,14 +25,17 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
     notFound();
   }
 
-  const jsonLd = categoryJsonLd(category);
+  const jsonLdParts = categoryJsonLd(category);
 
   return (
     <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLdParts.map((node, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
       <div className="border-b border-border/60 bg-background">
         <div className="container py-10">
           <nav className="mb-6 flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
@@ -100,6 +103,26 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
               </p>
             </div>
           </div>
+
+          {category.faqs && category.faqs.length > 0 && (
+            <div className="mx-auto mt-14 max-w-3xl border-t border-border/60 pt-10">
+              <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
+                <HelpCircle className="h-5 w-5 text-muted-foreground" />
+                Frequently asked questions
+              </h2>
+              <div className="mt-4 divide-y divide-border/60 rounded-lg border bg-card">
+                {category.faqs.map((faq, i) => (
+                  <details key={i} className="group p-5">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-foreground">
+                      {faq.q}
+                      <span className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
+                    </summary>
+                    <p className="mt-3 text-base leading-7 text-muted-foreground text-pretty">{faq.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

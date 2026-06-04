@@ -167,7 +167,7 @@ export function organizationJsonLd() {
 }
 
 export function categoryJsonLd(category: Category) {
-  return {
+  const collectionPage = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: `${category.name} | ${siteName}`,
@@ -187,6 +187,23 @@ export function categoryJsonLd(category: Category) {
       },
     })),
   };
+
+  if (!category.faqs || category.faqs.length === 0) return [collectionPage];
+
+  const faqPage = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: category.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+
+  return [collectionPage, faqPage];
 }
 
 export function toolJsonLd(tool: Tool) {

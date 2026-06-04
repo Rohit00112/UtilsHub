@@ -71,7 +71,7 @@ export default function Home() {
                         </div>
 
                         <div className="mt-10 max-w-xl">
-                            <SearchLauncher label="Search 30+ tools by task or format" className="h-12 px-4" />
+                            <SearchLauncher label={`Search ${activeTools.length}+ tools by task or format`} className="h-12 px-4" />
                         </div>
 
                         <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
