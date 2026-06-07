@@ -759,6 +759,27 @@ export const tools: Tool[] = [
     related: ['json-formatter', 'diff-checker', 'yaml-json'],
   },
   {
+    id: 'json-schema-generator',
+    name: 'JSON Schema Generator',
+    description: 'Infer a JSON Schema draft from sample JSON data.',
+    slug: 'json-schema-generator',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['JSON schema generator', 'generate JSON schema', 'JSON schema from JSON', 'schema inference'],
+    longDescription:
+      'JSON Schema Generator turns a sample JSON document into a draft 2020-12 JSON Schema. Paste an object, array, or nested payload and the tool infers primitive types, object properties, required keys, array item shapes, nullable unions, and nested schemas. It is a fast way to bootstrap validation rules from an API response, mock payload, config file, or fixture before refining the schema by hand.\n\nSchema generation runs entirely in your browser. The sample you paste is parsed locally, and the generated schema can optionally include the original JSON as an example for documentation or testing.',
+    steps: ['Paste sample JSON.', 'Optionally name the schema and include an example.', 'Copy the generated JSON Schema draft.'],
+    useCases: ['Bootstrap a schema from an API response', 'Document config file structure', 'Create a starting point for request validation'],
+    faqs: [
+      { q: 'Which JSON Schema draft is generated?', a: 'The tool outputs a draft 2020-12 schema.' },
+      { q: 'Does it infer every possible validation rule?', a: 'No. It infers structure and basic types from the sample. Constraints like minLength, formats, patterns, and business rules should be added manually.' },
+      { q: 'How are object keys handled?', a: 'Keys present in the sample object are marked as required and additionalProperties is set to false by default.' },
+      { q: 'Is my JSON uploaded?', a: 'No. The input is parsed and converted locally in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'json-diff', 'openapi-viewer'],
+  },
+  {
     id: 'url-parser',
     name: 'URL Parser & Query Builder',
     description: 'Parse URL components, edit query parameters, and rebuild encoded links.',
