@@ -724,6 +724,27 @@ export const tools: Tool[] = [
     related: ['xml-formatter', 'yaml-json', 'jwt-decoder'],
   },
   {
+    id: 'json-diff',
+    name: 'JSON Diff Viewer',
+    description: 'Compare two JSON objects with normalized formatting and highlighted changes.',
+    slug: 'json-diff',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['JSON diff', 'compare JSON', 'JSON compare online', 'JSON difference checker', 'JSON viewer'],
+    longDescription:
+      'JSON Diff Viewer compares two JSON documents after parsing and normalizing them, so key order and whitespace do not hide the real changes. Paste an original payload and a changed payload, run the comparison, and the tool highlights added and removed lines in a readable diff. This makes it useful for API response reviews, config changes, webhook payload checks, and debugging small differences between environments.\n\nBoth inputs are parsed with the browser\'s strict JSON.parse and then re-rendered with stable sorted keys before diffing. That means invalid JSON is caught early, while valid objects are compared in a consistent shape. Everything runs locally in your browser, so API responses, logs, and configuration values are never uploaded to a server.',
+    steps: ['Paste the original JSON.', 'Paste the changed JSON.', 'Compare the normalized documents and review highlighted changes.'],
+    useCases: ['Review API response changes', 'Compare config files before deployment', 'Debug webhook payload differences'],
+    faqs: [
+      { q: 'Does key order affect the result?', a: 'No. Object keys are sorted before comparison, so the diff focuses on value and structure changes rather than formatting or key order.' },
+      { q: 'Does it support comments or trailing commas?', a: 'No. The tool uses strict JSON.parse, so comments, trailing commas, and other JSON5 features are reported as invalid JSON.' },
+      { q: 'Can I copy the diff result?', a: 'Yes. The result can be copied as plain text with added and removed lines prefixed for easy sharing.' },
+      { q: 'Is my JSON uploaded anywhere?', a: 'No. The parse, normalization, and comparison all happen in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'diff-checker', 'yaml-json'],
+  },
+  {
     id: 'xml-formatter',
     name: 'XML Formatter',
     description: 'Prettify, minify, and format XML documents.',
