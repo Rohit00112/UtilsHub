@@ -1074,6 +1074,27 @@ export const tools: Tool[] = [
     ],
     related: ['api-request-tester', 'http-headers-analyzer', 'url-parser'],
   },
+  {
+    id: 'openapi-viewer',
+    name: 'OpenAPI Viewer',
+    description: 'Paste an OpenAPI or Swagger document and inspect endpoints, responses, and schemas.',
+    slug: 'openapi-viewer',
+    categoryId: 'api',
+    status: 'active',
+    keywords: ['OpenAPI viewer', 'Swagger viewer', 'API spec viewer', 'OpenAPI parser', 'Swagger parser'],
+    longDescription:
+      'OpenAPI Viewer reads an OpenAPI or Swagger document and turns it into a browsable endpoint summary. Paste JSON or YAML and the tool extracts API title, version, servers, operation methods, paths, summaries, tags, parameters, request body presence, response codes, and schema count. It is useful when reviewing an API contract, scanning a generated spec, or quickly understanding a third-party API without opening a heavier documentation UI.\n\nParsing uses the browser and the existing YAML parser, so the specification stays local. The viewer does not call any endpoints; it only reads the document you paste and formats the API structure for review.',
+    steps: ['Paste an OpenAPI JSON or YAML document.', 'Review API metadata, servers, and endpoint cards.', 'Copy the compact endpoint summary when needed.'],
+    useCases: ['Review an API contract during code review', 'Inspect generated OpenAPI files', 'Summarize endpoints for documentation or QA'],
+    faqs: [
+      { q: 'Does it support YAML and JSON?', a: 'Yes. The viewer accepts both JSON and YAML OpenAPI or Swagger documents.' },
+      { q: 'Does it call the API endpoints?', a: 'No. It only parses the specification text you paste.' },
+      { q: 'Which versions are supported?', a: 'It is designed for OpenAPI 3.x and Swagger 2.0 style documents with standard paths and operations.' },
+      { q: 'Is my API spec uploaded?', a: 'No. Parsing and rendering happen entirely in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['api-request-tester', 'curl-converter', 'json-formatter'],
+  },
 
   // Web
   {
