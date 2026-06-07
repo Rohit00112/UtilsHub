@@ -1095,6 +1095,26 @@ export const tools: Tool[] = [
     ],
     related: ['api-request-tester', 'curl-converter', 'json-formatter'],
   },
+  {
+    id: 'websocket-tester',
+    name: 'WebSocket Tester',
+    description: 'Connect to WebSocket endpoints, send messages, and inspect realtime events.',
+    slug: 'websocket-tester',
+    categoryId: 'api',
+    status: 'active',
+    keywords: ['WebSocket tester', 'websocket client', 'wss tester', 'realtime API tester', 'socket tester'],
+    longDescription:
+      'WebSocket Tester gives you a lightweight browser client for realtime endpoints. Enter a ws:// or wss:// URL, open the connection, send text or JSON messages, and watch connection events, sent messages, received messages, errors, and close codes in a timestamped log. It is a practical way to verify echo services, realtime APIs, notification channels, GraphQL subscriptions, and socket gateways while debugging frontend integrations.\n\nConnections are opened directly from your browser to the WebSocket server. UtilsHub does not proxy, store, or inspect messages, and the event log stays on your device until you clear it or leave the page.',
+    steps: ['Enter a WebSocket URL.', 'Connect and send a text or JSON message.', 'Review incoming messages and connection events in the log.'],
+    useCases: ['Test realtime API connectivity', 'Debug WebSocket message payloads', 'Inspect close codes and connection errors'],
+    faqs: [
+      { q: 'Does this proxy WebSocket traffic through UtilsHub?', a: 'No. The browser connects directly to the WebSocket URL you enter.' },
+      { q: 'Can I send JSON messages?', a: 'Yes. Messages are sent as text, so you can paste JSON, plain text, or protocol-specific commands.' },
+      { q: 'Why did the connection fail?', a: 'Common reasons include an invalid URL, TLS problems, network blocks, server origin policy, or the endpoint not supporting browser WebSocket clients.' },
+      { q: 'Are messages stored?', a: 'No. Messages remain in the in-page log in your browser and can be cleared at any time.' },
+    ],
+    related: ['api-request-tester', 'http-headers-analyzer', 'openapi-viewer'],
+  },
 
   // Web
   {
