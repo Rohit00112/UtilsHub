@@ -801,6 +801,27 @@ export const tools: Tool[] = [
     related: ['json-schema-generator', 'json-formatter', 'json-diff'],
   },
   {
+    id: 'sql-formatter',
+    name: 'SQL Formatter',
+    description: 'Format or minify SQL queries with readable keyword casing and indentation.',
+    slug: 'sql-formatter',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['SQL formatter', 'SQL beautifier', 'SQL minifier', 'format SQL online', 'SQL pretty print'],
+    longDescription:
+      'SQL Formatter cleans up dense SQL queries into a more readable layout or minifies formatted SQL into a compact single line. Paste a query, choose formatting or minify mode, pick uppercase or lowercase keywords, and adjust indentation. The formatter handles common SELECT, JOIN, WHERE, GROUP BY, ORDER BY, INSERT, UPDATE, DELETE, and RETURNING clauses well enough for everyday query review and sharing.\n\nEverything runs locally in your browser, so database queries, table names, and internal schema details are not uploaded. Use it during debugging, code review, documentation, or when turning a copied query into something a teammate can scan quickly.',
+    steps: ['Paste SQL.', 'Choose format or minify mode and keyword casing.', 'Copy the output.'],
+    useCases: ['Clean up a query before code review', 'Minify SQL for embedding in code', 'Make copied database logs readable'],
+    faqs: [
+      { q: 'Which SQL dialect is supported?', a: 'The formatter targets common SQL syntax rather than one specific dialect. Dialect-specific constructs may still need manual cleanup.' },
+      { q: 'Does it execute the query?', a: 'No. It only formats text and never connects to a database.' },
+      { q: 'Can it minify SQL?', a: 'Yes. Use minify mode to collapse whitespace while preserving the query text.' },
+      { q: 'Is my SQL uploaded?', a: 'No. Formatting runs entirely in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'regex-tester', 'csv-json'],
+  },
+  {
     id: 'url-parser',
     name: 'URL Parser & Query Builder',
     description: 'Parse URL components, edit query parameters, and rebuild encoded links.',
