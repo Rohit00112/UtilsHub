@@ -766,6 +766,27 @@ export const tools: Tool[] = [
     related: ['url-encoder', 'utm-builder', 'json-formatter'],
   },
   {
+    id: 'cron-helper',
+    name: 'Cron Expression Helper',
+    description: 'Explain cron expressions and preview the next scheduled run times.',
+    slug: 'cron-helper',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['cron expression helper', 'cron parser', 'cron schedule preview', 'cron next run', 'crontab explainer'],
+    longDescription:
+      'Cron Expression Helper turns terse cron schedules into readable explanations and shows the next run times from a chosen starting point. Enter a five-field or six-field cron expression, or load a common preset, and the tool explains the schedule in plain language, breaks down each field, and previews the next ten executions. It is useful when checking a deployment job, background worker, cleanup task, report schedule, or monitoring rule before shipping it.\n\nThe helper uses cronstrue for human-readable descriptions and cron-parser for schedule iteration, including timezone-aware previews. Your expression and dates are processed entirely in your browser, so internal job schedules and infrastructure details stay on your device.',
+    steps: ['Enter a cron expression or choose a preset.', 'Set the timezone and starting date.', 'Review the explanation, field breakdown, and next ten run times.'],
+    useCases: ['Verify a production cron job before deployment', 'Explain a schedule during code review', 'Preview timezone-aware run times for recurring jobs'],
+    faqs: [
+      { q: 'Does it support five-field and six-field cron?', a: 'Yes. Five-field expressions use an implicit zero seconds field, and six-field expressions include seconds explicitly.' },
+      { q: 'Can I preview run times in a timezone?', a: 'Yes. Enter an IANA timezone such as UTC, America/New_York, or Asia/Kathmandu to generate timezone-aware previews.' },
+      { q: 'Does it support predefined expressions?', a: 'Yes. Common expressions such as @daily, @weekly, @monthly, @weekdays, and @weekends are supported.' },
+      { q: 'Is my cron expression uploaded?', a: 'No. The explanation and next-run calculation happen locally in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['timestamp-converter', 'regex-tester', 'json-formatter'],
+  },
+  {
     id: 'xml-formatter',
     name: 'XML Formatter',
     description: 'Prettify, minify, and format XML documents.',
