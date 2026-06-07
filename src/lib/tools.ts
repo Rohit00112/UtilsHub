@@ -1033,6 +1033,26 @@ export const tools: Tool[] = [
     ],
     related: ['http-status', 'url-parser', 'json-formatter'],
   },
+  {
+    id: 'api-request-tester',
+    name: 'API Request Tester',
+    description: 'Send browser-side HTTP requests and inspect status, headers, and body.',
+    slug: 'request-tester',
+    categoryId: 'api',
+    status: 'active',
+    keywords: ['API request tester', 'HTTP request tester', 'REST API tester', 'fetch tester', 'API client online'],
+    longDescription:
+      'API Request Tester lets you send HTTP requests from the browser and inspect the response without installing a desktop client. Choose the method, enter the URL, add request headers, include a raw body when the method supports it, and send the request directly from your browser. The response view shows status, timing, exposed response headers, and the body, with JSON responses formatted for easier reading.\n\nBecause requests are made by the browser, normal browser networking rules still apply: CORS can block a request, HTTPS restrictions matter, and some headers cannot be set by client-side JavaScript. That makes this tool especially useful for testing public APIs, CORS behavior, mock endpoints, and simple REST calls while staying clear about what the browser can and cannot do.',
+    steps: ['Choose an HTTP method and enter the request URL.', 'Add optional headers and body content.', 'Send the request and inspect the response status, headers, and body.'],
+    useCases: ['Test a public REST endpoint', 'Debug CORS behavior from the browser', 'Inspect JSON responses without a desktop API client'],
+    faqs: [
+      { q: 'Why does a request fail even when curl works?', a: 'The browser enforces CORS, mixed-content, and forbidden-header rules. A server-side or terminal request may not face the same restrictions.' },
+      { q: 'Where is the request sent from?', a: 'The request is sent directly from your browser to the URL you enter, not through a UtilsHub proxy.' },
+      { q: 'Can I include cookies or credentials?', a: 'Yes. Enable the credentials option, but the target server must still allow credentialed browser requests.' },
+      { q: 'Are responses stored by UtilsHub?', a: 'No. The response is read in your browser and is not uploaded to a UtilsHub server.' },
+    ],
+    related: ['http-headers-analyzer', 'http-status', 'url-parser'],
+  },
 
   // Web
   {
