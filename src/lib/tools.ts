@@ -745,6 +745,27 @@ export const tools: Tool[] = [
     related: ['json-formatter', 'diff-checker', 'yaml-json'],
   },
   {
+    id: 'url-parser',
+    name: 'URL Parser & Query Builder',
+    description: 'Parse URL components, edit query parameters, and rebuild encoded links.',
+    slug: 'url-parser',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['URL parser', 'query parameter builder', 'URL parts', 'parse URL online', 'URL query editor'],
+    longDescription:
+      'URL Parser & Query Builder breaks a URL into the parts developers actually need to inspect: protocol, host, hostname, port, pathname, hash, origin, and query parameters. Paste a full URL or a host with a path, and the tool uses the browser\'s native URL APIs to parse it accurately. If the scheme is missing, it assumes HTTPS for parsing and clearly notes that fallback instead of silently changing your input.\n\nThe query builder turns parameters into editable rows, preserving duplicate keys and row order so URLs with repeated filters or tags remain faithful. Change values, add or remove rows, then copy the rebuilt URL or a JSON view of the query parameters. Everything runs in your browser, making it safe for debugging internal links, signed redirect URLs, analytics parameters, and API callback URLs without uploading them anywhere.',
+    steps: ['Paste a URL or host name.', 'Review the parsed URL parts and query rows.', 'Edit query parameters and copy the rebuilt URL or query JSON.'],
+    useCases: ['Debug redirect and callback URLs', 'Inspect repeated query parameters', 'Rebuild encoded links for API tests'],
+    faqs: [
+      { q: 'What happens if I paste a URL without https?', a: 'The tool parses it as HTTPS and shows a note so you know a scheme was assumed.' },
+      { q: 'Are duplicate query parameters preserved?', a: 'Yes. Query rows use URLSearchParams append behavior, so repeated keys remain repeated in the rebuilt URL.' },
+      { q: 'Can I copy query parameters as JSON?', a: 'Yes. Repeated keys are represented as arrays so the copied JSON does not lose duplicate values.' },
+      { q: 'Does this send URLs to a server?', a: 'No. Parsing, editing, and rebuilding all happen locally in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['url-encoder', 'utm-builder', 'json-formatter'],
+  },
+  {
     id: 'xml-formatter',
     name: 'XML Formatter',
     description: 'Prettify, minify, and format XML documents.',
