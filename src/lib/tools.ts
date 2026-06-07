@@ -1053,6 +1053,27 @@ export const tools: Tool[] = [
     ],
     related: ['http-headers-analyzer', 'http-status', 'url-parser'],
   },
+  {
+    id: 'curl-converter',
+    name: 'cURL to Code Converter',
+    description: 'Convert common cURL commands into fetch, Axios, or Python requests.',
+    slug: 'curl-converter',
+    categoryId: 'api',
+    status: 'active',
+    keywords: ['curl to code', 'curl to fetch', 'curl to axios', 'curl to python requests', 'curl converter'],
+    longDescription:
+      'cURL to Code Converter turns a command copied from documentation, DevTools, or a terminal into starter code for JavaScript fetch, Axios, or Python requests. Paste the cURL command and the tool extracts the URL, method, headers, and request body from common flags such as -X, -H, -d, --url, --head, and --user. The generated code is ready to copy into a test script, frontend prototype, or backend integration.\n\nThe converter runs entirely in your browser and does not execute the command or send a network request. It is designed for fast translation of everyday API examples rather than full shell emulation, so unsupported flags are shown as warnings instead of being silently ignored.',
+    steps: ['Paste a cURL command.', 'Choose fetch, Axios, or Python output.', 'Copy the generated starter code.'],
+    useCases: ['Turn API docs into working fetch code', 'Convert DevTools copy-as-cURL output', 'Create a quick Python requests snippet'],
+    faqs: [
+      { q: 'Does this execute the cURL command?', a: 'No. It only parses the text and generates code locally in your browser.' },
+      { q: 'Which flags are supported?', a: 'Common flags for method, headers, body data, URL, HEAD requests, GET mode, and basic auth are supported. Unsupported flags are reported as warnings.' },
+      { q: 'Is the generated code production-ready?', a: 'It is starter code. Review authentication, error handling, retries, secrets, and encoding before using it in production.' },
+      { q: 'Are pasted commands uploaded?', a: 'No. Parsing and code generation happen entirely in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['api-request-tester', 'http-headers-analyzer', 'url-parser'],
+  },
 
   // Web
   {
