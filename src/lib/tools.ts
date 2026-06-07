@@ -115,6 +115,20 @@ export const categories: Category[] = [
     ],
   },
   {
+    id: 'api',
+    name: 'API & Network Tools',
+    description: 'Inspect requests, headers, sockets, and API specifications.',
+    longDescription:
+      'UtilsHub\'s API and network tools help engineers debug HTTP and realtime integrations without leaving the browser. Inspect response headers, test requests, convert cURL commands, preview OpenAPI documents, and work with WebSocket messages from a local-first toolkit designed for API development. These tools are especially useful during integration work, code review, QA handoff, and production incident triage, where small details like a cache directive, CORS header, or malformed request body can explain hours of confusion.',
+    keywords: ['API tools', 'HTTP headers', 'API tester', 'curl converter', 'OpenAPI viewer', 'WebSocket tester'],
+    faqs: [
+      { q: 'Are API tool inputs stored by UtilsHub?', a: 'No. Inputs are handled in your browser. Tools that send requests connect directly from your browser to the URL you choose.' },
+      { q: 'Why might an API request fail in the browser?', a: 'Browser security rules such as CORS can block requests even when the same URL works from a server or terminal.' },
+      { q: 'Can I use these tools with private APIs?', a: 'Yes, if your browser can reach the API and the API allows the request. Be careful with secrets and tokens in shared machines.' },
+      { q: 'Are these tools free?', a: 'Yes. All UtilsHub API and network tools are free to use with no account or quota.' },
+    ],
+  },
+  {
     id: 'web',
     name: 'Web Tools',
     description: 'SEO, URL, and site-publishing utilities.',
@@ -995,6 +1009,29 @@ export const tools: Tool[] = [
       commonFaqPrivacy,
     ],
     related: ['lorem-ipsum', 'word-counter', 'json-formatter'],
+  },
+
+  // API & Network
+  {
+    id: 'http-headers-analyzer',
+    name: 'HTTP Headers Analyzer',
+    description: 'Paste response headers and review security, cache, and CORS signals.',
+    slug: 'http-headers',
+    categoryId: 'api',
+    status: 'active',
+    keywords: ['HTTP headers analyzer', 'security headers checker', 'cache control checker', 'CORS headers', 'response headers'],
+    longDescription:
+      'HTTP Headers Analyzer turns a raw response header block into a readable report. Paste headers from DevTools, curl, a proxy, or an API client, and the tool parses each header, checks common production signals, and highlights missing or risky security, cache, and CORS settings. It is a fast way to review whether a response includes HSTS, Content Security Policy, MIME sniffing protection, referrer controls, cache directives, and cross-origin rules.\n\nThe analyzer is local-only: it does not fetch a URL or upload your headers. That makes it safe for inspecting internal endpoints, staging environments, and incident logs. Use it during code review, release checks, and API debugging to turn dense header text into a compact checklist.',
+    steps: ['Paste raw response headers.', 'Review parsed header rows and analysis findings.', 'Copy the summary for a ticket or review note.'],
+    useCases: ['Audit security headers before launch', 'Debug CORS behavior', 'Check cache headers on API and static responses'],
+    faqs: [
+      { q: 'Does this fetch a URL?', a: 'No. This tool only analyzes the header text you paste, so it does not make network requests.' },
+      { q: 'Can it parse a full curl response?', a: 'Yes. It ignores a leading HTTP status line and parses standard name: value header lines.' },
+      { q: 'Does a passing result guarantee security?', a: 'No. It checks common header signals, but full security also depends on application behavior, content, cookies, authentication, and deployment configuration.' },
+      { q: 'Are pasted headers uploaded?', a: 'No. Parsing and analysis happen entirely in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['http-status', 'url-parser', 'json-formatter'],
   },
 
   // Web

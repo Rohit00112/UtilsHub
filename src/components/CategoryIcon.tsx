@@ -5,6 +5,7 @@ import {
   Globe2,
   ImageIcon,
   KeyRound,
+  Network,
   Sparkles,
   TextCursorInput,
   type LucideIcon,
@@ -18,6 +19,7 @@ const categoryIcons: Record<string, LucideIcon> = {
   security: KeyRound,
   calculator: Calculator,
   developer: Code2,
+  api: Network,
   web: Globe2,
   special: Sparkles,
 };
