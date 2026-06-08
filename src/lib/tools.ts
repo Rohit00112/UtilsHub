@@ -33,14 +33,14 @@ export const categories: Category[] = [
   {
     id: 'pdf',
     name: 'PDF Tools',
-    description: 'Merge, split, compress, and compare PDF files.',
+    description: 'Edit, merge, split, compress, and compare PDF files.',
     longDescription:
-      'UtilsHub\'s PDF tools let you merge, split, compress, and compare PDF documents without installing software or creating an account. Combine several PDFs into one ordered file, break a long document into page ranges or individual pages, shrink an oversized file to fit an email limit, or diff two revisions to see exactly what text changed. Every operation runs locally in your browser using the pdf-lib and pdfjs libraries, which means the documents you work with — contracts, invoices, statements, and other sensitive files — are never uploaded to a server. That makes these tools both faster, since there is no waiting on an upload or a processing queue, and more private than typical online PDF services.',
-    keywords: ['PDF tools', 'merge PDF', 'split PDF', 'compress PDF', 'compare PDF', 'free PDF tools'],
+      'UtilsHub\'s PDF tools let you edit, merge, split, compress, and compare PDF documents without installing software or creating an account. Add text and highlight annotations to a PDF, combine several PDFs into one ordered file, break a long document into page ranges or individual pages, shrink an oversized file to fit an email limit, or diff two revisions to see exactly what text changed. Every operation runs locally in your browser using the pdf-lib and pdfjs libraries, which means the documents you work with — contracts, invoices, statements, and other sensitive files — are never uploaded to a server. That makes these tools both faster, since there is no waiting on an upload or a processing queue, and more private than typical online PDF services.',
+    keywords: ['PDF tools', 'edit PDF', 'merge PDF', 'split PDF', 'compress PDF', 'compare PDF', 'free PDF tools'],
     faqs: [
       { q: 'Are my PDF files uploaded to a server?', a: 'No. Every PDF tool on UtilsHub processes your file entirely in your browser, so the document never leaves your device.' },
       { q: 'Do I need to install anything or sign up?', a: 'No. The tools run in any modern browser with no installation, account, or sign-up required.' },
-      { q: 'Will these tools reduce the quality of my PDF?', a: 'Merging and splitting copy pages losslessly. Compression focuses on structural optimization rather than aggressive image down-sampling, so visible quality is preserved.' },
+      { q: 'Will these tools reduce the quality of my PDF?', a: 'Editing adds annotations without rewriting the original page content. Merging and splitting copy pages losslessly. Compression focuses on structural optimization rather than aggressive image down-sampling, so visible quality is preserved.' },
       { q: 'Is there a file size limit?', a: 'There is no hard limit, but because processing is local, very large files (hundreds of megabytes) depend on your device\'s memory and may be slower.' },
     ],
   },
@@ -175,7 +175,28 @@ export const tools: Tool[] = [
       { q: 'Do you keep a copy of my merged file?', a: 'No. The tool never sees your files. Everything is processed in your browser and the merged PDF is generated on your device, so nothing is stored or transmitted.' },
       commonFaqPrivacy,
     ],
-    related: ['pdf-splitter', 'pdf-compressor', 'pdf-compare'],
+    related: ['pdf-editor', 'pdf-splitter', 'pdf-compressor'],
+  },
+  {
+    id: 'pdf-editor',
+    name: 'PDF Editor',
+    description: 'Add text, highlight, and rectangle annotations to PDF pages locally.',
+    slug: 'editor',
+    categoryId: 'pdf',
+    status: 'active',
+    keywords: ['PDF editor', 'edit PDF online', 'annotate PDF', 'add text to PDF', 'highlight PDF'],
+    longDescription:
+      'PDF Editor lets you add lightweight annotations to an existing PDF without uploading it to a server. Choose a PDF, select a page, then add text, highlight blocks, or rectangle outlines using PDF coordinates. The original pages are preserved and your annotations are written into a new downloadable PDF in the browser with pdf-lib.\n\nThis v1 editor is designed for common markup tasks: adding approval text, marking a section with a highlight, drawing attention to an area with a box, or preparing a quick annotated copy for review. It does not rewrite existing PDF text or remove original content; instead, it overlays new objects on top of the selected pages.',
+    steps: ['Upload a PDF from your device.', 'Add text, highlight, or rectangle annotations to selected pages.', 'Apply edits and download the edited PDF.'],
+    useCases: ['Add approval text to a document', 'Highlight a clause or section', 'Draw a box around an area for review'],
+    faqs: [
+      { q: 'Can it edit existing PDF text?', a: 'No. It adds new text and shape annotations on top of the existing pages. Rewriting existing PDF text reliably requires a heavier document editor.' },
+      { q: 'How do coordinates work?', a: 'X and Y are PDF points measured from the bottom-left corner of the selected page.' },
+      { q: 'Are my PDF files uploaded?', a: 'No. The PDF is read, edited, and saved entirely in your browser.' },
+      { q: 'Can I add highlights?', a: 'Yes. Use highlight mode to draw a translucent filled rectangle over part of a page.' },
+      commonFaqPrivacy,
+    ],
+    related: ['pdf-merger', 'pdf-splitter', 'pdf-compressor'],
   },
   {
     id: 'pdf-compare',
