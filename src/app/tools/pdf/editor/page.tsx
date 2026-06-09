@@ -1,13 +1,11 @@
-import { createToolMetadata } from '@/lib/seo';
-import ToolPageWrapper from '@/components/tools/ToolPageWrapper';
-import Client from './Client';
+import { notFound } from 'next/navigation';
+import { createMetadata } from '@/lib/seo';
 
-export const metadata = createToolMetadata('pdf', 'editor');
+export const metadata = createMetadata({
+    title: 'Tool unavailable',
+    path: '/tools/pdf/editor',
+});
 
 export default function Page() {
-    return (
-        <ToolPageWrapper categoryId="pdf" slug="editor">
-            <Client />
-        </ToolPageWrapper>
-    );
+    notFound();
 }

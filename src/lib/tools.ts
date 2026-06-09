@@ -33,14 +33,14 @@ export const categories: Category[] = [
   {
     id: 'pdf',
     name: 'PDF Tools',
-    description: 'Edit, merge, split, compress, and compare PDF files.',
+    description: 'Merge, split, compress, and compare PDF files.',
     longDescription:
-      'UtilsHub\'s PDF tools let you edit, merge, split, compress, and compare PDF documents without installing software or creating an account. Add text and highlight annotations to a PDF, combine several PDFs into one ordered file, break a long document into page ranges or individual pages, shrink an oversized file to fit an email limit, or diff two revisions to see exactly what text changed. Every operation runs locally in your browser using the pdf-lib and pdfjs libraries, which means the documents you work with — contracts, invoices, statements, and other sensitive files — are never uploaded to a server. That makes these tools both faster, since there is no waiting on an upload or a processing queue, and more private than typical online PDF services.',
-    keywords: ['PDF tools', 'edit PDF', 'merge PDF', 'split PDF', 'compress PDF', 'compare PDF', 'free PDF tools'],
+      'UtilsHub\'s PDF tools let you merge, split, compress, and compare PDF documents without installing software or creating an account. Combine several PDFs into one ordered file, break a long document into page ranges or individual pages, shrink an oversized file to fit an email limit, or diff two revisions to see exactly what text changed. Every operation runs locally in your browser using the pdf-lib and pdfjs libraries, which means the documents you work with — contracts, invoices, statements, and other sensitive files — are never uploaded to a server. That makes these tools both faster, since there is no waiting on an upload or a processing queue, and more private than typical online PDF services.',
+    keywords: ['PDF tools', 'merge PDF', 'split PDF', 'compress PDF', 'compare PDF', 'free PDF tools'],
     faqs: [
       { q: 'Are my PDF files uploaded to a server?', a: 'No. Every PDF tool on UtilsHub processes your file entirely in your browser, so the document never leaves your device.' },
       { q: 'Do I need to install anything or sign up?', a: 'No. The tools run in any modern browser with no installation, account, or sign-up required.' },
-      { q: 'Will these tools reduce the quality of my PDF?', a: 'Editing adds annotations without rewriting the original page content. Merging and splitting copy pages losslessly. Compression focuses on structural optimization rather than aggressive image down-sampling, so visible quality is preserved.' },
+      { q: 'Will these tools reduce the quality of my PDF?', a: 'Merging and splitting copy pages losslessly. Compression focuses on structural optimization rather than aggressive image down-sampling, so visible quality is preserved.' },
       { q: 'Is there a file size limit?', a: 'There is no hard limit, but because processing is local, very large files (hundreds of megabytes) depend on your device\'s memory and may be slower.' },
     ],
   },
@@ -175,7 +175,7 @@ export const tools: Tool[] = [
       { q: 'Do you keep a copy of my merged file?', a: 'No. The tool never sees your files. Everything is processed in your browser and the merged PDF is generated on your device, so nothing is stored or transmitted.' },
       commonFaqPrivacy,
     ],
-    related: ['pdf-editor', 'pdf-splitter', 'pdf-compressor'],
+    related: ['pdf-splitter', 'pdf-compressor', 'pdf-compare'],
   },
   {
     id: 'pdf-editor',
@@ -183,7 +183,7 @@ export const tools: Tool[] = [
     description: 'Full scrollable PDF editor for text, drawings, images, highlights, boxes, and whiteout overlays.',
     slug: 'editor',
     categoryId: 'pdf',
-    status: 'active',
+    status: 'planned',
     keywords: ['PDF editor', 'edit PDF online', 'annotate PDF', 'add text to PDF', 'highlight PDF', 'whiteout PDF', 'draw on PDF', 'add image to PDF'],
     longDescription:
       'PDF Editor opens an existing PDF in a full scrollable document workspace with page thumbnails, a sticky editing toolbar, and a properties panel for selected objects. Add text, highlights, rectangle outlines, whiteout blocks, lines, pen drawings, and PNG or JPG images directly onto any page without thinking in raw coordinates or uploading the file to a server. You can scroll through the whole document, jump from thumbnails, zoom, undo and redo edits, duplicate or delete selected objects, and export a new downloadable PDF in the browser with pdf-lib.\n\nThe editor is designed for common document markup workflows: placing approval text, covering a typo with a whiteout box and replacement text, highlighting clauses, drawing review boxes, dropping an image or signature, sketching pen notes, or preparing a quick annotated copy for someone else. The original pages are preserved and every edit is written as a new overlay on top of the selected pages. It does not rewrite the original PDF content stream, and whiteout is visual coverage rather than secure redaction.',
@@ -1406,7 +1406,7 @@ export function getCategoryById(id: string) {
 }
 
 export function getToolBySlug(categoryId: string, slug: string) {
-  return tools.find(tool => tool.categoryId === categoryId && tool.slug === slug);
+  return tools.find(tool => tool.categoryId === categoryId && tool.slug === slug && tool.status === 'active');
 }
 
 export function getToolById(id: string) {
