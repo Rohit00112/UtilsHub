@@ -536,6 +536,7 @@ export default function PDFEditor() {
                 if (!cancelled) {
                     setRenderInfos(nextInfos);
                     setError('');
+                    
                 }
             } catch (renderError) {
                 const name = renderError instanceof Error ? renderError.name : '';
