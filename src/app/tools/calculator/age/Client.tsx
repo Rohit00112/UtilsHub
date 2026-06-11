@@ -3,63 +3,171 @@
 import { useState } from 'react';
 import { CalendarDays } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
-import { ToolPanel } from '@/components/tools/ToolPrimitives';
+import { ToolField, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+
+interface AgeResult {
+    years: number;
+    months: number;
+    days: number;
+    asOfDate: string;
+}
+
+function parseDateInput(value: string) {
+    const [year, month, day] = value.split('-').map(Number);
+    if (!year || !month || !day) return null;
+    return new Date(year, month - 1, day);
+}
+
+function formatDateInput(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function formatDisplayDate(value: string) {
+    const date = parseDateInput(value);
+    if (!date) return value;
+    return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(date);
+}
+
+function daysInMonth(year: number, month: number) {
+    return new Date(year, month + 1, 0).getDate();
+}
+
+function addMonthsClamped(date: Date, monthsToAdd: number) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + monthsToAdd;
+    const targetYear = year + Math.floor(month / 12);
+    const targetMonth = ((month % 12) + 12) % 12;
+    const targetDay = Math.min(date.getDate(), daysInMonth(targetYear, targetMonth));
+
+    return new Date(targetYear, targetMonth, targetDay);
+}
+
+function addYearsClamped(date: Date, yearsToAdd: number) {
+    const targetYear = date.getFullYear() + yearsToAdd;
+    const targetMonth = date.getMonth();
+    const targetDay = Math.min(date.getDate(), daysInMonth(targetYear, targetMonth));
+
+    return new Date(targetYear, targetMonth, targetDay);
+}
+
+function differenceInCalendarDays(start: Date, end: Date) {
+    const startUtc = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+    const endUtc = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+    return Math.round((endUtc - startUtc) / 86400000);
+}
 
 export default function AgeCalculator() {
     const [birthDate, setBirthDate] = useState('');
-    const [age, setAge] = useState<{ years: number; months: number; days: number } | null>(null);
+    const [targetDate, setTargetDate] = useState('');
+    const [age, setAge] = useState<AgeResult | null>(null);
+    const [error, setError] = useState('');
 
     const calculateAge = () => {
-        if (!birthDate) return;
+        if (!birthDate) {
+            setAge(null);
+            setError('Choose a date of birth first.');
+            return;
+        }
 
-        const birth = new Date(birthDate);
-        const today = new Date();
+        const birth = parseDateInput(birthDate);
+        const targetInput = targetDate || formatDateInput(new Date());
+        const target = parseDateInput(targetInput);
 
-        let years = today.getFullYear() - birth.getFullYear();
-        let months = today.getMonth() - birth.getMonth();
-        let days = today.getDate() - birth.getDate();
+        if (!birth || !target) {
+            setAge(null);
+            setError('Enter valid dates before calculating.');
+            return;
+        }
 
-        if (months < 0 || (months === 0 && days < 0)) {
+        if (target < birth) {
+            setAge(null);
+            setError('The as-of date must be the same as or after the date of birth.');
+            return;
+        }
+
+        let years = target.getFullYear() - birth.getFullYear();
+        let yearAnchor = addYearsClamped(birth, years);
+
+        if (yearAnchor > target) {
             years--;
-            months += 12;
+            yearAnchor = addYearsClamped(birth, years);
         }
 
-        if (days < 0) {
-            const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 0);
-            days += prevMonth.getDate();
-            months--;
+        let months = 0;
+        let monthAnchor = yearAnchor;
+        let nextMonthAnchor = addMonthsClamped(yearAnchor, months + 1);
+
+        while (nextMonthAnchor <= target && months < 11) {
+            months++;
+            monthAnchor = nextMonthAnchor;
+            nextMonthAnchor = addMonthsClamped(yearAnchor, months + 1);
         }
 
-        setAge({ years, months, days });
+        const days = differenceInCalendarDays(monthAnchor, target);
+
+        setError('');
+        setAge({ years, months, days, asOfDate: targetInput });
     };
 
     return (
         <ToolLayout
             title="Age Calculator"
-            description="Calculate your exact age in years, months, and days"
+            description="Calculate exact age in years, months, and days on any date"
             category="calculator"
         >
             <div className="mx-auto max-w-4xl space-y-6">
-                <ToolPanel title="Date of birth" description="Select a date, then calculate the elapsed time.">
-                    <div className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row">
-                        <input
-                            type="date"
-                            value={birthDate}
-                            onChange={(event) => setBirthDate(event.target.value)}
-                            className="input h-10 text-center"
-                        />
-                        <button onClick={calculateAge} className="btn btn-primary gap-2">
+                <ToolPanel title="Age details" description="Select a date of birth and optionally calculate age on a specific date.">
+                    <div className="grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
+                        <ToolField label="Date of birth" htmlFor="birth-date">
+                            <input
+                                id="birth-date"
+                                type="date"
+                                value={birthDate}
+                                max={targetDate || undefined}
+                                onChange={(event) => {
+                                    setBirthDate(event.target.value);
+                                    setError('');
+                                }}
+                                className="input h-10"
+                            />
+                        </ToolField>
+
+                        <ToolField label="As of date" description="Leave blank to use today." htmlFor="target-date">
+                            <input
+                                id="target-date"
+                                type="date"
+                                value={targetDate}
+                                min={birthDate || undefined}
+                                onChange={(event) => {
+                                    setTargetDate(event.target.value);
+                                    setError('');
+                                }}
+                                className="input h-10"
+                            />
+                        </ToolField>
+
+                        <button type="button" onClick={calculateAge} className="btn btn-primary gap-2">
                             <CalendarDays className="h-4 w-4" />
                             Calculate
                         </button>
                     </div>
                 </ToolPanel>
 
+                {error && <ToolStatus tone="error">{error}</ToolStatus>}
+
                 {age && (
-                    <div className="grid gap-4 md:grid-cols-3">
-                        <AgeMetric label="Years" value={age.years} />
-                        <AgeMetric label="Months" value={age.months} />
-                        <AgeMetric label="Days" value={age.days} />
+                    <div className="space-y-3">
+                        <p className="text-center text-sm text-muted-foreground">
+                            Age as of {formatDisplayDate(age.asOfDate)}
+                        </p>
+                        <div className="grid gap-4 md:grid-cols-3">
+                            <AgeMetric label="Years" value={age.years} />
+                            <AgeMetric label="Months" value={age.months} />
+                            <AgeMetric label="Days" value={age.days} />
+                        </div>
                     </div>
                 )}
             </div>
