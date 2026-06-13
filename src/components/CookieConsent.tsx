@@ -58,7 +58,11 @@ export default function CookieConsent() {
                 >
                     <p className="text-pretty text-sm leading-6">
                         UtilsHub uses Google AdSense to display ads, which sets cookies and may collect data per Google&apos;s policies. Tool input you paste or upload stays in your browser. See our{' '}
-                        <Link href="/privacy" className="font-medium text-foreground underline underline-offset-2">
+                        <Link
+                            href="/privacy"
+                            prefetch={false}
+                            className="font-medium text-foreground underline underline-offset-2"
+                        >
                             privacy policy
                         </Link>{' '}
                         for details.

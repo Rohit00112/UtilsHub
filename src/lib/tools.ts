@@ -151,7 +151,7 @@ const commonFaqPrivacy: ToolFaq = {
 
 const commonFaqFree: ToolFaq = {
   q: 'Is this tool free to use?',
-  a: 'Yes. UtilsHub is free, with no sign-up, no ads, and no usage limits.',
+  a: 'Yes. UtilsHub is free to use, with no sign-up, premium tier, or usage limits.',
 };
 
 export const tools: Tool[] = [

@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-foreground/10 pt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {year} UtilsHub · Set in Inter & system serif</span>
+          <span>© {year} UtilsHub · Set in system sans & serif</span>
           <span>Printed locally — your browser, your data</span>
         </div>
       </div>

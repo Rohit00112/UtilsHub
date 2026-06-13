@@ -1,7 +1,11 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import SearchModal from './SearchModal';
+import dynamic from 'next/dynamic';
+
+const SearchModal = dynamic(() => import('./SearchModal'), {
+  ssr: false,
+});
 
 interface SearchContextValue {
   open: () => void;
@@ -38,7 +42,7 @@ export default function SearchProvider({ children }: { children: React.ReactNode
   return (
     <SearchContext.Provider value={{ open, close, isOpen }}>
       {children}
-      <SearchModal isOpen={isOpen} onClose={close} />
+      {isOpen && <SearchModal isOpen onClose={close} />}
     </SearchContext.Provider>
   );
 }

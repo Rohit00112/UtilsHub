@@ -11,7 +11,7 @@ import {
 
 export const siteName = 'UtilsHub';
 export const defaultDescription =
-  'Free browser-based tools for PDF, image, text, security, calculators, and developer workflows. Tool input is processed locally in your browser, not uploaded to a server.';
+  'Free browser-based tools for PDF, image, text, security, calculators, and developers. Your files and data stay on your device, with no sign-up required.';
 export const defaultKeywords = [
   'online tools',
   'free utilities',
@@ -20,16 +20,20 @@ export const defaultKeywords = [
   'UtilsHub',
 ];
 
-let warnedMissingSiteUrl = false;
+const productionSiteUrl = 'https://utils-hub.vercel.app';
+
+function normalizeSiteUrl(url: string) {
+  const withProtocol = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  return withProtocol.replace(/\/$/, '');
+}
+
 export function getSiteUrl() {
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!fromEnv && process.env.NODE_ENV === 'production' && !warnedMissingSiteUrl) {
-    warnedMissingSiteUrl = true;
-    // Surface misconfiguration loudly during build
-    // (avoids silently shipping localhost canonicals)
-    console.warn('[seo] NEXT_PUBLIC_SITE_URL is not set in production build. Canonicals will point to localhost.');
-  }
-  return (fromEnv || 'http://localhost:3000').replace(/\/$/, '');
+  const configuredUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    (process.env.NODE_ENV === 'production' ? productionSiteUrl : 'http://localhost:3000');
+
+  return normalizeSiteUrl(configuredUrl);
 }
 
 export function absoluteUrl(path = '/') {
@@ -73,6 +77,10 @@ export function createMetadata({
     title: resolvedTitle,
     description,
     applicationName: siteName,
+    authors: [{ name: siteName, url: absoluteUrl('/about') }],
+    creator: siteName,
+    publisher: siteName,
+    category: 'technology',
     manifest: '/manifest.webmanifest',
     icons: {
       icon: '/icon.svg',
@@ -92,6 +100,20 @@ export function createMetadata({
     keywords: Array.from(new Set([...defaultKeywords, ...keywords])),
     alternates: {
       canonical: url,
+      languages: {
+        'en-US': url,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
     },
     openGraph: {
       title: resolvedTitle,
@@ -99,6 +121,7 @@ export function createMetadata({
       url,
       siteName,
       type: 'website',
+      locale: 'en_US',
       images: [
         {
           url: absoluteUrl('/opengraph-image'),
@@ -121,9 +144,12 @@ export function getCategoryMetadata(categoryId: string): Metadata {
   const category = getCategoryById(categoryId);
   if (!category) return createMetadata({ title: 'Tools', path: '/tools' });
 
+  const baseDescription = category.description.replace(/\.$/, '');
+  const description = `${baseDescription}. Use free ${category.name.toLowerCase()} with no sign-up and browser-local input processing.`;
+
   return createMetadata({
-    title: category.name,
-    description: category.description,
+    fullTitle: `${category.name} — Free Online Utilities | ${siteName}`,
+    description,
     path: categoryPath(category),
     keywords: category.keywords,
   });
@@ -135,9 +161,19 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
 
   // Keyword-led, ~55–60 char target. Tool name + benefit + site name.
   const fullTitle = `${tool.name} — Free Online Tool | ${siteName}`;
+  const baseDescription = tool.description.replace(/\.$/, '');
+  const descriptionOptions = [
+    `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to UtilsHub.`,
+    `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to UtilsHub.`,
+    `${baseDescription}. Free browser tool with local processing and no sign-up.`,
+  ];
+  const description =
+    descriptionOptions.find((option) => option.length <= 160) ||
+    descriptionOptions[descriptionOptions.length - 1];
+
   return createMetadata({
     fullTitle,
-    description: tool.description,
+    description,
     path: toolPath(tool),
     keywords: tool.keywords,
   });
@@ -147,9 +183,14 @@ export function websiteJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': absoluteUrl('/#website'),
     name: siteName,
     url: absoluteUrl('/'),
     description: defaultDescription,
+    inLanguage: 'en-US',
+    publisher: {
+      '@id': absoluteUrl('/#organization'),
+    },
   };
 }
 
@@ -157,6 +198,7 @@ export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': absoluteUrl('/#organization'),
     name: siteName,
     url: absoluteUrl('/'),
     logo: absoluteUrl('/icon.svg'),
@@ -166,14 +208,43 @@ export function organizationJsonLd() {
   };
 }
 
+function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
 export function categoryJsonLd(category: Category) {
+  const categoryTools = getToolsByCategory(category.id);
   const collectionPage = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
+    '@id': absoluteUrl(`${categoryPath(category)}#collection`),
     name: `${category.name} | ${siteName}`,
     url: absoluteUrl(categoryPath(category)),
     description: category.description,
-    hasPart: getToolsByCategory(category.id).map((tool) => ({
+    inLanguage: 'en-US',
+    isPartOf: {
+      '@id': absoluteUrl('/#website'),
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: categoryTools.length,
+      itemListElement: categoryTools.map((tool, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: absoluteUrl(toolPath(tool)),
+        name: tool.name,
+      })),
+    },
+    hasPart: categoryTools.map((tool) => ({
       '@type': 'WebApplication',
       name: tool.name,
       url: absoluteUrl(toolPath(tool)),
@@ -188,7 +259,12 @@ export function categoryJsonLd(category: Category) {
     })),
   };
 
-  if (!category.faqs || category.faqs.length === 0) return [collectionPage];
+  const breadcrumb = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: category.name, path: categoryPath(category) },
+  ]);
+
+  if (!category.faqs || category.faqs.length === 0) return [collectionPage, breadcrumb];
 
   const faqPage = {
     '@context': 'https://schema.org',
@@ -203,18 +279,21 @@ export function categoryJsonLd(category: Category) {
     })),
   };
 
-  return [collectionPage, faqPage];
+  return [collectionPage, breadcrumb, faqPage];
 }
 
 export function toolJsonLd(tool: Tool) {
   const category = getCategoryById(tool.categoryId);
+  const path = toolPath(tool);
   const webApp = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
+    '@id': absoluteUrl(`${path}#application`),
     name: tool.name,
-    url: absoluteUrl(toolPath(tool)),
+    url: absoluteUrl(path),
     description: tool.description,
     applicationCategory: category?.name || 'Utility',
+    applicationSubCategory: 'Browser-based utility',
     operatingSystem: 'Any (browser)',
     browserRequirements: 'Requires a modern browser with JavaScript enabled.',
     offers: {
@@ -223,11 +302,26 @@ export function toolJsonLd(tool: Tool) {
       priceCurrency: 'USD',
     },
     isAccessibleForFree: true,
-    inLanguage: 'en',
+    inLanguage: 'en-US',
     keywords: tool.keywords?.join(', '),
+    isPartOf: {
+      '@id': absoluteUrl('/#website'),
+    },
+    provider: {
+      '@id': absoluteUrl('/#organization'),
+    },
   };
 
-  if (!tool.faqs || tool.faqs.length === 0) return [webApp];
+  const breadcrumb = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    {
+      name: category?.name || 'Tools',
+      path: category ? categoryPath(category) : '/tools',
+    },
+    { name: tool.name, path },
+  ]);
+
+  if (!tool.faqs || tool.faqs.length === 0) return [webApp, breadcrumb];
 
   const faqPage = {
     '@context': 'https://schema.org',
@@ -242,25 +336,24 @@ export function toolJsonLd(tool: Tool) {
     })),
   };
 
-  return [webApp, faqPage];
+  return [webApp, breadcrumb, faqPage];
 }
 
 export function allSitemapEntries() {
-  const now = new Date();
   return [
-    { url: absoluteUrl('/'), lastModified: now, priority: 1 },
-    { url: absoluteUrl('/about'), lastModified: now, priority: 0.5 },
-    { url: absoluteUrl('/privacy'), lastModified: now, priority: 0.3 },
+    { url: absoluteUrl('/'), changeFrequency: 'weekly' as const, priority: 1 },
+    { url: absoluteUrl('/about'), changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: absoluteUrl('/privacy'), changeFrequency: 'yearly' as const, priority: 0.3 },
     ...categories.map((category) => ({
       url: absoluteUrl(categoryPath(category)),
-      lastModified: now,
+      changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
     ...tools
       .filter((tool) => tool.status === 'active')
       .map((tool) => ({
         url: absoluteUrl(toolPath(tool)),
-        lastModified: now,
+        changeFrequency: 'monthly' as const,
         priority: 0.7,
       })),
   ];

@@ -40,7 +40,7 @@ export default function AboutPage() {
                         <ShieldCheck className="h-5 w-5 text-muted-foreground" />
                         <h2 className="mt-3 font-semibold text-foreground">Free, forever</h2>
                         <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                            No ads, no upsell, no premium tier. Source code is openly available on GitHub.
+                            No account, no upsell, no premium tier. Source code is openly available on GitHub.
                         </p>
                     </div>
                 </div>

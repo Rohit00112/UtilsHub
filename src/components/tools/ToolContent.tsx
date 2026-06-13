@@ -20,11 +20,17 @@ export default function ToolContent({ tool }: ToolContentProps) {
     <section className="mx-auto mt-10 max-w-4xl space-y-10 border-t border-border/60 pt-10">
       {hasLong && (
         <div>
-          <div className="mb-3 flex items-center gap-2 text-sm font-medium text-muted-foreground">
+          <h2 className="mb-3 flex items-center gap-2 text-xl font-semibold text-foreground">
             <BookOpen className="h-4 w-4" />
             About {tool.name}
+          </h2>
+          <div className="space-y-4">
+            {tool.longDescription!.split(/\n{2,}/).map((paragraph) => (
+              <p key={paragraph} className="text-base leading-7 text-foreground/90 text-pretty">
+                {paragraph}
+              </p>
+            ))}
           </div>
-          <p className="text-base leading-7 text-foreground/90 text-pretty">{tool.longDescription}</p>
         </div>
       )}
 

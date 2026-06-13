@@ -58,8 +58,8 @@ export default function Home() {
                     <div className="md:col-span-8">
                         <p className="eyebrow mb-6">No. 01 · The Workshop</p>
                         <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
-                            Quiet tools<br />
-                            for <em className="italic text-primary">noisy</em> work.
+                            Free browser tools<br />
+                            for <em className="italic text-primary">everyday</em> work.
                         </h1>
                         <div className="mt-8 grid gap-6 md:grid-cols-2">
                             <p className="text-base leading-relaxed text-foreground/80">
@@ -93,6 +93,7 @@ export default function Home() {
                                     <li key={tool.id}>
                                         <Link
                                             href={`/tools/${tool.categoryId}/${tool.slug}`}
+                                            prefetch={false}
                                             className="group flex items-baseline gap-3 px-5 py-3 transition-colors hover:bg-secondary"
                                         >
                                             <span className="marker-num shrink-0 w-6 text-right">
@@ -161,7 +162,7 @@ export default function Home() {
                                             </li>
                                         ))}
                                         {categoryTools.length > 3 && (
-                                            <li className="text-foreground/40">+ {categoryTools.length - 3} more</li>
+                                            <li className="text-muted-foreground">+ {categoryTools.length - 3} more</li>
                                         )}
                                     </ul>
 
@@ -172,6 +173,41 @@ export default function Home() {
                                 </Link>
                             );
                         })}
+                    </div>
+                </div>
+            </section>
+
+            <section className="border-t border-foreground/15 bg-secondary/20">
+                <div className="container grid gap-8 py-12 md:grid-cols-12">
+                    <div className="md:col-span-4">
+                        <p className="eyebrow mb-3">Why UtilsHub</p>
+                        <h2 className="font-serif text-3xl text-foreground">
+                            Useful online tools, without the upload.
+                        </h2>
+                    </div>
+                    <div className="space-y-5 text-base leading-7 text-foreground/80 md:col-span-8">
+                        <p>
+                            UtilsHub brings free PDF, text, image, calculator, security, web, API, and
+                            developer tools into one searchable directory. Use the{' '}
+                            <Link href="/tools/developer/json-formatter" className="font-medium text-foreground underline underline-offset-4">
+                                JSON formatter
+                            </Link>
+                            ,{' '}
+                            <Link href="/tools/pdf/merger" className="font-medium text-foreground underline underline-offset-4">
+                                PDF merger
+                            </Link>
+                            ,{' '}
+                            <Link href="/tools/image/resizer" className="font-medium text-foreground underline underline-offset-4">
+                                image resizer
+                            </Link>
+                            , and dozens of other focused utilities directly in your browser.
+                        </p>
+                        <p>
+                            Most tools process input locally on your device, which means pasted text,
+                            documents, images, passwords, and tokens are not uploaded to a UtilsHub
+                            server. There is no account to create and no software to install: open a
+                            tool, finish the task, and download or copy the result.
+                        </p>
                     </div>
                 </div>
             </section>
