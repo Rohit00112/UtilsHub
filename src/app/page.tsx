@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Share2 } from 'lucide-react';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import SearchLauncher from '@/components/SearchLauncher';
 import { categories, getAllActiveTools, getToolsByCategory } from '@/lib/tools';
-import { createMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
+import { absoluteUrl, createMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
 export const metadata = createMetadata({});
 
@@ -23,6 +23,8 @@ export default function Home() {
     const commonTools = commonToolIds
         .map((id) => activeTools.find((tool) => tool.id === id))
         .filter(Boolean);
+    const shareUrl = encodeURIComponent(absoluteUrl('/'));
+    const shareText = encodeURIComponent('UtilsHub — free browser-based utility tools');
 
     const issueDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -134,8 +136,7 @@ export default function Home() {
                         {categories.map((category, idx) => {
                             const categoryTools = getToolsByCategory(category.id);
                             return (
-                                <Link
-                                    href={`/tools/${category.id}`}
+                                <article
                                     key={category.id}
                                     className="group relative flex flex-col border-b border-r border-foreground/15 p-6 transition-colors hover:bg-secondary md:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(3n)]:border-r-0"
                                 >
@@ -166,11 +167,14 @@ export default function Home() {
                                         )}
                                     </ul>
 
-                                    <span className="mt-6 inline-flex items-center gap-1 self-start border-b border-foreground/30 pb-0.5 text-xs font-medium uppercase tracking-wider text-foreground transition-colors group-hover:border-primary group-hover:text-primary">
-                                        Open section
+                                    <Link
+                                        href={`/tools/${category.id}`}
+                                        className="mt-6 inline-flex items-center gap-1 self-start border-b border-foreground/30 pb-0.5 text-xs font-medium uppercase tracking-wider text-foreground transition-colors group-hover:border-primary group-hover:text-primary"
+                                    >
+                                        Browse {category.name}
                                         <ArrowUpRight className="h-3 w-3" />
-                                    </span>
-                                </Link>
+                                    </Link>
+                                </article>
                             );
                         })}
                     </div>
@@ -208,6 +212,131 @@ export default function Home() {
                             server. There is no account to create and no software to install: open a
                             tool, finish the task, and download or copy the result.
                         </p>
+                    </div>
+                </div>
+            </section>
+
+            <section className="border-t border-foreground/15 bg-background">
+                <div className="container py-14">
+                    <div className="max-w-3xl">
+                        <p className="eyebrow mb-3">Made for everyday work</p>
+                        <h2 className="font-serif text-3xl text-foreground sm:text-4xl">
+                            Free browser-based utility tools that stay out of your way.
+                        </h2>
+                        <p className="mt-5 text-base leading-7 text-foreground/80">
+                            UtilsHub is a collection of free browser-based utility tools for everyday
+                            work. It is built for the small jobs that interrupt a larger task: cleaning
+                            malformed data, checking a token, preparing a document, converting an image,
+                            or calculating a value. Instead of installing another application or
+                            searching through ad-heavy converter sites, you can open one focused tool,
+                            complete the job, and return to what you were doing.
+                        </p>
+                    </div>
+
+                    <div className="mt-10 grid gap-8 md:grid-cols-3">
+                        <article>
+                            <h3 className="font-serif text-2xl text-foreground">Choose by task</h3>
+                            <p className="mt-3 text-sm leading-7 text-foreground/80">
+                                The directory is organized around recognizable tasks and formats. PDF
+                                tools merge, split, compare, and compress documents. Text tools count,
+                                transform, encode, decode, and compare writing. Image tools resize,
+                                convert, merge, and generate favicons. Calculators handle measurements,
+                                percentages, dates, health estimates, and loan payments. Developer, web,
+                                security, and API tools cover the quick checks that usually become a
+                                temporary script or another browser tab.
+                            </p>
+                        </article>
+                        <article>
+                            <h3 className="font-serif text-2xl text-foreground">Keep input private</h3>
+                            <p className="mt-3 text-sm leading-7 text-foreground/80">
+                                Most utilities run locally with browser APIs and established client-side
+                                libraries. The files or text you provide are processed on your device,
+                                not sent to a UtilsHub processing server. That design is useful when a
+                                task involves contracts, internal JSON, screenshots, access tokens, or
+                                other material you would rather not upload. Tools that intentionally
+                                contact another service, such as an API request tester, clearly depend
+                                on the destination you choose.
+                            </p>
+                        </article>
+                        <article>
+                            <h3 className="font-serif text-2xl text-foreground">Use it without friction</h3>
+                            <p className="mt-3 text-sm leading-7 text-foreground/80">
+                                There is no account, installation, premium tier, or usage quota. Pages
+                                are pre-rendered for a fast first view, while interactive controls load
+                                in the browser. Search by a tool name, file format, or job description,
+                                then copy or download the result. The collection is also open source, so
+                                its behavior can be reviewed and improvements can be proposed through
+                                the public GitHub repository.
+                            </p>
+                        </article>
+                    </div>
+
+                    <div className="mt-10 border border-foreground/15 bg-secondary/20 p-6 sm:p-8">
+                        <h3 className="font-serif text-2xl text-foreground">How to use UtilsHub</h3>
+                        <ol className="mt-5 grid gap-6 md:grid-cols-3">
+                            <li>
+                                <p className="eyebrow mb-2">01 · Find the right tool</p>
+                                <p className="text-sm leading-7 text-foreground/80">
+                                    Search by task, format, or tool name, or browse a category such as
+                                    PDF, image, text, calculator, developer, security, web, or API.
+                                    Each page focuses on one job and explains the input it accepts.
+                                </p>
+                            </li>
+                            <li>
+                                <p className="eyebrow mb-2">02 · Process in the browser</p>
+                                <p className="text-sm leading-7 text-foreground/80">
+                                    Add your text, file, values, or settings and run the utility. For
+                                    local-first tools, the browser performs the work on your device
+                                    without sending the source material to a UtilsHub server.
+                                </p>
+                            </li>
+                            <li>
+                                <p className="eyebrow mb-2">03 · Take the result</p>
+                                <p className="text-sm leading-7 text-foreground/80">
+                                    Review the output, adjust the options when needed, then copy or
+                                    download the finished result. You can move straight to another
+                                    utility without creating an account or managing saved projects.
+                                </p>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div className="mt-10 flex flex-col gap-4 border-t border-foreground/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <h3 className="flex items-center gap-2 font-semibold text-foreground">
+                                <Share2 className="h-4 w-4" />
+                                Share UtilsHub
+                            </h3>
+                            <p className="mt-1 text-sm text-muted-foreground">
+                                Send the directory to someone who could use a private browser tool.
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            <a
+                                href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-secondary"
+                            >
+                                Facebook
+                            </a>
+                            <a
+                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-secondary"
+                            >
+                                LinkedIn
+                            </a>
+                            <a
+                                href={`https://x.com/intent/post?url=${shareUrl}&text=${shareText}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-secondary"
+                            >
+                                Share on X
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -100,9 +100,6 @@ export function createMetadata({
     keywords: Array.from(new Set([...defaultKeywords, ...keywords])),
     alternates: {
       canonical: url,
-      languages: {
-        'en-US': url,
-      },
     },
     robots: {
       index: true,
@@ -187,7 +184,7 @@ export function websiteJsonLd() {
     name: siteName,
     url: absoluteUrl('/'),
     description: defaultDescription,
-    inLanguage: 'en-US',
+    inLanguage: 'en',
     publisher: {
       '@id': absoluteUrl('/#organization'),
     },
@@ -230,7 +227,7 @@ export function categoryJsonLd(category: Category) {
     name: `${category.name} | ${siteName}`,
     url: absoluteUrl(categoryPath(category)),
     description: category.description,
-    inLanguage: 'en-US',
+    inLanguage: 'en',
     isPartOf: {
       '@id': absoluteUrl('/#website'),
     },
@@ -302,7 +299,7 @@ export function toolJsonLd(tool: Tool) {
       priceCurrency: 'USD',
     },
     isAccessibleForFree: true,
-    inLanguage: 'en-US',
+    inLanguage: 'en',
     keywords: tool.keywords?.join(', '),
     isPartOf: {
       '@id': absoluteUrl('/#website'),

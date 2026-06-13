@@ -4,6 +4,8 @@
 
 UtilsHub is a high-performance web application featuring a collection of free online tools for PDF manipulation, image processing, security utilities, financial calculators, and developer tools.
 
+**Live website: [utils-hub.vercel.app](https://utils-hub.vercel.app/)**
+
 ## ✨ Features
 
 - **Standardized Toolkit**: Focused set of functional tools across 7 core categories
@@ -45,7 +47,7 @@ Duplicate removal, text comparison, and unique utility combinations.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/UtilsHub.git
+git clone https://github.com/Rohit00112/UtilsHub.git
 
 # Navigate to the project directory
 cd UtilsHub
