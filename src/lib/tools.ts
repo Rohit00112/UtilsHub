@@ -886,6 +886,27 @@ export const tools: Tool[] = [
     related: ['timestamp-converter', 'regex-tester', 'json-formatter'],
   },
   {
+    id: 'chmod-calculator',
+    name: 'Unix Permissions Calculator',
+    description: 'Convert Unix file permissions between octal and symbolic notation.',
+    slug: 'chmod-calculator',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['chmod calculator', 'Unix permissions calculator', 'file permissions', 'octal permissions', 'symbolic permissions'],
+    longDescription:
+      'Unix Permissions Calculator converts Linux and macOS file modes between familiar octal values such as 755 and symbolic strings such as rwxr-xr-x. Toggle read, write, and execute access for the owner, group, and everyone else, or type a three-digit or four-digit octal mode to update the permission matrix instantly. The calculator also supports setuid, setgid, and sticky bits, including their lowercase and uppercase symbolic forms.\n\nUse the generated chmod command when preparing deployment scripts, fixing web-server access, reviewing container permissions, or explaining why a process cannot read or execute a file. Risky settings such as world-writable access are highlighted before you copy the command. Everything runs locally in your browser, so file paths and permission choices are never uploaded.',
+    steps: ['Enter an octal mode or toggle permissions in the matrix.', 'Optionally enable setuid, setgid, or the sticky bit.', 'Review the symbolic result and copy the chmod command.'],
+    useCases: ['Set executable permissions for a deployment script', 'Review file modes in a Docker image', 'Build a chmod command without memorizing octal values'],
+    faqs: [
+      { q: 'What do 755 and 644 mean?', a: 'Each digit combines read (4), write (2), and execute (1). Mode 755 gives the owner full access and everyone else read and execute access. Mode 644 gives the owner read and write access and everyone else read-only access.' },
+      { q: 'Does the calculator support special permission bits?', a: 'Yes. Four-digit modes and the controls for setuid, setgid, and sticky bits are supported, including symbolic s, S, t, and T notation.' },
+      { q: 'Why is world-writable access risky?', a: 'A world-writable file or directory can be modified by any local user or process. That is rarely appropriate outside carefully controlled temporary directories.' },
+      { q: 'Does this change permissions on my device?', a: 'No. The tool only calculates notation and generates a command for you to review and run yourself.' },
+      commonFaqPrivacy,
+    ],
+    related: ['number-base-converter', 'password-generator', 'hash-generator'],
+  },
+  {
     id: 'xml-formatter',
     name: 'XML Formatter',
     description: 'Prettify, minify, and format XML documents.',
