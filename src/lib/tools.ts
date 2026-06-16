@@ -49,8 +49,8 @@ export const categories: Category[] = [
     name: 'Text Tools',
     description: 'Format, transform, and analyze text data.',
     longDescription:
-      'UtilsHub\'s text tools handle the small, repetitive jobs that come up constantly when writing, editing, and cleaning data. Convert text between cases, count words and characters against a limit, generate URL slugs, encode and decode URLs and Base64, escape HTML entities, compare two blocks of text to spot edits, and strip duplicate lines from a list. Each tool is designed to do one thing quickly and get out of your way. Everything runs locally in your browser, so the content you paste — drafts, customer data, internal notes — is processed on your own device and never sent to a server. There are no limits, sign-ups, or ads, so you can reach for them as often as your day demands.',
-    keywords: ['text tools', 'word counter', 'case converter', 'base64', 'text diff', 'URL encoder'],
+      'UtilsHub\'s text tools handle the small, repetitive jobs that come up constantly when writing, editing, and cleaning data. Convert text between cases, count words and characters against a limit, generate URL slugs, encode and decode URLs and Base64, escape HTML entities, compare two blocks of text to spot edits, sort lists, and strip duplicate lines. Each tool is designed to do one thing quickly and get out of your way. Everything runs locally in your browser, so the content you paste — drafts, customer data, internal notes — is processed on your own device and never sent to a server. There are no limits, sign-ups, or ads, so you can reach for them as often as your day demands.',
+    keywords: ['text tools', 'word counter', 'case converter', 'line sorter', 'base64', 'text diff', 'URL encoder'],
     faqs: [
       { q: 'Is the text I paste kept private?', a: 'Yes. Every text tool runs entirely in your browser, so pasted content is never uploaded or stored on a server.' },
       { q: 'Do these tools work offline?', a: 'Once the page has loaded, the tools run client-side, so they continue to work even with an unreliable connection.' },
@@ -105,8 +105,8 @@ export const categories: Category[] = [
     name: 'Developer Tools',
     description: 'Formatters, generators, and testers for engineers.',
     longDescription:
-      'UtilsHub\'s developer tools are the quick utilities engineers reach for dozens of times a day: format, validate, and minify JSON and XML; convert between YAML, JSON, and CSV; test regular expressions with live match highlighting; generate UUIDs and Lorem Ipsum; convert CSS units and timestamps; build color palettes; and preview Markdown. Instead of pulling in a library or writing a throwaway script, you paste your data and get the result instantly. Everything runs client-side in your browser, so the payloads, config, logs, and tokens you work with stay on your device and are never sent to a server. The tools are free and account-free, which makes them safe and convenient for use during code review, debugging, and integration work.',
-    keywords: ['developer tools', 'JSON formatter', 'UUID generator', 'regex tester', 'YAML to JSON', 'timestamp converter'],
+      'UtilsHub\'s developer tools are the quick utilities engineers reach for dozens of times a day: format, validate, and minify JSON and XML; convert between YAML, JSON, and CSV; test regular expressions with live match highlighting; look up MIME content types; generate UUIDs and Lorem Ipsum; convert CSS units and timestamps; build color palettes; and preview Markdown. Instead of pulling in a library or writing a throwaway script, you paste your data and get the result instantly. Everything runs client-side in your browser, so the payloads, config, logs, and tokens you work with stay on your device and are never sent to a server. The tools are free and account-free, which makes them safe and convenient for use during code review, debugging, and integration work.',
+    keywords: ['developer tools', 'JSON formatter', 'UUID generator', 'regex tester', 'MIME type lookup', 'YAML to JSON', 'timestamp converter'],
     faqs: [
       { q: 'Is my data sent to a server?', a: 'No. Every developer tool runs entirely in your browser, so the JSON, config, logs, and tokens you paste never leave your device.' },
       { q: 'Which JSON standard is used?', a: 'The JSON tools use strict JSON.parse, so only standard JSON is accepted — trailing commas and comments are flagged as errors.' },
@@ -458,7 +458,28 @@ export const tools: Tool[] = [
       { q: 'Does trimming whitespace affect duplicate detection?', a: 'Yes. Enabling trim removes leading and trailing spaces before comparing, so lines that differ only by stray whitespace are correctly recognized as duplicates.' },
       commonFaqPrivacy,
     ],
-    related: ['word-counter', 'diff-checker', 'case-converter'],
+    related: ['line-sorter', 'word-counter', 'diff-checker', 'case-converter'],
+  },
+  {
+    id: 'line-sorter',
+    name: 'Line Sorter',
+    description: 'Sort text lines naturally, alphabetically, by length, or by number.',
+    slug: 'line-sorter',
+    categoryId: 'text',
+    status: 'active',
+    keywords: ['line sorter', 'sort lines', 'alphabetize text', 'natural sort', 'sort list online'],
+    longDescription:
+      'Line Sorter takes any list of text lines and reorders it by the rule you choose: natural order for filenames and numbered labels, strict A-Z alphabetical order, line length, or the first number found in each line. It is useful for tidying keyword lists, sorting IDs, organizing pasted filenames, or cleaning mixed lists before they go into a spreadsheet, config file, or issue comment.\n\nOptions let you flip between ascending and descending order, compare case-sensitively when capitalization matters, trim surrounding whitespace before sorting, remove blank rows, and collapse duplicates. The sort is stable, so lines that compare equally keep their original relative order. Everything runs locally in your browser, which means pasted customer lists, internal paths, and private notes are processed on your device and never uploaded.',
+    steps: ['Paste one item per line.', 'Choose the sort mode and direction.', 'Toggle cleanup options if needed.', 'Copy the sorted output.'],
+    useCases: ['Alphabetize a keyword or email list', 'Naturally sort numbered filenames', 'Sort task or log lines by length', 'Clean blank or duplicate rows before pasting into a spreadsheet'],
+    faqs: [
+      { q: 'What is natural sorting?', a: 'Natural sorting understands embedded numbers, so invoice-2 comes before invoice-10 instead of sorting purely character by character.' },
+      { q: 'How does numeric sorting work?', a: 'Numeric mode finds the first number in each line and sorts by that value, then falls back to text comparison when numbers are equal or missing.' },
+      { q: 'Does removing duplicates change the original text?', a: 'No. Duplicate detection can trim and ignore case for comparison, but the first kept line is output exactly as it was pasted.' },
+      { q: 'Is my list uploaded?', a: 'No. Sorting happens entirely in your browser, so the text never leaves your device.' },
+      commonFaqPrivacy,
+    ],
+    related: ['remove-duplicates-lines', 'word-counter', 'case-converter', 'diff-checker'],
   },
 
   // Image
@@ -967,7 +988,28 @@ export const tools: Tool[] = [
       { q: 'Does the first row have to be a header?', a: 'No. You control whether the first row is treated as a header. With headers on, JSON keys come from that row; with it off, columns are indexed.' },
       commonFaqPrivacy,
     ],
-    related: ['json-formatter', 'yaml-json', 'xml-formatter'],
+    related: ['json-formatter', 'yaml-json', 'xml-formatter', 'mime-type-lookup'],
+  },
+  {
+    id: 'mime-type-lookup',
+    name: 'MIME Type Lookup',
+    description: 'Find content types by file extension, MIME type, or format name.',
+    slug: 'mime-type-lookup',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['MIME type lookup', 'content type lookup', 'file extension MIME type', 'media type finder'],
+    longDescription:
+      'MIME Type Lookup maps common file extensions to the content types used in HTTP headers, uploads, email attachments, and API responses. Search by extension such as .json, .png, or .pdf, paste a MIME type such as application/json, or browse by category to find the correct media type quickly.\n\nCorrect MIME types matter because browsers and clients use them to decide how content should be parsed, downloaded, previewed, cached, or secured. A wrong Content-Type header can break JavaScript modules, make a PDF download instead of previewing, or cause APIs to reject a payload. This tool keeps a curated local table of common text, document, image, audio, video, archive, font, and developer formats, and it runs entirely in the browser with no network lookup.',
+    steps: ['Search by extension, MIME type, or format name.', 'Filter by category if the list is broad.', 'Copy the content type you need.'],
+    useCases: ['Set a Content-Type header for an API response', 'Configure static asset serving', 'Debug uploads rejected for an unexpected media type', 'Look up font and image MIME types for web servers'],
+    faqs: [
+      { q: 'What is a MIME type?', a: 'A MIME type, also called a media type, is a label such as application/json or image/png that tells software what kind of content a file or response contains.' },
+      { q: 'Is Content-Type case-sensitive?', a: 'Media types are generally compared case-insensitively, though lowercase is the conventional form used in HTTP headers and documentation.' },
+      { q: 'Why do some extensions have more than one possible type?', a: 'Historical and vendor-specific formats can have aliases. This lookup chooses common modern values for browser and API work.' },
+      { q: 'Does this call an external database?', a: 'No. The lookup uses a built-in table and runs locally in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['http-headers-analyzer', 'api-request-tester', 'csv-json', 'json-formatter'],
   },
   {
     id: 'regex-tester',
