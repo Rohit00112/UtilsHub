@@ -778,7 +778,7 @@ export const tools: Tool[] = [
       { q: 'What is the difference between beautify and minify?', a: 'Beautify adds indentation and line breaks for readability; minify strips all unnecessary whitespace to produce the smallest valid single-line JSON.' },
       commonFaqPrivacy,
     ],
-    related: ['xml-formatter', 'yaml-json', 'jwt-decoder'],
+    related: ['json-to-typescript', 'xml-formatter', 'yaml-json', 'jwt-decoder'],
   },
   {
     id: 'json-diff',
@@ -820,7 +820,28 @@ export const tools: Tool[] = [
       { q: 'Is my JSON uploaded?', a: 'No. The input is parsed and converted locally in your browser.' },
       commonFaqPrivacy,
     ],
-    related: ['json-formatter', 'json-diff', 'openapi-viewer'],
+    related: ['json-to-typescript', 'json-formatter', 'json-diff', 'openapi-viewer'],
+  },
+  {
+    id: 'json-to-typescript',
+    name: 'JSON to TypeScript',
+    description: 'Infer TypeScript interfaces or type aliases from sample JSON.',
+    slug: 'json-to-typescript',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['JSON to TypeScript', 'TypeScript interface generator', 'generate TypeScript from JSON', 'JSON types'],
+    longDescription:
+      'JSON to TypeScript converts a representative JSON payload into TypeScript declarations you can paste into an application, SDK, test fixture, or API client. Paste an object, array, or nested response body and the tool infers strings, numbers, booleans, nulls, arrays, nested objects, unions, and optional keys when array items do not all share the same shape. You can choose interface or type alias output, set the root type name, and include or omit export keywords.\n\nThe generator is intentionally fast and local. It uses JSON.parse in your browser, analyzes the resulting value on your device, and never uploads the payload. That makes it useful for turning API responses, webhook examples, config files, or saved fixtures into a clean starting point for strongly typed TypeScript code.',
+    steps: ['Paste sample JSON.', 'Choose interface or type alias output and name the root type.', 'Copy the generated TypeScript declarations.'],
+    useCases: ['Bootstrap API response types', 'Create fixture types for tests', 'Document config object shapes', 'Start SDK model definitions from sample payloads'],
+    faqs: [
+      { q: 'Does it create nested interfaces?', a: 'Yes. Nested objects become named declarations based on the root type and property names, and arrays of objects are merged into a shared item type.' },
+      { q: 'How are optional fields detected?', a: 'When an array contains objects with different keys, fields missing from some items are marked optional in the merged item declaration.' },
+      { q: 'Does it validate the JSON?', a: 'It uses strict JSON.parse, so invalid JSON is reported before type generation. JSON5 features such as comments and trailing commas are not accepted.' },
+      { q: 'Is my JSON uploaded?', a: 'No. The input is parsed and converted locally in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'json-schema-generator', 'json-schema-validator', 'openapi-viewer'],
   },
   {
     id: 'json-schema-validator',
