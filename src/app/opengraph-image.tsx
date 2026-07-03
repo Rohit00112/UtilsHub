@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'UtilsHub — free browser-based utility tools';
+export const alt = 'UtilsHub - free browser-based utility tools';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -52,8 +52,8 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: 'flex', gap: '12px', fontSize: 22, opacity: 0.6 }}>
-          <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>No uploads</span>
-          <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>100% local</span>
+          <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Browser tools</span>
+          <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Local where possible</span>
           <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Free</span>
         </div>
       </div>

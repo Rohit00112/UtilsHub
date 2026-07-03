@@ -11,6 +11,9 @@ interface ToolLayoutProps {
 
 export default function ToolLayout({ children, title, description, category }: ToolLayoutProps) {
     const categoryInfo = getCategoryById(category);
+    const privacyNote = category === 'api'
+        ? 'Network tools connect directly from your browser to the URL you choose; UtilsHub does not proxy or store the request.'
+        : 'Tool input is processed in your browser and is not uploaded to a UtilsHub server.';
     
     return (
         <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-muted/20">
@@ -49,7 +52,7 @@ export default function ToolLayout({ children, title, description, category }: T
                     </div>
 
                     <p className="mt-6 text-center text-xs text-muted-foreground text-pretty">
-                        Tool input is processed in your browser and is not uploaded to a UtilsHub server.
+                        {privacyNote}
                     </p>
                 </div>
             </main>

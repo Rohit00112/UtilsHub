@@ -11,7 +11,7 @@ import {
 
 export const siteName = 'UtilsHub';
 export const defaultDescription =
-  'Free browser-based tools for PDF, image, text, security, calculators, and developers. Your files and data stay on your device, with no sign-up required.';
+  'Free browser-based tools for PDF, image, text, security, calculators, APIs, and developers. Most tools process input on your device, with no sign-up required.';
 export const defaultKeywords = [
   'online tools',
   'free utilities',
@@ -142,7 +142,7 @@ export function getCategoryMetadata(categoryId: string): Metadata {
   if (!category) return createMetadata({ title: 'Tools', path: '/tools' });
 
   const baseDescription = category.description.replace(/\.$/, '');
-  const description = `${baseDescription}. Use free ${category.name.toLowerCase()} with no sign-up and browser-local input processing.`;
+  const description = `${baseDescription}. Use free ${category.name.toLowerCase()} with no sign-up and browser-side processing.`;
 
   return createMetadata({
     fullTitle: `${category.name} — Free Online Utilities | ${siteName}`,
@@ -159,11 +159,16 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
   // Keyword-led, ~55–60 char target. Tool name + benefit + site name.
   const fullTitle = `${tool.name} — Free Online Tool | ${siteName}`;
   const baseDescription = tool.description.replace(/\.$/, '');
-  const descriptionOptions = [
-    `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to UtilsHub.`,
-    `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to UtilsHub.`,
-    `${baseDescription}. Free browser tool with local processing and no sign-up.`,
-  ];
+  const descriptionOptions = tool.categoryId === 'api'
+    ? [
+      `${baseDescription}. Free with no sign-up; requests run directly from your browser and are not proxied by UtilsHub.`,
+      `${baseDescription}. Free browser tool with no sign-up and no UtilsHub proxy.`,
+    ]
+    : [
+      `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to UtilsHub.`,
+      `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to UtilsHub.`,
+      `${baseDescription}. Free browser tool with local processing and no sign-up.`,
+    ];
   const description =
     descriptionOptions.find((option) => option.length <= 160) ||
     descriptionOptions[descriptionOptions.length - 1];

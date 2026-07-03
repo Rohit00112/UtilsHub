@@ -49,13 +49,13 @@ export const categories: Category[] = [
     name: 'Text Tools',
     description: 'Format, transform, and analyze text data.',
     longDescription:
-      'UtilsHub\'s text tools handle the small, repetitive jobs that come up constantly when writing, editing, and cleaning data. Convert text between cases, count words and characters against a limit, generate URL slugs, encode and decode URLs and Base64, escape HTML entities, compare two blocks of text to spot edits, sort lists, and strip duplicate lines. Each tool is designed to do one thing quickly and get out of your way. Everything runs locally in your browser, so the content you paste — drafts, customer data, internal notes — is processed on your own device and never sent to a server. There are no limits, sign-ups, or ads, so you can reach for them as often as your day demands.',
+      'UtilsHub\'s text tools handle the small, repetitive jobs that come up constantly when writing, editing, and cleaning data. Convert text between cases, count words and characters against a limit, generate URL slugs, encode and decode URLs and Base64, escape HTML entities, compare two blocks of text to spot edits, sort lists, and strip duplicate lines. Each tool is designed to do one thing quickly and get out of your way. Everything runs locally in your browser, so the content you paste — drafts, customer data, internal notes — is processed on your own device and never sent to a server. There are no usage limits or sign-ups, so you can reach for them as often as your day demands.',
     keywords: ['text tools', 'word counter', 'case converter', 'line sorter', 'base64', 'text diff', 'URL encoder'],
     faqs: [
       { q: 'Is the text I paste kept private?', a: 'Yes. Every text tool runs entirely in your browser, so pasted content is never uploaded or stored on a server.' },
       { q: 'Do these tools work offline?', a: 'Once the page has loaded, the tools run client-side, so they continue to work even with an unreliable connection.' },
       { q: 'Is there a length limit on input?', a: 'There is no fixed limit for everyday use. Because processing is local, extremely large inputs depend on your device\'s available memory.' },
-      { q: 'Are the text tools free?', a: 'Yes. All UtilsHub text tools are free to use with no account, quota, or ads.' },
+      { q: 'Are the text tools free?', a: 'Yes. All UtilsHub text tools are free to use with no account or usage quota.' },
     ],
   },
   {
@@ -91,11 +91,11 @@ export const categories: Category[] = [
     name: 'Calculators',
     description: 'Quick financial and mathematical calculations.',
     longDescription:
-      'UtilsHub\'s calculators cover frequent financial, health, and measurement questions in one place. Work out the monthly EMI and full amortization for a loan, solve everyday percentage problems, find your BMI from height and weight, calculate an exact age in years, months, and days from a date of birth, or convert between units of length, weight, temperature, area, volume, time, speed, and data. Every calculation runs in your browser, so the figures you enter — loan amounts, dates, personal measurements — stay private and are never sent to a server. Results update as you type, with no sign-up, ads, or limits, making these calculators quick to reach for whenever a number needs checking.',
+      'UtilsHub\'s calculators cover frequent financial, health, and measurement questions in one place. Work out the monthly EMI and full amortization for a loan, solve everyday percentage problems, find your BMI from height and weight, calculate an exact age in years, months, and days from a date of birth, or convert between units of length, weight, temperature, area, volume, time, speed, and data. Every calculation runs in your browser, so the figures you enter — loan amounts, dates, personal measurements — stay private and are never sent to a server. Results update as you type, with no sign-up or usage limit, making these calculators quick to reach for whenever a number needs checking.',
     keywords: ['online calculators', 'EMI calculator', 'percentage calculator', 'BMI calculator', 'unit converter', 'age calculator'],
     faqs: [
       { q: 'Are the calculations done privately?', a: 'Yes. Every calculator runs in your browser, so the amounts, dates, and measurements you enter are never uploaded to a server.' },
-      { q: 'Are the calculators free to use?', a: 'Yes. All UtilsHub calculators are free with no sign-up, quota, or ads.' },
+      { q: 'Are the calculators free to use?', a: 'Yes. All UtilsHub calculators are free with no sign-up or usage quota.' },
       { q: 'Should I rely on these for financial or medical decisions?', a: 'They give accurate arithmetic, but they are general tools. For loans, taxes, or health, confirm important decisions with a qualified professional.' },
       { q: 'Do results update automatically?', a: 'Yes. Most calculators recalculate live as you change the inputs, so you see the result immediately.' },
     ],
@@ -111,7 +111,7 @@ export const categories: Category[] = [
       { q: 'Is my data sent to a server?', a: 'No. Every developer tool runs entirely in your browser, so the JSON, config, logs, and tokens you paste never leave your device.' },
       { q: 'Which JSON standard is used?', a: 'The JSON tools use strict JSON.parse, so only standard JSON is accepted — trailing commas and comments are flagged as errors.' },
       { q: 'Do these tools handle large payloads?', a: 'Tens of megabytes typically work fine. Because processing is local, very large inputs depend on your device\'s available memory.' },
-      { q: 'Are the developer tools free?', a: 'Yes. All UtilsHub developer tools are free with no sign-up, rate limits, or ads.' },
+      { q: 'Are the developer tools free?', a: 'Yes. All UtilsHub developer tools are free with no sign-up or rate limits.' },
     ],
   },
   {
@@ -139,7 +139,7 @@ export const categories: Category[] = [
       { q: 'Do these tools send my URLs or metadata anywhere?', a: 'No. The web tools run entirely in your browser, so the URLs, metadata, and lists you enter are never uploaded to a server.' },
       { q: 'Will using these tools improve my SEO?', a: 'They help you produce correct, well-formed tags, sitemaps, and crawl directives, which support good SEO. Rankings still depend on content quality, links, and many other factors.' },
       { q: 'Where do I place a robots.txt or sitemap.xml?', a: 'Both belong at your site root, for example example.com/robots.txt and example.com/sitemap.xml, and the sitemap can be referenced from robots.txt.' },
-      { q: 'Are the web tools free?', a: 'Yes. All UtilsHub web tools are free to use with no sign-up or ads.' },
+      { q: 'Are the web tools free?', a: 'Yes. All UtilsHub web tools are free to use with no sign-up or usage quota.' },
     ],
   },
 ];
@@ -555,7 +555,7 @@ export const tools: Tool[] = [
     status: 'active',
     keywords: ['image resizer', 'resize image online', 'change image dimensions'],
     longDescription:
-      'Image Resizer changes the dimensions of an image to an exact pixel size or a percentage of the original, with an optional aspect-ratio lock so your picture never looks stretched or squashed. Whether you need a hero image to fit a layout, a thumbnail from a full-size photo, or a smaller version to get under a form\'s upload limit, you set the target and download the result in seconds.\n\nResizing happens locally through the browser\'s Canvas API, so your image is processed on your device and never uploaded. You can export the resized output as PNG, JPEG, or WebP to match where it will be used, and the Canvas automatically normalizes EXIF orientation so photos from phones come out the right way up. Keeping aspect ratio locked preserves the original proportions; unlocking it lets you force exact width and height when a layout demands it.',
+      'Image Resizer changes the dimensions of an image to an exact pixel size or a percentage of the original, with an optional aspect-ratio lock so your picture never looks stretched or squashed. Whether you need a hero image to fit a layout, a thumbnail from a full-size photo, or a smaller version to get under a form\'s upload limit, you set the target and download the result in seconds.\n\nResizing happens locally through the browser\'s Canvas API, so your image is processed on your device and never uploaded. You can export the resized output as PNG, JPEG, or WebP to match where it will be used, and the Canvas automatically normalizes EXIF orientation so photos from phones come out the right way up. Keeping aspect ratio locked preserves the original proportions; turning it off lets you force exact width and height when a layout demands it.',
     steps: ['Upload an image.', 'Enter target dimensions or a percentage.', 'Pick output format and download.'],
     useCases: ['Resize a hero image to fit a layout', 'Create thumbnails from full-size photos', 'Down-sample before uploading to a size-limited form'],
     faqs: [

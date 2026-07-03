@@ -24,7 +24,7 @@ export default function Home() {
         .map((id) => activeTools.find((tool) => tool.id === id))
         .filter(Boolean);
     const shareUrl = encodeURIComponent(absoluteUrl('/'));
-    const shareText = encodeURIComponent('UtilsHub — free browser-based utility tools');
+    const shareText = encodeURIComponent('UtilsHub - free browser-based utility tools');
 
     const issueDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -47,28 +47,33 @@ export default function Home() {
             <section className="border-b border-foreground/15">
                 <div className="container py-3">
                     <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        <span>Vol. 01 — Local-first utilities</span>
+                        <span>Local-first browser utilities</span>
                         <span className="hidden sm:inline">{issueDate}</span>
-                        <span>{activeTools.length} tools in print</span>
+                        <span>{activeTools.length} working tools</span>
                     </div>
                 </div>
             </section>
 
-            {/* Hero — asymmetric editorial */}
+            {/* Hero */}
             <section className="border-b border-foreground/15">
                 <div className="container grid gap-8 py-12 md:grid-cols-12 md:py-20">
                     <div className="md:col-span-8">
-                        <p className="eyebrow mb-6">No. 01 · The Workshop</p>
+                        <p className="eyebrow mb-6">Browser tools for daily work</p>
                         <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
                             Free browser tools<br />
-                            for <em className="italic text-primary">everyday</em> work.
+                            for files, text, images, and code.
                         </h1>
                         <div className="mt-8 grid gap-6 md:grid-cols-2">
                             <p className="text-base leading-relaxed text-foreground/80">
-                                UtilsHub is a small workshop of {activeTools.length} browser-local utilities — for files, text, images, and developer chores. Nothing leaves your machine. Nothing waits on a server.
+                                UtilsHub collects {activeTools.length} focused utilities for work that
+                                usually interrupts a larger task: formatting JSON, splitting PDFs,
+                                resizing images, decoding tokens, building campaign URLs, and checking
+                                calculations.
                             </p>
                             <p className="text-sm leading-relaxed text-muted-foreground">
-                                Format JSON. Split a PDF. Resize an image. Generate a strong password. The kind of jobs you reach for between meetings, finished in the time it takes to switch tabs.
+                                Most tools run on your device after the page loads. Pasted drafts,
+                                documents, screenshots, passwords, and tokens are not uploaded to a
+                                UtilsHub processing server.
                             </p>
                         </div>
 
@@ -77,18 +82,18 @@ export default function Home() {
                         </div>
 
                         <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                            <span>· No uploads</span>
-                            <span>· Instant results</span>
-                            <span>· Free to use</span>
-                            <span>· Open in browser</span>
+                            <span>Local tools stay in browser</span>
+                            <span>No account</span>
+                            <span>Open source</span>
+                            <span>Works in browser</span>
                         </div>
                     </div>
 
-                    {/* Side panel — table of contents */}
+                    {/* Common tasks */}
                     <aside className="md:col-span-4">
                         <div className="border border-foreground/20 bg-card">
                             <div className="border-b border-foreground/20 px-5 py-3">
-                                <p className="eyebrow">Inside this issue</p>
+                                <p className="eyebrow">Start with a common task</p>
                             </div>
                             <ol className="divide-y divide-foreground/10">
                                 {commonTools.map((tool, i) => tool && (
@@ -111,22 +116,22 @@ export default function Home() {
                             </ol>
                         </div>
                         <p className="mt-3 text-xs text-muted-foreground">
-                            Most-reached-for, in order of habit.
+                            Frequently used utilities, selected from the active tool list.
                         </p>
                     </aside>
                 </div>
             </section>
 
-            {/* Sections — categories as newspaper sections */}
+            {/* Tool categories */}
             <section id="tool-directory" className="bg-background">
                 <div className="container py-16">
                     <div className="mb-10 flex flex-col items-baseline justify-between gap-2 md:flex-row">
                         <div>
-                            <p className="eyebrow mb-2">The sections</p>
-                            <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Browse the desk.</h2>
+                            <p className="eyebrow mb-2">Tool directory</p>
+                            <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Browse by category.</h2>
                         </div>
                         <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                            {activeTools.length} pieces · {categories.length} departments
+                            {activeTools.length} tools · {categories.length} categories
                         </p>
                     </div>
 
@@ -141,7 +146,7 @@ export default function Home() {
                                     className="group relative flex flex-col border-b border-r border-foreground/15 p-6 transition-colors hover:bg-secondary md:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(3n)]:border-r-0"
                                 >
                                     <div className="mb-6 flex items-start justify-between">
-                                        <span className="marker-num">№ {String(idx + 1).padStart(2, '0')}</span>
+                                        <span className="marker-num">No. {String(idx + 1).padStart(2, '0')}</span>
                                         <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
                                             {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
                                         </span>
@@ -159,7 +164,7 @@ export default function Home() {
                                     <ul className="mt-5 space-y-1 font-mono text-xs text-muted-foreground">
                                         {categoryTools.slice(0, 3).map((tool) => (
                                             <li key={tool.id} className="truncate">
-                                                — {tool.name}
+                                                - {tool.name}
                                             </li>
                                         ))}
                                         {categoryTools.length > 3 && (
@@ -186,7 +191,7 @@ export default function Home() {
                     <div className="md:col-span-4">
                         <p className="eyebrow mb-3">Why UtilsHub</p>
                         <h2 className="font-serif text-3xl text-foreground">
-                            Useful online tools, without the upload.
+                            Useful online tools with clear boundaries.
                         </h2>
                     </div>
                     <div className="space-y-5 text-base leading-7 text-foreground/80 md:col-span-8">
@@ -207,10 +212,10 @@ export default function Home() {
                             , and dozens of other focused utilities directly in your browser.
                         </p>
                         <p>
-                            Most tools process input locally on your device, which means pasted text,
-                            documents, images, passwords, and tokens are not uploaded to a UtilsHub
-                            server. There is no account to create and no software to install: open a
-                            tool, finish the task, and download or copy the result.
+                            Each tool page describes what the tool accepts, what it returns, and where
+                            the processing happens. Local tools process input in the browser. Network
+                            tools, such as the API request tester or WebSocket tester, connect directly
+                            from your browser to the destination you choose.
                         </p>
                     </div>
                 </div>
@@ -219,17 +224,16 @@ export default function Home() {
             <section className="border-t border-foreground/15 bg-background">
                 <div className="container py-14">
                     <div className="max-w-3xl">
-                        <p className="eyebrow mb-3">Made for everyday work</p>
+                        <p className="eyebrow mb-3">Built around specific jobs</p>
                         <h2 className="font-serif text-3xl text-foreground sm:text-4xl">
-                            Free browser-based utility tools that stay out of your way.
+                            One page for each task, with the details on the page.
                         </h2>
                         <p className="mt-5 text-base leading-7 text-foreground/80">
-                            UtilsHub is a collection of free browser-based utility tools for everyday
-                            work. It is built for the small jobs that interrupt a larger task: cleaning
-                            malformed data, checking a token, preparing a document, converting an image,
-                            or calculating a value. Instead of installing another application or
-                            searching through ad-heavy converter sites, you can open one focused tool,
-                            complete the job, and return to what you were doing.
+                            UtilsHub is organized around tasks people can finish in a few minutes:
+                            cleaning malformed data, checking a token, preparing a document, converting
+                            an image, or calculating a value. Each page keeps the interactive tool at
+                            the top and adds plain-language notes below it, including common use cases,
+                            basic steps, privacy notes, and limits to be aware of.
                         </p>
                     </div>
 
@@ -237,36 +241,31 @@ export default function Home() {
                         <article>
                             <h3 className="font-serif text-2xl text-foreground">Choose by task</h3>
                             <p className="mt-3 text-sm leading-7 text-foreground/80">
-                                The directory is organized around recognizable tasks and formats. PDF
-                                tools merge, split, compare, and compress documents. Text tools count,
-                                transform, encode, decode, and compare writing. Image tools resize,
-                                convert, merge, and generate favicons. Calculators handle measurements,
-                                percentages, dates, health estimates, and loan payments. Developer, web,
-                                security, and API tools cover the quick checks that usually become a
-                                temporary script or another browser tab.
+                                The directory uses recognizable tasks and formats. PDF tools merge,
+                                split, compare, and compress documents. Text tools count, transform,
+                                encode, decode, and compare writing. Image tools resize, convert, merge,
+                                and generate favicons. Developer, web, security, API, and calculator
+                                tools cover the quick checks that often become a temporary script or
+                                another browser tab.
                             </p>
                         </article>
                         <article>
                             <h3 className="font-serif text-2xl text-foreground">Keep input private</h3>
                             <p className="mt-3 text-sm leading-7 text-foreground/80">
-                                Most utilities run locally with browser APIs and established client-side
-                                libraries. The files or text you provide are processed on your device,
-                                not sent to a UtilsHub processing server. That design is useful when a
-                                task involves contracts, internal JSON, screenshots, access tokens, or
-                                other material you would rather not upload. Tools that intentionally
-                                contact another service, such as an API request tester, clearly depend
-                                on the destination you choose.
+                                Most utilities use browser APIs and client-side libraries, so files and
+                                pasted text are processed on your device. That matters for contracts,
+                                internal JSON, screenshots, access tokens, and other material you would
+                                rather not upload. Tools that must contact another service say so in
+                                their page copy and connect from your browser.
                             </p>
                         </article>
                         <article>
                             <h3 className="font-serif text-2xl text-foreground">Use it without friction</h3>
                             <p className="mt-3 text-sm leading-7 text-foreground/80">
-                                There is no account, installation, premium tier, or usage quota. Pages
-                                are pre-rendered for a fast first view, while interactive controls load
-                                in the browser. Search by a tool name, file format, or job description,
-                                then copy or download the result. The collection is also open source, so
-                                its behavior can be reviewed and improvements can be proposed through
-                                the public GitHub repository.
+                                There is no account, installation, premium tier, or usage quota. Search
+                                by a tool name, file format, or job description, then copy or download
+                                the result. The project is open source, so tool behavior can be reviewed
+                                and fixes can be proposed in the public GitHub repository.
                             </p>
                         </article>
                     </div>
@@ -341,30 +340,33 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Colophon */}
+            {/* Operating notes */}
             <section className="border-t border-foreground/15 bg-secondary/40">
                 <div className="container grid gap-8 py-12 md:grid-cols-12">
                     <div className="md:col-span-4">
-                        <p className="eyebrow mb-3">Colophon</p>
-                        <h3 className="font-serif text-2xl text-foreground">House rules.</h3>
+                        <p className="eyebrow mb-3">Operating notes</p>
+                        <h3 className="font-serif text-2xl text-foreground">What to expect.</h3>
                     </div>
                     <div className="grid gap-8 md:col-span-8 md:grid-cols-3">
                         <div>
                             <p className="font-mono text-xs uppercase tracking-wider text-primary">01 · Local</p>
                             <p className="mt-2 text-sm text-foreground/80">
-                                Everything runs in your browser. Files never touch our servers.
+                                Local tools run in your browser. Files and pasted text are not uploaded
+                                to a UtilsHub processing server.
                             </p>
                         </div>
                         <div>
-                            <p className="font-mono text-xs uppercase tracking-wider text-primary">02 · Fast</p>
+                            <p className="font-mono text-xs uppercase tracking-wider text-primary">02 · Direct</p>
                             <p className="mt-2 text-sm text-foreground/80">
-                                No splash screens, no sign-ups, no waiting room. Open and use.
+                                Tool pages put the working controls first, followed by steps, use cases,
+                                and answers to common questions.
                             </p>
                         </div>
                         <div>
                             <p className="font-mono text-xs uppercase tracking-wider text-primary">03 · Free</p>
                             <p className="mt-2 text-sm text-foreground/80">
-                                No tier walls, no quota meters. The tools you came for, all of them.
+                                No account, no premium tier, and no quota meter. The active tools are
+                                available without sign-up.
                             </p>
                         </div>
                     </div>

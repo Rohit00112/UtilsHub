@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, ChevronRight, HelpCircle, Plus } from 'lucide-react';
+import { ArrowRight, ChevronRight, HelpCircle, ShieldCheck } from 'lucide-react';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import { getCategoryById, getToolsByCategory, categories } from '@/lib/tools';
 import { categoryJsonLd, getCategoryMetadata } from '@/lib/seo';
@@ -95,11 +95,12 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
             
             <div className="flex min-h-40 flex-col items-center justify-center rounded-lg border border-dashed border-border bg-background/60 p-5 text-center">
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md border bg-muted/20 text-muted-foreground">
-                <Plus className="h-5 w-5" />
+                <ShieldCheck className="h-5 w-5" />
               </div>
-              <h3 className="font-semibold text-foreground">More coming soon</h3>
+              <h3 className="font-semibold text-foreground">Review before you run</h3>
               <p className="mt-1 text-sm text-muted-foreground text-pretty">
-                We&apos;re constantly adding new tools to the {category.name} suite.
+                Each {category.name.toLowerCase()} page explains the accepted input, the output,
+                and whether the work stays local in your browser.
               </p>
             </div>
           </div>

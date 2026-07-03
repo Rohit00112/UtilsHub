@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen, HelpCircle, ListChecks, Sparkles } from 'lucide-react';
+import { ArrowRight, BookOpen, HelpCircle, ListChecks, ListOrdered } from 'lucide-react';
 import { getRelatedTools, type Tool } from '@/lib/tools';
 import { toolPath } from '@/lib/seo';
 
@@ -37,7 +37,7 @@ export default function ToolContent({ tool }: ToolContentProps) {
       {hasSteps && (
         <div>
           <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
-            <Sparkles className="h-5 w-5 text-muted-foreground" />
+            <ListOrdered className="h-5 w-5 text-muted-foreground" />
             How to use {tool.name}
           </h2>
           <ol className="mt-4 space-y-2 text-base leading-7 text-foreground/90">

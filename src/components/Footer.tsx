@@ -12,7 +12,8 @@ export default function Footer() {
               Utils<span className="italic text-primary">Hub</span>
             </p>
             <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              A small workshop of browser-local utilities. Made for the small tasks that shouldn&apos;t need a server.
+              Free browser-based utilities for working with PDFs, images, text,
+              code, security values, APIs, and common calculations.
             </p>
           </div>
 
@@ -26,7 +27,7 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-4">
-            <p className="eyebrow mb-3">Off-paper</p>
+            <p className="eyebrow mb-3">Project</p>
             <ul className="space-y-1.5 text-sm">
               <li>
                 <Link href="https://github.com/Rohit00112/UtilsHub" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
@@ -43,8 +44,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-foreground/10 pt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {year} UtilsHub · Set in system sans & serif</span>
-          <span>Printed locally — your browser, your data</span>
+          <span>© {year} UtilsHub · Open source utility tools</span>
+          <span>Local tools run in your browser</span>
         </div>
       </div>
     </footer>
