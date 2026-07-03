@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { createMetadata } from "@/lib/seo";
 
@@ -19,10 +18,8 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <Script
-                    id="adsense-loader"
+                <script
                     async
-                    strategy="afterInteractive"
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9243015758853816"
                     crossOrigin="anonymous"
                 />
