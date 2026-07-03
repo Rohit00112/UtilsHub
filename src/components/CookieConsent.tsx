@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Script from 'next/script';
 
 const STORAGE_KEY = 'utilshub-cookie-consent';
-const ADSENSE_CLIENT_ID = 'ca-pub-9243015758853816';
 
 type ConsentState = 'unknown' | 'accepted' | 'declined';
 
@@ -38,16 +36,6 @@ export default function CookieConsent() {
 
     return (
         <>
-            {consent === 'accepted' && (
-                <Script
-                    id="adsense-init"
-                    async
-                    strategy="afterInteractive"
-                    src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
-                    crossOrigin="anonymous"
-                />
-            )}
-
             {consent === 'unknown' && (
                 <div
                     role="dialog"
