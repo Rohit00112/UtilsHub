@@ -4,7 +4,7 @@
 
 FreeWebTools is a high-performance web application featuring a collection of free online tools for PDF manipulation, image processing, security utilities, financial calculators, and developer tools.
 
-**Live website: [freewebtools.app](https://freewebtools.app/)**
+**Live website: [utils-hub.vercel.app](https://utils-hub.vercel.app/)**
 
 ## ✨ Features
 

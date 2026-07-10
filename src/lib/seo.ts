@@ -24,7 +24,7 @@ export const defaultKeywords = [
   'FreeWebTools',
 ];
 
-const productionSiteUrl = 'https://freewebtools.app';
+const productionSiteUrl = 'https://utils-hub.vercel.app';
 
 function normalizeSiteUrl(url: string) {
   const withProtocol = /^https?:\/\//i.test(url) ? url : `https://${url}`;

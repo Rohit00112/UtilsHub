@@ -29,8 +29,8 @@ const cardOptions: Array<{ label: string; value: CardType }> = [
 const sample = {
     title: 'Free Web Tools for Everyday Work',
     description: 'Format data, resize images, inspect tokens, and generate web metadata with free browser-based tools.',
-    url: 'https://freewebtools.app/tools/web/meta-tags',
-    image: 'https://freewebtools.app/opengraph-image',
+    url: 'https://utils-hub.vercel.app/tools/web/meta-tags',
+    image: 'https://utils-hub.vercel.app/opengraph-image',
     siteName: 'FreeWebTools',
     twitter: '@freewebtools',
 };

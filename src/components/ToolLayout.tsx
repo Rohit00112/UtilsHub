@@ -7,13 +7,22 @@ interface ToolLayoutProps {
     title: string;
     description: string;
     category: string;
+    processingLabel?: string;
+    privacyNote?: string;
 }
 
-export default function ToolLayout({ children, title, description, category }: ToolLayoutProps) {
+export default function ToolLayout({
+    children,
+    title,
+    description,
+    category,
+    processingLabel = 'Browser-local processing',
+    privacyNote,
+}: ToolLayoutProps) {
     const categoryInfo = getCategoryById(category);
-    const privacyNote = category === 'api'
+    const resolvedPrivacyNote = privacyNote || (category === 'api'
         ? 'Network tools connect directly from your browser to the URL you choose; FreeWebTools does not proxy or store the request.'
-        : 'Tool input is processed in your browser and is not uploaded to a FreeWebTools server.';
+        : 'Tool input is processed in your browser and is not uploaded to a FreeWebTools server.');
     
     return (
         <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-muted/20">
@@ -39,7 +48,7 @@ export default function ToolLayout({ children, title, description, category }: T
                         </div>
                         <div className="flex items-center gap-2 rounded-md border bg-muted/20 px-3 py-2 text-sm text-muted-foreground">
                             <ShieldCheck className="h-4 w-4 text-foreground" />
-                            Browser-local processing
+                            {processingLabel}
                         </div>
                     </div>
                 </div>
@@ -52,7 +61,7 @@ export default function ToolLayout({ children, title, description, category }: T
                     </div>
 
                     <p className="mt-6 text-center text-xs text-muted-foreground text-pretty">
-                        {privacyNote}
+                        {resolvedPrivacyNote}
                     </p>
                 </div>
             </main>
