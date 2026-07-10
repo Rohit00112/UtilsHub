@@ -24,7 +24,7 @@ export default function Home() {
         .map((id) => activeTools.find((tool) => tool.id === id))
         .filter(Boolean);
     const shareUrl = encodeURIComponent(absoluteUrl('/'));
-    const shareText = encodeURIComponent('UtilsHub - free browser-based utility tools');
+    const shareText = encodeURIComponent('FreeWebTools - free online web tools');
 
     const issueDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -58,22 +58,21 @@ export default function Home() {
             <section className="border-b border-foreground/15">
                 <div className="container grid gap-8 py-12 md:grid-cols-12 md:py-20">
                     <div className="md:col-span-8">
-                        <p className="eyebrow mb-6">Browser tools for daily work</p>
+                        <p className="eyebrow mb-6">Free web tools for daily work</p>
                         <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
-                            Free browser tools<br />
-                            for files, text, images, and code.
+                            Free web tools<br />
+                            for PDFs, images, text, and code.
                         </h1>
                         <div className="mt-8 grid gap-6 md:grid-cols-2">
                             <p className="text-base leading-relaxed text-foreground/80">
-                                UtilsHub collects {activeTools.length} focused utilities for work that
-                                usually interrupts a larger task: formatting JSON, splitting PDFs,
-                                resizing images, decoding tokens, building campaign URLs, and checking
-                                calculations.
+                                FreeWebTools collects {activeTools.length} focused online utilities for
+                                everyday tasks: formatting JSON, splitting PDFs, resizing images,
+                                decoding tokens, building campaign URLs, and checking calculations.
                             </p>
                             <p className="text-sm leading-relaxed text-muted-foreground">
                                 Most tools run on your device after the page loads. Pasted drafts,
                                 documents, screenshots, passwords, and tokens are not uploaded to a
-                                UtilsHub processing server.
+                                FreeWebTools processing server.
                             </p>
                         </div>
 
@@ -189,14 +188,14 @@ export default function Home() {
             <section className="border-t border-foreground/15 bg-secondary/20">
                 <div className="container grid gap-8 py-12 md:grid-cols-12">
                     <div className="md:col-span-4">
-                        <p className="eyebrow mb-3">Why UtilsHub</p>
+                        <p className="eyebrow mb-3">Why FreeWebTools</p>
                         <h2 className="font-serif text-3xl text-foreground">
                             Useful online tools with clear boundaries.
                         </h2>
                     </div>
                     <div className="space-y-5 text-base leading-7 text-foreground/80 md:col-span-8">
                         <p>
-                            UtilsHub brings free PDF, text, image, calculator, security, web, API, and
+                            FreeWebTools brings free PDF, text, image, calculator, security, web, API, and
                             developer tools into one searchable directory. Use the{' '}
                             <Link href="/tools/developer/json-formatter" className="font-medium text-foreground underline underline-offset-4">
                                 JSON formatter
@@ -229,7 +228,7 @@ export default function Home() {
                             One page for each task, with the details on the page.
                         </h2>
                         <p className="mt-5 text-base leading-7 text-foreground/80">
-                            UtilsHub is organized around tasks people can finish in a few minutes:
+                            FreeWebTools is organized around tasks people can finish in a few minutes:
                             cleaning malformed data, checking a token, preparing a document, converting
                             an image, or calculating a value. Each page keeps the interactive tool at
                             the top and adds plain-language notes below it, including common use cases,
@@ -271,7 +270,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-10 border border-foreground/15 bg-secondary/20 p-6 sm:p-8">
-                        <h3 className="font-serif text-2xl text-foreground">How to use UtilsHub</h3>
+                        <h3 className="font-serif text-2xl text-foreground">How to use FreeWebTools</h3>
                         <ol className="mt-5 grid gap-6 md:grid-cols-3">
                             <li>
                                 <p className="eyebrow mb-2">01 · Find the right tool</p>
@@ -286,7 +285,7 @@ export default function Home() {
                                 <p className="text-sm leading-7 text-foreground/80">
                                     Add your text, file, values, or settings and run the utility. For
                                     local-first tools, the browser performs the work on your device
-                                    without sending the source material to a UtilsHub server.
+                                    without sending the source material to a FreeWebTools server.
                                 </p>
                             </li>
                             <li>
@@ -304,10 +303,10 @@ export default function Home() {
                         <div>
                             <h3 className="flex items-center gap-2 font-semibold text-foreground">
                                 <Share2 className="h-4 w-4" />
-                                Share UtilsHub
+                                Share FreeWebTools
                             </h3>
                             <p className="mt-1 text-sm text-muted-foreground">
-                                Send the directory to someone who could use a private browser tool.
+                                Send the directory to someone who could use a free web tool.
                             </p>
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -352,7 +351,7 @@ export default function Home() {
                             <p className="font-mono text-xs uppercase tracking-wider text-primary">01 · Local</p>
                             <p className="mt-2 text-sm text-foreground/80">
                                 Local tools run in your browser. Files and pasted text are not uploaded
-                                to a UtilsHub processing server.
+                                to a FreeWebTools processing server.
                             </p>
                         </div>
                         <div>

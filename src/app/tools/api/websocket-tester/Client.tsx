@@ -29,7 +29,7 @@ function logText(logs: SocketLog[]) {
 
 export default function WebSocketTester() {
     const [url, setUrl] = useState('wss://echo.websocket.events');
-    const [message, setMessage] = useState('{"type":"ping","source":"UtilsHub"}');
+    const [message, setMessage] = useState('{"type":"ping","source":"FreeWebTools"}');
     const [status, setStatus] = useState<ConnectionStatus>('idle');
     const [logs, setLogs] = useState<SocketLog[]>([]);
     const [copied, setCopied] = useState(false);
@@ -53,7 +53,7 @@ export default function WebSocketTester() {
 
     const disconnect = () => {
         if (socketRef.current) {
-            socketRef.current.close(1000, 'Closed from UtilsHub');
+            socketRef.current.close(1000, 'Closed from FreeWebTools');
             socketRef.current = null;
         }
         setStatus((current) => (current === 'idle' ? 'idle' : 'closed'));

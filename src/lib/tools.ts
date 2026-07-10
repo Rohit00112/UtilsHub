@@ -35,10 +35,10 @@ export const categories: Category[] = [
     name: 'PDF Tools',
     description: 'Merge, split, compress, and compare PDF files.',
     longDescription:
-      'UtilsHub\'s PDF tools let you merge, split, compress, and compare PDF documents without installing software or creating an account. Combine several PDFs into one ordered file, break a long document into page ranges or individual pages, shrink an oversized file to fit an email limit, or diff two revisions to see exactly what text changed. Every operation runs locally in your browser using the pdf-lib and pdfjs libraries, which means the documents you work with — contracts, invoices, statements, and other sensitive files — are never uploaded to a server. That makes these tools both faster, since there is no waiting on an upload or a processing queue, and more private than typical online PDF services.',
+      'FreeWebTools PDF tools let you merge, split, compress, and compare PDF documents without installing software or creating an account. Combine several PDFs into one ordered file, break a long document into page ranges or individual pages, shrink an oversized file to fit an email limit, or diff two revisions to see exactly what text changed. Every operation runs locally in your browser using the pdf-lib and pdfjs libraries, which means the documents you work with — contracts, invoices, statements, and other sensitive files — are never uploaded to a server. That makes these tools both faster, since there is no waiting on an upload or a processing queue, and more private than typical online PDF services.',
     keywords: ['PDF tools', 'merge PDF', 'split PDF', 'compress PDF', 'compare PDF', 'free PDF tools'],
     faqs: [
-      { q: 'Are my PDF files uploaded to a server?', a: 'No. Every PDF tool on UtilsHub processes your file entirely in your browser, so the document never leaves your device.' },
+      { q: 'Are my PDF files uploaded to a server?', a: 'No. Every PDF tool on FreeWebTools processes your file entirely in your browser, so the document never leaves your device.' },
       { q: 'Do I need to install anything or sign up?', a: 'No. The tools run in any modern browser with no installation, account, or sign-up required.' },
       { q: 'Will these tools reduce the quality of my PDF?', a: 'Merging and splitting copy pages losslessly. Compression focuses on structural optimization rather than aggressive image down-sampling, so visible quality is preserved.' },
       { q: 'Is there a file size limit?', a: 'There is no hard limit, but because processing is local, very large files (hundreds of megabytes) depend on your device\'s memory and may be slower.' },
@@ -49,13 +49,13 @@ export const categories: Category[] = [
     name: 'Text Tools',
     description: 'Format, transform, and analyze text data.',
     longDescription:
-      'UtilsHub\'s text tools handle the small, repetitive jobs that come up constantly when writing, editing, and cleaning data. Convert text between cases, count words and characters against a limit, generate URL slugs, encode and decode URLs and Base64, escape HTML entities, compare two blocks of text to spot edits, sort lists, and strip duplicate lines. Each tool is designed to do one thing quickly and get out of your way. Everything runs locally in your browser, so the content you paste — drafts, customer data, internal notes — is processed on your own device and never sent to a server. There are no usage limits or sign-ups, so you can reach for them as often as your day demands.',
+      'FreeWebTools text tools handle the small, repetitive jobs that come up constantly when writing, editing, and cleaning data. Convert text between cases, count words and characters against a limit, generate URL slugs, encode and decode URLs and Base64, escape HTML entities, compare two blocks of text to spot edits, sort lists, and strip duplicate lines. Each tool is designed to do one thing quickly and get out of your way. Everything runs locally in your browser, so the content you paste — drafts, customer data, internal notes — is processed on your own device and never sent to a server. There are no usage limits or sign-ups, so you can reach for them as often as your day demands.',
     keywords: ['text tools', 'word counter', 'case converter', 'line sorter', 'base64', 'text diff', 'URL encoder'],
     faqs: [
       { q: 'Is the text I paste kept private?', a: 'Yes. Every text tool runs entirely in your browser, so pasted content is never uploaded or stored on a server.' },
       { q: 'Do these tools work offline?', a: 'Once the page has loaded, the tools run client-side, so they continue to work even with an unreliable connection.' },
       { q: 'Is there a length limit on input?', a: 'There is no fixed limit for everyday use. Because processing is local, extremely large inputs depend on your device\'s available memory.' },
-      { q: 'Are the text tools free?', a: 'Yes. All UtilsHub text tools are free to use with no account or usage quota.' },
+      { q: 'Are the text tools free?', a: 'Yes. All FreeWebTools text tools are free to use with no account or usage quota.' },
     ],
   },
   {
@@ -63,7 +63,7 @@ export const categories: Category[] = [
     name: 'Image Tools',
     description: 'Convert, resize, and edit images in your browser.',
     longDescription:
-      'UtilsHub\'s image tools cover the common edits you need before publishing or sharing a picture: resize to exact dimensions or a percentage, convert JPG and PNG to the lighter WebP format, generate a full set of favicons from one source image, and merge several images into a single file. All of them use the browser\'s built-in Canvas API, so the work happens on your device and your images are never uploaded to a third-party service. That keeps personal photos and unreleased designs private, avoids the quality loss some online converters introduce, and removes any wait on an upload or processing queue. The tools are free, require no account, and run instantly in any modern browser.',
+      'FreeWebTools image tools cover the common edits you need before publishing or sharing a picture: resize to exact dimensions or a percentage, convert JPG and PNG to the lighter WebP format, generate a full set of favicons from one source image, and merge several images into a single file. All of them use the browser\'s built-in Canvas API, so the work happens on your device and your images are never uploaded to a third-party service. That keeps personal photos and unreleased designs private, avoids the quality loss some online converters introduce, and removes any wait on an upload or processing queue. The tools are free, require no account, and run instantly in any modern browser.',
     keywords: ['image tools', 'WebP converter', 'image resizer', 'favicon generator', 'merge images'],
     faqs: [
       { q: 'Are my images uploaded anywhere?', a: 'No. All image processing uses the browser\'s Canvas API and happens locally, so your pictures never leave your device.' },
@@ -77,7 +77,7 @@ export const categories: Category[] = [
     name: 'Security Tools',
     description: 'Encryption, hashing, and password utilities.',
     longDescription:
-      'UtilsHub\'s security tools help with everyday cryptographic and authentication tasks: generate strong random passwords, compute MD5/SHA-1/SHA-256/SHA-384/SHA-512 hashes, create keyed HMAC signatures, decode JSON Web Tokens to inspect their header and claims, and produce QR codes. Where cryptographic randomness or hashing is needed, the tools use the browser\'s Web Crypto API — the same secure primitives browsers rely on — rather than weaker substitutes. Critically, everything runs locally, so secrets, tokens, and passwords are processed on your device and never transmitted to a server. That local-only design is what makes it safe to paste a real JWT to debug a 401, or to generate a production password, without worrying that the sensitive value is logged or stored elsewhere.',
+      'FreeWebTools security tools help with everyday cryptographic and authentication tasks: generate strong random passwords, compute MD5/SHA-1/SHA-256/SHA-384/SHA-512 hashes, create keyed HMAC signatures, decode JSON Web Tokens to inspect their header and claims, and produce QR codes. Where cryptographic randomness or hashing is needed, the tools use the browser\'s Web Crypto API — the same secure primitives browsers rely on — rather than weaker substitutes. Critically, everything runs locally, so secrets, tokens, and passwords are processed on your device and never transmitted to a server. That local-only design is what makes it safe to paste a real JWT to debug a 401, or to generate a production password, without worrying that the sensitive value is logged or stored elsewhere.',
     keywords: ['security tools', 'JWT decoder', 'hash generator', 'HMAC generator', 'password generator', 'QR code'],
     faqs: [
       { q: 'Are passwords and tokens sent to a server?', a: 'No. All security tools run entirely in your browser, so passwords, secrets, and tokens you enter never leave your device.' },
@@ -91,11 +91,11 @@ export const categories: Category[] = [
     name: 'Calculators',
     description: 'Quick financial and mathematical calculations.',
     longDescription:
-      'UtilsHub\'s calculators cover frequent financial, health, and measurement questions in one place. Work out the monthly EMI and full amortization for a loan, solve everyday percentage problems, find your BMI from height and weight, calculate an exact age in years, months, and days from a date of birth, or convert between units of length, weight, temperature, area, volume, time, speed, and data. Every calculation runs in your browser, so the figures you enter — loan amounts, dates, personal measurements — stay private and are never sent to a server. Results update as you type, with no sign-up or usage limit, making these calculators quick to reach for whenever a number needs checking.',
+      'FreeWebTools calculators cover frequent financial, health, and measurement questions in one place. Work out the monthly EMI and full amortization for a loan, solve everyday percentage problems, find your BMI from height and weight, calculate an exact age in years, months, and days from a date of birth, or convert between units of length, weight, temperature, area, volume, time, speed, and data. Every calculation runs in your browser, so the figures you enter — loan amounts, dates, personal measurements — stay private and are never sent to a server. Results update as you type, with no sign-up or usage limit, making these calculators quick to reach for whenever a number needs checking.',
     keywords: ['online calculators', 'EMI calculator', 'percentage calculator', 'BMI calculator', 'unit converter', 'age calculator'],
     faqs: [
       { q: 'Are the calculations done privately?', a: 'Yes. Every calculator runs in your browser, so the amounts, dates, and measurements you enter are never uploaded to a server.' },
-      { q: 'Are the calculators free to use?', a: 'Yes. All UtilsHub calculators are free with no sign-up or usage quota.' },
+      { q: 'Are the calculators free to use?', a: 'Yes. All FreeWebTools calculators are free with no sign-up or usage quota.' },
       { q: 'Should I rely on these for financial or medical decisions?', a: 'They give accurate arithmetic, but they are general tools. For loans, taxes, or health, confirm important decisions with a qualified professional.' },
       { q: 'Do results update automatically?', a: 'Yes. Most calculators recalculate live as you change the inputs, so you see the result immediately.' },
     ],
@@ -105,13 +105,13 @@ export const categories: Category[] = [
     name: 'Developer Tools',
     description: 'Formatters, generators, and testers for engineers.',
     longDescription:
-      'UtilsHub\'s developer tools are the quick utilities engineers reach for dozens of times a day: format, validate, and minify JSON and XML; convert between YAML, JSON, and CSV; test regular expressions with live match highlighting; look up MIME content types; generate UUIDs and Lorem Ipsum; convert CSS units and timestamps; build color palettes; and preview Markdown. Instead of pulling in a library or writing a throwaway script, you paste your data and get the result instantly. Everything runs client-side in your browser, so the payloads, config, logs, and tokens you work with stay on your device and are never sent to a server. The tools are free and account-free, which makes them safe and convenient for use during code review, debugging, and integration work.',
+      'FreeWebTools developer tools are the quick utilities engineers reach for dozens of times a day: format, validate, and minify JSON and XML; convert between YAML, JSON, and CSV; test regular expressions with live match highlighting; look up MIME content types; generate UUIDs and Lorem Ipsum; convert CSS units and timestamps; build color palettes; and preview Markdown. Instead of pulling in a library or writing a throwaway script, you paste your data and get the result instantly. Everything runs client-side in your browser, so the payloads, config, logs, and tokens you work with stay on your device and are never sent to a server. The tools are free and account-free, which makes them safe and convenient for use during code review, debugging, and integration work.',
     keywords: ['developer tools', 'JSON formatter', 'UUID generator', 'regex tester', 'MIME type lookup', 'YAML to JSON', 'timestamp converter'],
     faqs: [
       { q: 'Is my data sent to a server?', a: 'No. Every developer tool runs entirely in your browser, so the JSON, config, logs, and tokens you paste never leave your device.' },
       { q: 'Which JSON standard is used?', a: 'The JSON tools use strict JSON.parse, so only standard JSON is accepted — trailing commas and comments are flagged as errors.' },
       { q: 'Do these tools handle large payloads?', a: 'Tens of megabytes typically work fine. Because processing is local, very large inputs depend on your device\'s available memory.' },
-      { q: 'Are the developer tools free?', a: 'Yes. All UtilsHub developer tools are free with no sign-up or rate limits.' },
+      { q: 'Are the developer tools free?', a: 'Yes. All FreeWebTools developer tools are free with no sign-up or rate limits.' },
     ],
   },
   {
@@ -119,13 +119,13 @@ export const categories: Category[] = [
     name: 'API & Network Tools',
     description: 'Inspect requests, headers, sockets, and API specifications.',
     longDescription:
-      'UtilsHub\'s API and network tools help engineers debug HTTP and realtime integrations without leaving the browser. Inspect response headers, test requests, convert cURL commands, preview OpenAPI documents, and work with WebSocket messages from a local-first toolkit designed for API development. These tools are especially useful during integration work, code review, QA handoff, and production incident triage, where small details like a cache directive, CORS header, or malformed request body can explain hours of confusion.',
+      'FreeWebTools API and network tools help engineers debug HTTP and realtime integrations without leaving the browser. Inspect response headers, test requests, convert cURL commands, preview OpenAPI documents, and work with WebSocket messages from a local-first toolkit designed for API development. These tools are especially useful during integration work, code review, QA handoff, and production incident triage, where small details like a cache directive, CORS header, or malformed request body can explain hours of confusion.',
     keywords: ['API tools', 'HTTP headers', 'API tester', 'curl converter', 'OpenAPI viewer', 'WebSocket tester'],
     faqs: [
-      { q: 'Are API tool inputs stored by UtilsHub?', a: 'No. Inputs are handled in your browser. Tools that send requests connect directly from your browser to the URL you choose.' },
+      { q: 'Are API tool inputs stored by FreeWebTools?', a: 'No. Inputs are handled in your browser. Tools that send requests connect directly from your browser to the URL you choose.' },
       { q: 'Why might an API request fail in the browser?', a: 'Browser security rules such as CORS can block requests even when the same URL works from a server or terminal.' },
       { q: 'Can I use these tools with private APIs?', a: 'Yes, if your browser can reach the API and the API allows the request. Be careful with secrets and tokens in shared machines.' },
-      { q: 'Are these tools free?', a: 'Yes. All UtilsHub API and network tools are free to use with no account or quota.' },
+      { q: 'Are these tools free?', a: 'Yes. All FreeWebTools API and network tools are free to use with no account or quota.' },
     ],
   },
   {
@@ -133,25 +133,25 @@ export const categories: Category[] = [
     name: 'Web Tools',
     description: 'SEO, URL, and site-publishing utilities.',
     longDescription:
-      'UtilsHub\'s web tools help you ship, debug, and optimize websites. Build trackable campaign URLs with UTM parameters, look up HTTP status codes and copy their status lines, generate a robots.txt with crawl directives, create SEO, Open Graph, and Twitter Card meta tags, and produce a valid sitemap.xml from a list of URLs. These are the small SEO and publishing chores that are easy to get subtly wrong by hand, and the tools format everything correctly so search engines and social platforms read your pages the way you intend. Each one runs locally in your browser — your URLs and metadata are never uploaded — and all are free with no account required.',
+      'FreeWebTools web tools help you ship, debug, and optimize websites. Build trackable campaign URLs with UTM parameters, look up HTTP status codes and copy their status lines, generate a robots.txt with crawl directives, create SEO, Open Graph, and Twitter Card meta tags, and produce a valid sitemap.xml from a list of URLs. These are the small SEO and publishing chores that are easy to get subtly wrong by hand, and the tools format everything correctly so search engines and social platforms read your pages the way you intend. Each one runs locally in your browser — your URLs and metadata are never uploaded — and all are free with no account required.',
     keywords: ['web tools', 'UTM builder', 'SEO tools', 'robots.txt', 'sitemap generator', 'meta tags', 'HTTP status codes'],
     faqs: [
       { q: 'Do these tools send my URLs or metadata anywhere?', a: 'No. The web tools run entirely in your browser, so the URLs, metadata, and lists you enter are never uploaded to a server.' },
       { q: 'Will using these tools improve my SEO?', a: 'They help you produce correct, well-formed tags, sitemaps, and crawl directives, which support good SEO. Rankings still depend on content quality, links, and many other factors.' },
       { q: 'Where do I place a robots.txt or sitemap.xml?', a: 'Both belong at your site root, for example example.com/robots.txt and example.com/sitemap.xml, and the sitemap can be referenced from robots.txt.' },
-      { q: 'Are the web tools free?', a: 'Yes. All UtilsHub web tools are free to use with no sign-up or usage quota.' },
+      { q: 'Are the web tools free?', a: 'Yes. All FreeWebTools web tools are free to use with no sign-up or usage quota.' },
     ],
   },
 ];
 
 const commonFaqPrivacy: ToolFaq = {
   q: 'Is anything uploaded to a server?',
-  a: 'No. Every UtilsHub tool runs entirely in your browser. The input you paste or the file you select stays on your device.',
+  a: 'No. Every FreeWebTools tool runs entirely in your browser. The input you paste or the file you select stays on your device.',
 };
 
 const commonFaqFree: ToolFaq = {
   q: 'Is this tool free to use?',
-  a: 'Yes. UtilsHub is free to use, with no sign-up, premium tier, or usage limits.',
+  a: 'Yes. FreeWebTools is free to use, with no sign-up, premium tier, or usage limits.',
 };
 
 export const tools: Tool[] = [
@@ -162,7 +162,7 @@ export const tools: Tool[] = [
     description: 'Combine multiple PDF files into one ordered document.',
     slug: 'merger',
     categoryId: 'pdf',
-    status: 'active',
+    status: 'planned',
     keywords: ['merge PDF', 'combine PDF files', 'PDF merger online', 'join PDFs'],
     longDescription:
       'PDF Merger combines two or more PDF files into a single, ordered document without installing any software or signing up for an account. Add the files you want to join, drag them into the exact sequence you need, and the tool stitches every page together into one downloadable PDF. Because it runs entirely in your browser using the pdf-lib library, the documents you select are never uploaded to a server — the merge happens on your own device, which keeps sensitive files like contracts, invoices, and medical records private.\n\nMerging is lossless: each page is copied into the new document with its original text, vector graphics, fonts, and embedded images intact. There is no re-compression or rasterization step, so the combined file looks identical to the originals. This makes the tool well suited for assembling multi-part reports, joining scanned receipts into a single expense packet, or compiling separate chapters exported from different applications into one clean deliverable.',
@@ -183,7 +183,7 @@ export const tools: Tool[] = [
     description: 'Full scrollable PDF editor for text, drawings, images, highlights, boxes, and whiteout overlays.',
     slug: 'editor',
     categoryId: 'pdf',
-    status: 'planned',
+    status: 'active',
     keywords: ['PDF editor', 'edit PDF online', 'annotate PDF', 'add text to PDF', 'highlight PDF', 'whiteout PDF', 'draw on PDF', 'add image to PDF'],
     longDescription:
       'PDF Editor opens an existing PDF in a full scrollable document workspace with page thumbnails, a sticky editing toolbar, and a properties panel for selected objects. Add text, highlights, rectangle outlines, whiteout blocks, lines, pen drawings, and PNG or JPG images directly onto any page without thinking in raw coordinates or uploading the file to a server. You can scroll through the whole document, jump from thumbnails, zoom, undo and redo edits, duplicate or delete selected objects, and export a new downloadable PDF in the browser with pdf-lib.\n\nThe editor is designed for common document markup workflows: placing approval text, covering a typo with a whiteout box and replacement text, highlighting clauses, drawing review boxes, dropping an image or signature, sketching pen notes, or preparing a quick annotated copy for someone else. The original pages are preserved and every edit is written as a new overlay on top of the selected pages. It does not rewrite the original PDF content stream, and whiteout is visual coverage rather than secure redaction.',
@@ -858,7 +858,7 @@ export const tools: Tool[] = [
     faqs: [
       { q: 'Does it support every JSON Schema keyword?', a: 'No. It focuses on common rules such as type, required, properties, additionalProperties, items, enum, const, min/max, length, and pattern.' },
       { q: 'Where are errors shown?', a: 'Each issue includes a JSON path like $.user.email so you can find the failing value quickly.' },
-      { q: 'Can I use a schema generated by UtilsHub?', a: 'Yes. The JSON Schema Generator output can be pasted here for quick validation and refinement.' },
+      { q: 'Can I use a schema generated by FreeWebTools?', a: 'Yes. The JSON Schema Generator output can be pasted here for quick validation and refinement.' },
       { q: 'Is my schema or data uploaded?', a: 'No. Validation runs entirely in your browser.' },
       commonFaqPrivacy,
     ],
@@ -1216,9 +1216,9 @@ export const tools: Tool[] = [
     useCases: ['Test a public REST endpoint', 'Debug CORS behavior from the browser', 'Inspect JSON responses without a desktop API client'],
     faqs: [
       { q: 'Why does a request fail even when curl works?', a: 'The browser enforces CORS, mixed-content, and forbidden-header rules. A server-side or terminal request may not face the same restrictions.' },
-      { q: 'Where is the request sent from?', a: 'The request is sent directly from your browser to the URL you enter, not through a UtilsHub proxy.' },
+      { q: 'Where is the request sent from?', a: 'The request is sent directly from your browser to the URL you enter, not through a FreeWebTools proxy.' },
       { q: 'Can I include cookies or credentials?', a: 'Yes. Enable the credentials option, but the target server must still allow credentialed browser requests.' },
-      { q: 'Are responses stored by UtilsHub?', a: 'No. The response is read in your browser and is not uploaded to a UtilsHub server.' },
+      { q: 'Are responses stored by FreeWebTools?', a: 'No. The response is read in your browser and is not uploaded to a FreeWebTools server.' },
     ],
     related: ['http-headers-analyzer', 'http-status', 'url-parser'],
   },
@@ -1273,11 +1273,11 @@ export const tools: Tool[] = [
     status: 'active',
     keywords: ['WebSocket tester', 'websocket client', 'wss tester', 'realtime API tester', 'socket tester'],
     longDescription:
-      'WebSocket Tester gives you a lightweight browser client for realtime endpoints. Enter a ws:// or wss:// URL, open the connection, send text or JSON messages, and watch connection events, sent messages, received messages, errors, and close codes in a timestamped log. It is a practical way to verify echo services, realtime APIs, notification channels, GraphQL subscriptions, and socket gateways while debugging frontend integrations.\n\nConnections are opened directly from your browser to the WebSocket server. UtilsHub does not proxy, store, or inspect messages, and the event log stays on your device until you clear it or leave the page.',
+      'WebSocket Tester gives you a lightweight browser client for realtime endpoints. Enter a ws:// or wss:// URL, open the connection, send text or JSON messages, and watch connection events, sent messages, received messages, errors, and close codes in a timestamped log. It is a practical way to verify echo services, realtime APIs, notification channels, GraphQL subscriptions, and socket gateways while debugging frontend integrations.\n\nConnections are opened directly from your browser to the WebSocket server. FreeWebTools does not proxy, store, or inspect messages, and the event log stays on your device until you clear it or leave the page.',
     steps: ['Enter a WebSocket URL.', 'Connect and send a text or JSON message.', 'Review incoming messages and connection events in the log.'],
     useCases: ['Test realtime API connectivity', 'Debug WebSocket message payloads', 'Inspect close codes and connection errors'],
     faqs: [
-      { q: 'Does this proxy WebSocket traffic through UtilsHub?', a: 'No. The browser connects directly to the WebSocket URL you enter.' },
+      { q: 'Does this proxy WebSocket traffic through FreeWebTools?', a: 'No. The browser connects directly to the WebSocket URL you enter.' },
       { q: 'Can I send JSON messages?', a: 'Yes. Messages are sent as text, so you can paste JSON, plain text, or protocol-specific commands.' },
       { q: 'Why did the connection fail?', a: 'Common reasons include an invalid URL, TLS problems, network blocks, server origin policy, or the endpoint not supporting browser WebSocket clients.' },
       { q: 'Are messages stored?', a: 'No. Messages remain in the in-page log in your browser and can be cleared at any time.' },

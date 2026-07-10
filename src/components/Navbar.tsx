@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="container flex h-14 items-center gap-6">
         <Link href="/" className="group flex items-baseline gap-2">
           <span className="font-serif text-2xl leading-none tracking-tight text-foreground">
-            Utils<span className="italic text-primary">Hub</span>
+            FreeWeb<span className="italic text-primary">Tools</span>
           </span>
           <span className="hidden font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:inline">
             est. local

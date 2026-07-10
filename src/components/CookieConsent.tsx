@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-const STORAGE_KEY = 'utilshub-cookie-consent';
+const STORAGE_KEY = 'freewebtools-cookie-consent';
 
 type ConsentState = 'unknown' | 'accepted' | 'declined';
 
@@ -45,7 +45,7 @@ export default function CookieConsent() {
                     style={{ bottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
                 >
                     <p className="text-pretty text-sm leading-6">
-                        UtilsHub uses Google AdSense to display ads, which sets cookies and may collect data per Google&apos;s policies. Local tool input stays in your browser; network tools connect to the URL you choose. See our{' '}
+                        FreeWebTools uses Google AdSense to display ads, which sets cookies and may collect data per Google&apos;s policies. Local tool input stays in your browser; network tools connect to the URL you choose. See our{' '}
                         <Link
                             href="/privacy"
                             prefetch={false}

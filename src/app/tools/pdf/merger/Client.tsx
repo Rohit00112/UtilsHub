@@ -131,8 +131,8 @@ export default function PDFMerger() {
                 copiedPages.forEach((page) => mergedPdf.addPage(page));
             }
 
-            mergedPdf.setCreator('UtilsHub');
-            mergedPdf.setProducer('UtilsHub PDF Merger');
+            mergedPdf.setCreator('FreeWebTools');
+            mergedPdf.setProducer('FreeWebTools PDF Merger');
 
             const bytes = bytesToArrayBuffer(await mergedPdf.save({ useObjectStreams: true }));
             const baseName = items[0]?.file.name.replace(/\.pdf$/i, '') || 'merged';

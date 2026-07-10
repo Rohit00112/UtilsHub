@@ -57,7 +57,7 @@ export default function ApiRequestTester() {
     const [method, setMethod] = useState<HttpMethod>('GET');
     const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/todos/1');
     const [headersText, setHeadersText] = useState('accept: application/json');
-    const [body, setBody] = useState('{\n  "title": "UtilsHub test"\n}');
+    const [body, setBody] = useState('{\n  "title": "FreeWebTools test"\n}');
     const [includeCredentials, setIncludeCredentials] = useState(false);
     const [response, setResponse] = useState<ResponseState | null>(null);
     const [error, setError] = useState('');
@@ -148,7 +148,7 @@ export default function ApiRequestTester() {
         setMethod('GET');
         setUrl('https://jsonplaceholder.typicode.com/todos/1');
         setHeadersText('accept: application/json');
-        setBody('{\n  "title": "UtilsHub test"\n}');
+        setBody('{\n  "title": "FreeWebTools test"\n}');
         setIncludeCredentials(false);
         setResponse(null);
         setError('');
@@ -202,7 +202,7 @@ export default function ApiRequestTester() {
                             <ToolTextarea
                                 value={body}
                                 onChange={(event) => setBody(event.target.value)}
-                                placeholder='{"name":"UtilsHub"}'
+                                placeholder='{"name":"FreeWebTools"}'
                                 className="min-h-44"
                                 disabled={!canSendBody}
                                 spellCheck={false}

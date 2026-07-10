@@ -18,7 +18,7 @@ type JsonSchema = {
 
 const sampleJson = `{
   "id": 42,
-  "name": "UtilsHub",
+  "name": "FreeWebTools",
   "active": true,
   "tags": ["tools", "developer"],
   "owner": {
@@ -181,7 +181,7 @@ export default function JsonSchemaGenerator() {
                             setInput(event.target.value);
                             setCopied(false);
                         }}
-                        placeholder='{"name":"UtilsHub"}'
+                        placeholder='{"name":"FreeWebTools"}'
                         className="min-h-[360px]"
                         spellCheck={false}
                     />

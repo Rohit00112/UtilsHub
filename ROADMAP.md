@@ -1,6 +1,6 @@
-# UtilsHub Modernization Roadmap
+# FreeWebTools Modernization Roadmap
 
-This roadmap outlines the systematic transformation of UtilsHub into a premium, portfolio-grade utility toolkit.
+This roadmap outlines the systematic transformation of FreeWebTools into a premium, portfolio-grade utility toolkit.
 
 ## Phase 1: Foundation (Architecture & Design System) (COMPLETED ✅)
 *Goal: Build the infrastructure for rapid, consistent growth.*

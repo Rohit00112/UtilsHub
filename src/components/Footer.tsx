@@ -9,10 +9,10 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-12">
           <div className="md:col-span-5">
             <p className="font-serif text-xl text-foreground">
-              Utils<span className="italic text-primary">Hub</span>
+              FreeWeb<span className="italic text-primary">Tools</span>
             </p>
             <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Free browser-based utilities for working with PDFs, images, text,
+              Free web tools for working with PDFs, images, text,
               code, security values, APIs, and common calculations.
             </p>
           </div>
@@ -30,8 +30,8 @@ export default function Footer() {
             <p className="eyebrow mb-3">Project</p>
             <ul className="space-y-1.5 text-sm">
               <li>
-                <Link href="https://github.com/Rohit00112/UtilsHub" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
-                  Source on GitHub
+                <Link href="https://github.com/Rohit00112" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
+                  GitHub
                 </Link>
               </li>
               <li>
@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-foreground/10 pt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {year} UtilsHub · Open source utility tools</span>
+          <span>© {year} FreeWebTools · Open source utility tools</span>
           <span>Local tools run in your browser</span>
         </div>
       </div>

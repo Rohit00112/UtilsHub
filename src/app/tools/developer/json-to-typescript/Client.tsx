@@ -23,7 +23,7 @@ type TypeNode =
 
 const sampleJson = `{
   "id": 42,
-  "name": "UtilsHub",
+  "name": "FreeWebTools",
   "publishedAt": null,
   "owner": {
     "email": "team@example.com",
@@ -226,7 +226,7 @@ function generateTypeScript(rootNode: TypeNode, rootName: string, declarationKin
 
 export default function JsonToTypescript() {
     const [input, setInput] = useState(sampleJson);
-    const [rootName, setRootName] = useState('UtilsHubTool');
+    const [rootName, setRootName] = useState('FreeWebToolsTool');
     const [declarationKind, setDeclarationKind] = useState<DeclarationKind>('interface');
     const [exported, setExported] = useState(true);
     const [copied, setCopied] = useState(false);
@@ -271,7 +271,7 @@ export default function JsonToTypescript() {
 
     const loadSample = () => {
         setInput(sampleJson);
-        setRootName('UtilsHubTool');
+        setRootName('FreeWebToolsTool');
         setDeclarationKind('interface');
         setExported(true);
         setCopied(false);
@@ -334,7 +334,7 @@ export default function JsonToTypescript() {
                             setInput(event.target.value);
                             setCopied(false);
                         }}
-                        placeholder='{"name":"UtilsHub"}'
+                        placeholder='{"name":"FreeWebTools"}'
                         className="min-h-[360px]"
                         spellCheck={false}
                     />

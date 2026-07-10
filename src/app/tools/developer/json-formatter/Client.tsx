@@ -35,7 +35,7 @@ export default function JsonFormatter() {
                         <ToolTextarea
                             value={input}
                             onChange={(event) => setInput(event.target.value)}
-                            placeholder='{"name":"UtilsHub"}'
+                            placeholder='{"name":"FreeWebTools"}'
                             className="min-h-[420px]"
                         />
                     </ToolPanel>

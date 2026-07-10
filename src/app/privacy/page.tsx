@@ -3,7 +3,7 @@ import { createMetadata } from '@/lib/seo';
 
 export const metadata = createMetadata({
     title: 'Privacy Policy',
-    description: 'How UtilsHub handles tool input, cookies, and third-party services like Google AdSense.',
+    description: 'How FreeWebTools handles tool input, cookies, and third-party services like Google AdSense.',
     path: '/privacy',
 });
 
@@ -20,8 +20,8 @@ export default function PrivacyPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground">Summary</h2>
                         <p className="mt-3 text-muted-foreground">
-                            UtilsHub runs its tools in your browser. Files and pasted text you give to a
-                            tool are processed locally and are not uploaded to a UtilsHub server. The site
+                            FreeWebTools runs its tools in your browser. Files and pasted text you give to a
+                            tool are processed locally and are not uploaded to a FreeWebTools server. The site
                             does use Google AdSense for ads and basic third-party analytics, which set
                             cookies and may collect data described below.
                         </p>
@@ -33,14 +33,14 @@ export default function PrivacyPage() {
                             <li>The files you upload to a tool. They stay in your browser.</li>
                             <li>The text you paste into a tool. It is processed locally.</li>
                             <li>Outputs you generate (passwords, hashes, formatted JSON, etc.). They are not transmitted to us.</li>
-                            <li>Sign-up information — there are no accounts on UtilsHub.</li>
+                            <li>Sign-up information — there are no accounts on FreeWebTools.</li>
                         </ul>
                     </section>
 
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground">Cookies and ads (Google AdSense)</h2>
                         <p className="mt-3 text-muted-foreground">
-                            UtilsHub displays ads served by Google AdSense. When you visit the site:
+                            FreeWebTools displays ads served by Google AdSense. When you visit the site:
                         </p>
                         <ul className="mt-3 list-disc space-y-1 pl-6 text-muted-foreground">
                             <li>Google may set cookies in your browser to deliver and personalize ads.</li>
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
                         <p className="mt-3 text-muted-foreground">
                             We ask for your consent before loading AdSense. If you decline, the AdSense
                             script is not loaded for you, and ad-related cookies are not set by Google
-                            through UtilsHub. You can reset your choice by clearing site data for this
+                            through FreeWebTools. You can reset your choice by clearing site data for this
                             domain in your browser.
                         </p>
                     </section>
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground">Local storage</h2>
                         <p className="mt-3 text-muted-foreground">
-                            UtilsHub itself uses your browser&apos;s localStorage to remember small
+                            FreeWebTools itself uses your browser&apos;s localStorage to remember small
                             preferences — for example, your theme (light/dark) and your cookie consent
                             choice. This data lives only in your browser and is not transmitted to us.
                         </p>
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
                         <p className="mt-3 text-muted-foreground">
                             Depending on where you live, you may have the right to access, correct, or
                             delete personal data held about you, or to object to certain processing. Since
-                            UtilsHub itself does not collect personal data, requests should usually be
+                            FreeWebTools itself does not collect personal data, requests should usually be
                             directed to Google (for ad-related data) or to Vercel (for server logs).
                         </p>
                     </section>
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
                         <h2 className="text-2xl font-semibold text-foreground">Contact</h2>
                         <p className="mt-3 text-muted-foreground">
                             Questions about this policy? Open an issue on the project&apos;s{' '}
-                            <Link href="https://github.com/Rohit00112/UtilsHub" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
+                            <Link href="https://github.com/Rohit00112" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
                                 GitHub repository
                             </Link>
                             .

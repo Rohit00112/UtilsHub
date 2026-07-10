@@ -29,7 +29,7 @@ const sampleSchema = `{
 
 const sampleJson = `{
   "id": 12,
-  "name": "UtilsHub",
+  "name": "FreeWebTools",
   "tags": ["developer", "schema"]
 }`;
 
@@ -202,7 +202,7 @@ export default function JsonSchemaValidator() {
                                 setJsonInput(event.target.value);
                                 setCopied(false);
                             }}
-                            placeholder='{"name":"UtilsHub"}'
+                            placeholder='{"name":"FreeWebTools"}'
                             className="min-h-[420px]"
                             spellCheck={false}
                         />

@@ -131,7 +131,7 @@ export default function JsonDiffViewer() {
                         <ToolTextarea
                             value={leftJson}
                             onChange={(event) => setLeftJson(event.target.value)}
-                            placeholder='{"name":"UtilsHub","tools":["json","diff"]}'
+                            placeholder='{"name":"FreeWebTools","tools":["json","diff"]}'
                             className="min-h-[380px]"
                             spellCheck={false}
                         />
@@ -142,7 +142,7 @@ export default function JsonDiffViewer() {
                         <ToolTextarea
                             value={rightJson}
                             onChange={(event) => setRightJson(event.target.value)}
-                            placeholder='{"name":"UtilsHub","tools":["json","diff","parser"]}'
+                            placeholder='{"name":"FreeWebTools","tools":["json","diff","parser"]}'
                             className="min-h-[380px]"
                             spellCheck={false}
                         />

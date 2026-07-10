@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'UtilsHub - free browser-based utility tools';
+export const alt = 'FreeWebTools - free online web tools';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -37,14 +37,14 @@ export default function OpengraphImage() {
           >
             U
           </div>
-          <span>UtilsHub</span>
+          <span>FreeWebTools</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em' }}>
-            Free browser-based
+            Free online
             <br />
-            utility tools.
+            web tools.
           </div>
           <div style={{ fontSize: 30, opacity: 0.7, lineHeight: 1.4 }}>
             PDF · Text · Image · Security · Calculators · Developer
@@ -52,7 +52,7 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: 'flex', gap: '12px', fontSize: 22, opacity: 0.6 }}>
-          <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Browser tools</span>
+          <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Free web tools</span>
           <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Local where possible</span>
           <span style={{ padding: '8px 16px', border: '1px solid #444', borderRadius: 8 }}>Free</span>
         </div>

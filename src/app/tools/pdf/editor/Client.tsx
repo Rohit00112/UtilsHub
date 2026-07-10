@@ -1053,8 +1053,8 @@ export default function PDFEditor() {
                 });
             }
 
-            doc.setCreator('UtilsHub');
-            doc.setProducer('UtilsHub PDF Editor');
+            doc.setCreator('FreeWebTools');
+            doc.setProducer('FreeWebTools PDF Editor');
             const output = bytesToArrayBuffer(await doc.save({ useObjectStreams: true }));
             const baseName = pdf.file.name.replace(/\.pdf$/i, '') || 'edited-pdf';
             const name = `${baseName}-edited.pdf`;

@@ -27,12 +27,12 @@ const cardOptions: Array<{ label: string; value: CardType }> = [
 ];
 
 const sample = {
-    title: 'Browser-Local Utilities for Everyday Work',
-    description: 'Format data, resize images, inspect tokens, and generate web metadata without uploading files to a server.',
-    url: 'https://utilshub.example/tools/web/meta-tags',
-    image: 'https://utilshub.example/og-image.png',
-    siteName: 'UtilsHub',
-    twitter: '@utilshub',
+    title: 'Free Web Tools for Everyday Work',
+    description: 'Format data, resize images, inspect tokens, and generate web metadata with free browser-based tools.',
+    url: 'https://freewebtools.app/tools/web/meta-tags',
+    image: 'https://freewebtools.app/opengraph-image',
+    siteName: 'FreeWebTools',
+    twitter: '@freewebtools',
 };
 
 function escapeHtml(value: string) {

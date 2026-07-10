@@ -79,8 +79,8 @@ export default function PDFCompressor() {
             const { PDFDocument } = await import('pdf-lib');
             const sourceBytes = await file.arrayBuffer();
             const pdfDoc = await PDFDocument.load(sourceBytes);
-            pdfDoc.setProducer('UtilsHub PDF Compressor');
-            pdfDoc.setCreator('UtilsHub');
+            pdfDoc.setProducer('FreeWebTools PDF Compressor');
+            pdfDoc.setCreator('FreeWebTools');
 
             const optimizedBytes = bytesToArrayBuffer(await pdfDoc.save({
                 useObjectStreams: true,

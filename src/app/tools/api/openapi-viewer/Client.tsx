@@ -30,7 +30,7 @@ const methods = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'tr
 
 const sampleSpec = `openapi: 3.0.3
 info:
-  title: UtilsHub Demo API
+  title: FreeWebTools Demo API
   version: 1.0.0
 servers:
   - url: https://api.example.com

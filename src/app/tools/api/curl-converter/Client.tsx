@@ -19,7 +19,7 @@ interface ParsedCurl {
 const sampleCurl = `curl -X POST https://api.example.com/users \\
   -H "Authorization: Bearer token" \\
   -H "Content-Type: application/json" \\
-  -d '{"name":"UtilsHub","role":"tester"}'`;
+  -d '{"name":"FreeWebTools","role":"tester"}'`;
 
 function tokenize(input: string) {
     const normalized = input.replace(/\\\r?\n/g, ' ');

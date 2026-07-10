@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'UtilsHub',
-    short_name: 'UtilsHub',
-    description: 'Free browser-based utilities for PDF, image, text, security, calculators, and developer workflows. Tool input is processed locally.',
+    name: 'FreeWebTools',
+    short_name: 'FreeWebTools',
+    description: 'Free web tools for PDF, image, text, security, calculators, and developer workflows. Most tools run locally in your browser.',
     start_url: '/',
     scope: '/',
     display: 'standalone',

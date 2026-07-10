@@ -152,7 +152,7 @@ export default function Base64Encoder() {
                 >
                     <div className="grid gap-4 md:grid-cols-[1fr_1.2fr]">
                         <div className="rounded-md border bg-muted/20 p-4">
-                            <div className="font-mono text-sm text-muted-foreground">UtilsHub + UTF-8</div>
+                            <div className="font-mono text-sm text-muted-foreground">FreeWebTools + UTF-8</div>
                             <div className="mt-2 break-words font-mono text-sm text-foreground">VXRpbHNIdWIgKyBVVEYtOA==</div>
                         </div>
                         <div className="grid gap-3 sm:grid-cols-2">

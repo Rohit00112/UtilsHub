@@ -5,7 +5,7 @@ import { categories } from '@/lib/tools';
 
 export const metadata = createMetadata({
     title: 'About',
-    description: 'UtilsHub is a free collection of browser-based utility tools. Most tools process input locally in your browser, with no account required.',
+    description: 'FreeWebTools is a free collection of browser-based utility tools. Most tools process input locally in your browser, with no account required.',
     path: '/about',
 });
 
@@ -13,11 +13,11 @@ export default function AboutPage() {
     return (
         <div className="min-h-[calc(100dvh-3.5rem)] bg-muted/20">
             <div className="container max-w-3xl py-16">
-                <h1 className="text-4xl font-semibold text-foreground text-balance">About UtilsHub</h1>
+                <h1 className="text-4xl font-semibold text-foreground text-balance">About FreeWebTools</h1>
                 <p className="mt-4 text-lg leading-8 text-muted-foreground text-pretty">
-                    UtilsHub is a free collection of utility tools that run in your browser.
+                    FreeWebTools is a free collection of utility tools that run in your browser.
                     There&apos;s no sign-up and no usage quota. For local tools, files and pasted
-                    text stay on your device and are not uploaded to a UtilsHub processing server.
+                    text stay on your device and are not uploaded to a FreeWebTools processing server.
                 </p>
 
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
@@ -26,7 +26,7 @@ export default function AboutPage() {
                         <h2 className="mt-3 font-semibold text-foreground">Local processing</h2>
                         <p className="mt-2 text-sm leading-6 text-muted-foreground">
                             Local tool input is processed in your browser. Files and pasted text are not
-                            uploaded to a UtilsHub processing server.
+                            uploaded to a FreeWebTools processing server.
                         </p>
                     </div>
                     <div className="rounded-lg border bg-card p-5">
@@ -62,7 +62,7 @@ export default function AboutPage() {
 
                 <h2 className="mt-12 text-2xl font-semibold text-foreground">How it works</h2>
                 <p className="mt-4 text-base leading-7 text-muted-foreground">
-                    UtilsHub is a Next.js application. Every tool is implemented as a client-side
+                    FreeWebTools is a Next.js application. Every tool is implemented as a client-side
                     component that uses the browser&apos;s built-in APIs — Web Crypto for hashing,
                     Canvas for image work, pdf-lib for PDF manipulation, and so on. Pages are
                     pre-rendered for fast first paint, and the interactive parts hydrate on demand.
@@ -85,14 +85,14 @@ export default function AboutPage() {
 
                 <h2 className="mt-12 text-2xl font-semibold text-foreground">Open source</h2>
                 <p className="mt-4 text-base leading-7 text-muted-foreground">
-                    The full source lives at{' '}
+                    The project is maintained on{' '}
                     <Link
-                        href="https://github.com/Rohit00112/UtilsHub"
+                        href="https://github.com/Rohit00112"
                         target="_blank"
                         rel="noreferrer"
                         className="font-medium text-foreground underline underline-offset-4"
                     >
-                        github.com/Rohit00112/UtilsHub
+                        GitHub
                     </Link>
                     . Issues, suggestions, and pull requests are welcome.
                 </p>

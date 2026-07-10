@@ -9,18 +9,22 @@ import {
   type Tool,
 } from '@/lib/tools';
 
-export const siteName = 'UtilsHub';
+export const siteName = 'FreeWebTools';
 export const defaultDescription =
-  'Free browser-based tools for PDF, image, text, security, calculators, APIs, and developers. Most tools process input on your device, with no sign-up required.';
+  'Free web tools for PDF, image, text, security, calculators, APIs, and developers. Most tools run in your browser with no sign-up required.';
 export const defaultKeywords = [
+  'free web tools',
+  'free online tools',
   'online tools',
-  'free utilities',
+  'online utilities',
   'browser tools',
+  'PDF tools',
+  'developer tools',
   'privacy-first tools',
-  'UtilsHub',
+  'FreeWebTools',
 ];
 
-const productionSiteUrl = 'https://utils-hub.vercel.app';
+const productionSiteUrl = 'https://freewebtools.app';
 
 function normalizeSiteUrl(url: string) {
   const withProtocol = /^https?:\/\//i.test(url) ? url : `https://${url}`;
@@ -69,7 +73,7 @@ export function createMetadata({
     ? fullTitle
     : title
       ? `${title} | ${siteName}`
-      : `${siteName} – Free Browser-Based Utility Tools`;
+      : `${siteName} - Free Online Web Tools`;
   const url = absoluteUrl(path);
 
   return {
@@ -124,7 +128,7 @@ export function createMetadata({
           url: absoluteUrl('/opengraph-image'),
           width: 1200,
           height: 630,
-          alt: `${siteName} — free browser-based utility tools`,
+          alt: `${siteName} - free online web tools`,
         },
       ],
     },
@@ -161,12 +165,12 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
   const baseDescription = tool.description.replace(/\.$/, '');
   const descriptionOptions = tool.categoryId === 'api'
     ? [
-      `${baseDescription}. Free with no sign-up; requests run directly from your browser and are not proxied by UtilsHub.`,
-      `${baseDescription}. Free browser tool with no sign-up and no UtilsHub proxy.`,
+      `${baseDescription}. Free with no sign-up; requests run directly from your browser and are not proxied by FreeWebTools.`,
+      `${baseDescription}. Free browser tool with no sign-up and no FreeWebTools proxy.`,
     ]
     : [
-      `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to UtilsHub.`,
-      `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to UtilsHub.`,
+      `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to a FreeWebTools server.`,
+      `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to a FreeWebTools server.`,
       `${baseDescription}. Free browser tool with local processing and no sign-up.`,
     ];
   const description =
@@ -205,7 +209,7 @@ export function organizationJsonLd() {
     url: absoluteUrl('/'),
     logo: absoluteUrl('/icon.svg'),
     sameAs: [
-      'https://github.com/Rohit00112/UtilsHub',
+      'https://github.com/Rohit00112',
     ],
   };
 }
