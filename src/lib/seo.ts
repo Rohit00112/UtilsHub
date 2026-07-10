@@ -87,8 +87,8 @@ export function createMetadata({
     category: 'technology',
     manifest: '/manifest.webmanifest',
     icons: {
-      icon: '/icon.svg',
-      apple: '/apple-icon.svg',
+      icon: '/ico.png',
+      apple: '/ico.png',
     },
     appleWebApp: {
       capable: true,
@@ -207,7 +207,7 @@ export function organizationJsonLd() {
     '@id': absoluteUrl('/#organization'),
     name: siteName,
     url: absoluteUrl('/'),
-    logo: absoluteUrl('/icon.svg'),
+    logo: absoluteUrl('/ico.png'),
     sameAs: [
       'https://github.com/Rohit00112',
     ],
