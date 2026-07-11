@@ -183,7 +183,7 @@ export const tools: Tool[] = [
     description: 'LibreOffice-compatible PDF editor powered by a Collabora Online WOPI session.',
     slug: 'editor',
     categoryId: 'pdf',
-    status: 'active',
+    status: 'planned',
     keywords: ['PDF editor', 'edit PDF online', 'annotate PDF', 'add text to PDF', 'highlight PDF', 'whiteout PDF', 'draw on PDF', 'add image to PDF'],
     longDescription:
       'PDF Editor uses the same broad architecture as office-style web document editors: the browser embeds a Collabora/LibreOffice Online editor, while FreeWebTools acts as the WOPI host that provides the PDF file and receives saved changes. This moves PDF editing away from simple overlay drawing and toward a full document-engine workflow backed by LibreOffice-compatible infrastructure.\n\nTo use it in production, configure a reachable Collabora Online or CODE server, connect a private Vercel Blob store, and expose the FreeWebTools WOPI endpoints at a public HTTPS URL. The editor creates a temporary private file session, opens the document in the Collabora iframe, and lets the office engine handle the editing surface. This approach is better suited for richer PDF editing, but it is not browser-only: files pass through the configured WOPI host and Collabora server.',
