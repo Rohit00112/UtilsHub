@@ -29,6 +29,18 @@ export default function Navbar() {
         </Link>
 
         <div className="ml-auto flex flex-1 items-center justify-end gap-3">
+          <Link
+            href="/tools"
+            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
+          >
+            Tools
+          </Link>
+          <Link
+            href="/blog"
+            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
+          >
+            Blog
+          </Link>
           <div className="w-full max-w-xs">
             <SearchLauncher className="h-9" showShortcut enableShortcut />
           </div>

@@ -8,6 +8,7 @@ import {
   type Category,
   type Tool,
 } from '@/lib/tools';
+import { getAllPosts, type BlogPost } from '@/lib/blog';
 
 export const siteName = 'FreeWebTools';
 export const defaultDescription =
@@ -53,6 +54,10 @@ export function toolPath(tool: Tool) {
   return `/tools/${tool.categoryId}/${tool.slug}`;
 }
 
+export function embedPath(tool: Tool) {
+  return `/embed/${tool.categoryId}/${tool.slug}`;
+}
+
 type MetadataOptions = {
   title?: string;
   description?: string;
@@ -60,7 +65,18 @@ type MetadataOptions = {
   keywords?: string[];
   /** Prefer the keyword-led title verbatim instead of `${title} | ${siteName}`. */
   fullTitle?: string;
+  /** Absolute or root-relative OG/Twitter image URL. Defaults to the static card. */
+  ogImage?: string;
 };
+
+/** Build a dynamic OG image URL for the /og route. */
+export function ogImageUrl(params: { title: string; sub?: string; tag?: string }) {
+  const qs = new URLSearchParams();
+  qs.set('title', params.title);
+  if (params.sub) qs.set('sub', params.sub);
+  if (params.tag) qs.set('tag', params.tag);
+  return absoluteUrl(`/og?${qs.toString()}`);
+}
 
 export function createMetadata({
   title,
@@ -68,6 +84,7 @@ export function createMetadata({
   path = '/',
   keywords = [],
   fullTitle,
+  ogImage,
 }: MetadataOptions): Metadata {
   const resolvedTitle = fullTitle
     ? fullTitle
@@ -75,6 +92,9 @@ export function createMetadata({
       ? `${title} | ${siteName}`
       : `${siteName} - Free Online Web Tools`;
   const url = absoluteUrl(path);
+  const ogImageResolved = ogImage
+    ? (ogImage.startsWith('http') ? ogImage : absoluteUrl(ogImage))
+    : absoluteUrl('/opengraph-image');
 
   return {
     metadataBase: new URL(getSiteUrl()),
@@ -107,6 +127,9 @@ export function createMetadata({
     keywords: Array.from(new Set([...defaultKeywords, ...keywords])),
     alternates: {
       canonical: url,
+      types: {
+        'application/rss+xml': absoluteUrl('/feed.xml'),
+      },
     },
     robots: {
       index: true,
@@ -128,7 +151,7 @@ export function createMetadata({
       locale: 'en_US',
       images: [
         {
-          url: absoluteUrl('/opengraph-image'),
+          url: ogImageResolved,
           width: 1200,
           height: 630,
           alt: `${siteName} - free online web tools`,
@@ -139,7 +162,7 @@ export function createMetadata({
       card: 'summary_large_image',
       title: resolvedTitle,
       description,
-      images: [absoluteUrl('/opengraph-image')],
+      images: [ogImageResolved],
     },
   };
 }
@@ -156,6 +179,11 @@ export function getCategoryMetadata(categoryId: string): Metadata {
     description,
     path: categoryPath(category),
     keywords: category.keywords,
+    ogImage: ogImageUrl({
+      title: category.name,
+      sub: category.description,
+      tag: 'Free online tools',
+    }),
   });
 }
 
@@ -185,6 +213,11 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
     description,
     path: toolPath(tool),
     keywords: tool.keywords,
+    ogImage: ogImageUrl({
+      title: tool.name,
+      sub: tool.description,
+      tag: 'Free online tool',
+    }),
   });
 }
 
@@ -417,5 +450,58 @@ export function allSitemapEntries(lastModified?: Date) {
         changeFrequency: 'monthly' as const,
         priority: 0.7,
       })),
+    { url: absoluteUrl('/blog'), lastModified: modified, changeFrequency: 'weekly' as const, priority: 0.6 },
+    ...getAllPosts().map((post) => ({
+      url: absoluteUrl(`/blog/${post.slug}`),
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
   ];
+}
+
+// --- Blog ---
+
+export function getBlogIndexMetadata(): Metadata {
+  return createMetadata({
+    fullTitle: `Guides & How-Tos | ${siteName}`,
+    description:
+      'Practical guides on PDFs, images, JSON, and everyday web tasks — using free, privacy-first browser tools.',
+    path: '/blog',
+    keywords: ['web tools guides', 'how to', 'free tools tutorials'],
+    ogImage: ogImageUrl({ title: 'Guides & How-Tos', sub: 'Practical, privacy-first tutorials', tag: 'Blog' }),
+  });
+}
+
+export function createBlogPostMetadata(post: BlogPost): Metadata {
+  return createMetadata({
+    fullTitle: `${post.title} | ${siteName}`,
+    description: post.description,
+    path: `/blog/${post.slug}`,
+    keywords: post.keywords,
+    ogImage: ogImageUrl({ title: post.title, sub: post.description, tag: 'Guide' }),
+  });
+}
+
+export function blogPostJsonLd(post: BlogPost) {
+  const article = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': absoluteUrl(`/blog/${post.slug}#article`),
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    inLanguage: 'en',
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    author: { '@id': absoluteUrl('/#organization') },
+    publisher: { '@id': absoluteUrl('/#organization') },
+    keywords: post.keywords?.join(', '),
+  };
+  const breadcrumb = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog' },
+    { name: post.title, path: `/blog/${post.slug}` },
+  ]);
+  return [article, breadcrumb];
 }

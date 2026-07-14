@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { ArrowRight, BookOpen, HelpCircle, ListChecks, ListOrdered } from 'lucide-react';
 import { getRelatedTools, type Tool } from '@/lib/tools';
-import { toolPath } from '@/lib/seo';
+import { absoluteUrl, embedPath, toolPath } from '@/lib/seo';
+import EmbedSnippet from './EmbedSnippet';
+import ShareButtons from '../ShareButtons';
 
 interface ToolContentProps {
   tool: Tool;
@@ -89,6 +91,10 @@ export default function ToolContent({ tool }: ToolContentProps) {
           </div>
         </div>
       )}
+
+      <EmbedSnippet embedUrl={absoluteUrl(embedPath(tool))} toolName={tool.name} />
+
+      <ShareButtons url={absoluteUrl(toolPath(tool))} title={`${tool.name} — free online tool`} />
 
       {related.length > 0 && (
         <div>
