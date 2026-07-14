@@ -129,9 +129,13 @@ export default function Home() {
                             <p className="eyebrow mb-2">Tool directory</p>
                             <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Browse by category.</h2>
                         </div>
-                        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                        <Link
+                            href="/tools"
+                            className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary"
+                        >
                             {activeTools.length} tools · {categories.length} categories
-                        </p>
+                            <ArrowUpRight className="h-3 w-3" />
+                        </Link>
                     </div>
 
                     <div className="rule-thick" />

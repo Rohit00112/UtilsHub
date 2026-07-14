@@ -197,6 +197,14 @@ export function websiteJsonLd() {
     publisher: {
       '@id': absoluteUrl('/#organization'),
     },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${absoluteUrl('/tools')}?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
 }
 
@@ -345,13 +353,56 @@ export function toolJsonLd(tool: Tool) {
   return [webApp, breadcrumb, faqPage];
 }
 
-export function allSitemapEntries() {
+export function getToolsHubMetadata(): Metadata {
+  const description =
+    'Browse every free FreeWebTools utility in one place. PDF, image, text, security, calculator, web, API, and developer tools — no sign-up, most run locally in your browser.';
+  return createMetadata({
+    fullTitle: `All Free Online Tools — Full Directory | ${siteName}`,
+    description,
+    path: '/tools',
+    keywords: ['all online tools', 'free tools directory', 'web tools list'],
+  });
+}
+
+export function toolsHubJsonLd() {
+  const activeTools = tools.filter((tool) => tool.status === 'active');
+  const collectionPage = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': absoluteUrl('/tools#collection'),
+    name: `All Tools | ${siteName}`,
+    url: absoluteUrl('/tools'),
+    description: 'Complete directory of free FreeWebTools online utilities.',
+    inLanguage: 'en',
+    isPartOf: { '@id': absoluteUrl('/#website') },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: activeTools.length,
+      itemListElement: activeTools.map((tool, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: absoluteUrl(toolPath(tool)),
+        name: tool.name,
+      })),
+    },
+  };
+  const breadcrumb = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'All Tools', path: '/tools' },
+  ]);
+  return [collectionPage, breadcrumb];
+}
+
+export function allSitemapEntries(lastModified?: Date) {
+  const modified = lastModified ?? new Date();
   return [
-    { url: absoluteUrl('/'), changeFrequency: 'weekly' as const, priority: 1 },
-    { url: absoluteUrl('/about'), changeFrequency: 'monthly' as const, priority: 0.5 },
-    { url: absoluteUrl('/privacy'), changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: absoluteUrl('/'), lastModified: modified, changeFrequency: 'weekly' as const, priority: 1 },
+    { url: absoluteUrl('/tools'), lastModified: modified, changeFrequency: 'weekly' as const, priority: 0.9 },
+    { url: absoluteUrl('/about'), lastModified: modified, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: absoluteUrl('/privacy'), lastModified: modified, changeFrequency: 'yearly' as const, priority: 0.3 },
     ...categories.map((category) => ({
       url: absoluteUrl(categoryPath(category)),
+      lastModified: modified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
@@ -359,6 +410,7 @@ export function allSitemapEntries() {
       .filter((tool) => tool.status === 'active')
       .map((tool) => ({
         url: absoluteUrl(toolPath(tool)),
+        lastModified: modified,
         changeFrequency: 'monthly' as const,
         priority: 0.7,
       })),

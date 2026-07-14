@@ -35,7 +35,7 @@ export default function OpengraphImage() {
               fontSize: 28,
             }}
           >
-            U
+            F
           </div>
           <span>FreeWebTools</span>
         </div>
