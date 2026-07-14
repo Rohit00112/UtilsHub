@@ -24,7 +24,7 @@ export const defaultKeywords = [
   'FreeWebTools',
 ];
 
-const productionSiteUrl = 'https://utils-hub.vercel.app';
+const productionSiteUrl = 'https://freewebtools.app';
 
 function normalizeSiteUrl(url: string) {
   const withProtocol = /^https?:\/\//i.test(url) ? url : `https://${url}`;
@@ -101,6 +101,9 @@ export function createMetadata({
     other: {
       'google-adsense-account': 'ca-pub-9243015758853816',
     },
+    verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : undefined,
     keywords: Array.from(new Set([...defaultKeywords, ...keywords])),
     alternates: {
       canonical: url,

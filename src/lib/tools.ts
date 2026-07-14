@@ -162,7 +162,7 @@ export const tools: Tool[] = [
     description: 'Combine multiple PDF files into one ordered document.',
     slug: 'merger',
     categoryId: 'pdf',
-    status: 'planned',
+    status: 'active',
     keywords: ['merge PDF', 'combine PDF files', 'PDF merger online', 'join PDFs'],
     longDescription:
       'PDF Merger combines two or more PDF files into a single, ordered document without installing any software or signing up for an account. Add the files you want to join, drag them into the exact sequence you need, and the tool stitches every page together into one downloadable PDF. Because it runs entirely in your browser using the pdf-lib library, the documents you select are never uploaded to a server — the merge happens on your own device, which keeps sensitive files like contracts, invoices, and medical records private.\n\nMerging is lossless: each page is copied into the new document with its original text, vector graphics, fonts, and embedded images intact. There is no re-compression or rasterization step, so the combined file looks identical to the originals. This makes the tool well suited for assembling multi-part reports, joining scanned receipts into a single expense packet, or compiling separate chapters exported from different applications into one clean deliverable.',
