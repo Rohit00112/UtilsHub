@@ -3,9 +3,9 @@ import { ArrowUpRight, Share2 } from 'lucide-react';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import SearchLauncher from '@/components/SearchLauncher';
 import { categories, getAllActiveTools, getToolsByCategory } from '@/lib/tools';
-import { absoluteUrl, createMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
+import { absoluteUrl, getHomeMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
-export const metadata = createMetadata({});
+export const metadata = getHomeMetadata();
 
 const commonToolIds = [
     'json-formatter',
@@ -60,7 +60,7 @@ export default function Home() {
                     <div className="md:col-span-8">
                         <p className="eyebrow mb-6">Free web tools for daily work</p>
                         <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
-                            Free web tools<br />
+                            60+ free online web tools<br />
                             for PDFs, images, text, and code.
                         </h1>
                         <div className="mt-8 grid gap-6 md:grid-cols-2">

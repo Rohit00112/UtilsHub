@@ -191,8 +191,7 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
   const tool = getToolBySlug(categoryId, slug);
   if (!tool) return createMetadata({ title: 'Tool', path: '/tools' });
 
-  // Keyword-led, ~55–60 char target. Tool name + benefit + site name.
-  const fullTitle = `${tool.name} — Free Online Tool | ${siteName}`;
+  const fullTitle = `Free ${tool.name} Online | No Sign-Up Required`;
   const baseDescription = tool.description.replace(/\.$/, '');
   const descriptionOptions = tool.categoryId === 'api'
     ? [
@@ -217,6 +216,27 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
       title: tool.name,
       sub: tool.description,
       tag: 'Free online tool',
+    }),
+  });
+}
+
+export function getHomeMetadata(): Metadata {
+  return createMetadata({
+    fullTitle: 'Free Web Tools Online | 60+ Browser Tools — No Sign-Up',
+    description:
+      'Use 60+ free online tools for PDFs, images, text, security, APIs, SEO, and development. No sign-up required; most tools process data locally in your browser.',
+    path: '/',
+    keywords: [
+      'free developer tools',
+      'free SEO tools',
+      'free PDF tools',
+      'free image tools',
+      'free text tools',
+    ],
+    ogImage: ogImageUrl({
+      title: 'Free Web Tools Online',
+      sub: '60+ browser-based tools with no sign-up',
+      tag: 'FreeWebTools',
     }),
   });
 }

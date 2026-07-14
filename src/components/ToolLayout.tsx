@@ -43,7 +43,7 @@ export default function ToolLayout({
 
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                         <div className="max-w-3xl">
-                            <h1 className="text-3xl font-semibold text-foreground text-balance sm:text-4xl">{title}</h1>
+                            <h1 className="text-3xl font-semibold text-foreground text-balance sm:text-4xl">Free {title} Online</h1>
                             <p className="mt-3 text-base leading-7 text-muted-foreground text-pretty">{description}</p>
                         </div>
                         <div className="flex items-center gap-2 rounded-md border bg-muted/20 px-3 py-2 text-sm text-muted-foreground">

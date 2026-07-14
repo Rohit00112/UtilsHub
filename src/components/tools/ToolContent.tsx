@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen, HelpCircle, ListChecks, ListOrdered } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle2, HelpCircle, ListChecks, ListOrdered } from 'lucide-react';
 import { getRelatedTools, type Tool } from '@/lib/tools';
 import { absoluteUrl, embedPath, toolPath } from '@/lib/seo';
 import EmbedSnippet from './EmbedSnippet';
@@ -15,6 +15,14 @@ export default function ToolContent({ tool }: ToolContentProps) {
   const hasUseCases = (tool.useCases?.length ?? 0) > 0;
   const hasFaqs = (tool.faqs?.length ?? 0) > 0;
   const related = getRelatedTools(tool.id, 4);
+  const features = [
+    'Free to use with no account or sign-up.',
+    tool.categoryId === 'api'
+      ? 'Connects directly from your browser to the URL you choose.'
+      : 'Processes your input locally in your browser.',
+    'Works in modern desktop and mobile browsers.',
+    'Copy or download results when the tool supports it.',
+  ];
 
   if (!hasLong && !hasSteps && !hasUseCases && !hasFaqs && related.length === 0) return null;
 
@@ -71,6 +79,24 @@ export default function ToolContent({ tool }: ToolContentProps) {
           </ul>
         </div>
       )}
+
+      <div>
+        <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
+          <CheckCircle2 className="h-5 w-5 text-muted-foreground" />
+          {tool.name} features
+        </h2>
+        <ul className="mt-4 grid gap-2 text-base leading-7 text-foreground/90 sm:grid-cols-2">
+          {features.map((feature) => (
+            <li key={feature} className="flex gap-2">
+              <span
+                className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/60"
+                aria-hidden="true"
+              />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {hasFaqs && (
         <div>
