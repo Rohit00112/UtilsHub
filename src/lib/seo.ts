@@ -192,20 +192,25 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
   if (!tool) return createMetadata({ title: 'Tool', path: '/tools' });
 
   const fullTitle = `Free ${tool.name} Online | No Sign-Up Required`;
-  const baseDescription = tool.description.replace(/\.$/, '');
-  const descriptionOptions = tool.categoryId === 'api'
-    ? [
-      `${baseDescription}. Free with no sign-up; requests run directly from your browser and are not proxied by FreeWebTools.`,
-      `${baseDescription}. Free browser tool with no sign-up and no FreeWebTools proxy.`,
-    ]
-    : [
-      `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to a FreeWebTools server.`,
-      `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to a FreeWebTools server.`,
-      `${baseDescription}. Free browser tool with local processing and no sign-up.`,
-    ];
-  const description =
-    descriptionOptions.find((option) => option.length <= 160) ||
-    descriptionOptions[descriptionOptions.length - 1];
+  let description: string;
+  if (tool.metaDescription) {
+    description = tool.metaDescription;
+  } else {
+    const baseDescription = tool.description.replace(/\.$/, '');
+    const descriptionOptions = tool.categoryId === 'api'
+      ? [
+        `${baseDescription}. Free with no sign-up; requests run directly from your browser and are not proxied by FreeWebTools.`,
+        `${baseDescription}. Free browser tool with no sign-up and no FreeWebTools proxy.`,
+      ]
+      : [
+        `${baseDescription}. Free to use with no sign-up. Your input is processed locally in your browser and is not uploaded to a FreeWebTools server.`,
+        `${baseDescription}. Free with no sign-up; input is processed locally in your browser and not uploaded to a FreeWebTools server.`,
+        `${baseDescription}. Free browser tool with local processing and no sign-up.`,
+      ];
+    description =
+      descriptionOptions.find((option) => option.length <= 160) ||
+      descriptionOptions[descriptionOptions.length - 1];
+  }
 
   return createMetadata({
     fullTitle,
@@ -224,7 +229,7 @@ export function getHomeMetadata(): Metadata {
   return createMetadata({
     fullTitle: 'Free Web Tools Online | 60+ Browser Tools — No Sign-Up',
     description:
-      'Use 60+ free online tools for PDFs, images, text, security, APIs, SEO, and development. No sign-up required; most tools process data locally in your browser.',
+      '60+ free online web tools for developers, SEO pros & marketers. JSON formatter, Base64 encoder, MD5 generator & more. No signup. 100% private. Browser-based.',
     path: '/',
     keywords: [
       'free developer tools',
