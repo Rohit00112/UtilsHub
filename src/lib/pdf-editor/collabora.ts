@@ -312,7 +312,19 @@ export async function getCollaboraPdfActionUrl() {
   }
 
   const discoveryXml = await response.text();
-  const actionUrl = findCollaboraPdfActionUrl(discoveryXml);
+  const discoveredActionUrl = findCollaboraPdfActionUrl(discoveryXml);
+
+  // Collabora discovery commonly advertises HTTPS action URLs.
+  // In local/dev setups we may run HTTP only, so force the configured origin.
+  let actionUrl = discoveredActionUrl;
+  try {
+    const configuredOrigin = new URL(collaboraBaseUrl).origin;
+    const resolved = new URL(discoveredActionUrl, configuredOrigin);
+    const normalized = new URL(resolved.pathname + resolved.search, configuredOrigin);
+    actionUrl = normalized.toString();
+  } catch {
+    actionUrl = discoveredActionUrl;
+  }
 
   if (!actionUrl) {
     throw new Error('The configured Collabora server did not advertise a PDF action.');
