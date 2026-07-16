@@ -18,21 +18,20 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <head>
-                <script
-                    async
+            <body className="min-h-screen bg-background font-sans antialiased">
+                <Script
+                    id="adsbygoogle-init"
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9243015758853816"
+                    strategy="lazyOnload"
                     crossOrigin="anonymous"
                 />
-            </head>
-            <body className="min-h-screen bg-background font-sans antialiased">
                 {gaId && (
                     <>
                         <Script
                             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-                            strategy="afterInteractive"
+                            strategy="lazyOnload"
                         />
-                        <Script id="ga4-init" strategy="afterInteractive">
+                        <Script id="ga4-init" strategy="lazyOnload">
                             {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
@@ -40,7 +39,7 @@ gtag('config', '${gaId}');`}
                         </Script>
                     </>
                 )}
-                <Script id="ms-clarity" strategy="afterInteractive">
+                <Script id="ms-clarity" strategy="lazyOnload">
                     {`(function(c,l,a,r,i,t,y){
 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
