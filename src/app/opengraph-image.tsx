@@ -61,5 +61,3 @@ export default function OpengraphImage() {
     size,
   );
 }
-
-export const runtime = 'edge';
