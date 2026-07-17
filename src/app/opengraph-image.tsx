@@ -41,10 +41,18 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em' }}>
-            Free online
-            <br />
-            web tools.
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              fontSize: 76,
+              fontWeight: 700,
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            <span>Free online</span>
+            <span>web tools.</span>
           </div>
           <div style={{ fontSize: 30, opacity: 0.7, lineHeight: 1.4 }}>
             PDF · Text · Image · Security · Calculators · Developer
