@@ -69,15 +69,6 @@ type MetadataOptions = {
   ogImage?: string;
 };
 
-/** Build a dynamic OG image URL for the /og route. */
-export function ogImageUrl(params: { title: string; sub?: string; tag?: string }) {
-  const qs = new URLSearchParams();
-  qs.set('title', params.title);
-  if (params.sub) qs.set('sub', params.sub);
-  if (params.tag) qs.set('tag', params.tag);
-  return absoluteUrl(`/og?${qs.toString()}`);
-}
-
 export function createMetadata({
   title,
   description = defaultDescription,
@@ -183,11 +174,6 @@ export function getCategoryMetadata(categoryId: string): Metadata {
     description,
     path: categoryPath(category),
     keywords: category.keywords,
-    ogImage: ogImageUrl({
-      title: category.name,
-      sub: category.description,
-      tag: 'Free online tools',
-    }),
   });
 }
 
@@ -221,11 +207,6 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
     description,
     path: toolPath(tool),
     keywords: tool.keywords,
-    ogImage: ogImageUrl({
-      title: tool.name,
-      sub: tool.description,
-      tag: 'Free online tool',
-    }),
   });
 }
 
@@ -242,11 +223,6 @@ export function getHomeMetadata(): Metadata {
       'free image tools',
       'free text tools',
     ],
-    ogImage: ogImageUrl({
-      title: 'Free Web Tools Online',
-      sub: '60+ browser-based tools with no sign-up',
-      tag: 'FreeWebTools',
-    }),
   });
 }
 
@@ -498,7 +474,6 @@ export function getBlogIndexMetadata(): Metadata {
       'Practical guides on PDFs, images, JSON, and everyday web tasks — using free, privacy-first browser tools.',
     path: '/blog',
     keywords: ['web tools guides', 'how to', 'free tools tutorials'],
-    ogImage: ogImageUrl({ title: 'Guides & How-Tos', sub: 'Practical, privacy-first tutorials', tag: 'Blog' }),
   });
 }
 
@@ -508,7 +483,6 @@ export function createBlogPostMetadata(post: BlogPost): Metadata {
     description: post.description,
     path: `/blog/${post.slug}`,
     keywords: post.keywords,
-    ogImage: ogImageUrl({ title: post.title, sub: post.description, tag: 'Guide' }),
   });
 }
 
