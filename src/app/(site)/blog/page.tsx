@@ -1,12 +1,21 @@
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, paginate } from '@/lib/blog';
 import { getBlogIndexMetadata } from '@/lib/seo';
+import BlogHero from '@/components/blog/BlogHero';
+import BlogSearch from '@/components/blog/BlogSearch';
+import CategoryChips from '@/components/blog/CategoryChips';
+import Pagination from '@/components/blog/Pagination';
 
 export const metadata = getBlogIndexMetadata();
 
+const PER_PAGE = 6;
+
 export default function BlogIndex() {
   const posts = getAllPosts();
+  const hero = posts[0];
+  const rest = posts.slice(1);
+  const { items: pagePosts } = paginate(rest, 1, PER_PAGE);
+  // total pages across hero(1) + rest: page 1 holds hero + PER_PAGE; each later page holds PER_PAGE.
+  const totalPages = Math.max(1, 1 + Math.ceil(Math.max(0, rest.length - PER_PAGE) / PER_PAGE));
 
   return (
     <div className="bg-muted/20">
@@ -23,30 +32,17 @@ export default function BlogIndex() {
       </div>
 
       <div className="container py-10">
-        <div className="mx-auto grid max-w-4xl gap-4">
-          {posts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group rounded-lg border bg-card p-6 transition-colors hover:border-primary/40"
-            >
-              <div className="text-xs text-muted-foreground tabular-nums">
-                {new Date(post.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </div>
-              <h2 className="mt-2 text-xl font-semibold text-foreground">{post.title}</h2>
-              <p className="mt-2 text-base leading-7 text-muted-foreground text-pretty">
-                {post.description}
-              </p>
-              <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-                Read guide
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
-          ))}
+        <div className="mx-auto max-w-4xl">
+          <CategoryChips />
+          {hero && (
+            <div className="mt-6">
+              <BlogHero post={hero} />
+            </div>
+          )}
+          <div className="mt-8">
+            <BlogSearch posts={pagePosts} />
+          </div>
+          <Pagination basePath="/blog" page={1} totalPages={totalPages} />
         </div>
       </div>
     </div>
