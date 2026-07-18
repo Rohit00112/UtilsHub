@@ -1,4 +1,4 @@
-import { getAllPosts, paginate } from '@/lib/blog';
+import { getAllPosts, paginate, toCardData, BLOG_PER_PAGE, blogIndexTotalPages } from '@/lib/blog';
 import { getBlogIndexMetadata } from '@/lib/seo';
 import BlogHero from '@/components/blog/BlogHero';
 import BlogSearch from '@/components/blog/BlogSearch';
@@ -7,15 +7,12 @@ import Pagination from '@/components/blog/Pagination';
 
 export const metadata = getBlogIndexMetadata();
 
-const PER_PAGE = 6;
-
 export default function BlogIndex() {
   const posts = getAllPosts();
   const hero = posts[0];
   const rest = posts.slice(1);
-  const { items: pagePosts } = paginate(rest, 1, PER_PAGE);
-  // total pages across hero(1) + rest: page 1 holds hero + PER_PAGE; each later page holds PER_PAGE.
-  const totalPages = Math.max(1, 1 + Math.ceil(Math.max(0, rest.length - PER_PAGE) / PER_PAGE));
+  const { items: pagePosts } = paginate(rest, 1, BLOG_PER_PAGE);
+  const totalPages = blogIndexTotalPages(rest.length);
 
   return (
     <div className="bg-muted/20">
@@ -40,7 +37,7 @@ export default function BlogIndex() {
             </div>
           )}
           <div className="mt-8">
-            <BlogSearch posts={pagePosts} />
+            <BlogSearch posts={pagePosts.map(toCardData)} />
           </div>
           <Pagination basePath="/blog" page={1} totalPages={totalPages} />
         </div>

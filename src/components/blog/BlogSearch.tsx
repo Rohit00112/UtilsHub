@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
-import type { BlogPost } from '@/lib/blog';
+import type { BlogCardData } from '@/lib/blog';
 import BlogCard from './BlogCard';
 
 /**
@@ -11,7 +11,7 @@ import BlogCard from './BlogCard';
  * Hero and pagination render OUTSIDE this component in the page, so they are
  * unaffected by the query — search filters only the grid it owns (spec approach A).
  */
-export default function BlogSearch({ posts }: { posts: BlogPost[] }) {
+export default function BlogSearch({ posts }: { posts: BlogCardData[] }) {
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {

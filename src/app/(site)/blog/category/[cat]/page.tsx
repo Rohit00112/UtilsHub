@@ -6,6 +6,7 @@ import {
   getPostsByCategory,
   categoryFromSlug,
   categorySlug,
+  toCardData,
 } from '@/lib/blog';
 import { getBlogCategoryMetadata, blogCategoryJsonLd } from '@/lib/seo';
 import BlogSearch from '@/components/blog/BlogSearch';
@@ -76,7 +77,7 @@ export default async function BlogCategoryPage({
           <div className="mx-auto max-w-4xl">
             <CategoryChips activeCategory={name} />
             <div className="mt-8">
-              <BlogSearch posts={posts} />
+              <BlogSearch posts={posts.map(toCardData)} />
             </div>
           </div>
         </div>

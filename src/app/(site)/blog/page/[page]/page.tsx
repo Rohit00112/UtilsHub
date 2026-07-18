@@ -1,19 +1,13 @@
 import { notFound } from 'next/navigation';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, toCardData, BLOG_PER_PAGE, blogIndexTotalPages } from '@/lib/blog';
 import { getBlogPageMetadata } from '@/lib/seo';
 import BlogSearch from '@/components/blog/BlogSearch';
 import CategoryChips from '@/components/blog/CategoryChips';
 import Pagination from '@/components/blog/Pagination';
 
-const PER_PAGE = 6;
-
-function totalPagesFor(restLength: number): number {
-  return Math.max(1, 1 + Math.ceil(Math.max(0, restLength - PER_PAGE) / PER_PAGE));
-}
-
 export function generateStaticParams() {
   const rest = getAllPosts().slice(1);
-  const total = totalPagesFor(rest.length);
+  const total = blogIndexTotalPages(rest.length);
   const params: { page: string }[] = [];
   for (let p = 2; p <= total; p++) params.push({ page: String(p) });
   return params;
@@ -34,11 +28,11 @@ export default async function BlogPaginatedPage({
   if (!Number.isInteger(pageNum) || pageNum < 2) notFound();
 
   const rest = getAllPosts().slice(1);
-  const totalPages = totalPagesFor(rest.length);
+  const totalPages = blogIndexTotalPages(rest.length);
   if (pageNum > totalPages) notFound();
 
-  const start = (pageNum - 1) * PER_PAGE;
-  const pagePosts = rest.slice(start, start + PER_PAGE);
+  const start = (pageNum - 1) * BLOG_PER_PAGE;
+  const pagePosts = rest.slice(start, start + BLOG_PER_PAGE);
   if (pagePosts.length === 0) notFound();
 
   return (
@@ -58,7 +52,7 @@ export default async function BlogPaginatedPage({
         <div className="mx-auto max-w-4xl">
           <CategoryChips />
           <div className="mt-8">
-            <BlogSearch posts={pagePosts} />
+            <BlogSearch posts={pagePosts.map(toCardData)} />
           </div>
           <Pagination basePath="/blog" page={pageNum} totalPages={totalPages} />
         </div>

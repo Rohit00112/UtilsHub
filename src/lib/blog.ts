@@ -592,6 +592,30 @@ export function readingTime(post: BlogPost): number {
   return Math.max(1, Math.ceil(wordCount(post.body) / 220));
 }
 
+/** Lightweight post shape for cards/search — excludes the heavy markdown body. */
+export interface BlogCardData {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  tags?: string[];
+  readingMinutes: number;
+}
+
+/** Project a post to card data (computes reading time, drops body). */
+export function toCardData(post: BlogPost): BlogCardData {
+  return {
+    slug: post.slug,
+    title: post.title,
+    description: post.description,
+    date: post.date,
+    category: post.category,
+    tags: post.tags,
+    readingMinutes: readingTime(post),
+  };
+}
+
 /** URL slug for a category name, e.g. 'PDF' -> 'pdf', 'Developer' -> 'developer'. */
 export function categorySlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -619,6 +643,17 @@ export function getPostsByCategory(name: string): BlogPost[] {
 /** Posts having a tag, newest first. */
 export function getPostsByTag(tag: string): BlogPost[] {
   return getAllPosts().filter((p) => p.tags?.includes(tag));
+}
+
+/** Posts shown per page in the blog index grid (page 1 also shows a hero above the grid). */
+export const BLOG_PER_PAGE = 6;
+
+/**
+ * Total number of blog index pages. Page 1 holds the hero + BLOG_PER_PAGE grid posts;
+ * each later page holds BLOG_PER_PAGE. `restLength` = total posts minus the hero.
+ */
+export function blogIndexTotalPages(restLength: number): number {
+  return Math.max(1, 1 + Math.ceil(Math.max(0, restLength - BLOG_PER_PAGE) / BLOG_PER_PAGE));
 }
 
 /** Slice items for a 1-indexed page. */

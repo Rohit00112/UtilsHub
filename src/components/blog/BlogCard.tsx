@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { readingTime, type BlogPost } from '@/lib/blog';
+import { type BlogCardData } from '@/lib/blog';
 
-export default function BlogCard({ post }: { post: BlogPost }) {
+export default function BlogCard({ post }: { post: BlogCardData }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -20,7 +20,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           })}
         </span>
         <span aria-hidden>·</span>
-        <span>{readingTime(post)} min read</span>
+        <span>{post.readingMinutes} min read</span>
       </div>
       <h2 className="mt-2 text-xl font-semibold text-foreground">{post.title}</h2>
       <p className="mt-2 text-base leading-7 text-muted-foreground text-pretty">
