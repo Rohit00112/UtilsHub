@@ -21,13 +21,19 @@ export default function Pagination({ basePath, page, totalPages }: PaginationPro
 
   return (
     <nav className="mt-10 flex items-center justify-center gap-1.5" aria-label="Pagination">
-      <Link
-        href={pageHref(basePath, page - 1)}
-        className={`${link} ${idle} ${page <= 1 ? disabled : ''}`}
-        aria-label="Previous page"
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </Link>
+      {page <= 1 ? (
+        <span className={`${link} ${disabled}`} aria-disabled="true">
+          <ChevronLeft className="h-4 w-4" />
+        </span>
+      ) : (
+        <Link
+          href={pageHref(basePath, page - 1)}
+          className={`${link} ${idle}`}
+          aria-label="Previous page"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Link>
+      )}
       {pages.map((p) => (
         <Link
           key={p}
@@ -38,13 +44,19 @@ export default function Pagination({ basePath, page, totalPages }: PaginationPro
           {p}
         </Link>
       ))}
-      <Link
-        href={pageHref(basePath, page + 1)}
-        className={`${link} ${idle} ${page >= totalPages ? disabled : ''}`}
-        aria-label="Next page"
-      >
-        <ChevronRight className="h-4 w-4" />
-      </Link>
+      {page >= totalPages ? (
+        <span className={`${link} ${disabled}`} aria-disabled="true">
+          <ChevronRight className="h-4 w-4" />
+        </span>
+      ) : (
+        <Link
+          href={pageHref(basePath, page + 1)}
+          className={`${link} ${idle}`}
+          aria-label="Next page"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Link>
+      )}
     </nav>
   );
 }

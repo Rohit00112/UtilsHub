@@ -13,7 +13,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           {post.category}
         </span>
         <span className="tabular-nums">
-          {new Date(post.date).toLocaleDateString('en-US', {
+          {new Date(`${post.date}T00:00:00`).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
