@@ -581,3 +581,54 @@ export function getPostBySlug(slug: string) {
 export function getAllPosts() {
   return [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
 }
+
+/** Word count of a markdown body (rough — splits on whitespace). */
+export function wordCount(body: string): number {
+  return body.trim().split(/\s+/).filter(Boolean).length;
+}
+
+/** Estimated reading time in minutes (220 wpm, min 1). */
+export function readingTime(post: BlogPost): number {
+  return Math.max(1, Math.ceil(wordCount(post.body) / 220));
+}
+
+/** URL slug for a category name, e.g. 'PDF' -> 'pdf', 'Developer' -> 'developer'. */
+export function categorySlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/** Resolve a category slug back to its canonical name, or undefined if none match. */
+export function categoryFromSlug(slug: string): string | undefined {
+  return getAllCategories().find((c) => categorySlug(c.name) === slug)?.name;
+}
+
+/** Unique categories with post counts, ordered by count desc then name. */
+export function getAllCategories(): { name: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const p of posts) counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => (b.count - a.count) || a.name.localeCompare(b.name));
+}
+
+/** Posts in a category (by canonical name), newest first. */
+export function getPostsByCategory(name: string): BlogPost[] {
+  return getAllPosts().filter((p) => p.category === name);
+}
+
+/** Posts having a tag, newest first. */
+export function getPostsByTag(tag: string): BlogPost[] {
+  return getAllPosts().filter((p) => p.tags?.includes(tag));
+}
+
+/** Slice items for a 1-indexed page. */
+export function paginate<T>(
+  items: T[],
+  page: number,
+  perPage = 6,
+): { items: T[]; page: number; totalPages: number } {
+  const totalPages = Math.max(1, Math.ceil(items.length / perPage));
+  const clamped = Math.min(Math.max(1, page), totalPages);
+  const start = (clamped - 1) * perPage;
+  return { items: items.slice(start, start + perPage), page: clamped, totalPages };
+}
