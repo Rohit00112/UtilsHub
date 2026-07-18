@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, ChevronRight, Home } from 'lucide-react';
 import { marked } from 'marked';
-import { getAllPosts, getPostBySlug } from '@/lib/blog';
+import { getAllPosts, getPostBySlug, readingTime, categorySlug } from '@/lib/blog';
 import { getToolById } from '@/lib/tools';
 import { absoluteUrl, blogPostJsonLd, createBlogPostMetadata, toolPath } from '@/lib/seo';
 import ShareButtons from '@/components/ShareButtons';
@@ -60,12 +60,22 @@ export default async function BlogPostPage({ params }: Params) {
                 Blog
               </Link>
             </nav>
-            <div className="text-xs text-muted-foreground tabular-nums">
-              {new Date(post.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <Link
+                href={`/blog/category/${categorySlug(post.category)}`}
+                className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 font-medium text-primary transition-colors hover:bg-primary/20"
+              >
+                {post.category}
+              </Link>
+              <span className="tabular-nums">
+                {new Date(`${post.date}T00:00:00`).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </span>
+              <span aria-hidden>·</span>
+              <span>{readingTime(post)} min read</span>
             </div>
             <h1 className="mt-2 max-w-3xl text-3xl font-semibold text-foreground text-balance sm:text-4xl">
               {post.title}
