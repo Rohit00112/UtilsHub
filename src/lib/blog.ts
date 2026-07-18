@@ -9,6 +9,10 @@ export interface BlogPost {
   relatedTools?: string[];
   /** Markdown body. */
   body: string;
+  /** Single primary category, e.g. 'PDF', 'Developer', 'Security', 'Image', 'Text'. */
+  category: string;
+  /** Freeform tags used for client-side search filtering. */
+  tags?: string[];
 }
 
 // Guides and how-tos. Each post targets long-tail keywords and links to the
@@ -21,6 +25,8 @@ export const posts: BlogPost[] = [
     description:
       'Combine multiple PDFs into one document directly in your browser — no software, no sign-up, and your files never leave your device.',
     date: '2026-07-14',
+    category: 'PDF',
+    tags: ['pdf', 'merge'],
     keywords: ['merge pdf', 'combine pdf', 'join pdf files', 'free pdf merger'],
     relatedTools: ['pdf-merger', 'pdf-splitter', 'pdf-compressor'],
     body: `Merging PDFs is one of the most common document tasks, yet most online tools force you to upload sensitive files to a server first. Here is how to combine PDFs **entirely in your browser**, so contracts, invoices, and statements never leave your device.
@@ -50,6 +56,8 @@ Need to split a PDF back apart, or shrink an oversized file? See the [PDF Splitt
     description:
       'Formatting pretty-prints JSON for readability; validation checks that it is well-formed and matches a schema. Here is when to use each.',
     date: '2026-07-14',
+    category: 'Developer',
+    tags: ['json', 'validation'],
     keywords: ['json formatter', 'json validator', 'format json', 'validate json'],
     relatedTools: ['json-formatter', 'json-schema-validator', 'json-diff'],
     body: `Developers reach for "JSON tools" dozens of times a day, but formatting and validation solve different problems. Knowing which you need saves time.
@@ -74,6 +82,8 @@ All three run entirely in your browser, so the payloads, tokens, and config you 
     description:
       'WebP images are typically 25–35% smaller than JPG or PNG at the same quality. Convert them in your browser with no upload.',
     date: '2026-07-14',
+    category: 'Image',
+    tags: ['webp', 'image', 'optimization'],
     keywords: ['convert to webp', 'webp converter', 'compress images', 'image optimization'],
     relatedTools: ['webp-converter', 'image-resizer', 'favicon-generator'],
     body: `Page speed is a ranking factor, and images are usually the heaviest thing on a page. Switching to WebP is one of the easiest wins.
@@ -101,6 +111,8 @@ If your image is larger than it needs to be, [resize it](/tools/image/resizer) b
     description:
       'MD5 is fast but cryptographically broken. SHA-256 is the modern standard. Learn the difference, when each applies, and how to generate both in your browser.',
     date: '2026-07-15',
+    category: 'Security',
+    tags: ['hashing', 'security'],
     keywords: ['sha256 vs md5', 'md5 vs sha256', 'hash algorithm comparison', 'md5 generator', 'sha256 generator', 'cryptographic hash'],
     relatedTools: ['hash-generator', 'hmac-generator', 'password-generator'],
     body: `MD5 and SHA-256 are both cryptographic hash functions — they take an input and produce a fixed-length fingerprint — but they were designed in different eras and serve very different purposes today. Here is everything you need to know to pick the right one.
@@ -167,6 +179,8 @@ Use SHA-256 (or stronger) for anything security-sensitive. Use MD5 only for non-
     description:
       'Base64 turns binary data into printable ASCII text. Learn why it exists, how to encode and decode it, and where you encounter it every day in web development.',
     date: '2026-07-15',
+    category: 'Developer',
+    tags: ['base64', 'encoding'],
     keywords: ['base64 encoding explained', 'what is base64', 'base64 encode decode', 'base64 tutorial', 'base64url', 'base64 javascript'],
     relatedTools: ['base64', 'url-encoder', 'jwt-decoder'],
     body: `Base64 is one of those encodings that shows up everywhere in web development — JWTs, data URIs, HTTP auth headers, email attachments — yet its purpose is often misunderstood. Here is a clear explanation of what it is, why it exists, and how to use it.
@@ -258,6 +272,8 @@ If you are inspecting a JWT token, the [JWT Decoder](/tools/security/jwt-decoder
     description:
       'CSS minification removes whitespace and comments to shrink stylesheet file size, speeding up page loads. Learn what it does, how much it saves, and how to automate it.',
     date: '2026-07-15',
+    category: 'Developer',
+    tags: ['css', 'minify', 'performance'],
     keywords: ['how to minify css', 'css minification', 'minify css online', 'css optimizer', 'reduce css file size', 'css performance'],
     relatedTools: ['css-minifier', 'css-unit-converter', 'json-formatter'],
     body: `CSS minification is one of the quickest performance wins available to front-end developers. Here is exactly what it does, how much it helps, and how to apply it.
@@ -356,6 +372,8 @@ The [CSS Minifier](/tools/developer/css-minifier) also shows you the exact byte 
     description:
       'URL encoding replaces unsafe characters with % sequences. Learn when to use encodeURIComponent vs encodeURI, how percent-encoding works, and common pitfalls.',
     date: '2026-07-15',
+    category: 'Developer',
+    tags: ['url', 'encoding'],
     keywords: ['url encoding explained', 'percent encoding', 'encodeURIComponent vs encodeURI', 'url encode decode', 'url encoding javascript', 'what is url encoding'],
     relatedTools: ['url-encoder', 'base64', 'query-string-parser'],
     body: `URLs can only contain a limited set of characters. When you need to include spaces, special symbols, or non-ASCII text in a URL, you use **percent-encoding** (also called URL encoding) to represent those characters safely.
@@ -451,6 +469,8 @@ The [URL Encoder / Decoder](/tools/text/url-encoder) encodes or decodes any text
     description:
       'A JSON Web Token has three Base64URL-encoded parts. Learn what each part contains, how to read claims like exp and iss, and how to debug 401 errors.',
     date: '2026-07-15',
+    category: 'Security',
+    tags: ['jwt', 'auth', 'security'],
     keywords: ['jwt token explained', 'how to decode jwt', 'jwt claims', 'jwt header payload', 'debug jwt', 'json web token guide'],
     relatedTools: ['jwt-decoder', 'base64', 'hash-generator'],
     body: `JSON Web Tokens (JWTs) are the most common format for authentication tokens in modern web APIs. They look like gibberish, but they contain structured data that you can read without any secret key. Here is how.
@@ -560,4 +580,90 @@ export function getPostBySlug(slug: string) {
 
 export function getAllPosts() {
   return [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+/** Word count of a markdown body (rough — splits on whitespace). */
+export function wordCount(body: string): number {
+  return body.trim().split(/\s+/).filter(Boolean).length;
+}
+
+/** Estimated reading time in minutes (220 wpm, min 1). */
+export function readingTime(post: BlogPost): number {
+  return Math.max(1, Math.ceil(wordCount(post.body) / 220));
+}
+
+/** Lightweight post shape for cards/search — excludes the heavy markdown body. */
+export interface BlogCardData {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  tags?: string[];
+  readingMinutes: number;
+}
+
+/** Project a post to card data (computes reading time, drops body). */
+export function toCardData(post: BlogPost): BlogCardData {
+  return {
+    slug: post.slug,
+    title: post.title,
+    description: post.description,
+    date: post.date,
+    category: post.category,
+    tags: post.tags,
+    readingMinutes: readingTime(post),
+  };
+}
+
+/** URL slug for a category name, e.g. 'PDF' -> 'pdf', 'Developer' -> 'developer'. */
+export function categorySlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/** Resolve a category slug back to its canonical name, or undefined if none match. */
+export function categoryFromSlug(slug: string): string | undefined {
+  return getAllCategories().find((c) => categorySlug(c.name) === slug)?.name;
+}
+
+/** Unique categories with post counts, ordered by count desc then name. */
+export function getAllCategories(): { name: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const p of posts) counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => (b.count - a.count) || a.name.localeCompare(b.name));
+}
+
+/** Posts in a category (by canonical name), newest first. */
+export function getPostsByCategory(name: string): BlogPost[] {
+  return getAllPosts().filter((p) => p.category === name);
+}
+
+/** Posts having a tag, newest first. */
+export function getPostsByTag(tag: string): BlogPost[] {
+  return getAllPosts().filter((p) => p.tags?.includes(tag));
+}
+
+/** Posts shown per page in the blog index grid (page 1 also shows a hero above the grid). */
+export const BLOG_PER_PAGE = 6;
+
+/**
+ * Total number of blog index pages. Page 1 holds the hero + BLOG_PER_PAGE grid posts;
+ * each later page holds BLOG_PER_PAGE. `restLength` = total posts minus the hero.
+ */
+export function blogIndexTotalPages(restLength: number): number {
+  return Math.max(1, 1 + Math.ceil(Math.max(0, restLength - BLOG_PER_PAGE) / BLOG_PER_PAGE));
+}
+
+/** Slice items for a 1-indexed page. */
+export function paginate<T>(
+  items: T[],
+  page: number,
+  perPage = 6,
+): { items: T[]; page: number; totalPages: number } {
+  const totalPages = Math.max(1, Math.ceil(items.length / perPage));
+  const clamped = Math.min(Math.max(1, page), totalPages);
+  const start = (clamped - 1) * perPage;
+  return { items: items.slice(start, start + perPage), page: clamped, totalPages };
 }

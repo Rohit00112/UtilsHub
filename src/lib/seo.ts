@@ -8,7 +8,7 @@ import {
   type Category,
   type Tool,
 } from '@/lib/tools';
-import { getAllPosts, type BlogPost } from '@/lib/blog';
+import { getAllPosts, categorySlug, type BlogPost } from '@/lib/blog';
 
 export const siteName = 'FreeWebTools';
 export const defaultDescription =
@@ -496,10 +496,11 @@ export function blogPostJsonLd(post: BlogPost) {
     datePublished: post.date,
     dateModified: post.date,
     inLanguage: 'en',
+    articleSection: post.category,
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
     author: { '@id': absoluteUrl('/#organization') },
     publisher: { '@id': absoluteUrl('/#organization') },
-    keywords: post.keywords?.join(', '),
+    keywords: [...(post.keywords ?? []), ...(post.tags ?? [])].join(', ') || undefined,
   };
   const breadcrumb = breadcrumbJsonLd([
     { name: 'Home', path: '/' },
@@ -507,4 +508,46 @@ export function blogPostJsonLd(post: BlogPost) {
     { name: post.title, path: `/blog/${post.slug}` },
   ]);
   return [article, breadcrumb];
+}
+
+export function getBlogCategoryMetadata(category: string): Metadata {
+  return createMetadata({
+    fullTitle: `${category} Guides & How-Tos | ${siteName}`,
+    description: `Practical ${category} guides using free, privacy-first browser tools.`,
+    path: `/blog/category/${categorySlug(category)}`,
+    keywords: [`${category.toLowerCase()} guides`, 'how to', 'free tools tutorials'],
+  });
+}
+
+export function getBlogPageMetadata(page: number): Metadata {
+  return createMetadata({
+    fullTitle: `Guides & How-Tos – Page ${page} | ${siteName}`,
+    description:
+      'Practical guides on PDFs, images, JSON, and everyday web tasks — using free, privacy-first browser tools.',
+    path: `/blog/page/${page}`,
+    keywords: ['web tools guides', 'how to', 'free tools tutorials'],
+  });
+}
+
+export function blogCategoryJsonLd(category: string, posts: BlogPost[]) {
+  const collection = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': absoluteUrl(`/blog/category/${categorySlug(category)}#collection`),
+    url: absoluteUrl(`/blog/category/${categorySlug(category)}`),
+    name: `${category} Guides & How-Tos`,
+    isPartOf: { '@id': absoluteUrl('/#website') },
+    hasPart: posts.map((p) => ({
+      '@type': 'Article',
+      '@id': absoluteUrl(`/blog/${p.slug}#article`),
+      headline: p.title,
+      url: absoluteUrl(`/blog/${p.slug}`),
+    })),
+  };
+  const breadcrumb = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog' },
+    { name: category, path: `/blog/category/${categorySlug(category)}` },
+  ]);
+  return [collection, breadcrumb];
 }
