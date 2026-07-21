@@ -376,7 +376,23 @@ export function toolJsonLd(tool: Tool) {
     { name: tool.name, path },
   ]);
 
-  if (!tool.faqs || tool.faqs.length === 0) return [webApp, breadcrumb];
+  const howTo = tool.steps?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: `How to use ${tool.name}`,
+        description: tool.description,
+        step: tool.steps.map((step, index) => ({
+          '@type': 'HowToStep',
+          position: index + 1,
+          name: `Step ${index + 1}`,
+          text: step,
+        })),
+      }
+    : null;
+
+  const schemas = howTo ? [webApp, breadcrumb, howTo] : [webApp, breadcrumb];
+  if (!tool.faqs || tool.faqs.length === 0) return schemas;
 
   const faqPage = {
     '@context': 'https://schema.org',
@@ -391,7 +407,7 @@ export function toolJsonLd(tool: Tool) {
     })),
   };
 
-  return [webApp, breadcrumb, faqPage];
+  return [...schemas, faqPage];
 }
 
 export function getToolsHubMetadata(): Metadata {

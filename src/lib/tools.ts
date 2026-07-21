@@ -497,6 +497,27 @@ export const tools: Tool[] = [
     ],
     related: ['remove-duplicates-lines', 'word-counter', 'case-converter', 'diff-checker'],
   },
+  {
+    id: 'reading-time-calculator',
+    name: 'Reading Time Calculator',
+    description: 'Estimate reading and speaking time from any text.',
+    metaDescription: 'Calculate reading time, speaking time, words, and characters online free. Adjust reading speed instantly. No signup or uploads.',
+    slug: 'reading-time-calculator',
+    categoryId: 'text',
+    status: 'active',
+    keywords: ['reading time calculator', 'word reading time', 'speaking time calculator', 'minutes to read'],
+    longDescription:
+      'Reading Time Calculator estimates how long a passage takes to read silently or deliver aloud. Paste an article, speech, script, essay, or documentation draft and the result updates instantly from its word count. You can adjust the reading pace to match a quick scan, average reading, careful study, or your own audience.\n\nThe calculator uses a transparent words-per-minute formula: total words divided by the selected reading speed. It also estimates speaking time at a typical presentation pace, which is useful when preparing talks, videos, podcasts, and voice-overs. All text is counted locally in your browser and is never uploaded.',
+    steps: ['Paste or type your text.', 'Choose a reading speed or enter your own words-per-minute rate.', 'Review the reading time, speaking time, word count, and character count.'],
+    useCases: ['Estimate an article\'s read time', 'Fit a speech into a time limit', 'Plan video or podcast narration', 'Check the length of documentation or lesson material'],
+    faqs: [
+      { q: 'How is reading time calculated?', a: 'The word count is divided by your selected words-per-minute speed. For example, 500 words at 250 words per minute takes about two minutes.' },
+      { q: 'What is an average adult reading speed?', a: 'Around 200 to 250 words per minute is a practical estimate for general English prose. Dense technical material is often read more slowly.' },
+      { q: 'How is speaking time different?', a: 'People generally speak more slowly than they read silently. The speaking estimate uses 130 words per minute, a common pace for clear presentations.' },
+      commonFaqPrivacy,
+    ],
+    related: ['word-counter', 'whitespace-cleaner', 'case-converter'],
+  },
 
   // Image
   {
@@ -1249,6 +1270,27 @@ export const tools: Tool[] = [
       commonFaqPrivacy,
     ],
     related: ['css-unit-converter', 'json-formatter', 'html-entities'],
+  },
+  {
+    id: 'html-minifier',
+    name: 'HTML Minifier',
+    description: 'Minify HTML by removing comments and unnecessary whitespace.',
+    metaDescription: 'Minify HTML online free. Remove comments and extra whitespace, preserve preformatted content, and see byte savings. No signup or uploads.',
+    slug: 'html-minifier',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['HTML minifier', 'minify HTML online', 'HTML compressor', 'compress HTML', 'remove HTML whitespace'],
+    longDescription:
+      'HTML Minifier reduces the size of an HTML document by removing ordinary comments, collapsing unnecessary whitespace between tags, and trimming the result. Smaller HTML transfers faster and is useful when placing markup in a CMS, email template, static page, or production response.\n\nContent inside pre, textarea, script, and style elements is protected before whitespace is collapsed, so code and preformatted text keep their intended spacing. Conditional comments are also preserved for compatibility. The minification happens entirely in your browser, so private templates and unpublished markup never leave your device.',
+    steps: ['Paste an HTML document or fragment.', 'Select whether ordinary HTML comments should be removed.', 'Copy the minified HTML and review the byte savings.'],
+    useCases: ['Reduce a static HTML page before deployment', 'Compress markup pasted into a CMS', 'Minify an email template', 'Remove development comments from production HTML'],
+    faqs: [
+      { q: 'Does minifying HTML change the page?', a: 'The tool preserves text inside pre, textarea, script, and style elements while removing whitespace that browsers do not normally need between tags.' },
+      { q: 'Are conditional comments removed?', a: 'No. Conditional comments such as those historically used for Microsoft Outlook or Internet Explorer are preserved.' },
+      { q: 'Should I keep the original HTML?', a: 'Yes. Keep readable source markup for editing and use the minified version as a deployment artifact.' },
+      commonFaqPrivacy,
+    ],
+    related: ['css-minifier', 'html-entities', 'markdown-editor'],
   },
 
   // API & Network
