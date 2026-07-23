@@ -30,22 +30,41 @@ export const posts: BlogPost[] = [
     tags: ['pdf', 'merge'],
     keywords: ['merge pdf', 'combine pdf', 'join pdf files', 'free pdf merger'],
     relatedTools: ['pdf-merger', 'pdf-splitter', 'pdf-compressor'],
-    body: `You can combine PDFs **entirely in your browser**, so contracts, invoices, and statements stay on your device. The process takes four steps and does not require an account.
+    body: `You can combine PDFs **entirely in your browser**, so contracts, invoices, and statements stay on your device. The process takes four steps and does not require an account. The result is one PDF containing every source page in the order you choose.
 
 ## Why browser-based merging is safer
 
-When a website processes your PDF on its own servers, the document is transmitted and may be stored temporarily on a machine you do not control. For signed agreements, financial records, or medical documents, local processing removes that transfer. A browser-based tool uses your device's processing power, so the file stays local.
+When a website processes your PDF on its own servers, the document is transmitted and may be stored temporarily on a machine you do not control. For signed agreements, financial records, or medical documents, local processing removes that transfer. A browser-based tool uses your device's memory and processing power, so the file stays local.
 
-## Step-by-step
+This also removes upload and download queues. The practical limit is your device's available memory: a normal report or invoice bundle should be quick, while hundreds of image-heavy pages can take longer on a phone or older laptop.
+
+## How to merge PDF files step by step
 
 1. Open the [PDF Merger](/tools/pdf/merger).
 2. Upload two or more PDF files from your device.
 3. Drag the files into the exact order you want them combined.
 4. Click merge, then download the single combined PDF.
 
+Open the downloaded file before deleting the originals. Check the first page, the transition between each source document, and the final page. That quick review catches an accidental ordering mistake without requiring you to inspect every page.
+
 ## Does merging reduce quality?
 
-No. Pages are copied losslessly into the new document — text stays selectable and images keep their original resolution. There is no re-compression step.
+No. The merger copies existing PDF pages into a new document without rasterizing them. Selectable text stays selectable, vector graphics remain vectors, and embedded images keep their original resolution. Because there is no image down-sampling step, merging alone will not make a large scanned PDF much smaller.
+
+If file size is the real problem, merge first and then use the [PDF Compressor](/tools/pdf/compressor). Compression results depend on what is inside the file: scanned pages usually offer more room for savings than a compact, text-heavy PDF.
+
+## Choose the order before merging
+
+Arrange complete documents in their final reading order. For example, a client packet might contain a cover letter, proposal, pricing appendix, and signed acceptance page. The merger preserves the page order inside each source file; it only changes the order of the source files themselves.
+
+If you need to remove or rearrange individual pages first, use the [PDF Splitter](/tools/pdf/splitter) to extract the required ranges, then merge those smaller files. This two-step approach is safer than combining everything and trying to correct the finished document afterward.
+
+## Common problems
+
+- **A password-protected PDF will not open:** unlock it in the application that created it, then try again. The browser cannot copy pages it is not permitted to read.
+- **The tab becomes slow:** close other memory-heavy tabs or merge the files in smaller batches.
+- **The output is still too large:** merging preserves source quality, so run the finished file through compression.
+- **Pages are in the wrong sequence:** reorder the source files and merge again; the originals are unchanged.
 
 ## Related tasks
 
@@ -62,24 +81,66 @@ Need to split a PDF back apart, or shrink an oversized file? See the [PDF Splitt
     tags: ['json', 'validation'],
     keywords: ['json formatter', 'json validator', 'format json', 'validate json'],
     relatedTools: ['json-formatter', 'json-schema-validator', 'json-diff'],
-    body: `Formatting and validation solve different JSON problems. A formatter helps you read a payload; a validator checks whether the data follows required rules.
+    body: `Formatting and validation solve different JSON problems. A formatter helps you read a payload; a validator checks whether the data follows required rules. Formatting answers “is this valid JSON syntax, and can I read it?” Schema validation answers “does this valid JSON have the fields and values my application expects?”
 
-## Formatting
+## What a JSON formatter checks
 
-A [JSON Formatter](/tools/developer/json-formatter) takes minified or messy JSON and pretty-prints it with consistent indentation, so you can read a large payload from an API response or log line. It also flags syntax errors like a trailing comma.
+A [JSON Formatter](/tools/developer/json-formatter) takes minified or messy JSON and pretty-prints it with consistent indentation, so you can read a large payload from an API response or log line. Before formatting, it must parse the input. That means it also catches syntax errors such as trailing commas, single-quoted property names, missing braces, and unescaped quotation marks.
 
-## Validation
+Formatting does not prove the data is useful. The following document is valid JSON even if an API requires an email address and a positive numeric account ID:
 
-A [JSON Schema Validator](/tools/developer/json-schema-validator) goes further: it checks your JSON against a schema that defines required fields, types, and constraints. Use it when you need to guarantee a payload matches an API contract before sending it.
+\`\`\`json
+{
+  "accountId": "unknown",
+  "active": true
+}
+\`\`\`
 
-## Comparing two payloads
+Use formatting while debugging, reading logs, reviewing configuration, or preparing a small example for documentation.
+
+## What JSON Schema validation checks
+
+A [JSON Schema Validator](/tools/developer/json-schema-validator) goes further: it compares an instance against a schema that defines the expected structure. A schema can require properties, restrict their types, set numeric or string limits, describe array items, and reject values outside an allowed list.
+
+For example, this schema requires a positive integer account ID and a correctly formatted email string:
+
+\`\`\`json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["accountId", "email"],
+  "properties": {
+    "accountId": { "type": "integer", "minimum": 1 },
+    "email": { "type": "string", "format": "email" }
+  }
+}
+\`\`\`
+
+Use schema validation at system boundaries: API request tests, configuration checks, fixture verification, and data-import pipelines. It catches structurally valid JSON that would still break an application.
+
+## Formatter vs validator
+
+| Question | Formatter | Schema validator |
+|---|---|---|
+| Is the text valid JSON syntax? | Yes | Yes |
+| Can it indent or minify the document? | Yes | No |
+| Are required properties present? | No | Yes |
+| Are values the expected types? | No | Yes |
+| Does it need a schema? | No | Yes |
+
+In a typical workflow, format first so syntax errors are easy to locate, then validate against the same schema used by the receiving system. Passing the formatter is a prerequisite, not a substitute, for schema validation.
+
+## When to compare two payloads
 
 When you need to see what changed between two objects, a [JSON Diff](/tools/developer/json-diff) highlights added, removed, and changed keys line by line.
 
-All three run entirely in your browser, so the payloads, tokens, and configuration you paste never touch a processing server.
+Diffing answers a third question: “how did these two valid documents change?” It is useful when a regression appears after an API deployment or when two environment configurations behave differently. A diff does not validate either document against a contract.
 
-## Reference
+All three tools run entirely in your browser, so payloads, tokens, and configuration you paste are not sent to a FreeWebTools processing server. Still remove live credentials before sharing a formatted result or screenshot with someone else.
 
+## References
+
+- [JSON data interchange format, RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)
 - [JSON Schema specification](https://json-schema.org/specification)`,
   },
   {
@@ -93,28 +154,62 @@ All three run entirely in your browser, so the payloads, tokens, and configurati
     tags: ['webp', 'image', 'optimization'],
     keywords: ['convert to webp', 'webp converter', 'compress images', 'image optimization'],
     relatedTools: ['webp-converter', 'image-resizer', 'favicon-generator'],
-    body: `Converting a large JPG or PNG to WebP can reduce its transfer size without changing its display dimensions. That makes WebP useful when images account for a large share of a page's downloaded bytes.
+    body: `Converting a large JPG or PNG to WebP can reduce its transfer size without changing its display dimensions. That makes WebP useful when images account for a large share of a page's downloaded bytes. The right workflow is to resize to the dimensions you actually need, choose a suitable WebP quality, and compare the output before replacing the original.
 
-## Why WebP
+## When WebP is a good choice
 
 WebP supports lossy and lossless compression as well as transparency. Google's WebP documentation reports that lossy WebP images are **25–34% smaller than comparable JPEG images**, while lossless WebP images are **26% smaller than comparable PNG images**. Your result will depend on the source image and quality setting.
 
-## Convert without uploading
+Use lossy WebP for photographs, gradients, and other images where a small amount of compression is not noticeable. Use lossless output when exact pixels matter, such as interface captures or graphics with sharp text. WebP also supports transparency, so it can replace many PNG assets without adding a solid background.
+
+Do not convert an image merely to change its extension. A tiny, already-optimized source can become the same size or even larger. Always compare file sizes and inspect the rendered result.
+
+## How to convert an image to WebP
 
 1. Open the [WebP Converter](/tools/image/webp-converter).
 2. Add your JPG or PNG images.
-3. Choose a quality level.
+3. Choose a quality level; start around 80 for a photograph.
 4. Download the WebP output.
+5. Open the result at 100% zoom and compare fine detail, edges, and text with the source.
 
 Because the conversion uses your browser's Canvas API, your images are not uploaded to a FreeWebTools processing server. That is useful for unreleased designs or personal photos.
 
 ## Resize first for even smaller files
 
-If your image is larger than it needs to be, [resize it](/tools/image/resizer) before converting. Serving a 4000px image scaled down to 800px in CSS wastes bandwidth.
+If your image is larger than it needs to be, [resize it](/tools/image/resizer) before converting. Serving a 4000px image scaled down to 800px in CSS still makes the browser download and decode all of the original pixels.
 
-## Reference
+For a page that displays an image at 800 CSS pixels wide, a 1600-pixel source is usually enough for a sharp result on a 2× density screen. Keep the original outside the website so you can make a different crop or larger export later.
 
-- [Google WebP documentation](https://developers.google.com/speed/webp)`,
+## Pick a quality setting
+
+There is no universal best quality number. The useful setting depends on the source:
+
+- **Photographs:** start near 80, then lower the value until artifacts become visible and move back one step.
+- **Screenshots with text:** use a higher setting or lossless output so letters and thin borders stay crisp.
+- **Simple illustrations:** test both lossy and lossless; flat colors sometimes compress better losslessly.
+- **Thumbnails:** a lower quality may be acceptable because fine detail is not visible at the displayed size.
+
+Compare the output where it will actually appear, not only in an image viewer. A quality difference that is obvious at 400% zoom may be invisible in a 320-pixel card.
+
+## Publish the converted image safely
+
+Changing the file format also changes the URL. Update image references, preload tags, social metadata, and any structured data that points to the old filename. Keep meaningful alternative text on the HTML image element; the file format does not change the need for an accessible description.
+
+Modern browsers support WebP, but a \`<picture>\` element can provide a JPEG or PNG fallback when you must support older clients:
+
+\`\`\`html
+<picture>
+  <source srcset="/images/report.webp" type="image/webp">
+  <img src="/images/report.jpg" alt="Monthly traffic report">
+</picture>
+\`\`\`
+
+After deployment, confirm the browser receives the WebP file with the \`image/webp\` content type and that the displayed dimensions match the layout. Format conversion saves bytes; correct sizing prevents those bytes from being wasted.
+
+## References
+
+- [Google WebP documentation](https://developers.google.com/speed/webp)
+- [MDN: WebP image format](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types#webp_image)`,
   },
   {
     slug: 'sha256-vs-md5',
