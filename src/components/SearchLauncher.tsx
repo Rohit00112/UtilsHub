@@ -20,15 +20,16 @@ export default function SearchLauncher({
     <button
       type="button"
       onClick={open}
+      aria-label={label}
       className={cn(
-        'inline-flex h-10 w-full items-center justify-start rounded-md border border-input bg-background px-3 text-sm text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+        'inline-flex h-10 w-full items-center justify-start rounded-xl border border-input bg-background px-3 text-sm text-muted-foreground shadow-sm transition-all hover:border-primary/30 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40',
         className
       )}
     >
       <Search className="mr-2 h-4 w-4 shrink-0" />
       <span className="truncate">{label}</span>
       {showShortcut && (
-        <kbd className="pointer-events-none ml-auto hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground sm:flex">
+        <kbd className="pointer-events-none ml-auto hidden h-6 select-none items-center gap-1 rounded-md border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground sm:flex">
           <span>⌘</span>K
         </kbd>
       )}

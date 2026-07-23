@@ -1,5 +1,15 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen, CheckCircle2, HelpCircle, ListChecks, ListOrdered } from 'lucide-react';
+import {
+  ArrowRight,
+  BookOpen,
+  CheckCircle2,
+  ExternalLink,
+  FileText,
+  HelpCircle,
+  ListChecks,
+  ListOrdered,
+} from 'lucide-react';
+import { getAllPosts, readingTime } from '@/lib/blog';
 import { getRelatedTools, type Tool } from '@/lib/tools';
 import { absoluteUrl, embedPath, toolPath } from '@/lib/seo';
 import EmbedSnippet from './EmbedSnippet';
@@ -15,6 +25,9 @@ export default function ToolContent({ tool }: ToolContentProps) {
   const hasUseCases = (tool.useCases?.length ?? 0) > 0;
   const hasFaqs = (tool.faqs?.length ?? 0) > 0;
   const related = getRelatedTools(tool.id, 4);
+  const guides = getAllPosts()
+    .filter((post) => post.relatedTools?.includes(tool.id))
+    .slice(0, 3);
   const features = [
     'Free to use with no account or sign-up.',
     tool.categoryId === 'api'
@@ -24,14 +37,16 @@ export default function ToolContent({ tool }: ToolContentProps) {
     'Copy or download results when the tool supports it.',
   ];
 
-  if (!hasLong && !hasSteps && !hasUseCases && !hasFaqs && related.length === 0) return null;
+  if (!hasLong && !hasSteps && !hasUseCases && !hasFaqs && related.length === 0 && guides.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="mx-auto mt-10 max-w-4xl space-y-10 border-t border-border/60 pt-10">
+    <section className="mx-auto mt-12 max-w-4xl space-y-12 border-t border-border/70 pt-12">
       {hasLong && (
         <div>
-          <h2 className="mb-3 flex items-center gap-2 text-xl font-semibold text-foreground">
-            <BookOpen className="h-4 w-4" />
+          <h2 className="mb-3 flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+            <BookOpen className="h-5 w-5 text-primary" />
             About {tool.name}
           </h2>
           <div className="space-y-4">
@@ -46,14 +61,14 @@ export default function ToolContent({ tool }: ToolContentProps) {
 
       {hasSteps && (
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
-            <ListOrdered className="h-5 w-5 text-muted-foreground" />
+          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+            <ListOrdered className="h-5 w-5 text-primary" />
             How to use {tool.name}
           </h2>
           <ol className="mt-4 space-y-2 text-base leading-7 text-foreground/90">
             {tool.steps!.map((step, i) => (
               <li key={i} className="flex gap-3">
-                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border bg-muted/40 text-xs font-semibold text-muted-foreground tabular-nums">
+                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary tabular-nums">
                   {i + 1}
                 </span>
                 <span>{step}</span>
@@ -65,8 +80,8 @@ export default function ToolContent({ tool }: ToolContentProps) {
 
       {hasUseCases && (
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
-            <ListChecks className="h-5 w-5 text-muted-foreground" />
+          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+            <ListChecks className="h-5 w-5 text-primary" />
             Common use cases
           </h2>
           <ul className="mt-4 grid gap-2 text-base leading-7 text-foreground/90 sm:grid-cols-2">
@@ -81,8 +96,8 @@ export default function ToolContent({ tool }: ToolContentProps) {
       )}
 
       <div>
-        <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
-          <CheckCircle2 className="h-5 w-5 text-muted-foreground" />
+        <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+          <CheckCircle2 className="h-5 w-5 text-primary" />
           {tool.name} features
         </h2>
         <ul className="mt-4 grid gap-2 text-base leading-7 text-foreground/90 sm:grid-cols-2">
@@ -100,21 +115,66 @@ export default function ToolContent({ tool }: ToolContentProps) {
 
       {hasFaqs && (
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-semibold text-foreground">
-            <HelpCircle className="h-5 w-5 text-muted-foreground" />
+          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+            <HelpCircle className="h-5 w-5 text-primary" />
             Frequently asked questions
           </h2>
-          <div className="mt-4 divide-y divide-border/60 rounded-lg border bg-card">
+          <div className="mt-4 divide-y divide-border/70 overflow-hidden rounded-2xl border bg-card shadow-sm">
             {tool.faqs!.map((faq, i) => (
               <details key={i} className="group p-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-foreground">
                   {faq.q}
-                  <span className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-lg font-normal text-muted-foreground transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-3 text-base leading-7 text-muted-foreground text-pretty">{faq.a}</p>
               </details>
             ))}
           </div>
+        </div>
+      )}
+
+      {guides.length > 0 && (
+        <div>
+          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+            <FileText className="h-5 w-5 text-primary" />
+            Guides for {tool.name}
+          </h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {guides.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="soft-card group p-5">
+                <span className="text-xs font-semibold text-primary">
+                  {post.category} · {readingTime(post)} min read
+                </span>
+                <h3 className="mt-2 font-bold leading-snug text-foreground">{post.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{post.description}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                  Read guide
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {(tool.sources?.length ?? 0) > 0 && (
+        <div>
+          <h2 className="text-lg font-bold tracking-tight text-foreground">Standards and references</h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            {tool.sources!.map((source) => (
+              <li key={source.url}>
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
+                >
+                  {source.label}
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
@@ -124,13 +184,13 @@ export default function ToolContent({ tool }: ToolContentProps) {
 
       {related.length > 0 && (
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Related tools</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">Related tools</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {related.map((r) => (
               <Link
                 key={r.id}
                 href={toolPath(r)}
-                className="group flex items-start justify-between gap-3 rounded-lg border bg-card p-4 transition-colors hover:border-primary/40"
+                className="soft-card group flex items-start justify-between gap-3 p-4"
               >
                 <div>
                   <div className="font-medium text-foreground">{r.name}</div>

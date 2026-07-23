@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
-const STORAGE_KEY = 'freewebtools-cookie-consent';
+import { CONSENT_EVENT, CONSENT_STORAGE_KEY } from './ConsentScripts';
 
 type ConsentState = 'unknown' | 'accepted' | 'declined';
 
@@ -14,7 +13,7 @@ export default function CookieConsent() {
     useEffect(() => {
         setMounted(true);
         try {
-            const stored = localStorage.getItem(STORAGE_KEY);
+            const stored = localStorage.getItem(CONSENT_STORAGE_KEY);
             if (stored === 'accepted' || stored === 'declined') {
                 setConsent(stored);
             }
@@ -25,10 +24,11 @@ export default function CookieConsent() {
 
     const persist = (value: 'accepted' | 'declined') => {
         try {
-            localStorage.setItem(STORAGE_KEY, value);
+            localStorage.setItem(CONSENT_STORAGE_KEY, value);
         } catch {
             // ignore
         }
+        window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
         setConsent(value);
     };
 
@@ -45,7 +45,7 @@ export default function CookieConsent() {
                     style={{ bottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
                 >
                     <p className="text-pretty text-sm leading-6">
-                        FreeWebTools uses Google AdSense to display ads, which sets cookies and may collect data per Google&apos;s policies. Local tool input stays in your browser; network tools connect to the URL you choose. See our{' '}
+                        FreeWebTools uses Google AdSense and basic analytics after you consent. These services may set cookies and collect usage data. Local tool input stays in your browser; network tools connect to the URL you choose. See our{' '}
                         <Link
                             href="/privacy"
                             prefetch={false}

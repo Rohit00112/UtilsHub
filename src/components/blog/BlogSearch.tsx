@@ -5,46 +5,48 @@ import { Search } from 'lucide-react';
 import type { BlogCardData } from '@/lib/blog';
 import BlogCard from './BlogCard';
 
-/**
- * Renders a search box + a grid of BlogCards for the given posts.
- * Filtering is client-side over title/description/tags of the passed posts only.
- * Hero and pagination render OUTSIDE this component in the page, so they are
- * unaffected by the query — search filters only the grid it owns (spec approach A).
- */
 export default function BlogSearch({ posts }: { posts: BlogCardData[] }) {
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return posts;
-    return posts.filter((p) => {
-      const haystack = [p.title, p.description, ...(p.tags ?? [])].join(' ').toLowerCase();
-      return haystack.includes(q);
-    });
+    return posts.filter((post) =>
+      [post.title, post.description, post.category, ...(post.tags ?? [])]
+        .join(' ')
+        .toLowerCase()
+        .includes(q)
+    );
   }, [posts, query]);
 
   return (
     <div>
-      <div className="relative mb-6">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search these guides…"
-          aria-label="Search guides"
-          className="w-full rounded-lg border border-border/60 bg-background py-2.5 pl-9 pr-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/40"
-        />
+      <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-sm">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search by topic or task"
+            aria-label="Search guides"
+            className="h-11 w-full rounded-xl border border-border bg-card py-2 pl-10 pr-3 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+          />
+        </div>
+        <p className="text-sm text-muted-foreground" aria-live="polite">
+          {filtered.length} {filtered.length === 1 ? 'guide' : 'guides'}
+        </p>
       </div>
 
       {filtered.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
-          No guides match “{query}”.
-        </p>
+        <div className="rounded-2xl border border-dashed border-border bg-card/50 p-10 text-center">
+          <p className="font-semibold text-foreground">No guide matches “{query}”.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Try a format such as PDF, JSON, JWT, CSS, or WebP.</p>
+        </div>
       ) : (
-        <div className="grid gap-4">
-          {filtered.map((post) => (
-            <BlogCard key={post.slug} post={post} />
+        <div className="grid gap-4 md:grid-cols-2">
+          {filtered.map((post, index) => (
+            <BlogCard key={post.slug} post={post} index={index} />
           ))}
         </div>
       )}

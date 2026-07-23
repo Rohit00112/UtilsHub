@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { Moon, Sun } from 'lucide-react';
+import { ArrowUpRight, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
+import LogoMark from './LogoMark';
 import SearchLauncher from './SearchLauncher';
 
 export default function Navbar() {
@@ -17,42 +18,60 @@ export default function Navbar() {
   const isDark = mounted && resolvedTheme === 'dark';
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-foreground/15 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="container flex h-14 items-center gap-6">
-        <Link href="/" className="group flex items-baseline gap-2">
-          <span className="font-serif text-2xl leading-none tracking-tight text-foreground">
-            FreeWeb<span className="italic text-primary">Tools</span>
-          </span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:inline">
-            est. local
+    <nav className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
+      <div className="container flex h-16 items-center gap-4">
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5" aria-label="FreeWebTools home">
+          <LogoMark className="h-8 w-8 rounded-[10px] shadow-md shadow-primary/15 transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-105" priority />
+          <span className="text-[17px] font-bold tracking-[-0.03em] text-foreground">
+            FreeWeb<span className="text-primary">Tools</span>
           </span>
         </Link>
 
-        <div className="ml-auto flex flex-1 items-center justify-end gap-3">
+        <div className="ml-3 hidden items-center gap-1 lg:flex">
           <Link
             href="/tools"
-            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            Tools
+            All tools
           </Link>
           <Link
             href="/blog"
-            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            Blog
+            Guides
           </Link>
-          <div className="w-full max-w-xs">
-            <SearchLauncher className="h-9" showShortcut enableShortcut />
+          <Link
+            href="/about"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            About
+          </Link>
+        </div>
+
+        <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2">
+          <div className="hidden w-full max-w-xs sm:block">
+            <SearchLauncher label="Search 60+ tools..." className="h-10 bg-card/80" showShortcut enableShortcut />
+          </div>
+          <div className="w-10 sm:hidden">
+            <SearchLauncher
+              label="Search tools"
+              className="h-10 w-10 justify-center px-0 [&>svg]:mr-0 [&>span]:hidden"
+              enableShortcut
+            />
           </div>
           <button
             type="button"
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-transparent text-muted-foreground transition-colors hover:border-border hover:bg-card hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
             title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
           >
             {mounted && (isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />)}
           </button>
+          <Link href="/tools" className="btn btn-primary hidden h-10 gap-1.5 px-4 sm:inline-flex">
+            Explore tools
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </div>
     </nav>

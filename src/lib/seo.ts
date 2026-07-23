@@ -8,20 +8,28 @@ import {
   type Category,
   type Tool,
 } from '@/lib/tools';
-import { getAllPosts, categorySlug, type BlogPost } from '@/lib/blog';
+import {
+  categorySlug,
+  getAllCategories as getAllBlogCategories,
+  getAllPosts,
+  wordCount,
+  type BlogPost,
+} from '@/lib/blog';
 
 export const siteName = 'FreeWebTools';
 export const defaultDescription =
-  'Free web tools for PDF, image, text, security, calculators, APIs, and developers. Most tools run in your browser with no sign-up required.';
+  'Free online tools for PDFs, images, text, developers, security, APIs, and calculations. No sign-up; most tools run locally in your browser.';
 export const defaultKeywords = [
-  'free web tools',
   'free online tools',
-  'online tools',
-  'online utilities',
-  'browser tools',
-  'PDF tools',
-  'developer tools',
-  'privacy-first tools',
+  'free web tools',
+  'browser-based tools',
+  'online PDF tools',
+  'online image tools',
+  'online text tools',
+  'free developer tools',
+  'JSON formatter online',
+  'PDF merger online',
+  'image resizer online',
   'FreeWebTools',
 ];
 
@@ -99,6 +107,7 @@ export function createMetadata({
     manifest: '/manifest.webmanifest',
     icons: {
       icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
         { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
         { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
       ],
@@ -167,7 +176,7 @@ export function getCategoryMetadata(categoryId: string): Metadata {
   if (!category) return createMetadata({ title: 'Tools', path: '/tools' });
 
   const baseDescription = category.description.replace(/\.$/, '');
-  const description = `${baseDescription}. Use free ${category.name.toLowerCase()} with no sign-up and browser-side processing.`;
+  const description = `${baseDescription}. Browse free ${category.name.toLowerCase()} with no sign-up and browser-side processing.`;
 
   return createMetadata({
     fullTitle: `${category.name} — Free Online Utilities | ${siteName}`,
@@ -211,17 +220,23 @@ export function createToolMetadata(categoryId: string, slug: string): Metadata {
 }
 
 export function getHomeMetadata(): Metadata {
+  const activeToolCount = tools.filter((tool) => tool.status === 'active').length;
+
   return createMetadata({
-    fullTitle: 'Free Web Tools Online | 60+ Browser Tools — No Sign-Up',
+    fullTitle: 'Free Online Tools for PDF, Images & Developers | FreeWebTools',
     description:
-      '60+ free online web tools for developers, SEO pros & marketers. JSON formatter, Base64 encoder, MD5 generator & more. No signup. 100% private. Browser-based.',
+      `Use ${activeToolCount} free online tools for PDFs, images, text, code, APIs, security, and calculations. No sign-up; most tools run locally in your browser.`,
     path: '/',
     keywords: [
+      'free online tools no signup',
       'free developer tools',
-      'free SEO tools',
-      'free PDF tools',
-      'free image tools',
-      'free text tools',
+      'online PDF tools',
+      'online image tools',
+      'online text tools',
+      'JSON formatter',
+      'PDF merger',
+      'image resizer',
+      'word counter',
     ],
   });
 }
@@ -232,19 +247,12 @@ export function websiteJsonLd() {
     '@type': 'WebSite',
     '@id': absoluteUrl('/#website'),
     name: siteName,
+    alternateName: 'Free Web Tools',
     url: absoluteUrl('/'),
     description: defaultDescription,
     inLanguage: 'en',
     publisher: {
       '@id': absoluteUrl('/#organization'),
-    },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${absoluteUrl('/tools')}?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
     },
   };
 }
@@ -256,9 +264,13 @@ export function organizationJsonLd() {
     '@id': absoluteUrl('/#organization'),
     name: siteName,
     url: absoluteUrl('/'),
-    logo: absoluteUrl('/ico.png'),
+    logo: absoluteUrl('/favicon.svg'),
+    description: defaultDescription,
+    publishingPrinciples: absoluteUrl('/about#editorial-standards'),
+    knowsAbout: ['PDF documents', 'web development', 'web security', 'image optimization', 'browser utilities'],
     sameAs: [
       'https://github.com/Rohit00112',
+      'https://github.com/Rohit00112/UtilsHub',
     ],
   };
 }
@@ -274,6 +286,14 @@ function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
       item: absoluteUrl(item.path),
     })),
   };
+}
+
+function schemaApplicationCategory(categoryId: string) {
+  if (categoryId === 'developer' || categoryId === 'api') return 'DeveloperApplication';
+  if (categoryId === 'security') return 'SecurityApplication';
+  if (categoryId === 'calculator') return 'FinanceApplication';
+  if (categoryId === 'image' || categoryId === 'pdf') return 'MultimediaApplication';
+  return 'UtilitiesApplication';
 }
 
 export function categoryJsonLd(category: Category) {
@@ -304,7 +324,8 @@ export function categoryJsonLd(category: Category) {
       name: tool.name,
       url: absoluteUrl(toolPath(tool)),
       description: tool.description,
-      applicationCategory: category.name,
+      applicationCategory: schemaApplicationCategory(category.id),
+      applicationSubCategory: category.name,
       operatingSystem: 'Any (browser)',
       offers: {
         '@type': 'Offer',
@@ -347,8 +368,8 @@ export function toolJsonLd(tool: Tool) {
     name: tool.name,
     url: absoluteUrl(path),
     description: tool.description,
-    applicationCategory: category?.name || 'Utility',
-    applicationSubCategory: 'Browser-based utility',
+    applicationCategory: schemaApplicationCategory(tool.categoryId),
+    applicationSubCategory: category?.name || 'Browser-based utility',
     operatingSystem: 'Any (browser)',
     browserRequirements: 'Requires a modern browser with JavaScript enabled.',
     offers: {
@@ -365,6 +386,11 @@ export function toolJsonLd(tool: Tool) {
     provider: {
       '@id': absoluteUrl('/#organization'),
     },
+    citation: tool.sources?.map((source) => ({
+      '@type': 'CreativeWork',
+      name: source.label,
+      url: source.url,
+    })),
   };
 
   const breadcrumb = breadcrumbJsonLd([
@@ -450,16 +476,14 @@ export function toolsHubJsonLd() {
   return [collectionPage, breadcrumb];
 }
 
-export function allSitemapEntries(lastModified?: Date) {
-  const modified = lastModified ?? new Date();
+export function allSitemapEntries() {
   return [
-    { url: absoluteUrl('/'), lastModified: modified, changeFrequency: 'weekly' as const, priority: 1 },
-    { url: absoluteUrl('/tools'), lastModified: modified, changeFrequency: 'weekly' as const, priority: 0.9 },
-    { url: absoluteUrl('/about'), lastModified: modified, changeFrequency: 'monthly' as const, priority: 0.5 },
-    { url: absoluteUrl('/privacy'), lastModified: modified, changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: absoluteUrl('/'), changeFrequency: 'weekly' as const, priority: 1 },
+    { url: absoluteUrl('/tools'), changeFrequency: 'weekly' as const, priority: 0.9 },
+    { url: absoluteUrl('/about'), changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: absoluteUrl('/privacy'), changeFrequency: 'yearly' as const, priority: 0.3 },
     ...categories.map((category) => ({
       url: absoluteUrl(categoryPath(category)),
-      lastModified: modified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
@@ -467,14 +491,18 @@ export function allSitemapEntries(lastModified?: Date) {
       .filter((tool) => tool.status === 'active')
       .map((tool) => ({
         url: absoluteUrl(toolPath(tool)),
-        lastModified: modified,
         changeFrequency: 'monthly' as const,
         priority: 0.7,
       })),
-    { url: absoluteUrl('/blog'), lastModified: modified, changeFrequency: 'weekly' as const, priority: 0.6 },
+    { url: absoluteUrl('/blog'), changeFrequency: 'weekly' as const, priority: 0.6 },
+    ...getAllBlogCategories().map((category) => ({
+      url: absoluteUrl(`/blog/category/${categorySlug(category.name)}`),
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
+    })),
     ...getAllPosts().map((post) => ({
       url: absoluteUrl(`/blog/${post.slug}`),
-      lastModified: new Date(post.date),
+      lastModified: new Date(post.updatedDate ?? post.date),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
@@ -485,63 +513,122 @@ export function allSitemapEntries(lastModified?: Date) {
 
 export function getBlogIndexMetadata(): Metadata {
   return createMetadata({
-    fullTitle: `Guides & How-Tos | ${siteName}`,
+    fullTitle: `PDF, JSON & Developer Guides | ${siteName}`,
     description:
-      'Practical guides on PDFs, images, JSON, and everyday web tasks — using free, privacy-first browser tools.',
+      'Clear guides for PDFs, JSON, images, web security, CSS, URLs, and developer tasks. Read direct answers, working examples, and tested steps.',
     path: '/blog',
-    keywords: ['web tools guides', 'how to', 'free tools tutorials'],
+    keywords: ['PDF guides', 'JSON guides', 'developer tutorials', 'web security guides', 'image optimization guides'],
   });
 }
 
 export function createBlogPostMetadata(post: BlogPost): Metadata {
-  return createMetadata({
+  const metadata = createMetadata({
     fullTitle: `${post.title} | ${siteName}`,
     description: post.description,
     path: `/blog/${post.slug}`,
     keywords: post.keywords,
   });
+
+  return {
+    ...metadata,
+    openGraph: {
+      ...metadata.openGraph,
+      type: 'article',
+      publishedTime: post.date,
+      modifiedTime: post.updatedDate ?? post.date,
+      authors: [siteName],
+      section: post.category,
+      tags: post.tags,
+    },
+  };
 }
 
 export function blogPostJsonLd(post: BlogPost) {
   const article = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
     '@id': absoluteUrl(`/blog/${post.slug}#article`),
     headline: post.title,
     description: post.description,
+    url: absoluteUrl(`/blog/${post.slug}`),
+    image: absoluteUrl('/opengraph-image'),
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updatedDate ?? post.date,
     inLanguage: 'en',
     articleSection: post.category,
+    wordCount: wordCount(post.body),
+    timeRequired: `PT${Math.max(1, Math.ceil(wordCount(post.body) / 220))}M`,
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
-    author: { '@id': absoluteUrl('/#organization') },
-    publisher: { '@id': absoluteUrl('/#organization') },
+    isPartOf: { '@id': absoluteUrl('/blog#collection') },
+    author: {
+      '@type': 'Organization',
+      name: siteName,
+      url: absoluteUrl('/about'),
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': absoluteUrl('/#organization'),
+      name: siteName,
+      url: absoluteUrl('/'),
+      logo: {
+        '@type': 'ImageObject',
+        url: absoluteUrl('/favicon.svg'),
+      },
+    },
     keywords: [...(post.keywords ?? []), ...(post.tags ?? [])].join(', ') || undefined,
   };
   const breadcrumb = breadcrumbJsonLd([
     { name: 'Home', path: '/' },
-    { name: 'Blog', path: '/blog' },
+    { name: 'Guides', path: '/blog' },
+    { name: post.category, path: `/blog/category/${categorySlug(post.category)}` },
     { name: post.title, path: `/blog/${post.slug}` },
   ]);
   return [article, breadcrumb];
 }
 
+export function blogIndexJsonLd(posts: BlogPost[]) {
+  const collection = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': absoluteUrl('/blog#collection'),
+    url: absoluteUrl('/blog'),
+    name: `Practical web tool guides | ${siteName}`,
+    description: 'Guides for PDFs, JSON, images, security, CSS, URLs, and developer tasks.',
+    isPartOf: { '@id': absoluteUrl('/#website') },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: posts.length,
+      itemListElement: posts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: absoluteUrl(`/blog/${post.slug}`),
+        name: post.title,
+      })),
+    },
+  };
+  const breadcrumb = breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/blog' },
+  ]);
+  return [collection, breadcrumb];
+}
+
 export function getBlogCategoryMetadata(category: string): Metadata {
   return createMetadata({
-    fullTitle: `${category} Guides & How-Tos | ${siteName}`,
-    description: `Practical ${category} guides using free, privacy-first browser tools.`,
+    fullTitle: `${category} Guides: Clear Tutorials & Examples | ${siteName}`,
+    description: `Read practical ${category.toLowerCase()} guides with direct answers, working examples, and links to free browser-based tools.`,
     path: `/blog/category/${categorySlug(category)}`,
-    keywords: [`${category.toLowerCase()} guides`, 'how to', 'free tools tutorials'],
+    keywords: [`${category.toLowerCase()} guides`, `${category.toLowerCase()} tutorials`, `free ${category.toLowerCase()} tools`],
   });
 }
 
 export function getBlogPageMetadata(page: number): Metadata {
   return createMetadata({
-    fullTitle: `Guides & How-Tos – Page ${page} | ${siteName}`,
+    fullTitle: `Practical Web Tool Guides — Page ${page} | ${siteName}`,
     description:
-      'Practical guides on PDFs, images, JSON, and everyday web tasks — using free, privacy-first browser tools.',
+      'More clear guides for PDFs, JSON, images, web security, CSS, URLs, and everyday developer tasks.',
     path: `/blog/page/${page}`,
-    keywords: ['web tools guides', 'how to', 'free tools tutorials'],
+    keywords: ['web tool guides', 'developer tutorials', 'free tools'],
   });
 }
 
@@ -551,10 +638,21 @@ export function blogCategoryJsonLd(category: string, posts: BlogPost[]) {
     '@type': 'CollectionPage',
     '@id': absoluteUrl(`/blog/category/${categorySlug(category)}#collection`),
     url: absoluteUrl(`/blog/category/${categorySlug(category)}`),
-    name: `${category} Guides & How-Tos`,
-    isPartOf: { '@id': absoluteUrl('/#website') },
+    name: `${category} guides`,
+    description: `Practical ${category.toLowerCase()} guides with examples and browser-based tools.`,
+    isPartOf: { '@id': absoluteUrl('/blog#collection') },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: posts.length,
+      itemListElement: posts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: absoluteUrl(`/blog/${post.slug}`),
+        name: post.title,
+      })),
+    },
     hasPart: posts.map((p) => ({
-      '@type': 'Article',
+      '@type': 'BlogPosting',
       '@id': absoluteUrl(`/blog/${p.slug}#article`),
       headline: p.title,
       url: absoluteUrl(`/blog/${p.slug}`),
@@ -562,7 +660,7 @@ export function blogCategoryJsonLd(category: string, posts: BlogPost[]) {
   };
   const breadcrumb = breadcrumbJsonLd([
     { name: 'Home', path: '/' },
-    { name: 'Blog', path: '/blog' },
+    { name: 'Guides', path: '/blog' },
     { name: category, path: `/blog/category/${categorySlug(category)}` },
   ]);
   return [collection, breadcrumb];

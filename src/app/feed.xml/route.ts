@@ -23,6 +23,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <category>${escapeXml(post.category)}</category>
       <description>${escapeXml(post.description)}</description>
     </item>`;
     })
@@ -31,10 +32,10 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${escapeXml(siteName)} — Guides &amp; How-Tos</title>
+    <title>${escapeXml(siteName)} — Practical Guides</title>
     <link>${site}</link>
     <atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />
-    <description>Practical guides on PDFs, images, JSON, and everyday web tasks using free, privacy-first browser tools.</description>
+    <description>Direct answers and practical guides for PDFs, JSON, images, web security, CSS, URLs, and developer tasks.</description>
     <language>en</language>
 ${items}
   </channel>

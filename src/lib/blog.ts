@@ -4,6 +4,8 @@ export interface BlogPost {
   description: string;
   /** ISO date, e.g. '2026-07-14'. */
   date: string;
+  /** ISO date of the latest substantive review. */
+  updatedDate?: string;
   keywords?: string[];
   /** IDs of tools referenced by this post, rendered as a related-tools rail. */
   relatedTools?: string[];
@@ -15,25 +17,24 @@ export interface BlogPost {
   tags?: string[];
 }
 
-// Guides and how-tos. Each post targets long-tail keywords and links to the
-// relevant tool pages, which builds internal links and gives people something
-// to link to from other sites.
+// Practical guides that answer a specific question and link to the relevant tools.
 export const posts: BlogPost[] = [
   {
     slug: 'how-to-merge-pdf-files-free',
     title: 'How to Merge PDF Files for Free (Without Uploading Them)',
     description:
-      'Combine multiple PDFs into one document directly in your browser — no software, no sign-up, and your files never leave your device.',
+      'Combine PDF files in your browser without installing software or uploading documents to a processing server.',
     date: '2026-07-14',
+    updatedDate: '2026-07-23',
     category: 'PDF',
     tags: ['pdf', 'merge'],
     keywords: ['merge pdf', 'combine pdf', 'join pdf files', 'free pdf merger'],
     relatedTools: ['pdf-merger', 'pdf-splitter', 'pdf-compressor'],
-    body: `Merging PDFs is one of the most common document tasks, yet most online tools force you to upload sensitive files to a server first. Here is how to combine PDFs **entirely in your browser**, so contracts, invoices, and statements never leave your device.
+    body: `You can combine PDFs **entirely in your browser**, so contracts, invoices, and statements stay on your device. The process takes four steps and does not require an account.
 
 ## Why browser-based merging is safer
 
-When a website processes your PDF on its own servers, your document is transmitted, and often temporarily stored, on a machine you do not control. For anything sensitive — signed agreements, financial records, medical documents — that is an unnecessary risk. A browser-based tool uses your device's own processing power, so the file stays local.
+When a website processes your PDF on its own servers, the document is transmitted and may be stored temporarily on a machine you do not control. For signed agreements, financial records, or medical documents, local processing removes that transfer. A browser-based tool uses your device's processing power, so the file stays local.
 
 ## Step-by-step
 
@@ -54,13 +55,14 @@ Need to split a PDF back apart, or shrink an oversized file? See the [PDF Splitt
     slug: 'json-formatter-vs-validator',
     title: 'JSON Formatter vs Validator: What Is the Difference?',
     description:
-      'Formatting pretty-prints JSON for readability; validation checks that it is well-formed and matches a schema. Here is when to use each.',
+      'A JSON formatter improves readability. A validator checks syntax or a schema. Compare the two and choose the right tool.',
     date: '2026-07-14',
+    updatedDate: '2026-07-23',
     category: 'Developer',
     tags: ['json', 'validation'],
     keywords: ['json formatter', 'json validator', 'format json', 'validate json'],
     relatedTools: ['json-formatter', 'json-schema-validator', 'json-diff'],
-    body: `Developers reach for "JSON tools" dozens of times a day, but formatting and validation solve different problems. Knowing which you need saves time.
+    body: `Formatting and validation solve different JSON problems. A formatter helps you read a payload; a validator checks whether the data follows required rules.
 
 ## Formatting
 
@@ -74,23 +76,28 @@ A [JSON Schema Validator](/tools/developer/json-schema-validator) goes further: 
 
 When you need to see what changed between two objects, a [JSON Diff](/tools/developer/json-diff) highlights added, removed, and changed keys line by line.
 
-All three run entirely in your browser, so the payloads, tokens, and config you paste never touch a server.`,
+All three run entirely in your browser, so the payloads, tokens, and configuration you paste never touch a processing server.
+
+## Reference
+
+- [JSON Schema specification](https://json-schema.org/specification)`,
   },
   {
     slug: 'convert-images-to-webp',
-    title: 'How to Convert Images to WebP (and Why It Speeds Up Your Site)',
+    title: 'How to Convert Images to WebP',
     description:
-      'WebP images are typically 25–35% smaller than JPG or PNG at the same quality. Convert them in your browser with no upload.',
+      'Convert JPG and PNG images to WebP in your browser. Learn when WebP reduces file size and how to avoid serving oversized images.',
     date: '2026-07-14',
+    updatedDate: '2026-07-23',
     category: 'Image',
     tags: ['webp', 'image', 'optimization'],
     keywords: ['convert to webp', 'webp converter', 'compress images', 'image optimization'],
     relatedTools: ['webp-converter', 'image-resizer', 'favicon-generator'],
-    body: `Page speed is a ranking factor, and images are usually the heaviest thing on a page. Switching to WebP is one of the easiest wins.
+    body: `Converting a large JPG or PNG to WebP can reduce its transfer size without changing its display dimensions. That makes WebP useful when images account for a large share of a page's downloaded bytes.
 
 ## Why WebP
 
-WebP supports both lossy and lossless compression and typically produces files **25–35% smaller** than an equivalent JPG or PNG, with no visible quality loss. Every modern browser supports it.
+WebP supports lossy and lossless compression as well as transparency. Google's WebP documentation reports that lossy WebP images are **25–34% smaller than comparable JPEG images**, while lossless WebP images are **26% smaller than comparable PNG images**. Your result will depend on the source image and quality setting.
 
 ## Convert without uploading
 
@@ -99,11 +106,15 @@ WebP supports both lossy and lossless compression and typically produces files *
 3. Choose a quality level.
 4. Download the WebP output.
 
-Because the conversion uses your browser's Canvas API, your images are never uploaded — useful for unreleased designs or personal photos.
+Because the conversion uses your browser's Canvas API, your images are not uploaded to a FreeWebTools processing server. That is useful for unreleased designs or personal photos.
 
 ## Resize first for even smaller files
 
-If your image is larger than it needs to be, [resize it](/tools/image/resizer) before converting. Serving a 4000px image scaled down to 800px in CSS wastes bandwidth.`,
+If your image is larger than it needs to be, [resize it](/tools/image/resizer) before converting. Serving a 4000px image scaled down to 800px in CSS wastes bandwidth.
+
+## Reference
+
+- [Google WebP documentation](https://developers.google.com/speed/webp)`,
   },
   {
     slug: 'sha256-vs-md5',
@@ -111,15 +122,16 @@ If your image is larger than it needs to be, [resize it](/tools/image/resizer) b
     description:
       'MD5 is fast but cryptographically broken. SHA-256 is the modern standard. Learn the difference, when each applies, and how to generate both in your browser.',
     date: '2026-07-15',
+    updatedDate: '2026-07-23',
     category: 'Security',
     tags: ['hashing', 'security'],
     keywords: ['sha256 vs md5', 'md5 vs sha256', 'hash algorithm comparison', 'md5 generator', 'sha256 generator', 'cryptographic hash'],
     relatedTools: ['hash-generator', 'hmac-generator', 'password-generator'],
-    body: `MD5 and SHA-256 are both cryptographic hash functions — they take an input and produce a fixed-length fingerprint — but they were designed in different eras and serve very different purposes today. Here is everything you need to know to pick the right one.
+    body: `MD5 and SHA-256 both turn an input into a fixed-length digest, but they do not provide the same security. Use SHA-256 for security-sensitive work. Reserve MD5 for legacy, non-adversarial checksums.
 
 ## What is a hash function?
 
-A hash function maps any input (a string, a file, a password) to a fixed-length digest. The same input always produces the same output, and even a one-character change produces a completely different digest. That property — called the avalanche effect — is what makes hashes useful for integrity checks and comparisons.
+A hash function maps any input, such as a string or file, to a fixed-length digest. The same input always produces the same output, and a small input change should produce a substantially different digest. This behavior makes hashes useful for integrity checks and comparisons.
 
 ## MD5: fast, but broken for security
 
@@ -127,7 +139,7 @@ MD5 was published in 1992 and produces a 128-bit (32 hex character) digest. It w
 
 - **Collision attacks**: Two different inputs can produce the same MD5 digest. This was demonstrated in practice in 2004 and is now trivially achievable.
 - **Pre-image attacks**: While harder, the small digest size (128 bits) makes MD5 weaker than modern standards.
-- **Speed as a liability**: MD5 is extremely fast, which is good for checksums but bad for password hashing — an attacker can test billions of guesses per second.
+- **Speed as a liability**: MD5 is fast, which is useful for checksums but unsuitable for password hashing because attackers can test guesses quickly.
 
 **When MD5 is still acceptable:**
 - Non-security file checksums where collision resistance does not matter (e.g., detecting accidental corruption, not tampering)
@@ -145,14 +157,14 @@ SHA-256 is part of the SHA-2 family, published by NIST in 2001, and produces a 2
 
 - **No known collision attacks** for the full SHA-256 algorithm
 - **Larger digest** (256 bits vs. 128 bits) means vastly more resistant to brute force
-- **Widely trusted** — used in TLS certificates, Bitcoin, code-signing, and HMAC signatures
+- **Widely used** in TLS certificates, Bitcoin, code signing, and HMAC signatures
 - **Slower than MD5** for checksums, but fast enough for most uses
 
 SHA-256 is the right default for anything security-sensitive. Its sibling SHA-512 offers a larger digest (512 bits) and can be faster on 64-bit hardware.
 
 ## SHA-1: the one in between
 
-SHA-1 (160 bits) is stronger than MD5 but also broken for cryptographic purposes — Google demonstrated a practical collision attack (SHAttered) in 2017. Avoid it for new designs; migrate away from it in existing ones.
+SHA-1 (160 bits) is stronger than MD5 but also broken for cryptographic purposes. A practical collision was demonstrated in 2017. Avoid it for new designs and migrate away from it in existing ones.
 
 ## Quick comparison
 
@@ -160,34 +172,40 @@ SHA-1 (160 bits) is stronger than MD5 but also broken for cryptographic purposes
 |---|---|---|---|---|
 | Digest size | 128 bit | 160 bit | 256 bit | 512 bit |
 | Collisions found | Yes | Yes | No | No |
-| Security use | ❌ No | ❌ No | ✅ Yes | ✅ Yes |
+| Suitable for new security use | No | No | Yes | Yes |
 | Speed (relative) | Fastest | Fast | Moderate | Fast on 64-bit |
 
 ## Generating hashes in your browser
 
 The [Hash Generator](/tools/security/hash-generator) computes MD5, SHA-1, SHA-256, SHA-384, and SHA-512 from any text input. The SHA-family hashes use the browser's Web Crypto API (the same cryptographic primitive TLS relies on), while MD5 is provided for legacy compatibility. Nothing you enter is uploaded.
 
-For keyed authentication codes — where you need to prove both integrity and origin — use the [HMAC Generator](/tools/security/hmac-generator) with SHA-256 or SHA-512.
+For keyed authentication codes, where you need to prove integrity and origin, use the [HMAC Generator](/tools/security/hmac-generator) with SHA-256 or SHA-512.
 
-## The bottom line
+## Which should you use?
 
-Use SHA-256 (or stronger) for anything security-sensitive. Use MD5 only for non-security checksums in legacy contexts where you have no choice. When in doubt, SHA-256 is the safe default.`,
+Use SHA-256 or a stronger suitable algorithm for security-sensitive work. Use MD5 only for non-security checksums in legacy contexts where collision resistance is not required.
+
+## References
+
+- [RFC 6151: Updated Security Considerations for MD5](https://www.rfc-editor.org/rfc/rfc6151)
+- [NIST Secure Hash Standard, FIPS 180-4](https://csrc.nist.gov/pubs/fips/180-4/upd1/final)`,
   },
   {
     slug: 'base64-encoding-explained',
-    title: 'Base64 Encoding Explained: What It Is, How It Works, and When to Use It',
+    title: 'Base64 Encoding Explained: How It Works and When to Use It',
     description:
       'Base64 turns binary data into printable ASCII text. Learn why it exists, how to encode and decode it, and where you encounter it every day in web development.',
     date: '2026-07-15',
+    updatedDate: '2026-07-23',
     category: 'Developer',
     tags: ['base64', 'encoding'],
     keywords: ['base64 encoding explained', 'what is base64', 'base64 encode decode', 'base64 tutorial', 'base64url', 'base64 javascript'],
     relatedTools: ['base64', 'url-encoder', 'jwt-decoder'],
-    body: `Base64 is one of those encodings that shows up everywhere in web development — JWTs, data URIs, HTTP auth headers, email attachments — yet its purpose is often misunderstood. Here is a clear explanation of what it is, why it exists, and how to use it.
+    body: `Base64 represents binary data with printable ASCII characters. You will see it in JWTs, data URIs, HTTP authentication headers, and email attachments. It solves a compatibility problem; it does not provide secrecy.
 
 ## What problem does Base64 solve?
 
-Many protocols and formats were designed to handle **text only** — email (SMTP/MIME), URLs, JSON, XML, HTTP headers. But a lot of the data we want to transmit is **binary**: images, compiled code, cryptographic keys, PDF files.
+Many protocols and formats were designed to handle **text only**, including email, URLs, JSON, XML, and HTTP headers. Much of the data we transmit is **binary**, including images, compiled code, cryptographic keys, and PDF files.
 
 Base64 solves this by encoding binary data as a sequence of 64 printable ASCII characters. The resulting string can safely pass through any text-based system without corruption.
 
@@ -211,7 +229,7 @@ Mapped: \`S G k =\` → \`SGk=\`
 
 ## Base64 is encoding, not encryption
 
-This is the most important thing to understand: **Base64 is not encryption**. It provides no security or confidentiality. Anyone can decode it instantly. Its only purpose is format compatibility — making binary data safe to put in a text field.
+**Base64 is not encryption.** It provides no security or confidentiality. Anyone can decode it. Its purpose is format compatibility: making binary data safe to put in a text field.
 
 Never use Base64 to "hide" sensitive data.
 
@@ -262,21 +280,26 @@ Base64 expands data by approximately **33%** — every 3 bytes of input becomes 
 
 ## Try it in your browser
 
-The [Base64 Encoder / Decoder](/tools/text/base64) handles both standard Base64 and Base64URL, supports full Unicode through UTF-8, and runs entirely in your browser — so tokens and secrets you paste are never uploaded.
+The [Base64 Encoder / Decoder](/tools/text/base64) handles both standard Base64 and Base64URL, supports full Unicode through UTF-8, and runs entirely in your browser, so tokens and secrets you paste are not uploaded to a FreeWebTools processing server.
 
-If you are inspecting a JWT token, the [JWT Decoder](/tools/security/jwt-decoder) decodes all three parts at once and formats the header and payload as readable JSON.`,
+If you are inspecting a JWT token, the [JWT Decoder](/tools/security/jwt-decoder) decodes all three parts at once and formats the header and payload as readable JSON.
+
+## Reference
+
+- [RFC 4648: Base-N Encodings](https://www.rfc-editor.org/rfc/rfc4648)`,
   },
   {
     slug: 'how-to-minify-css',
-    title: 'How to Minify CSS: What It Is, Why It Matters, and How to Do It',
+    title: 'How to Minify CSS: A Practical Guide',
     description:
       'CSS minification removes whitespace and comments to shrink stylesheet file size, speeding up page loads. Learn what it does, how much it saves, and how to automate it.',
     date: '2026-07-15',
+    updatedDate: '2026-07-23',
     category: 'Developer',
     tags: ['css', 'minify', 'performance'],
     keywords: ['how to minify css', 'css minification', 'minify css online', 'css optimizer', 'reduce css file size', 'css performance'],
     relatedTools: ['css-minifier', 'css-unit-converter', 'json-formatter'],
-    body: `CSS minification is one of the quickest performance wins available to front-end developers. Here is exactly what it does, how much it helps, and how to apply it.
+    body: `CSS minification removes bytes that a browser does not need. It is a small, repeatable production optimization that most build tools can apply automatically.
 
 ## What is CSS minification?
 
@@ -287,20 +310,11 @@ Minification removes everything from a CSS file that the browser does not need t
 - **Redundant semicolons**: the last semicolon before a closing \`}\` is optional in CSS
 - **Unnecessary whitespace in values**: \`margin: 0px 0px 0px 0px\` can stay, but spaces around \`:\`, \`;\`, and \`{\` can go
 
-The visual output of the stylesheet is **identical** — only the file size changes.
+For basic whitespace and comment removal, the rendered result should stay the same while the file size changes.
 
 ## How much can it save?
 
-A typical hand-authored stylesheet is 20–40% whitespace and comments. Results vary, but here are realistic expectations:
-
-| File type | Typical savings |
-|---|---|
-| Small utility stylesheet (< 10 KB) | 15–25% |
-| Medium component stylesheet (10–50 KB) | 20–35% |
-| Large framework override (50 KB+) | 25–40% |
-| Framework source (e.g. Bootstrap) | 30–45% |
-
-For a 50 KB stylesheet, a 30% reduction saves 15 KB. That may sound small, but CSS is **render-blocking** — the browser must download and parse it before it can paint the page — so smaller CSS directly improves First Contentful Paint (FCP) and Largest Contentful Paint (LCP).
+Savings depend on the source. Measure the original and minified byte counts instead of assuming a fixed percentage. Files with comments and generous spacing usually shrink more; already-minified files may barely change. CSS can delay rendering, so reducing its transfer and parse cost is useful, but the effect depends on compression, caching, and the rest of the page.
 
 ## What minification does not do
 
@@ -317,7 +331,7 @@ If you want those optimizations, combine minification with a build step that inc
 
 ### Option 1: Quick online tool
 
-Paste your stylesheet into the [CSS Minifier](/tools/developer/css-minifier) and copy the compressed output. It runs entirely in your browser — your proprietary styles are never uploaded.
+Paste your stylesheet into the [CSS Minifier](/tools/developer/css-minifier) and copy the compressed output. It runs entirely in your browser, so your proprietary styles are not uploaded to a FreeWebTools processing server.
 
 ### Option 2: Build pipeline (recommended for production)
 
@@ -372,11 +386,12 @@ The [CSS Minifier](/tools/developer/css-minifier) also shows you the exact byte 
     description:
       'URL encoding replaces unsafe characters with % sequences. Learn when to use encodeURIComponent vs encodeURI, how percent-encoding works, and common pitfalls.',
     date: '2026-07-15',
+    updatedDate: '2026-07-23',
     category: 'Developer',
     tags: ['url', 'encoding'],
     keywords: ['url encoding explained', 'percent encoding', 'encodeURIComponent vs encodeURI', 'url encode decode', 'url encoding javascript', 'what is url encoding'],
     relatedTools: ['url-encoder', 'base64', 'query-string-parser'],
-    body: `URLs can only contain a limited set of characters. When you need to include spaces, special symbols, or non-ASCII text in a URL, you use **percent-encoding** (also called URL encoding) to represent those characters safely.
+    body: `Percent-encoding represents characters that cannot be used literally in a particular part of a URL. In JavaScript, the practical choice is usually between \`encodeURIComponent\` for a value and \`encodeURI\` for a complete URL.
 
 ## What is percent-encoding?
 
@@ -395,7 +410,7 @@ Non-ASCII characters are encoded through UTF-8 first, which is why accented char
 
 ## Why does it matter?
 
-URLs have a defined syntax: \`scheme://host/path?query#fragment\`. Characters like \`?\`, \`&\`, \`=\`, and \`#\` are **reserved** — they delimit parts of the URL. If your data contains those characters, they must be escaped or the URL breaks.
+URLs have a defined syntax: \`scheme://host/path?query#fragment\`. Characters like \`?\`, \`&\`, \`=\`, and \`#\` are **reserved** because they delimit parts of the URL. If your data contains those characters, encode them so they are not interpreted as structure.
 
 **Example:** A search query "cats & dogs" in a URL:
 
@@ -437,13 +452,13 @@ const q = encodeURIComponent(userInput);
 const url = \`/search?q=\${q}\`;
 \`\`\`
 
-**The rule of thumb:** Use \`encodeURIComponent\` for any value you embed in a URL. Use \`encodeURI\` only when you have a complete URL and just need to escape spaces.
+Use \`encodeURIComponent\` for a value you embed in a URL. Use \`encodeURI\` when you have a complete URL and need to encode characters such as spaces without encoding its structural separators.
 
 ## The \`+\` vs \`%20\` confusion
 
 In HTML form submissions (\`application/x-www-form-urlencoded\`), spaces are encoded as \`+\` rather than \`%20\`. Some server frameworks decode \`+\` back to a space in query strings. In URL path segments, \`+\` must be \`%20\`.
 
-When in doubt, use \`%20\` — it is unambiguous everywhere.
+When in doubt, use \`%20\`; it is unambiguous.
 
 ## Decoding in JavaScript
 
@@ -461,7 +476,11 @@ decodeURI('https://example.com/path%20with%20spaces')
 
 ## Try it in your browser
 
-The [URL Encoder / Decoder](/tools/text/url-encoder) encodes or decodes any text using \`encodeURIComponent\`, handles full Unicode, and runs entirely in your browser — nothing you paste is uploaded.`,
+The [URL Encoder / Decoder](/tools/text/url-encoder) encodes or decodes any text using \`encodeURIComponent\`, handles full Unicode, and runs entirely in your browser. Nothing you paste is uploaded to a FreeWebTools processing server.
+
+## Reference
+
+- [RFC 3986: Uniform Resource Identifier syntax](https://www.rfc-editor.org/rfc/rfc3986)`,
   },
   {
     slug: 'jwt-tokens-explained',
@@ -469,11 +488,12 @@ The [URL Encoder / Decoder](/tools/text/url-encoder) encodes or decodes any text
     description:
       'A JSON Web Token has three Base64URL-encoded parts. Learn what each part contains, how to read claims like exp and iss, and how to debug 401 errors.',
     date: '2026-07-15',
+    updatedDate: '2026-07-23',
     category: 'Security',
     tags: ['jwt', 'auth', 'security'],
     keywords: ['jwt token explained', 'how to decode jwt', 'jwt claims', 'jwt header payload', 'debug jwt', 'json web token guide'],
     relatedTools: ['jwt-decoder', 'base64', 'hash-generator'],
-    body: `JSON Web Tokens (JWTs) are the most common format for authentication tokens in modern web APIs. They look like gibberish, but they contain structured data that you can read without any secret key. Here is how.
+    body: `A JSON Web Token (JWT) contains three dot-separated parts: a header, a claims payload, and a signature. You can decode the header and payload without a secret key, but decoding does not verify that the token is trustworthy.
 
 ## What a JWT looks like
 
@@ -542,11 +562,11 @@ HMACSHA256(
 )
 \`\`\`
 
-**The signature proves the token has not been tampered with.** If anyone modifies the header or payload, the signature check fails. However, you can only verify a JWT signature if you have the signing key — a client application typically cannot do this, and should not try.
+**A valid signature proves the signed content has not changed.** If anyone modifies the header or payload, verification fails. Verification requires the correct secret or public key and an explicit algorithm policy.
 
 ## JWT is encoded, not encrypted
 
-This is the most important thing to understand: **the payload is readable by anyone**. Base64URL is an encoding, not encryption. Never put sensitive data (passwords, credit card numbers, secrets) in a JWT payload.
+**The payload is readable by anyone who has the token.** Base64URL is an encoding, not encryption. Never put passwords, payment card data, or secrets in a JWT payload.
 
 ## Debugging a 401 Unauthorized error
 
@@ -565,12 +585,16 @@ The [JWT Decoder](/tools/security/jwt-decoder) decodes any token instantly, form
 | | JWT | Server session |
 |---|---|---|
 | Storage | Client (cookie or localStorage) | Server (database or memory) |
-| Stateless | ✅ Yes | ❌ No |
+| Stateless | Yes | No |
 | Revocable | Hard (requires blocklist) | Easy (delete session) |
-| Payload visible | ✅ Yes | ❌ No |
+| Payload visible to holder | Yes | No |
 | Good for | APIs, microservices, mobile | Traditional web apps |
 
-JWTs are stateless — the server does not need to look anything up to validate them, which makes them well-suited to distributed systems and APIs. The tradeoff is that revoking a token before it expires requires extra infrastructure (a token blocklist).`,
+JWTs can support stateless validation, which can suit distributed systems and APIs. The tradeoff is that revoking a token before it expires usually requires additional state or short token lifetimes.
+
+## Reference
+
+- [RFC 7519: JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519)`,
   },
 ];
 
@@ -646,7 +670,7 @@ export function getPostsByTag(tag: string): BlogPost[] {
 }
 
 /** Posts shown per page in the blog index grid (page 1 also shows a hero above the grid). */
-export const BLOG_PER_PAGE = 6;
+export const BLOG_PER_PAGE = 12;
 
 /**
  * Total number of blog index pages. Page 1 holds the hero + BLOG_PER_PAGE grid posts;
@@ -660,7 +684,7 @@ export function blogIndexTotalPages(restLength: number): number {
 export function paginate<T>(
   items: T[],
   page: number,
-  perPage = 6,
+  perPage = BLOG_PER_PAGE,
 ): { items: T[]; page: number; totalPages: number } {
   const totalPages = Math.max(1, Math.ceil(items.length / perPage));
   const clamped = Math.min(Math.max(1, page), totalPages);

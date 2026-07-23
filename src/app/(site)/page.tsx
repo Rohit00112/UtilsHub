@@ -1,380 +1,389 @@
 import Link from 'next/link';
-import { ArrowUpRight, Share2 } from 'lucide-react';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ChevronRight,
+  Command,
+  LockKeyhole,
+  MousePointer2,
+  Search,
+  Sparkles,
+  Zap,
+} from 'lucide-react';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import SearchLauncher from '@/components/SearchLauncher';
 import { categories, getAllActiveTools, getToolsByCategory } from '@/lib/tools';
-import { absoluteUrl, getHomeMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
+import { getHomeMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
 export const metadata = getHomeMetadata();
 
-const commonToolIds = [
-    'json-formatter',
-    'jwt-decoder',
-    'password-generator',
-    'pdf-splitter',
-    'image-resizer',
-    'word-counter',
+const popularToolIds = [
+  'json-formatter',
+  'pdf-merger',
+  'image-resizer',
+  'word-counter',
+  'password-generator',
+  'regex-tester',
+];
+
+const categoryStyles: Record<string, string> = {
+  developer: 'from-indigo-500/20 to-violet-500/5 text-indigo-600 dark:text-indigo-300',
+  pdf: 'from-rose-500/20 to-orange-500/5 text-rose-600 dark:text-rose-300',
+  image: 'from-fuchsia-500/20 to-pink-500/5 text-fuchsia-600 dark:text-fuchsia-300',
+  text: 'from-cyan-500/20 to-sky-500/5 text-cyan-700 dark:text-cyan-300',
+  security: 'from-emerald-500/20 to-teal-500/5 text-emerald-700 dark:text-emerald-300',
+  calculator: 'from-amber-500/20 to-yellow-500/5 text-amber-700 dark:text-amber-300',
+  api: 'from-blue-500/20 to-indigo-500/5 text-blue-600 dark:text-blue-300',
+  web: 'from-violet-500/20 to-purple-500/5 text-violet-600 dark:text-violet-300',
+};
+
+const homeFaqs = [
+  {
+    q: 'Are FreeWebTools really free?',
+    a: 'Yes. Every active tool is available without an account, subscription, premium tier, or usage quota.',
+  },
+  {
+    q: 'Do my files and text leave my device?',
+    a: 'Most tools process files and text locally in your browser. Network tools connect directly to the destination you choose, and each tool page explains its processing boundary.',
+  },
+  {
+    q: 'What can I do with FreeWebTools?',
+    a: 'You can format and convert data, merge or split PDFs, resize images, transform text, generate passwords and hashes, test APIs, build web assets, and run everyday calculations.',
+  },
+  {
+    q: 'Do I need to install anything?',
+    a: 'No. FreeWebTools works in modern desktop and mobile browsers, so you can open a tool and use it immediately.',
+  },
 ];
 
 export default function Home() {
-    const websiteLd = websiteJsonLd();
-    const orgLd = organizationJsonLd();
-    const activeTools = getAllActiveTools();
-    const commonTools = commonToolIds
-        .map((id) => activeTools.find((tool) => tool.id === id))
-        .filter(Boolean);
-    const shareUrl = encodeURIComponent(absoluteUrl('/'));
-    const shareText = encodeURIComponent('FreeWebTools - free online web tools');
+  const activeTools = getAllActiveTools();
+  const popularTools = popularToolIds
+    .map((id) => activeTools.find((tool) => tool.id === id))
+    .filter(Boolean);
+  const websiteLd = websiteJsonLd();
+  const orgLd = organizationJsonLd();
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  };
 
-    const issueDate = new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
+  return (
+    <div className="overflow-hidden bg-background">
+      {[websiteLd, orgLd, faqLd].map((node, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
 
-    return (
-        <div className="flex flex-col bg-background">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
-            />
+      <section className="relative border-b border-border/70">
+        <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[34rem] w-[54rem] -translate-x-1/2 rounded-full bg-primary/15 blur-[120px]" aria-hidden="true" />
+        <div className="pointer-events-none absolute -right-32 top-32 h-80 w-80 rounded-full bg-cyan-400/10 blur-[90px]" aria-hidden="true" />
 
-            {/* Masthead */}
-            <section className="border-b border-foreground/15">
-                <div className="container py-3">
-                    <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        <span>Local-first browser utilities</span>
-                        <span className="hidden sm:inline">{issueDate}</span>
-                        <span>{activeTools.length} working tools</span>
-                    </div>
+        <div className="container relative grid items-center gap-14 py-16 lg:grid-cols-[1.08fr_.92fr] lg:py-24">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary">
+              <Sparkles className="h-3.5 w-3.5" />
+              {activeTools.length} tools. Zero sign-ups.
+            </div>
+            <h1 className="mt-7 font-serif text-5xl font-bold leading-[1.02] tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl">
+              Free online tools
+              <br />
+              for work that
+              <span className="gradient-text"> can’t wait.</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground text-pretty">
+              Format JSON, merge PDFs, resize images, clean text, test APIs, and
+              finish dozens of everyday tasks—fast, free, and mostly right in your browser.
+            </p>
+
+            <div className="mt-9 flex max-w-2xl flex-col gap-3 sm:flex-row">
+              <div className="min-w-0 flex-1">
+                <SearchLauncher
+                  label={`Search ${activeTools.length} tools by task or format`}
+                  className="h-13 rounded-2xl border-primary/20 bg-card px-4 shadow-xl shadow-primary/10"
+                  showShortcut
+                  enableShortcut
+                />
+              </div>
+              <Link href="/tools" className="btn btn-primary h-13 shrink-0 gap-2 rounded-2xl">
+                Browse all tools
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+              {['No account', 'Browser-based', 'Mobile friendly', 'Open source'].map((item) => (
+                <span key={item} className="inline-flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-emerald-500" />
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-xl">
+            <div className="absolute -inset-8 rounded-[3rem] bg-gradient-to-br from-primary/20 via-violet-400/10 to-cyan-400/20 blur-3xl" aria-hidden="true" />
+            <div className="glass relative overflow-hidden rounded-[1.75rem]">
+              <div className="flex items-center gap-2 border-b border-border/70 px-5 py-4">
+                <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <span className="ml-auto rounded-md bg-muted px-2 py-1 font-mono text-[10px] text-muted-foreground">
+                  freewebtools.app
+                </span>
+              </div>
+              <div className="p-5 sm:p-6">
+                <div className="flex items-center gap-3 rounded-xl border bg-background/80 px-4 py-3 shadow-sm">
+                  <Search className="h-4 w-4 text-primary" />
+                  <span className="text-sm text-muted-foreground">What do you need to do?</span>
+                  <kbd className="ml-auto rounded-md border bg-card px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+                    ⌘K
+                  </kbd>
                 </div>
-            </section>
-
-            {/* Hero */}
-            <section className="border-b border-foreground/15">
-                <div className="container grid gap-8 py-12 md:grid-cols-12 md:py-20">
-                    <div className="md:col-span-8">
-                        <p className="eyebrow mb-6">Free web tools for daily work</p>
-                        <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
-                            60+ free online web tools<br />
-                            for PDFs, images, text, and code.
-                        </h1>
-                        <div className="mt-8 grid gap-6 md:grid-cols-2">
-                            <p className="text-base leading-relaxed text-foreground/80">
-                                FreeWebTools collects {activeTools.length} focused online utilities for
-                                everyday tasks: formatting JSON, splitting PDFs, resizing images,
-                                decoding tokens, building campaign URLs, and checking calculations.
-                            </p>
-                            <p className="text-sm leading-relaxed text-muted-foreground">
-                                Most tools run on your device after the page loads. Pasted drafts,
-                                documents, screenshots, passwords, and tokens are not uploaded to a
-                                FreeWebTools processing server.
-                            </p>
-                        </div>
-
-                        <div className="mt-10 max-w-xl">
-                            <SearchLauncher label={`Search ${activeTools.length}+ tools by task or format`} className="h-12 px-4" />
-                        </div>
-
-                        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                            <span>Local tools stay in browser</span>
-                            <span>No account</span>
-                            <span>Open source</span>
-                            <span>Works in browser</span>
-                        </div>
-                    </div>
-
-                    {/* Common tasks */}
-                    <aside className="md:col-span-4">
-                        <div className="border border-foreground/20 bg-card">
-                            <div className="border-b border-foreground/20 px-5 py-3">
-                                <p className="eyebrow">Start with a common task</p>
-                            </div>
-                            <ol className="divide-y divide-foreground/10">
-                                {commonTools.map((tool, i) => tool && (
-                                    <li key={tool.id}>
-                                        <Link
-                                            href={`/tools/${tool.categoryId}/${tool.slug}`}
-                                            prefetch={false}
-                                            className="group flex items-baseline gap-3 px-5 py-3 transition-colors hover:bg-secondary"
-                                        >
-                                            <span className="marker-num shrink-0 w-6 text-right">
-                                                {String(i + 1).padStart(2, '0')}
-                                            </span>
-                                            <span className="flex-1 truncate text-sm text-foreground group-hover:text-primary">
-                                                {tool.name}
-                                            </span>
-                                            <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ol>
-                        </div>
-                        <p className="mt-3 text-xs text-muted-foreground">
-                            Frequently used utilities, selected from the active tool list.
-                        </p>
-                    </aside>
+                <p className="mb-3 mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Popular right now
+                </p>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {popularTools.map((tool) => tool && (
+                    <Link
+                      key={tool.id}
+                      href={`/tools/${tool.categoryId}/${tool.slug}`}
+                      prefetch={false}
+                      className="group flex items-center gap-3 rounded-xl border border-transparent bg-background/65 p-3 transition-all hover:border-primary/20 hover:bg-card hover:shadow-sm"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <CategoryIcon categoryId={tool.categoryId} className="h-4 w-4" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-semibold text-foreground">{tool.name}</span>
+                        <span className="block text-xs text-muted-foreground">Open tool</span>
+                      </span>
+                      <ChevronRight className="ml-auto h-3.5 w-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+                    </Link>
+                  ))}
                 </div>
-            </section>
-
-            {/* Tool categories */}
-            <section id="tool-directory" className="bg-background">
-                <div className="container py-16">
-                    <div className="mb-10 flex flex-col items-baseline justify-between gap-2 md:flex-row">
-                        <div>
-                            <p className="eyebrow mb-2">Tool directory</p>
-                            <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Browse by category.</h2>
-                        </div>
-                        <Link
-                            href="/tools"
-                            className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary"
-                        >
-                            {activeTools.length} tools · {categories.length} categories
-                            <ArrowUpRight className="h-3 w-3" />
-                        </Link>
-                    </div>
-
-                    <div className="rule-thick" />
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                        {categories.map((category, idx) => {
-                            const categoryTools = getToolsByCategory(category.id);
-                            return (
-                                <article
-                                    key={category.id}
-                                    className="group relative flex flex-col border-b border-r border-foreground/15 p-6 transition-colors hover:bg-secondary md:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(3n)]:border-r-0"
-                                >
-                                    <div className="mb-6 flex items-start justify-between">
-                                        <span className="marker-num">No. {String(idx + 1).padStart(2, '0')}</span>
-                                        <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                                            {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
-                                        </span>
-                                    </div>
-
-                                    <CategoryIcon categoryId={category.id} className="mb-4 h-7 w-7 text-foreground" />
-
-                                    <h3 className="font-serif text-2xl leading-tight text-foreground">
-                                        {category.name}
-                                    </h3>
-                                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                                        {category.description}
-                                    </p>
-
-                                    <ul className="mt-5 space-y-1 font-mono text-xs text-muted-foreground">
-                                        {categoryTools.slice(0, 3).map((tool) => (
-                                            <li key={tool.id} className="truncate">
-                                                - {tool.name}
-                                            </li>
-                                        ))}
-                                        {categoryTools.length > 3 && (
-                                            <li className="text-muted-foreground">+ {categoryTools.length - 3} more</li>
-                                        )}
-                                    </ul>
-
-                                    <Link
-                                        href={`/tools/${category.id}`}
-                                        className="mt-6 inline-flex items-center gap-1 self-start border-b border-foreground/30 pb-0.5 text-xs font-medium uppercase tracking-wider text-foreground transition-colors group-hover:border-primary group-hover:text-primary"
-                                    >
-                                        Browse {category.name}
-                                        <ArrowUpRight className="h-3 w-3" />
-                                    </Link>
-                                </article>
-                            );
-                        })}
-                    </div>
-                </div>
-            </section>
-
-            <section className="border-t border-foreground/15 bg-secondary/20">
-                <div className="container grid gap-8 py-12 md:grid-cols-12">
-                    <div className="md:col-span-4">
-                        <p className="eyebrow mb-3">Why FreeWebTools</p>
-                        <h2 className="font-serif text-3xl text-foreground">
-                            Useful online tools with clear boundaries.
-                        </h2>
-                    </div>
-                    <div className="space-y-5 text-base leading-7 text-foreground/80 md:col-span-8">
-                        <p>
-                            FreeWebTools brings free PDF, text, image, calculator, security, web, API, and
-                            developer tools into one searchable directory. Use the{' '}
-                            <Link href="/tools/developer/json-formatter" className="font-medium text-foreground underline underline-offset-4">
-                                JSON formatter
-                            </Link>
-                            ,{' '}
-                            <Link href="/tools/pdf/merger" className="font-medium text-foreground underline underline-offset-4">
-                                PDF merger
-                            </Link>
-                            ,{' '}
-                            <Link href="/tools/image/resizer" className="font-medium text-foreground underline underline-offset-4">
-                                image resizer
-                            </Link>
-                            , and dozens of other focused utilities directly in your browser.
-                        </p>
-                        <p>
-                            Each tool page describes what the tool accepts, what it returns, and where
-                            the processing happens. Local tools process input in the browser. Network
-                            tools, such as the API request tester or WebSocket tester, connect directly
-                            from your browser to the destination you choose.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section className="border-t border-foreground/15 bg-background">
-                <div className="container py-14">
-                    <div className="max-w-3xl">
-                        <p className="eyebrow mb-3">Built around specific jobs</p>
-                        <h2 className="font-serif text-3xl text-foreground sm:text-4xl">
-                            One page for each task, with the details on the page.
-                        </h2>
-                        <p className="mt-5 text-base leading-7 text-foreground/80">
-                            FreeWebTools is organized around tasks people can finish in a few minutes:
-                            cleaning malformed data, checking a token, preparing a document, converting
-                            an image, or calculating a value. Each page keeps the interactive tool at
-                            the top and adds plain-language notes below it, including common use cases,
-                            basic steps, privacy notes, and limits to be aware of.
-                        </p>
-                    </div>
-
-                    <div className="mt-10 grid gap-8 md:grid-cols-3">
-                        <article>
-                            <h3 className="font-serif text-2xl text-foreground">Choose by task</h3>
-                            <p className="mt-3 text-sm leading-7 text-foreground/80">
-                                The directory uses recognizable tasks and formats. PDF tools merge,
-                                split, compare, and compress documents. Text tools count, transform,
-                                encode, decode, and compare writing. Image tools resize, convert, merge,
-                                and generate favicons. Developer, web, security, API, and calculator
-                                tools cover the quick checks that often become a temporary script or
-                                another browser tab.
-                            </p>
-                        </article>
-                        <article>
-                            <h3 className="font-serif text-2xl text-foreground">Keep input private</h3>
-                            <p className="mt-3 text-sm leading-7 text-foreground/80">
-                                Most utilities use browser APIs and client-side libraries, so files and
-                                pasted text are processed on your device. That matters for contracts,
-                                internal JSON, screenshots, access tokens, and other material you would
-                                rather not upload. Tools that must contact another service say so in
-                                their page copy and connect from your browser.
-                            </p>
-                        </article>
-                        <article>
-                            <h3 className="font-serif text-2xl text-foreground">Use it without friction</h3>
-                            <p className="mt-3 text-sm leading-7 text-foreground/80">
-                                There is no account, installation, premium tier, or usage quota. Search
-                                by a tool name, file format, or job description, then copy or download
-                                the result. The project is open source, so tool behavior can be reviewed
-                                and fixes can be proposed in the public GitHub repository.
-                            </p>
-                        </article>
-                    </div>
-
-                    <div className="mt-10 border border-foreground/15 bg-secondary/20 p-6 sm:p-8">
-                        <h3 className="font-serif text-2xl text-foreground">How to use FreeWebTools</h3>
-                        <ol className="mt-5 grid gap-6 md:grid-cols-3">
-                            <li>
-                                <p className="eyebrow mb-2">01 · Find the right tool</p>
-                                <p className="text-sm leading-7 text-foreground/80">
-                                    Search by task, format, or tool name, or browse a category such as
-                                    PDF, image, text, calculator, developer, security, web, or API.
-                                    Each page focuses on one job and explains the input it accepts.
-                                </p>
-                            </li>
-                            <li>
-                                <p className="eyebrow mb-2">02 · Process in the browser</p>
-                                <p className="text-sm leading-7 text-foreground/80">
-                                    Add your text, file, values, or settings and run the utility. For
-                                    local-first tools, the browser performs the work on your device
-                                    without sending the source material to a FreeWebTools server.
-                                </p>
-                            </li>
-                            <li>
-                                <p className="eyebrow mb-2">03 · Take the result</p>
-                                <p className="text-sm leading-7 text-foreground/80">
-                                    Review the output, adjust the options when needed, then copy or
-                                    download the finished result. You can move straight to another
-                                    utility without creating an account or managing saved projects.
-                                </p>
-                            </li>
-                        </ol>
-                    </div>
-
-                    <div className="mt-10 flex flex-col gap-4 border-t border-foreground/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <h3 className="flex items-center gap-2 font-semibold text-foreground">
-                                <Share2 className="h-4 w-4" />
-                                Share FreeWebTools
-                            </h3>
-                            <p className="mt-1 text-sm text-muted-foreground">
-                                Send the directory to someone who could use a free web tool.
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            <a
-                                href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-secondary"
-                            >
-                                Facebook
-                            </a>
-                            <a
-                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-secondary"
-                            >
-                                LinkedIn
-                            </a>
-                            <a
-                                href={`https://x.com/intent/post?url=${shareUrl}&text=${shareText}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-secondary"
-                            >
-                                Share on X
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Operating notes */}
-            <section className="border-t border-foreground/15 bg-secondary/40">
-                <div className="container grid gap-8 py-12 md:grid-cols-12">
-                    <div className="md:col-span-4">
-                        <p className="eyebrow mb-3">Operating notes</p>
-                        <h3 className="font-serif text-2xl text-foreground">What to expect.</h3>
-                    </div>
-                    <div className="grid gap-8 md:col-span-8 md:grid-cols-3">
-                        <div>
-                            <p className="font-mono text-xs uppercase tracking-wider text-primary">01 · Local</p>
-                            <p className="mt-2 text-sm text-foreground/80">
-                                Local tools run in your browser. Files and pasted text are not uploaded
-                                to a FreeWebTools processing server.
-                            </p>
-                        </div>
-                        <div>
-                            <p className="font-mono text-xs uppercase tracking-wider text-primary">02 · Direct</p>
-                            <p className="mt-2 text-sm text-foreground/80">
-                                Tool pages put the working controls first, followed by steps, use cases,
-                                and answers to common questions.
-                            </p>
-                        </div>
-                        <div>
-                            <p className="font-mono text-xs uppercase tracking-wider text-primary">03 · Free</p>
-                            <p className="mt-2 text-sm text-foreground/80">
-                                No account, no premium tier, and no quota meter. The active tools are
-                                available without sign-up.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+              </div>
+              <div className="flex items-center justify-between border-t border-border/70 bg-muted/35 px-5 py-3 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5">
+                  <LockKeyhole className="h-3.5 w-3.5 text-emerald-500" />
+                  Local processing where possible
+                </span>
+                <span className="hidden sm:inline">{activeTools.length} ready tools</span>
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      </section>
+
+      <section className="border-b border-border/70 bg-card/55">
+        <div className="container grid grid-cols-2 divide-x divide-border/70 sm:grid-cols-4">
+          {[
+            [`${activeTools.length}`, 'working tools'],
+            [`${categories.length}`, 'focused categories'],
+            ['0', 'accounts required'],
+            ['24/7', 'available online'],
+          ].map(([value, label]) => (
+            <div key={label} className="px-4 py-6 text-center">
+              <div className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{value}</div>
+              <div className="mt-1 text-xs font-medium text-muted-foreground sm:text-sm">{label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="tool-directory" className="py-20 sm:py-24">
+        <div className="container">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="eyebrow">Everything in one place</p>
+              <h2 className="mt-3 font-serif text-3xl font-bold tracking-[-0.035em] text-foreground sm:text-5xl">
+                Find the right tool in seconds.
+              </h2>
+              <p className="mt-4 text-base leading-7 text-muted-foreground">
+                Browse free PDF tools, image tools, text utilities, developer tools,
+                calculators, security helpers, and API testing tools by category.
+              </p>
+            </div>
+            <Link href="/tools" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+              View the complete directory
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((category) => {
+              const categoryTools = getToolsByCategory(category.id);
+              return (
+                <Link
+                  key={category.id}
+                  href={`/tools/${category.id}`}
+                  className="soft-card group relative flex min-h-64 flex-col overflow-hidden p-5"
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br opacity-80 ${categoryStyles[category.id] || 'from-primary/15 to-transparent text-primary'}`} aria-hidden="true" />
+                  <div className="relative">
+                    <div className="flex items-start justify-between">
+                      <span className={`flex h-11 w-11 items-center justify-center rounded-xl bg-card/80 shadow-sm ${categoryStyles[category.id] || 'text-primary'}`}>
+                        <CategoryIcon categoryId={category.id} className="h-5 w-5" />
+                      </span>
+                      <span className="rounded-full border border-border/80 bg-card/65 px-2.5 py-1 text-xs font-semibold text-muted-foreground backdrop-blur">
+                        {categoryTools.length} tools
+                      </span>
+                    </div>
+                    <h3 className="mt-8 text-xl font-bold tracking-tight text-foreground">{category.name}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{category.description}</p>
+                  </div>
+                  <span className="relative mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold text-foreground">
+                    Explore category
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border/70 bg-card/50 py-20 sm:py-24">
+        <div className="container grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+          <div>
+            <p className="eyebrow">Privacy without friction</p>
+            <h2 className="mt-3 font-serif text-3xl font-bold tracking-[-0.035em] text-foreground sm:text-5xl">
+              Your work stays yours.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
+              Most FreeWebTools utilities process your files and pasted content on your
+              device. There is no account to create and no project history stored on our servers.
+            </p>
+            <Link href="/about" className="btn btn-secondary mt-7 gap-2">
+              How FreeWebTools works
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              {
+                icon: LockKeyhole,
+                title: 'Local-first',
+                copy: 'PDFs, images, text, tokens, and other inputs stay in your browser for local tools.',
+              },
+              {
+                icon: Zap,
+                title: 'Instant results',
+                copy: 'Skip uploads, queues, and email links. Get the output as soon as your browser computes it.',
+              },
+              {
+                icon: MousePointer2,
+                title: 'One focused job',
+                copy: 'Every page is built around a clear task with the controls, steps, limits, and answers together.',
+              },
+              {
+                icon: Command,
+                title: 'Fast discovery',
+                copy: 'Press Command-K from anywhere to find a tool by name, format, task, or category.',
+              },
+            ].map(({ icon: Icon, title, copy }) => (
+              <article key={title} className="rounded-2xl border bg-background p-5 shadow-sm">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <h3 className="mt-5 text-lg font-bold text-foreground">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 sm:py-24">
+        <div className="container">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow">Simple by design</p>
+            <h2 className="mt-3 font-serif text-3xl font-bold tracking-[-0.035em] text-foreground sm:text-5xl">
+              Search. Use. Done.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-muted-foreground">
+              No onboarding, dashboard, or saved workspace between you and the result.
+            </p>
+          </div>
+          <ol className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3">
+            {[
+              ['01', 'Find your tool', 'Search by task or browse a category such as PDF, image, text, developer, or calculator.'],
+              ['02', 'Add your input', 'Paste text, select a file, or enter values. Each page explains exactly what it accepts.'],
+              ['03', 'Take the result', 'Copy or download the output, then move on—without creating an account or saving a project.'],
+            ].map(([number, title, copy]) => (
+              <li key={number} className="relative rounded-2xl border bg-card p-6 shadow-sm">
+                <span className="font-mono text-xs font-semibold text-primary">{number}</span>
+                <h3 className="mt-7 text-xl font-bold text-foreground">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{copy}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="border-y border-border/70 bg-card/55 py-20 sm:py-24">
+        <div className="container grid gap-10 lg:grid-cols-[.7fr_1.3fr]">
+          <div>
+            <p className="eyebrow">Questions, answered</p>
+            <h2 className="mt-3 font-serif text-3xl font-bold tracking-[-0.035em] text-foreground sm:text-4xl">
+              Free online tools FAQ
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              Straight answers about pricing, privacy, installation, and what the toolkit can do.
+            </p>
+          </div>
+          <div className="divide-y divide-border/70 overflow-hidden rounded-2xl border bg-background shadow-sm">
+            {homeFaqs.map((faq, index) => (
+              <details key={faq.q} className="group p-5 sm:p-6" open={index === 0}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 font-semibold text-foreground">
+                  {faq.q}
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-lg font-normal text-muted-foreground transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 sm:py-24">
+        <div className="container">
+          <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 px-6 py-14 text-center text-white shadow-2xl shadow-primary/15 sm:px-12 sm:py-18 dark:bg-white dark:text-slate-950">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,.6),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(6,182,212,.35),transparent_35%)]" aria-hidden="true" />
+            <div className="relative mx-auto max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-indigo-300 dark:text-indigo-600">
+                Ready when you are
+              </p>
+              <h2 className="mt-4 font-serif text-3xl font-bold tracking-[-0.04em] sm:text-5xl">
+                Your next task is one search away.
+              </h2>
+              <p className="mt-4 text-base leading-7 text-slate-300 dark:text-slate-600">
+                Open any of {activeTools.length} free browser tools and get useful work done now.
+              </p>
+              <div className="mx-auto mt-8 flex max-w-lg flex-col justify-center gap-3 sm:flex-row">
+                <Link href="/tools" className="btn bg-white text-slate-950 shadow-xl hover:-translate-y-0.5 hover:bg-slate-100 dark:bg-slate-950 dark:text-white dark:hover:bg-slate-800">
+                  Explore all tools
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+                <Link href="/blog" className="btn border border-white/20 bg-white/10 text-white hover:bg-white/15 dark:border-slate-900/20 dark:bg-slate-900/5 dark:text-slate-950">
+                  Read practical guides
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

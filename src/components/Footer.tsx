@@ -1,52 +1,66 @@
 import Link from 'next/link';
+import { ArrowUpRight, Code2 } from 'lucide-react';
+import LogoMark from './LogoMark';
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-foreground/15 bg-background">
-      <div className="container py-10">
-        <div className="grid gap-8 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <p className="font-serif text-xl text-foreground">
-              FreeWeb<span className="italic text-primary">Tools</span>
+    <footer className="border-t border-border/70 bg-card/45">
+      <div className="container py-12 sm:py-16">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-6">
+            <Link href="/" className="inline-flex items-center gap-2.5" aria-label="FreeWebTools home">
+              <LogoMark className="h-9 w-9 rounded-xl shadow-sm shadow-primary/15" />
+              <span className="text-lg font-bold tracking-[-0.03em] text-foreground">
+                FreeWeb<span className="text-primary">Tools</span>
+              </span>
+            </Link>
+            <p className="mt-4 max-w-md text-sm leading-6 text-muted-foreground">
+              Free online tools for PDFs, images, text, code, security, APIs, and
+              everyday calculations. Most tools work locally in your browser.
             </p>
-            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Free web tools for working with PDFs, images, text,
-              code, security values, APIs, and common calculations.
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              No account. No uploads for local tools.
             </p>
           </div>
 
           <div className="md:col-span-3">
-            <p className="eyebrow mb-3">Pages</p>
-            <ul className="space-y-1.5 text-sm">
-              <li><Link href="/about" className="text-foreground/80 hover:text-primary">About</Link></li>
-              <li><Link href="/privacy" className="text-foreground/80 hover:text-primary">Privacy</Link></li>
-              <li><Link href="/tools" className="text-foreground/80 hover:text-primary">All tools</Link></li>
-              <li><Link href="/blog" className="text-foreground/80 hover:text-primary">Blog</Link></li>
+            <p className="text-sm font-semibold text-foreground">Explore</p>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li><Link href="/tools" className="text-muted-foreground transition-colors hover:text-primary">All tools</Link></li>
+              <li><Link href="/tools/developer" className="text-muted-foreground transition-colors hover:text-primary">Developer tools</Link></li>
+              <li><Link href="/tools/pdf" className="text-muted-foreground transition-colors hover:text-primary">PDF tools</Link></li>
+              <li><Link href="/tools/image" className="text-muted-foreground transition-colors hover:text-primary">Image tools</Link></li>
+              <li><Link href="/blog" className="text-muted-foreground transition-colors hover:text-primary">Guides</Link></li>
             </ul>
           </div>
 
-          <div className="md:col-span-4">
-            <p className="eyebrow mb-3">Project</p>
-            <ul className="space-y-1.5 text-sm">
+          <div className="md:col-span-3">
+            <p className="text-sm font-semibold text-foreground">Project</p>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li><Link href="/about" className="text-muted-foreground transition-colors hover:text-primary">About</Link></li>
+              <li><Link href="/privacy" className="text-muted-foreground transition-colors hover:text-primary">Privacy</Link></li>
               <li>
-                <Link href="https://github.com/Rohit00112" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
-                  GitHub
-                </Link>
-              </li>
-              <li>
-                <Link href="https://github.com/Rohit00112" target="_blank" rel="noreferrer" className="text-foreground/80 hover:text-primary">
-                  Built by Rohit
-                </Link>
+                <a
+                  href="https://github.com/Rohit00112/UtilsHub"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary"
+                >
+                  <Code2 className="h-3.5 w-3.5" />
+                  Open source
+                  <ArrowUpRight className="h-3 w-3" />
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-foreground/10 pt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {year} FreeWebTools · Open source utility tools</span>
-          <span>Local tools run in your browser</span>
+        <div className="mt-12 flex flex-col gap-2 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <span>© {year} FreeWebTools. Built for useful work.</span>
+          <span>Private by design · Fast by default</span>
         </div>
       </div>
     </footer>

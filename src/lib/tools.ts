@@ -3,6 +3,11 @@ export interface ToolFaq {
   a: string;
 }
 
+export interface ToolSource {
+  label: string;
+  url: string;
+}
+
 export interface Tool {
   id: string;
   name: string;
@@ -18,6 +23,8 @@ export interface Tool {
   steps?: string[];
   useCases?: string[];
   faqs?: ToolFaq[];
+  /** Primary standards or platform documentation supporting technical claims. */
+  sources?: ToolSource[];
   // IDs of related tools (rendered as a sidebar/footer rail)
   related?: string[];
 }
@@ -162,11 +169,11 @@ export const tools: Tool[] = [
     id: 'pdf-merger',
     name: 'PDF Merger',
     description: 'Combine multiple PDF files into one ordered document.',
-    metaDescription: 'Merge multiple PDF files into one document online free. Drag and drop to reorder. No signup required. Files processed locally in your browser.',
+    metaDescription: 'Merge PDF files online free without uploading them to a processing server. Reorder documents and combine them locally in your browser.',
     slug: 'merger',
     categoryId: 'pdf',
     status: 'active',
-    keywords: ['merge PDF', 'combine PDF files', 'PDF merger online', 'join PDFs'],
+    keywords: ['merge PDF', 'combine PDF files', 'PDF merger online', 'join PDFs', 'merge PDF without uploading', 'combine PDF in browser'],
     longDescription:
       'PDF Merger combines two or more PDF files into a single, ordered document without installing any software or signing up for an account. Add the files you want to join, drag them into the exact sequence you need, and the tool stitches every page together into one downloadable PDF. Because it runs entirely in your browser using the pdf-lib library, the documents you select are never uploaded to a server — the merge happens on your own device, which keeps sensitive files like contracts, invoices, and medical records private.\n\nMerging is lossless: each page is copied into the new document with its original text, vector graphics, fonts, and embedded images intact. There is no re-compression or rasterization step, so the combined file looks identical to the originals. This makes the tool well suited for assembling multi-part reports, joining scanned receipts into a single expense packet, or compiling separate chapters exported from different applications into one clean deliverable.',
     steps: ['Upload two or more PDF files from your device.', 'Drag the files into the order you want them combined, top to bottom.', 'Click merge to generate the combined PDF.', 'Download the single merged document.'],
@@ -177,6 +184,9 @@ export const tools: Tool[] = [
       { q: 'Is there a limit on how many PDFs I can merge?', a: 'There is no fixed limit. Because merging runs locally, the practical ceiling depends on your device memory — combining a few hundred pages is typically fast, while very large bundles may take longer.' },
       { q: 'Do you keep a copy of my merged file?', a: 'No. The tool never sees your files. Everything is processed in your browser and the merged PDF is generated on your device, so nothing is stored or transmitted.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'pdf-lib documentation', url: 'https://pdf-lib.js.org/' },
     ],
     related: ['pdf-splitter', 'pdf-compressor', 'pdf-compare'],
   },
@@ -326,11 +336,11 @@ export const tools: Tool[] = [
     id: 'word-counter',
     name: 'Word Counter',
     description: 'Count words, characters, sentences, and paragraphs in real time.',
-    metaDescription: 'Count words, characters, sentences, paragraphs, and estimated reading time instantly. Free online word counter tool. No signup required. Works on mobile.',
+    metaDescription: 'Count words, characters, sentences, paragraphs, and reading time instantly. Free private word counter with no signup.',
     slug: 'word-counter',
     categoryId: 'text',
     status: 'active',
-    keywords: ['word counter', 'character counter', 'count words online', 'free word counter', 'online word counter', 'word count tool', 'free online word counter', 'count characters online', 'word count checker'],
+    keywords: ['word counter', 'character counter', 'count words online', 'free word counter', 'private word counter', 'word count checker'],
     longDescription:
       'Word Counter gives you live, real-time statistics about any text you paste or type: the number of words, characters with spaces, characters without spaces, sentences, and paragraphs, plus an estimated reading time. The counters update instantly as you edit, so you can write toward a target and watch the numbers move rather than guessing and re-checking in another program.\n\nThis is the everyday tool for anyone working to a length limit — students hitting an essay word count, writers staying inside a 280-character social post, marketers fitting a meta description, or editors trimming copy to fit a layout. Reading time is estimated at roughly 200 words per minute, a common average for adult readers, which helps when planning content briefs or speeches. Everything runs in your browser, so your draft is never uploaded and stays completely private while you work.',
     steps: ['Paste or type text in the input box.', 'Watch the counters update as you type.'],
@@ -414,11 +424,11 @@ export const tools: Tool[] = [
     id: 'base64',
     name: 'Base64 Encoder / Decoder',
     description: 'Encode text to Base64 or decode Base64 back to text.',
-    metaDescription: 'Encode text and files to Base64 format free online. Supports text, images, and files. Decode Base64 back to original. Private, fast, no signup required.',
+    metaDescription: 'Encode UTF-8 text to Base64 or decode Base64 and Base64URL locally in your browser. Free, private, and no signup required.',
     slug: 'base64',
     categoryId: 'text',
     status: 'active',
-    keywords: ['Base64 encode', 'Base64 decode', 'Base64 converter', 'Base64URL', 'URL safe Base64', 'base64 encoder', 'base64 decoder', 'base64 online', 'encode to base64', 'decode base64 online', 'base64 encoding explained', 'base64 text encoder'],
+    keywords: ['Base64 encoder', 'Base64 decoder', 'Base64URL decoder', 'encode text to Base64', 'decode Base64 online', 'Base64 browser tool'],
     longDescription:
       'Base64 Encoder / Decoder converts UTF-8 text into Base64 — the ASCII-only representation used to embed binary or special-character data inside text-based formats — and decodes Base64 back into the original text. It supports both standard Base64 and the URL-safe Base64URL variant, which swaps the + and / characters for - and _ so the value can travel safely inside a URL or filename.\n\nBase64 shows up everywhere in modern web development: JWT tokens, data: URIs, embedded images, email attachments, basic-auth headers, and configuration values are all Base64-encoded. This tool is the quick way to peek inside one of those payloads or to encode a value for storage. Because encoding runs UTF-8 first, non-ASCII content like emoji and accented characters round-trips correctly. All work happens locally in your browser, so tokens and secrets you decode are never sent to a server.',
     steps: ['Paste text or a Base64 string.', 'Pick encode or decode and choose the output variant.', 'Copy the output.'],
@@ -428,6 +438,9 @@ export const tools: Tool[] = [
       { q: 'Can it decode Base64URL?', a: 'Yes. Decode mode accepts standard Base64 and URL-safe Base64 with optional padding.' },
       { q: 'Can I decode an image data: URI?', a: 'You can decode the Base64 portion to its raw bytes, but rendering an image requires saving those bytes as a file.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'RFC 4648: Base-N Encodings', url: 'https://www.rfc-editor.org/rfc/rfc4648' },
     ],
     related: ['url-encoder', 'jwt-decoder', 'hash-generator'],
   },
@@ -568,11 +581,11 @@ export const tools: Tool[] = [
     id: 'webp-converter',
     name: 'WebP Converter',
     description: 'Convert JPG, PNG, or GIF to WebP with quality control.',
-    metaDescription: 'Convert JPG, PNG, and GIF images to WebP format online free. Control quality and reduce file size. No signup, no data sent to servers.',
+    metaDescription: 'Convert JPG, PNG, and GIF images to WebP locally in your browser. Adjust quality, batch files, and download without signup.',
     slug: 'webp-converter',
     categoryId: 'image',
     status: 'active',
-    keywords: ['WebP converter', 'JPG to WebP', 'PNG to WebP'],
+    keywords: ['WebP converter', 'JPG to WebP', 'PNG to WebP', 'convert image to WebP locally', 'WebP converter no upload'],
     longDescription:
       'WebP Converter turns JPG, PNG, and GIF images into the modern WebP format, which produces noticeably smaller files at the same visual quality. Smaller images mean faster page loads, lower bandwidth bills, and better Core Web Vitals scores — which is why WebP has become a standard choice for web imagery. You can convert several files in one batch and dial in a quality level from 1 to 100 to balance size against fidelity.\n\nThe conversion is handled entirely in your browser through the Canvas API, so the images you upload stay on your device and are never sent to a server. WebP supports an alpha channel, so transparency from PNG sources is preserved. For photographic content, a quality setting around 75–85 is usually visually indistinguishable from the original while cutting the file size substantially, making this an easy win when optimizing a site for speed.',
     steps: ['Upload one or more images.', 'Pick the WebP quality level.', 'Download converted files.'],
@@ -584,17 +597,20 @@ export const tools: Tool[] = [
       { q: 'Can I convert several images at once?', a: 'Yes. Upload multiple files and the tool batch-converts them at your chosen quality, so you can download an optimized set in one pass.' },
       commonFaqPrivacy,
     ],
+    sources: [
+      { label: 'Google WebP documentation', url: 'https://developers.google.com/speed/webp' },
+    ],
     related: ['image-resizer', 'image-merger', 'favicon-generator'],
   },
   {
     id: 'image-resizer',
     name: 'Image Resizer',
     description: 'Resize images by exact dimensions or percentage.',
-    metaDescription: 'Resize images by exact dimensions or percentage online free. Preserves aspect ratio. Supports JPG, PNG, WebP. No signup, no data sent to servers.',
+    metaDescription: 'Resize images to exact pixels or a percentage without uploading them. Export JPG, PNG, or WebP locally in your browser.',
     slug: 'resizer',
     categoryId: 'image',
     status: 'active',
-    keywords: ['image resizer', 'resize image online', 'change image dimensions'],
+    keywords: ['image resizer', 'resize image online', 'resize image without uploading', 'resize image to exact pixels', 'change image dimensions'],
     longDescription:
       'Image Resizer changes the dimensions of an image to an exact pixel size or a percentage of the original, with an optional aspect-ratio lock so your picture never looks stretched or squashed. Whether you need a hero image to fit a layout, a thumbnail from a full-size photo, or a smaller version to get under a form\'s upload limit, you set the target and download the result in seconds.\n\nResizing happens locally through the browser\'s Canvas API, so your image is processed on your device and never uploaded. You can export the resized output as PNG, JPEG, or WebP to match where it will be used, and the Canvas automatically normalizes EXIF orientation so photos from phones come out the right way up. Keeping aspect ratio locked preserves the original proportions; turning it off lets you force exact width and height when a layout demands it.',
     steps: ['Upload an image.', 'Enter target dimensions or a percentage.', 'Pick output format and download.'],
@@ -605,6 +621,9 @@ export const tools: Tool[] = [
       { q: 'Does resizing reduce quality?', a: 'Shrinking an image is generally clean. Enlarging beyond the original dimensions can look soft because there is no extra detail to add.' },
       { q: 'Which output format should I choose?', a: 'Use JPEG for photos to keep files small, PNG when you need transparency or crisp edges, and WebP for the best size-to-quality balance on the web.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'MDN Canvas drawImage documentation', url: 'https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage' },
     ],
     related: ['webp-converter', 'image-merger', 'favicon-generator'],
   },
@@ -618,7 +637,7 @@ export const tools: Tool[] = [
     slug: 'password-generator',
     categoryId: 'security',
     status: 'active',
-    keywords: ['password generator', 'strong password', 'random password'],
+    keywords: ['password generator', 'strong password generator', 'random password generator', 'secure password generator browser'],
     longDescription:
       'Password Generator creates strong, unpredictable passwords of any length, with toggles for uppercase letters, lowercase letters, numbers, and symbols so you can match the character requirements of any site. Longer passwords with a wider character set are dramatically harder to brute-force, and generating a fresh random string is far safer than reusing a memorable one across accounts.\n\nWhat sets a trustworthy generator apart is the source of randomness. This tool uses the browser\'s Web Crypto API (crypto.getRandomValues), the same cryptographically secure random source used for key material — not the predictable Math.random(). Generation is fully local: the password is produced on your device, nothing is transmitted, and copying it to your clipboard is a normal operating-system action. Use it to create a new account password, seed an API secret, or rotate credentials during incident response, then store the result in a password manager.',
     steps: ['Pick a length.', 'Toggle character sets.', 'Click generate, then copy.'],
@@ -630,17 +649,20 @@ export const tools: Tool[] = [
       { q: 'Where should I store generated passwords?', a: 'Save them in a reputable password manager rather than reusing them or writing them down. A manager lets every account have a unique strong password.' },
       commonFaqPrivacy,
     ],
+    sources: [
+      { label: 'MDN crypto.getRandomValues documentation', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues' },
+    ],
     related: ['hash-generator', 'jwt-decoder'],
   },
   {
     id: 'hash-generator',
     name: 'Hash Generator',
     description: 'Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes.',
-    metaDescription: 'Generate MD5 hash from text online free. Instant checksum creation. Supports SHA-1, SHA-256, SHA-512. No data sent to servers. No signup required.',
+    metaDescription: 'Generate SHA-256, SHA-512, SHA-1, or MD5 hashes from text locally in your browser. Free checksum tool with no signup.',
     slug: 'hash-generator',
     categoryId: 'security',
     status: 'active',
-    keywords: ['hash generator', 'MD5', 'SHA-256', 'SHA-512', 'hash online', 'MD5 generator', 'MD5 hash generator', 'SHA-256 generator', 'generate MD5 online', 'SHA256 vs MD5', 'checksum generator', 'MD5 checksum'],
+    keywords: ['hash generator', 'SHA-256 generator', 'SHA-512 generator', 'MD5 generator', 'generate hash in browser', 'checksum generator'],
     longDescription:
       'Hash Generator computes cryptographic hash digests for any text you enter, supporting MD5, SHA-1, SHA-256, SHA-384, and SHA-512. A hash is a fixed-length fingerprint of the input: the same text always produces the same digest, and even a one-character change produces a completely different value. That property makes hashes ideal for verifying that data has not been altered and for comparing two inputs without storing the originals.\n\nThe SHA-family algorithms are computed with the browser\'s Web Crypto API, while MD5 is included for legacy compatibility with older systems that still use it for non-security checksums. Everything runs locally, so the text you hash is never uploaded. Use it to verify a download against a publisher\'s posted checksum, confirm two files or strings are identical, or check expected-versus-actual hashes while debugging. Note that MD5 and SHA-1 are broken for security purposes and should not be used where collision resistance matters — prefer SHA-256 or stronger.',
     steps: ['Paste input text.', 'Pick the hash algorithm.', 'Copy the hex digest.'],
@@ -651,6 +673,10 @@ export const tools: Tool[] = [
       { q: 'Which algorithm should I use?', a: 'For new security uses, prefer SHA-256 or SHA-512. SHA-1 and MD5 are only appropriate for non-security checksums or interoperating with legacy systems.' },
       { q: 'Is a hash reversible?', a: 'No. Hashing is one-way, so you cannot recover the original text from the digest. That is what makes it useful for integrity checks and comparisons.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'NIST Secure Hash Standard, FIPS 180-4', url: 'https://csrc.nist.gov/pubs/fips/180-4/upd1/final' },
+      { label: 'RFC 6151: MD5 security considerations', url: 'https://www.rfc-editor.org/rfc/rfc6151' },
     ],
     related: ['password-generator', 'base64', 'jwt-decoder'],
   },
@@ -684,7 +710,7 @@ export const tools: Tool[] = [
     slug: 'jwt-decoder',
     categoryId: 'security',
     status: 'active',
-    keywords: ['JWT decoder', 'JSON web token', 'decode JWT online'],
+    keywords: ['JWT decoder', 'JSON Web Token decoder', 'decode JWT online', 'check JWT expiry', 'decode JWT locally'],
     longDescription:
       'JWT Decoder takes a JSON Web Token — the three dot-separated, Base64URL-encoded parts you see in authentication headers — and decodes its header and payload into readable, formatted JSON. You can immediately see the signing algorithm, the registered claims like expiry (exp), issued-at (iat), issuer (iss), and audience (aud), and any custom claims your application embeds.\n\nThis is the everyday companion for debugging authentication. When an API returns a 401, decoding the token shows whether it has expired, who issued it, and whether the audience matches. The decode is a pure Base64URL plus JSON-parse operation performed locally in your browser, so the token — which often grants access to a real account — is never transmitted. Note that decoding does not verify the signature; confirming a token is authentic requires the signing key, which this tool deliberately does not handle.',
     steps: ['Paste a JWT (three dot-separated Base64URL parts).', 'Inspect the decoded header and payload.', 'Read the registered claims (exp, iat, iss, aud).'],
@@ -695,6 +721,9 @@ export const tools: Tool[] = [
       { q: 'How do I check if a token is expired?', a: 'Look at the exp claim in the decoded payload. It is a Unix timestamp; if that time is in the past, the token has expired.' },
       { q: 'Why can I read the payload without a password?', a: 'JWT payloads are only Base64URL-encoded, not encrypted. Anyone can decode and read them, which is why you should never put secrets in a JWT payload.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'RFC 7519: JSON Web Token', url: 'https://www.rfc-editor.org/rfc/rfc7519' },
     ],
     related: ['base64', 'hash-generator', 'json-formatter'],
   },
@@ -813,11 +842,11 @@ export const tools: Tool[] = [
     id: 'json-formatter',
     name: 'JSON Formatter',
     description: 'Format, minify, and validate JSON data instantly.',
-    metaDescription: 'Format and beautify JSON data instantly with our free online JSON formatter. Error detection, minify mode. No signup, no data sent to servers.',
+    metaDescription: 'Format, validate, beautify, or minify JSON locally in your browser. Free online JSON formatter with clear syntax errors and no signup.',
     slug: 'json-formatter',
     categoryId: 'developer',
     status: 'active',
-    keywords: ['JSON formatter', 'JSON validator', 'JSON beautifier', 'JSON minify', 'free online JSON formatter', 'format JSON online', 'JSON beautifier online', 'how to format JSON', 'pretty print JSON', 'JSON formatter free'],
+    keywords: ['JSON formatter', 'JSON validator', 'JSON beautifier', 'JSON minifier', 'format JSON online', 'format JSON locally', 'JSON formatter browser'],
     longDescription:
       'JSON Formatter cleans up JSON in both directions: beautify a compact or minified blob into readable, indented form, or minify a pretty-printed document onto a single line to save bytes before embedding it in code. It also validates as it goes — if the JSON is malformed, you get a clear error pointing you toward the missing comma, unbalanced bracket, or stray quote, which turns a frustrating hunt into a quick fix.\n\nThis is one of the most-used tools in a developer\'s day: making a one-line API response readable, checking that a config file is valid before committing, or normalizing the formatting of a payload pasted from a log. Parsing uses the browser\'s strict JSON.parse, so only standard JSON is accepted, and everything happens locally — the data you paste, which may include API responses or configuration, is never uploaded to a server.',
     steps: ['Paste JSON.', 'Click Beautify or Minify.', 'Copy the result.'],
@@ -828,6 +857,9 @@ export const tools: Tool[] = [
       { q: 'How does it help me find errors?', a: 'When parsing fails, the validator surfaces the problem so you can quickly locate a missing comma, unbalanced bracket, or unquoted key.' },
       { q: 'What is the difference between beautify and minify?', a: 'Beautify adds indentation and line breaks for readability; minify strips all unnecessary whitespace to produce the smallest valid single-line JSON.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'RFC 8259: The JavaScript Object Notation data interchange format', url: 'https://www.rfc-editor.org/rfc/rfc8259' },
     ],
     related: ['json-to-typescript', 'xml-formatter', 'yaml-json', 'jwt-decoder'],
   },
@@ -1125,7 +1157,7 @@ export const tools: Tool[] = [
     slug: 'uuid-generator',
     categoryId: 'developer',
     status: 'active',
-    keywords: ['UUID generator', 'GUID generator', 'UUID v4', 'UUID v7'],
+    keywords: ['UUID generator', 'GUID generator', 'UUID v4 generator', 'UUID v7 generator', 'bulk UUID generator'],
     longDescription:
       'UUID Generator produces universally unique identifiers in the versions you are most likely to need: v1 (time-and-node based), v4 (fully random), and v7 (time-ordered). UUIDs are the standard way to assign a globally unique ID to a record, request, or resource without coordinating with a central server, which makes them ideal for distributed systems and offline-first apps.\n\nGenerate a single value or bulk-generate hundreds at once for seeding test data, then copy individual IDs or download the whole set. v4 is the everyday default for general-purpose unique IDs, while v7 embeds a timestamp so the IDs sort by creation time — a real advantage for database index locality. v4 and v7 draw their randomness from crypto.getRandomValues in the browser, and because generation is local, nothing is sent to a server.',
     steps: ['Pick a UUID version.', 'Choose how many to generate.', 'Copy or download.'],
@@ -1136,6 +1168,9 @@ export const tools: Tool[] = [
       { q: 'Will two generated UUIDs ever collide?', a: 'The probability is astronomically small. v4 has 122 random bits, so practical collisions essentially never happen even across billions of values.' },
       { q: 'Can I generate many at once?', a: 'Yes. Bulk mode generates hundreds of UUIDs in one go, which is handy for seeding test fixtures or pre-allocating IDs.' },
       commonFaqPrivacy,
+    ],
+    sources: [
+      { label: 'RFC 9562: Universally Unique IDentifiers', url: 'https://www.rfc-editor.org/rfc/rfc9562' },
     ],
     related: ['password-generator', 'hash-generator'],
   },

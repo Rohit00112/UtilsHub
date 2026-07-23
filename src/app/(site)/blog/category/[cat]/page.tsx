@@ -1,33 +1,28 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import {
-  getAllCategories,
-  getPostsByCategory,
   categoryFromSlug,
   categorySlug,
+  getAllCategories,
+  getPostsByCategory,
   toCardData,
 } from '@/lib/blog';
-import { getBlogCategoryMetadata, blogCategoryJsonLd } from '@/lib/seo';
+import { blogCategoryJsonLd, getBlogCategoryMetadata } from '@/lib/seo';
 import BlogSearch from '@/components/blog/BlogSearch';
 import CategoryChips from '@/components/blog/CategoryChips';
 
 export function generateStaticParams() {
-  return getAllCategories().map((c) => ({ cat: categorySlug(c.name) }));
+  return getAllCategories().map((category) => ({ cat: categorySlug(category.name) }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ cat: string }> }) {
   const { cat } = await params;
   const name = categoryFromSlug(cat);
-  if (!name) return {};
-  return getBlogCategoryMetadata(name);
+  return name ? getBlogCategoryMetadata(name) : {};
 }
 
-export default async function BlogCategoryPage({
-  params,
-}: {
-  params: Promise<{ cat: string }>;
-}) {
+export default async function BlogCategoryPage({ params }: { params: Promise<{ cat: string }> }) {
   const { cat } = await params;
   const name = categoryFromSlug(cat);
   if (!name) notFound();
@@ -36,52 +31,42 @@ export default async function BlogCategoryPage({
   const jsonLd = blogCategoryJsonLd(name, posts);
 
   return (
-    <>
-      {jsonLd.map((node, i) => (
+    <div className="bg-background">
+      {jsonLd.map((node, index) => (
         <script
-          key={i}
+          key={index}
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
         />
       ))}
 
-      <div className="bg-muted/20">
-        <div className="border-b border-border/60 bg-background">
-          <div className="container py-10">
-            <nav
-              className="mb-5 flex min-w-0 items-center gap-2 text-sm text-muted-foreground"
-              aria-label="Breadcrumb"
-            >
-              <Link href="/" className="flex items-center gap-1 transition-colors hover:text-foreground">
-                <Home className="h-3.5 w-3.5" />
-                <span>Home</span>
-              </Link>
-              <ChevronRight className="h-3.5 w-3.5" />
-              <Link href="/blog" className="transition-colors hover:text-foreground">
-                Blog
-              </Link>
-              <ChevronRight className="h-3.5 w-3.5" />
-              <span className="text-foreground">{name}</span>
-            </nav>
-            <h1 className="text-3xl font-semibold text-foreground text-balance sm:text-4xl">
-              {name} Guides &amp; How-Tos
-            </h1>
-            <p className="mt-3 text-sm text-muted-foreground tabular-nums">
-              {posts.length} {posts.length === 1 ? 'guide' : 'guides'}
-            </p>
-          </div>
+      <header className="relative overflow-hidden border-b border-border/70 bg-card/40">
+        <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="pointer-events-none absolute left-1/4 top-0 h-72 w-96 rounded-full bg-primary/12 blur-[100px]" aria-hidden="true" />
+        <div className="container relative py-12 sm:py-16">
+          <nav className="mb-7 flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-foreground">Home</Link>
+            <ChevronRight className="h-4 w-4" />
+            <Link href="/blog" className="hover:text-foreground">Guides</Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="font-medium text-foreground">{name}</span>
+          </nav>
+          <p className="eyebrow">{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
+          <h1 className="mt-3 font-serif text-4xl font-bold tracking-[-0.04em] text-foreground text-balance sm:text-6xl">
+            {name} guides
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
+            Clear explanations and working examples for {name.toLowerCase()} tasks.
+          </p>
         </div>
+      </header>
 
-        <div className="container py-10">
-          <div className="mx-auto max-w-4xl">
-            <CategoryChips activeCategory={name} />
-            <div className="mt-8">
-              <BlogSearch posts={posts.map(toCardData)} />
-            </div>
-          </div>
+      <main className="container py-12 sm:py-16">
+        <CategoryChips activeCategory={name} />
+        <div className="mt-10">
+          <BlogSearch posts={posts.map(toCardData)} />
         </div>
-      </div>
-    </>
+      </main>
+    </div>
   );
 }

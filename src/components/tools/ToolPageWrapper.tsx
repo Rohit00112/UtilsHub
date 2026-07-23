@@ -27,7 +27,7 @@ export default function ToolPageWrapper({ categoryId, slug, children }: ToolPage
         />
       ))}
       {children}
-      <div className="bg-muted/20 pb-12">
+      <div className="pb-14">
         <div className="container">
           <ToolContent tool={tool} />
         </div>

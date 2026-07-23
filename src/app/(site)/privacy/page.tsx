@@ -7,7 +7,7 @@ export const metadata = createMetadata({
     path: '/privacy',
 });
 
-const LAST_UPDATED = '2026-05-24';
+const LAST_UPDATED = '2026-07-23';
 
 export default function PrivacyPage() {
     return (
@@ -63,10 +63,20 @@ export default function PrivacyPage() {
                             </Link>.
                         </p>
                         <p className="mt-3 text-muted-foreground">
-                            We ask for your consent before loading AdSense. If you decline, the AdSense
-                            script is not loaded for you, and ad-related cookies are not set by Google
-                            through FreeWebTools. You can reset your choice by clearing site data for this
-                            domain in your browser.
+                            We ask for your consent before loading AdSense or third-party analytics. If
+                            you decline, those scripts are not loaded through FreeWebTools. You can reset
+                            your choice by clearing site data for this domain in your browser.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-semibold text-foreground">Analytics</h2>
+                        <p className="mt-3 text-muted-foreground">
+                            After consent, FreeWebTools uses Google Analytics and Microsoft Clarity to
+                            understand aggregate page usage and identify usability problems. These
+                            services may process device, browser, approximate-location, interaction, and
+                            referral information under their own privacy policies. They are not loaded
+                            when you decline consent.
                         </p>
                     </section>
 
@@ -82,13 +92,14 @@ export default function PrivacyPage() {
                     <section>
                         <h2 className="text-2xl font-semibold text-foreground">Hosting</h2>
                         <p className="mt-3 text-muted-foreground">
-                            The site is hosted on{' '}
-                            <Link href="https://vercel.com" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
-                                Vercel
+                            The public site is delivered through{' '}
+                            <Link href="https://www.cloudflare.com" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
+                                Cloudflare
                             </Link>
-                            . Vercel processes standard server-access logs (IP address, request path,
-                            timestamp, user agent) for security and reliability. See Vercel&apos;s{' '}
-                            <Link href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
+                            . Cloudflare may process standard request information such as IP address,
+                            request path, timestamp, and user agent for delivery, security, and
+                            reliability. See Cloudflare&apos;s{' '}
+                            <Link href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
                                 privacy policy
                             </Link>{' '}
                             for details.
@@ -101,7 +112,8 @@ export default function PrivacyPage() {
                             Depending on where you live, you may have the right to access, correct, or
                             delete personal data held about you, or to object to certain processing. Since
                             FreeWebTools itself does not collect personal data, requests should usually be
-                            directed to Google (for ad-related data) or to Vercel (for server logs).
+                            directed to the relevant third-party provider for advertising, analytics, or
+                            delivery data.
                         </p>
                     </section>
 
@@ -117,7 +129,7 @@ export default function PrivacyPage() {
                         <h2 className="text-2xl font-semibold text-foreground">Contact</h2>
                         <p className="mt-3 text-muted-foreground">
                             Questions about this policy? Open an issue on the project&apos;s{' '}
-                            <Link href="https://github.com/Rohit00112" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
+                            <Link href="https://github.com/Rohit00112/UtilsHub/issues" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
                                 GitHub repository
                             </Link>
                             .

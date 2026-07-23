@@ -1,29 +1,28 @@
 import Link from 'next/link';
-import { getAllCategories, categorySlug } from '@/lib/blog';
+import { categorySlug, getAllCategories } from '@/lib/blog';
 
-/** `activeCategory` is the canonical name of the current category page, or undefined on the index. */
 export default function CategoryChips({ activeCategory }: { activeCategory?: string }) {
   const categories = getAllCategories();
-  const base =
-    'inline-flex items-center rounded-full border px-3 py-1 text-sm transition-colors';
-  const active = 'border-primary bg-primary/10 text-primary';
-  const idle = 'border-border/60 text-muted-foreground hover:border-primary/40 hover:text-foreground';
+  const base = 'inline-flex h-10 items-center rounded-xl border px-3.5 text-sm font-medium transition-all';
+  const active = 'border-primary bg-primary text-primary-foreground shadow-md shadow-primary/15';
+  const idle = 'border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground';
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <nav className="flex flex-wrap gap-2" aria-label="Guide topics">
       <Link href="/blog" className={`${base} ${activeCategory ? idle : active}`}>
-        All
+        All topics
+        <span className="ml-2 text-xs opacity-75">{categories.reduce((sum, category) => sum + category.count, 0)}</span>
       </Link>
-      {categories.map((c) => (
+      {categories.map((category) => (
         <Link
-          key={c.name}
-          href={`/blog/category/${categorySlug(c.name)}`}
-          className={`${base} ${activeCategory === c.name ? active : idle}`}
+          key={category.name}
+          href={`/blog/category/${categorySlug(category.name)}`}
+          className={`${base} ${activeCategory === category.name ? active : idle}`}
         >
-          {c.name}
-          <span className="ml-1.5 text-xs opacity-70">{c.count}</span>
+          {category.name}
+          <span className="ml-2 text-xs opacity-70">{category.count}</span>
         </Link>
       ))}
-    </div>
+    </nav>
   );
 }

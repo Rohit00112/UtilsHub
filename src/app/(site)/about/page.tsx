@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { LockKeyhole, ShieldCheck, Zap } from 'lucide-react';
-import { createMetadata } from '@/lib/seo';
+import { BookCheck, LockKeyhole, ShieldCheck, Zap } from 'lucide-react';
+import { absoluteUrl, createMetadata, organizationJsonLd } from '@/lib/seo';
 import { categories } from '@/lib/tools';
 
 export const metadata = createMetadata({
@@ -10,8 +10,27 @@ export const metadata = createMetadata({
 });
 
 export default function AboutPage() {
+    const jsonLd = [
+        organizationJsonLd(),
+        {
+            '@context': 'https://schema.org',
+            '@type': 'AboutPage',
+            '@id': absoluteUrl('/about#page'),
+            url: absoluteUrl('/about'),
+            name: 'About FreeWebTools',
+            mainEntity: { '@id': absoluteUrl('/#organization') },
+        },
+    ];
+
     return (
         <div className="min-h-[calc(100dvh-3.5rem)] bg-muted/20">
+            {jsonLd.map((node, index) => (
+                <script
+                    key={index}
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+                />
+            ))}
             <div className="container max-w-3xl py-16">
                 <h1 className="text-4xl font-semibold text-foreground text-balance">About FreeWebTools</h1>
                 <p className="mt-4 text-lg leading-8 text-muted-foreground text-pretty">
@@ -68,6 +87,34 @@ export default function AboutPage() {
                     pre-rendered for fast first paint, and the interactive parts hydrate on demand.
                 </p>
 
+                <section id="editorial-standards" className="mt-12 scroll-mt-24 rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
+                    <BookCheck className="h-6 w-6 text-primary" />
+                    <h2 className="mt-4 text-2xl font-semibold text-foreground">Editorial and testing standards</h2>
+                    <p className="mt-4 text-base leading-7 text-muted-foreground">
+                        The FreeWebTools editorial team writes each page from the behavior of the
+                        working utility, then checks its inputs, outputs, privacy boundary, and known
+                        limitations against the implementation.
+                    </p>
+                    <ul className="mt-4 list-disc space-y-2 pl-6 text-base leading-7 text-muted-foreground">
+                        <li>Technical claims link to primary standards or platform documentation when available.</li>
+                        <li>Measurements are published only when the method and test data can be reproduced.</li>
+                        <li>Security and privacy notes distinguish local tools from tools that make network requests.</li>
+                        <li>Substantive article reviews are shown with a visible updated date.</li>
+                    </ul>
+                    <p className="mt-4 text-base leading-7 text-muted-foreground">
+                        Found an error? Report it in the project&apos;s{' '}
+                        <Link
+                            href="https://github.com/Rohit00112/UtilsHub/issues"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-medium text-foreground underline underline-offset-4"
+                        >
+                            public issue tracker
+                        </Link>
+                        .
+                    </p>
+                </section>
+
                 <h2 className="mt-12 text-2xl font-semibold text-foreground">How tool pages are written</h2>
                 <p className="mt-4 text-base leading-7 text-muted-foreground">
                     Each tool page is based on the actual behavior of that utility: the inputs it accepts,
@@ -87,7 +134,7 @@ export default function AboutPage() {
                 <p className="mt-4 text-base leading-7 text-muted-foreground">
                     The project is maintained on{' '}
                     <Link
-                        href="https://github.com/Rohit00112"
+                        href="https://github.com/Rohit00112/UtilsHub"
                         target="_blank"
                         rel="noreferrer"
                         className="font-medium text-foreground underline underline-offset-4"
