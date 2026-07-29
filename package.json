@@ -15,6 +15,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
+    "check:image": "node --no-warnings --experimental-strip-types scripts/check-image-processing.mjs",
     "cf-build": "opennextjs-cloudflare build",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",

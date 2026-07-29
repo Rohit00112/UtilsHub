@@ -691,6 +691,200 @@ JWTs can support stateless validation, which can suit distributed systems and AP
 
 - [RFC 7519: JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519)`,
   },
+  {
+    slug: 'remove-watermark-from-your-own-image',
+    title: 'How to Remove a Watermark from an Image You Own',
+    description:
+      'Clean a small logo, timestamp, or old brand mark from your own image locally, and learn when a simple browser tool is enough.',
+    date: '2026-07-29',
+    category: 'Image',
+    tags: ['image', 'watermark', 'editing'],
+    keywords: ['remove watermark from image', 'watermark remover', 'remove logo from photo', 'clean image watermark'],
+    relatedTools: ['watermark-remover', 'image-cropper', 'image-resizer'],
+    body: `A small watermark over a plain background can often be cleaned without uploading the image or opening a full desktop editor. Select the entire mark with a little surrounding space, rebuild that area from nearby pixels, and inspect the result at full size.
+
+Only remove a watermark, logo, timestamp, or attribution mark from an image you own or have permission to edit. A watermark can communicate ownership or licensing, and removing one from somebody else's work may violate their rights.
+
+## When local cleanup works well
+
+The [Watermark Remover](/tools/image/watermark-remover) estimates replacement pixels from the edges around your selection. It is a good fit when the mark is:
+
+- Small compared with the image
+- Over a flat wall, sky, soft gradient, or blurred background
+- Surrounded by similar colors
+- Fully covered by one rectangular selection
+
+The tool is not generative AI. It cannot know what was hidden behind a logo. Large marks over faces, lettering, fabric, architecture, or repeating patterns will usually show blur or smearing and need a clone, healing, or generative-fill tool in a full image editor.
+
+## Remove the mark step by step
+
+1. Open the [Watermark Remover](/tools/image/watermark-remover).
+2. Choose an image you are authorized to edit.
+3. Drag from one corner of the mark to the opposite corner.
+4. Include a small margin so no letter edges or shadows remain outside the box.
+5. Click **Remove selection**.
+6. Zoom in and inspect the boundary.
+7. Undo and try a tighter or slightly wider selection if needed.
+8. Download the cleaned PNG.
+
+Start with the smallest selection that covers the complete mark. A large box asks the tool to invent more pixels, so the result becomes softer. If a watermark sits entirely in an expendable corner, [cropping the image](/tools/image/cropper) may produce a cleaner result because it does not reconstruct anything.
+
+## Why the result may look blurred
+
+Simple cleanup interpolates between the colors above, below, left, and right of the selection. That creates a smooth transition on simple backgrounds but cannot recreate a hidden eye, brick pattern, or line of text. Repeating the operation usually makes that area softer rather than recovering detail.
+
+If the first result is poor, undo it. Try selecting one small part at a time or use a desktop editor with a clone stamp that lets you choose the source texture manually.
+
+## Keep the original
+
+The download is a new PNG, so the source file remains unchanged. Keep the original until you have checked the edited image at 100% zoom and in the layout where it will be used. You may also want the original later when rebranding or making a different crop.
+
+All processing happens in your browser. The image is not sent to a FreeWebTools processing server.`,
+  },
+  {
+    slug: 'crop-an-image-to-the-right-aspect-ratio',
+    title: 'How to Crop an Image to the Right Aspect Ratio',
+    description:
+      'Crop photos to square, 4:3, 16:9, or exact pixel coordinates without uploading them.',
+    date: '2026-07-29',
+    category: 'Image',
+    tags: ['image', 'crop', 'aspect ratio'],
+    keywords: ['crop image online', 'crop image to square', 'image aspect ratio', 'crop photo 16:9'],
+    relatedTools: ['image-cropper', 'image-resizer', 'webp-converter'],
+    body: `Cropping changes which part of an image remains. Resizing changes how many pixels the image contains. Choose the crop first to set the composition and aspect ratio, then resize the result if a website or form also requires exact output dimensions.
+
+## Common aspect ratios
+
+- **1:1 (square):** profile pictures, product tiles, and square social posts
+- **4:3:** traditional photos, presentation media, and many content cards
+- **16:9:** video thumbnails, wide banners, and landscape previews
+- **Free:** screenshots, document details, and any subject that does not fit a preset
+
+An aspect ratio describes the relationship between width and height, not a fixed size. Both 800×800 and 2000×2000 are 1:1. Both 1280×720 and 1920×1080 are 16:9.
+
+## Crop an image step by step
+
+1. Open the [Image Cropper](/tools/image/cropper).
+2. Choose a PNG, JPEG, or WebP image.
+3. Select Free, Square, 4:3, or 16:9.
+4. Adjust the X and Y values to move the frame.
+5. Adjust width and height if you need an exact region.
+6. Pick PNG, JPEG, or WebP output.
+7. Crop and download the new image.
+
+The shaded preview shows what will be removed. The clear rectangle is the output. The X value measures from the left edge, while Y measures from the top.
+
+## Leave room around the subject
+
+Avoid placing a face, logo, or important text directly against an edge. A little breathing room makes the image easier to reuse and reduces the risk that another platform's thumbnail treatment clips the subject.
+
+For a profile photo, center the face with extra room around the head because many apps display a square upload inside a circular mask. For a video thumbnail, keep text and faces away from the lower-right corner, where a duration badge may appear.
+
+## Choose an output format
+
+Use PNG for transparency, logos, diagrams, and interface captures with sharp edges. Use JPEG for normal photographs when compatibility matters. Use WebP for a smaller web-ready image when modern browser support is acceptable.
+
+JPEG and WebP quality controls affect compression, not the crop dimensions. PNG export is lossless and ignores the quality slider.
+
+## Crop first, resize second
+
+Suppose a site requests a 1200×630 image. First crop to the same 40:21 aspect ratio if exact composition matters, then use the [Image Resizer](/tools/image/resizer) to produce 1200×630 pixels. Resizing before cropping can waste work or leave fewer useful pixels around the subject.
+
+Cropping runs locally with the browser Canvas API, so the source image stays on your device.`,
+  },
+  {
+    slug: 'remove-exif-gps-metadata-from-photos',
+    title: 'How to Remove EXIF and GPS Metadata from Photos',
+    description:
+      'Strip location, camera, date, and editing metadata from images before sharing them.',
+    date: '2026-07-29',
+    category: 'Image',
+    tags: ['image', 'exif', 'privacy', 'metadata'],
+    keywords: ['remove EXIF data', 'remove GPS from photo', 'photo metadata remover', 'strip image metadata'],
+    relatedTools: ['metadata-remover', 'image-resizer', 'webp-converter'],
+    body: `A photo can contain information that is not visible in its pixels. Depending on the camera, phone, and editing workflow, embedded metadata may include the capture time, device model, lens and exposure settings, editing software, a thumbnail, copyright fields, and GPS coordinates.
+
+If you do not need those fields in the shared copy, create a clean export before posting or sending the image.
+
+## What EXIF metadata is
+
+EXIF is a common metadata format used by cameras and phones. It can be genuinely useful: photo software uses capture time for sorting, photographers use exposure data while reviewing a shoot, and orientation data tells software how to display some camera files.
+
+That is why you should keep the original. Remove metadata from a separate sharing copy, not from the only file you have.
+
+## Remove image metadata step by step
+
+1. Open the [Image Metadata Remover](/tools/image/metadata-remover).
+2. Choose one or more photos.
+3. Select JPEG, PNG, or WebP output.
+4. Choose a quality level for JPEG or WebP.
+5. Click **Remove metadata**.
+6. Download each clean image or one ZIP.
+
+The tool decodes the visible pixels and writes them into a new image. Original EXIF, GPS, XMP, IPTC, thumbnail, and application-specific blocks are not copied into that new file.
+
+## Does removing metadata reduce quality?
+
+Metadata removal itself does not need to change the picture, but the export format matters. PNG is lossless and can be large for photographs. JPEG and WebP use lossy compression at the quality level you select, so they may introduce a small visual change while reducing file size.
+
+For a JPEG photo, start around 90–95 if preserving quality matters. Inspect text, hair, high-contrast edges, and smooth gradients after export. If the new file is unexpectedly larger, try WebP or a slightly lower JPEG quality.
+
+## Orientation and transparency
+
+The browser applies the displayed orientation when it decodes the source. The clean export contains pixels in that orientation, so it no longer needs the original orientation tag.
+
+JPEG does not support transparency. Transparent input is placed over white when you choose JPEG. Choose PNG or WebP to keep transparent areas.
+
+## Check privacy beyond metadata
+
+Removing EXIF does not hide information visible in the image itself. Review reflections, house numbers, badges, screens, documents, faces, and recognizable landmarks. Crop unnecessary edges with the [Image Cropper](/tools/image/cropper) and blur or cover sensitive visible details in an appropriate editor.
+
+The images are rebuilt locally in your browser and are not uploaded to a FreeWebTools processing server.`,
+  },
+  {
+    slug: 'pick-hex-color-from-an-image',
+    title: 'How to Pick a HEX Color from an Image',
+    description:
+      'Sample an exact image pixel, copy its HEX or RGB value, and extract a practical color palette.',
+    date: '2026-07-29',
+    category: 'Image',
+    tags: ['image', 'color', 'hex', 'design'],
+    keywords: ['pick color from image', 'image color picker', 'image to HEX', 'extract color palette from image'],
+    relatedTools: ['image-color-picker', 'color-palette', 'image-cropper'],
+    body: `You can turn any pixel in a logo, screenshot, or reference photo into a CSS-ready color value. Upload the image, click the point you want, and copy the resulting HEX or RGB notation.
+
+## Pick a color step by step
+
+1. Open the [Image Color Picker](/tools/image/color-picker).
+2. Choose an image from your device.
+3. Click or tap the exact point you want to sample.
+4. Copy the HEX value for CSS or the RGB value when channel notation is more convenient.
+5. Use the generated palette for a quick overview of the image's dominant tones.
+
+The selected color reads one exact decoded pixel. If you click a JPEG edge, shadow, or anti-aliased letter, adjacent pixels can differ slightly. Zoom the browser or sample a few nearby points when you need a representative fill color rather than one edge pixel.
+
+## HEX and RGB describe the same channels
+
+The CSS colors \`#2563EB\` and \`rgb(37, 99, 235)\` represent the same red, green, and blue channel values. HEX writes each channel as a two-digit hexadecimal number; RGB writes the channels as decimal values from 0 to 255.
+
+Use whichever notation fits your workflow. HEX is compact and common in design handoffs. RGB is readable when you want to adjust one channel or add an alpha value with modern CSS syntax.
+
+## Exact pixel versus extracted palette
+
+An exact picker can return thousands of subtly different colors from a photograph. A palette is more useful when it groups nearby shades and ranks the groups by frequency.
+
+The tool's six-color palette quantizes nearby values before counting them. That means a palette swatch may not exactly match any one clicked pixel, but it better describes the image as a whole.
+
+Treat an automatic palette as a starting point. A photo dominated by a dark background may place that background first even when a smaller accent color is more important to the design.
+
+## Check contrast before using the color
+
+A color that looks attractive in an image is not automatically readable behind text. After choosing foreground and background colors, test the pair with the [Color Contrast Checker](/tools/web/color-contrast-checker). Large headings and normal body text have different accessibility thresholds.
+
+For a fuller set of lighter and darker shades around one chosen color, paste the HEX value into the [Color Palette Generator](/tools/developer/color-palette).
+
+Image decoding and color sampling happen locally in your browser, so the source file is not uploaded.`,
+  },
 ];
 
 export function getPostBySlug(slug: string) {
