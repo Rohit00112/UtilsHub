@@ -10,6 +10,7 @@ import {
     ToolSegmentedControl,
     ToolStatus,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type InputMode = 'auto' | 'seconds' | 'milliseconds' | 'iso';
 
@@ -115,9 +116,9 @@ function formatRelative(date: Date, now: Date) {
 
 export default function TimestampConverter() {
     const [now, setNow] = useState(() => new Date());
-    const [input, setInput] = useState(() => String(Math.floor(Date.now() / 1000)));
-    const [mode, setMode] = useState<InputMode>('auto');
-    const [localDate, setLocalDate] = useState(() => toDateTimeLocalValue(new Date()));
+    const [input, setInput] = useToolState('timestamp-converter', 'input', () => String(Math.floor(Date.now() / 1000)));
+    const [mode, setMode] = useToolState<InputMode>('timestamp-converter', 'mode', 'auto');
+    const [localDate, setLocalDate] = useToolState('timestamp-converter', 'localDate', () => toDateTimeLocalValue(new Date()));
     const [copied, setCopied] = useState<string | null>(null);
 
     useEffect(() => {

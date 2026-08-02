@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolMetric, ToolPanel, ToolSegmentedControl } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Mode = 'of' | 'isWhat' | 'change';
 
@@ -24,9 +25,9 @@ function num(v: string): number | null {
 }
 
 export default function PercentageCalculator() {
-    const [mode, setMode] = useState<Mode>('of');
-    const [a, setA] = useState('15');
-    const [b, setB] = useState('200');
+    const [mode, setMode] = useToolState<Mode>('percentage-calculator', 'mode', 'of');
+    const [a, setA] = useToolState('percentage-calculator', 'a', '15');
+    const [b, setB] = useToolState('percentage-calculator', 'b', '200');
 
     const result = useMemo(() => {
         const x = num(a);

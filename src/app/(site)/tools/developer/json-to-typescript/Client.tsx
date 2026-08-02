@@ -12,6 +12,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type DeclarationKind = 'interface' | 'type';
 
@@ -225,10 +226,10 @@ function generateTypeScript(rootNode: TypeNode, rootName: string, declarationKin
 }
 
 export default function JsonToTypescript() {
-    const [input, setInput] = useState(sampleJson);
-    const [rootName, setRootName] = useState('FreeWebToolsTool');
-    const [declarationKind, setDeclarationKind] = useState<DeclarationKind>('interface');
-    const [exported, setExported] = useState(true);
+    const [input, setInput] = useToolState('json-to-typescript', 'input', sampleJson);
+    const [rootName, setRootName] = useToolState('json-to-typescript', 'rootName', 'FreeWebToolsTool');
+    const [declarationKind, setDeclarationKind] = useToolState<DeclarationKind>('json-to-typescript', 'declarationKind', 'interface');
+    const [exported, setExported] = useToolState('json-to-typescript', 'exported', true);
     const [copied, setCopied] = useState(false);
 
     const result = useMemo(() => {

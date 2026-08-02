@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 function cleanLines(value: string) {
     return value
@@ -63,11 +64,11 @@ const sample = {
 };
 
 export default function RobotsGenerator() {
-    const [userAgent, setUserAgent] = useState(sample.userAgent);
-    const [allow, setAllow] = useState(sample.allow);
-    const [disallow, setDisallow] = useState(sample.disallow);
-    const [sitemap, setSitemap] = useState(sample.sitemap);
-    const [crawlDelay, setCrawlDelay] = useState(sample.crawlDelay);
+    const [userAgent, setUserAgent] = useToolState('robots-generator', 'userAgent', sample.userAgent);
+    const [allow, setAllow] = useToolState('robots-generator', 'allow', sample.allow);
+    const [disallow, setDisallow] = useToolState('robots-generator', 'disallow', sample.disallow);
+    const [sitemap, setSitemap] = useToolState('robots-generator', 'sitemap', sample.sitemap);
+    const [crawlDelay, setCrawlDelay] = useToolState('robots-generator', 'crawlDelay', sample.crawlDelay);
     const [copied, setCopied] = useState(false);
 
     const robots = useMemo(() => buildRobots({ userAgent, allow, disallow, sitemap, crawlDelay }), [

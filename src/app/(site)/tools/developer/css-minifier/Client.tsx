@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Clipboard, Eraser, Minimize2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 function minifyCSS(css: string): string {
     return css
@@ -22,10 +23,10 @@ function minifyCSS(css: string): string {
 }
 
 export default function CSSMinifier() {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+    const [input, setInput] = useToolState('css-minifier', 'input', '');
+    const [output, setOutput] = useToolState('css-minifier', 'output', '');
     const [copied, setCopied] = useState(false);
-    const [stats, setStats] = useState<{ original: number; minified: number } | null>(null);
+    const [stats, setStats] = useToolState<{ original: number; minified: number } | null>('css-minifier', 'stats', null);
 
     const handleMinify = () => {
         const result = minifyCSS(input);

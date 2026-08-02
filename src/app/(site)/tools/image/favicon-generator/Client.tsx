@@ -11,6 +11,7 @@ import {
     ToolResultCard,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const SIZES = [
     { size: 16, name: 'favicon-16x16.png' },
@@ -21,8 +22,8 @@ const SIZES = [
 ];
 
 export default function FaviconCreator() {
-    const [image, setImage] = useState<string | null>(null);
-    const [fileName, setFileName] = useState('');
+    const [image, setImage] = useToolState<string | null>('favicon-generator', 'image', null);
+    const [fileName, setFileName] = useToolState('favicon-generator', 'fileName', '');
     const [isGenerating, setIsGenerating] = useState(false);
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

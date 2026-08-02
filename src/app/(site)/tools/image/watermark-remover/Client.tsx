@@ -10,6 +10,7 @@ import {
     ToolStatus,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 import {
     fillSelectionFromEdges,
     normalizeImageRect,
@@ -24,9 +25,9 @@ export default function WatermarkRemover() {
     const originalRef = useRef<ImageData | null>(null);
     const undoRef = useRef<ImageData | null>(null);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
-    const [fileName, setFileName] = useState('');
-    const [selection, setSelection] = useState<ImageRect>(emptySelection);
-    const [hasImage, setHasImage] = useState(false);
+    const [fileName, setFileName] = useToolState('watermark-remover', 'fileName', '');
+    const [selection, setSelection] = useToolState<ImageRect>('watermark-remover', 'selection', emptySelection);
+    const [hasImage, setHasImage] = useToolState('watermark-remover', 'hasImage', false);
     const [message, setMessage] = useState('');
     const [hasUndo, setHasUndo] = useState(false);
 

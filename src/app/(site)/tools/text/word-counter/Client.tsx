@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import { Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const textareaClass = 'min-h-80 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function WordCounter() {
-    const [text, setText] = useState('');
+    const [text, setText] = useToolState('word-counter', 'text', '');
 
     const words = text.trim() ? text.trim().split(/\s+/).length : 0;
     const stats = [

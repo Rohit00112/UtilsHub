@@ -4,12 +4,13 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Download, RotateCcw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolMetric, ToolPanel, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function WhitespaceCleaner() {
-  const [input, setInput] = useState('');
-  const [trimLines, setTrimLines] = useState(true);
-  const [collapseSpaces, setCollapseSpaces] = useState(true);
-  const [blankMode, setBlankMode] = useState<'keep' | 'reduce' | 'remove'>('reduce');
+  const [input, setInput] = useToolState('whitespace-cleaner', 'input', '');
+  const [trimLines, setTrimLines] = useToolState('whitespace-cleaner', 'trimLines', true);
+  const [collapseSpaces, setCollapseSpaces] = useToolState('whitespace-cleaner', 'collapseSpaces', true);
+  const [blankMode, setBlankMode] = useToolState<'keep' | 'reduce' | 'remove'>('whitespace-cleaner', 'blankMode', 'reduce');
   const [copied, setCopied] = useState(false);
   const output = useMemo(() => {
     let lines = input.replace(/\r\n?/g, '\n').split('\n');

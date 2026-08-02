@@ -10,6 +10,7 @@ import {
     ToolPanel,
     ToolStatus,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Scope = 'owner' | 'group' | 'others';
 type Permission = 'read' | 'write' | 'execute';
@@ -116,10 +117,10 @@ function shellQuote(value: string) {
 const initialMode = parseMode('755');
 
 export default function ChmodCalculator() {
-    const [permissions, setPermissions] = useState<PermissionState>(initialMode!.permissions);
-    const [specialBits, setSpecialBits] = useState<SpecialBitState>(initialMode!.specialBits);
-    const [octalInput, setOctalInput] = useState('755');
-    const [filePath, setFilePath] = useState('path/to/file');
+    const [permissions, setPermissions] = useToolState<PermissionState>('chmod-calculator', 'permissions', initialMode!.permissions);
+    const [specialBits, setSpecialBits] = useToolState<SpecialBitState>('chmod-calculator', 'specialBits', initialMode!.specialBits);
+    const [octalInput, setOctalInput] = useToolState('chmod-calculator', 'octalInput', '755');
+    const [filePath, setFilePath] = useToolState('chmod-calculator', 'filePath', 'path/to/file');
     const [copied, setCopied] = useState<'mode' | 'command' | null>(null);
 
     const mode = formatMode(permissions, specialBits);

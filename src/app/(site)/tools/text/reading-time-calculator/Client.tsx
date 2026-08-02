@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolMetric, ToolPanel, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const sample = 'Clear writing helps readers find an answer quickly. Paste an article, speech, script, or documentation draft here to estimate how long it takes to read.';
 
@@ -16,8 +17,8 @@ function formatDuration(seconds: number) {
 }
 
 export default function ReadingTimeCalculator() {
-  const [text, setText] = useState(sample);
-  const [speed, setSpeed] = useState('225');
+  const [text, setText] = useToolState('reading-time-calculator', 'text', sample);
+  const [speed, setSpeed] = useToolState('reading-time-calculator', 'speed', '225');
   const stats = useMemo(() => {
     const words = text.trim() ? text.trim().split(/\s+/).length : 0;
     const wordsPerMinute = Math.min(1000, Math.max(50, Number(speed) || 225));

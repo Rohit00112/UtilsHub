@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, FileJson2, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolMetric, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type JsonSchema = {
     $schema?: string;
@@ -98,9 +99,9 @@ function countProperties(schema: JsonSchema): number {
 }
 
 export default function JsonSchemaGenerator() {
-    const [input, setInput] = useState(sampleJson);
-    const [title, setTitle] = useState('GeneratedSchema');
-    const [includeExample, setIncludeExample] = useState(true);
+    const [input, setInput] = useToolState('json-schema-generator', 'input', sampleJson);
+    const [title, setTitle] = useToolState('json-schema-generator', 'title', 'GeneratedSchema');
+    const [includeExample, setIncludeExample] = useToolState('json-schema-generator', 'includeExample', true);
     const [copied, setCopied] = useState(false);
 
     const result = useMemo(() => {

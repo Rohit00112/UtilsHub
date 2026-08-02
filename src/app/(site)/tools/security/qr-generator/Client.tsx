@@ -5,11 +5,12 @@ import Image from 'next/image';
 import { Download, QrCode } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function QRCodeGenerator() {
-    const [text, setText] = useState('');
-    const [qrCodeUrl, setQrCodeUrl] = useState('');
-    const [size, setSize] = useState(256);
+    const [text, setText] = useToolState('qr-generator', 'text', '');
+    const [qrCodeUrl, setQrCodeUrl] = useToolState('qr-generator', 'qrCodeUrl', '');
+    const [size, setSize] = useToolState('qr-generator', 'size', 256);
     const [error, setError] = useState('');
 
     const generateQRCode = () => {

@@ -1,10 +1,10 @@
 'use client';
-import { useState } from 'react';
 import { ReceiptText, Users } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolMetric, ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 export default function TipCalculator() {
-  const [bill, setBill] = useState(75); const [tip, setTip] = useState(18); const [people, setPeople] = useState(2); const [round, setRound] = useState(false);
+  const [bill, setBill] = useToolState('tip-calculator', 'bill', 75); const [tip, setTip] = useToolState('tip-calculator', 'tip', 18); const [people, setPeople] = useToolState('tip-calculator', 'people', 2); const [round, setRound] = useToolState('tip-calculator', 'round', false);
   const safeBill = Math.max(0, bill || 0), safeTip = Math.max(0, tip || 0), safePeople = Math.max(1, people || 1);
   const tipAmount = safeBill * safeTip / 100, total = safeBill + tipAmount, rawEach = total / safePeople, each = round ? Math.ceil(rawEach) : rawEach;
   const money = (n: number) => n.toLocaleString(undefined, { style: 'currency', currency: 'USD' });

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, Link2, Plus, Trash2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolMetric, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface QueryRow {
     id: string;
@@ -68,8 +69,8 @@ function buildQueryJson(rows: QueryRow[]) {
 }
 
 export default function UrlParser() {
-    const [inputUrl, setInputUrl] = useState('https://example.com/docs/search?q=utils&tag=web&tag=dev#results');
-    const [queryRows, setQueryRows] = useState<QueryRow[]>([]);
+    const [inputUrl, setInputUrl] = useToolState('url-parser', 'inputUrl', 'https://example.com/docs/search?q=utils&tag=web&tag=dev#results');
+    const [queryRows, setQueryRows] = useToolState<QueryRow[]>('url-parser', 'queryRows', []);
     const [copied, setCopied] = useState<'url' | 'json' | null>(null);
 
     const parsed = useMemo(() => parseUrlInput(inputUrl), [inputUrl]);
@@ -77,7 +78,7 @@ export default function UrlParser() {
     useEffect(() => {
         setQueryRows(rowsFromUrl(parsed.url));
         setCopied(null);
-    }, [parsed.url]);
+    }, [parsed.url, setQueryRows]);
 
     const rebuiltUrl = useMemo(() => {
         if (!parsed.url) return '';

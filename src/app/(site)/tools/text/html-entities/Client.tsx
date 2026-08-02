@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Mode = 'encode' | 'decode';
 type EntityStyle = 'named' | 'numeric';
@@ -90,11 +91,11 @@ function decodeHtml(value: string) {
 
 export default function HtmlEntities() {
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    const [mode, setMode] = useState<Mode>('encode');
-    const [entityStyle, setEntityStyle] = useState<EntityStyle>('named');
-    const [encodeQuotes, setEncodeQuotes] = useState(true);
-    const [preserveEntities, setPreserveEntities] = useState(false);
-    const [input, setInput] = useState('');
+    const [mode, setMode] = useToolState<Mode>('html-entities', 'mode', 'encode');
+    const [entityStyle, setEntityStyle] = useToolState<EntityStyle>('html-entities', 'entityStyle', 'named');
+    const [encodeQuotes, setEncodeQuotes] = useToolState('html-entities', 'encodeQuotes', true);
+    const [preserveEntities, setPreserveEntities] = useToolState('html-entities', 'preserveEntities', false);
+    const [input, setInput] = useToolState('html-entities', 'input', '');
     const [copied, setCopied] = useState(false);
 
     const { output, error } = useMemo(() => {

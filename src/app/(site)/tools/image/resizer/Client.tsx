@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Download, FileArchive, Image as ImageIcon, Maximize2, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolEmptyState, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type ResizeMode = 'dimensions' | 'percentage';
 type OutputFormat = 'image/png' | 'image/jpeg' | 'image/webp';
@@ -114,15 +115,15 @@ function getTargetSize(
 }
 
 export default function ImageResizer() {
-    const [images, setImages] = useState<SourceImage[]>([]);
-    const [resized, setResized] = useState<ResizedImage[]>([]);
-    const [mode, setMode] = useState<ResizeMode>('percentage');
-    const [percent, setPercent] = useState(50);
-    const [targetWidth, setTargetWidth] = useState('');
-    const [targetHeight, setTargetHeight] = useState('');
-    const [lockAspectRatio, setLockAspectRatio] = useState(true);
-    const [format, setFormat] = useState<OutputFormat>('image/webp');
-    const [quality, setQuality] = useState(85);
+    const [images, setImages] = useToolState<SourceImage[]>('image-resizer', 'images', []);
+    const [resized, setResized] = useToolState<ResizedImage[]>('image-resizer', 'resized', []);
+    const [mode, setMode] = useToolState<ResizeMode>('image-resizer', 'mode', 'percentage');
+    const [percent, setPercent] = useToolState('image-resizer', 'percent', 50);
+    const [targetWidth, setTargetWidth] = useToolState('image-resizer', 'targetWidth', '');
+    const [targetHeight, setTargetHeight] = useToolState('image-resizer', 'targetHeight', '');
+    const [lockAspectRatio, setLockAspectRatio] = useToolState('image-resizer', 'lockAspectRatio', true);
+    const [format, setFormat] = useToolState<OutputFormat>('image-resizer', 'format', 'image/webp');
+    const [quality, setQuality] = useToolState('image-resizer', 'quality', 85);
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 

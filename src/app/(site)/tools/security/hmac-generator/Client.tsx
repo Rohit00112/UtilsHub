@@ -12,6 +12,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Algorithm = 'SHA-256' | 'SHA-384' | 'SHA-512';
 type OutputFormat = 'hex' | 'base64';
@@ -67,11 +68,11 @@ const sampleMessage = '{"event":"invoice.paid","id":"evt_123"}';
 const sampleSecret = 'whsec_test_secret';
 
 export default function HmacGenerator() {
-    const [message, setMessage] = useState(sampleMessage);
-    const [secret, setSecret] = useState(sampleSecret);
-    const [algorithm, setAlgorithm] = useState<Algorithm>('SHA-256');
-    const [format, setFormat] = useState<OutputFormat>('hex');
-    const [signature, setSignature] = useState('');
+    const [message, setMessage] = useToolState('hmac-generator', 'message', sampleMessage);
+    const [secret, setSecret] = useToolState('hmac-generator', 'secret', sampleSecret);
+    const [algorithm, setAlgorithm] = useToolState<Algorithm>('hmac-generator', 'algorithm', 'SHA-256');
+    const [format, setFormat] = useToolState<OutputFormat>('hmac-generator', 'format', 'hex');
+    const [signature, setSignature] = useToolState('hmac-generator', 'signature', '');
     const [error, setError] = useState('');
     const [copied, setCopied] = useState(false);
 

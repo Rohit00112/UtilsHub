@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { Check, Copy, Pipette, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolEmptyState, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 import { dominantColors, rgbToHex } from '@/lib/image-processing';
 
 interface PickedColor {
@@ -13,9 +14,9 @@ interface PickedColor {
 
 export default function ImageColorPicker() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [fileName, setFileName] = useState('');
-    const [selected, setSelected] = useState<PickedColor | null>(null);
-    const [palette, setPalette] = useState<string[]>([]);
+    const [fileName, setFileName] = useToolState('image-color-picker', 'fileName', '');
+    const [selected, setSelected] = useToolState<PickedColor | null>('image-color-picker', 'selected', null);
+    const [palette, setPalette] = useToolState<string[]>('image-color-picker', 'palette', []);
     const [copied, setCopied] = useState('');
     const [error, setError] = useState('');
 

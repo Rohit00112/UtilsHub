@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Clipboard, Eraser, Plug, PlugZap, Send } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolMetric, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type ConnectionStatus = 'idle' | 'connecting' | 'open' | 'closed' | 'error';
 type LogDirection = 'system' | 'sent' | 'received';
@@ -28,8 +29,8 @@ function logText(logs: SocketLog[]) {
 }
 
 export default function WebSocketTester() {
-    const [url, setUrl] = useState('wss://echo.websocket.events');
-    const [message, setMessage] = useState('{"type":"ping","source":"FreeWebTools"}');
+    const [url, setUrl] = useToolState('websocket-tester', 'url', 'wss://echo.websocket.events');
+    const [message, setMessage] = useToolState('websocket-tester', 'message', '{"type":"ping","source":"FreeWebTools"}');
     const [status, setStatus] = useState<ConnectionStatus>('idle');
     const [logs, setLogs] = useState<SocketLog[]>([]);
     const [copied, setCopied] = useState(false);

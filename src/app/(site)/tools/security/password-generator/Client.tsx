@@ -4,17 +4,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { Clipboard, RefreshCw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function PasswordGenerator() {
-    const [password, setPassword] = useState('');
-    const [length, setLength] = useState(16);
-    const [options, setOptions] = useState({
+    const [password, setPassword] = useToolState('password-generator', 'password', '');
+    const [length, setLength] = useToolState('password-generator', 'length', 16);
+    const [options, setOptions] = useToolState('password-generator', 'options', {
         uppercase: true,
         lowercase: true,
         numbers: true,
         symbols: true,
     });
-    const [strength, setStrength] = useState('');
+    const [strength, setStrength] = useToolState('password-generator', 'strength', '');
     const [copied, setCopied] = useState(false);
 
     const calculateStrength = (pass: string) => {
@@ -58,7 +59,7 @@ export default function PasswordGenerator() {
         setPassword(generatedPassword);
         setCopied(false);
         calculateStrength(generatedPassword);
-    }, [length, options]);
+    }, [length, options, setPassword, setStrength]);
 
     useEffect(() => {
         generatePassword();

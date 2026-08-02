@@ -12,6 +12,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Changefreq = 'none' | 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
@@ -71,12 +72,12 @@ function buildSitemap({
 }
 
 export default function SitemapGenerator() {
-    const [urls, setUrls] = useState(sampleUrls);
-    const [lastmod, setLastmod] = useState(() => new Date().toISOString().slice(0, 10));
-    const [includeLastmod, setIncludeLastmod] = useState(true);
-    const [changefreq, setChangefreq] = useState<Changefreq>('weekly');
-    const [priority, setPriority] = useState('0.8');
-    const [includePriority, setIncludePriority] = useState(true);
+    const [urls, setUrls] = useToolState('sitemap-generator', 'urls', sampleUrls);
+    const [lastmod, setLastmod] = useToolState('sitemap-generator', 'lastmod', () => new Date().toISOString().slice(0, 10));
+    const [includeLastmod, setIncludeLastmod] = useToolState('sitemap-generator', 'includeLastmod', true);
+    const [changefreq, setChangefreq] = useToolState<Changefreq>('sitemap-generator', 'changefreq', 'weekly');
+    const [priority, setPriority] = useToolState('sitemap-generator', 'priority', '0.8');
+    const [includePriority, setIncludePriority] = useToolState('sitemap-generator', 'includePriority', true);
     const [copied, setCopied] = useState(false);
 
     const urlList = useMemo(() => cleanUrls(urls), [urls]);

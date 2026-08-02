@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolMetric, ToolPanel, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const sample = `<!doctype html>
 <html lang="en">
@@ -35,8 +36,8 @@ function minifyHtml(input: string, removeComments: boolean) {
 }
 
 export default function HtmlMinifier() {
-  const [input, setInput] = useState(sample);
-  const [removeComments, setRemoveComments] = useState(true);
+  const [input, setInput] = useToolState('html-minifier', 'input', sample);
+  const [removeComments, setRemoveComments] = useToolState('html-minifier', 'removeComments', true);
   const [copied, setCopied] = useState(false);
   const output = useMemo(() => minifyHtml(input, removeComments), [input, removeComments]);
   const saved = input.length ? Math.max(0, Math.round((1 - output.length / input.length) * 100)) : 0;

@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface AmortizationRow {
     month: number;
@@ -14,10 +15,10 @@ interface AmortizationRow {
 }
 
 export default function EMICalculator() {
-    const [principal, setPrincipal] = useState<number>(100000);
-    const [interestRate, setInterestRate] = useState<number>(10);
-    const [tenure, setTenure] = useState<number>(12);
-    const [tenureType, setTenureType] = useState<'months' | 'years'>('months');
+    const [principal, setPrincipal] = useToolState<number>('emi-calculator', 'principal', 100000);
+    const [interestRate, setInterestRate] = useToolState<number>('emi-calculator', 'interestRate', 10);
+    const [tenure, setTenure] = useToolState<number>('emi-calculator', 'tenure', 12);
+    const [tenureType, setTenureType] = useToolState<'months' | 'years'>('emi-calculator', 'tenureType', 'months');
     const [showAmortization, setShowAmortization] = useState(false);
 
     const calculations = useMemo(() => {

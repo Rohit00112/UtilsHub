@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const defaultUrl = 'https://example.com/launch?ref=homepage';
 
@@ -37,13 +38,13 @@ function parseCustomParams(value: string) {
 }
 
 export default function UtmBuilder() {
-    const [baseUrl, setBaseUrl] = useState(defaultUrl);
-    const [source, setSource] = useState('newsletter');
-    const [medium, setMedium] = useState('email');
-    const [campaign, setCampaign] = useState('spring_launch');
-    const [term, setTerm] = useState('');
-    const [content, setContent] = useState('');
-    const [customParams, setCustomParams] = useState('audience=beta\nvariant=hero-a');
+    const [baseUrl, setBaseUrl] = useToolState('utm-builder', 'baseUrl', defaultUrl);
+    const [source, setSource] = useToolState('utm-builder', 'source', 'newsletter');
+    const [medium, setMedium] = useToolState('utm-builder', 'medium', 'email');
+    const [campaign, setCampaign] = useToolState('utm-builder', 'campaign', 'spring_launch');
+    const [term, setTerm] = useToolState('utm-builder', 'term', '');
+    const [content, setContent] = useToolState('utm-builder', 'content', '');
+    const [customParams, setCustomParams] = useToolState('utm-builder', 'customParams', 'audience=beta\nvariant=hero-a');
     const [copied, setCopied] = useState(false);
 
     const result = useMemo(() => {

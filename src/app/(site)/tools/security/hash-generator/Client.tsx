@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Clipboard, Eraser, Fingerprint } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type HashAlgorithm = 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512';
 
@@ -161,8 +162,8 @@ function md5(inputString: string): string {
 }
 
 export default function HashGenerator() {
-    const [input, setInput] = useState('');
-    const [hashes, setHashes] = useState<Record<HashAlgorithm, string>>({
+    const [input, setInput] = useToolState('hash-generator', 'input', '');
+    const [hashes, setHashes] = useToolState<Record<HashAlgorithm, string>>('hash-generator', 'hashes', {
         'MD5': '',
         'SHA-1': '',
         'SHA-256': '',

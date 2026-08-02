@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Clipboard, FileText, RefreshCw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import {
@@ -10,6 +9,7 @@ import {
     ToolPanel,
     ToolSegmentedControl,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const LOREM_WORDS = [
     'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
@@ -26,10 +26,10 @@ const LOREM_START = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 type LoremMode = 'paragraphs' | 'sentences' | 'words';
 
 export default function LoremIpsumGenerator() {
-    const [mode, setMode] = useState<LoremMode>('paragraphs');
-    const [count, setCount] = useState(3);
-    const [startWithLorem, setStartWithLorem] = useState(true);
-    const [generatedText, setGeneratedText] = useState('');
+    const [mode, setMode] = useToolState<LoremMode>('lorem-ipsum', 'mode', 'paragraphs');
+    const [count, setCount] = useToolState('lorem-ipsum', 'count', 3);
+    const [startWithLorem, setStartWithLorem] = useToolState('lorem-ipsum', 'startWithLorem', true);
+    const [generatedText, setGeneratedText] = useToolState('lorem-ipsum', 'generatedText', '');
 
     const generateWord = () => LOREM_WORDS[Math.floor(Math.random() * LOREM_WORDS.length)];
 

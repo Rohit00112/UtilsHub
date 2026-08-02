@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { Clipboard, Eraser, FileJson2, Minimize2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function JsonFormatter() {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+    const [input, setInput] = useToolState('json-formatter', 'input', '');
+    const [output, setOutput] = useToolState('json-formatter', 'output', '');
     const [error, setError] = useState('');
 
     const processJson = (mode: 'format' | 'minify') => {

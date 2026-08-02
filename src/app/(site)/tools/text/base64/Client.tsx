@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Mode = 'encode' | 'decode';
 type Base64Variant = 'standard' | 'url-safe';
@@ -84,10 +85,10 @@ function decodeText(value: string) {
 }
 
 export default function Base64Encoder() {
-    const [inputText, setInputText] = useState('');
-    const [mode, setMode] = useState<Mode>('encode');
-    const [variant, setVariant] = useState<Base64Variant>('standard');
-    const [includePadding, setIncludePadding] = useState(true);
+    const [inputText, setInputText] = useToolState('base64', 'inputText', '');
+    const [mode, setMode] = useToolState<Mode>('base64', 'mode', 'encode');
+    const [variant, setVariant] = useToolState<Base64Variant>('base64', 'variant', 'standard');
+    const [includePadding, setIncludePadding] = useToolState('base64', 'includePadding', true);
     const [copied, setCopied] = useState(false);
     const [clipboardError, setClipboardError] = useState('');
 

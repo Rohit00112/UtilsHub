@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getToolBySlug } from '@/lib/tools';
 import { toolJsonLd } from '@/lib/seo';
 import ToolContent from './ToolContent';
+import RecentTracker from './RecentTracker';
 
 interface ToolPageWrapperProps {
   categoryId: string;
@@ -26,6 +27,7 @@ export default function ToolPageWrapper({ categoryId, slug, children }: ToolPage
           dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
         />
       ))}
+      <RecentTracker toolId={tool.id} />
       {children}
       <div className="pb-14">
         <div className="container">

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import SearchLauncher from '@/components/SearchLauncher';
+import RecentlyUsed from '@/components/RecentlyUsed';
 import { categories, getAllActiveTools, getToolsByCategory } from '@/lib/tools';
 import { getHomeMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
@@ -200,6 +201,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <RecentlyUsed />
 
       <section id="tool-directory" className="py-20 sm:py-24">
         <div className="container">

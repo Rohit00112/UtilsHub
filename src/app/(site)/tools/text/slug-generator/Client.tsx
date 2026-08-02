@@ -11,6 +11,7 @@ import {
     ToolSegmentedControl,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Separator = '-' | '_';
 type CaseMode = 'lower' | 'preserve';
@@ -91,11 +92,11 @@ function buildSlug({
 const sampleTitle = 'The Practical Guide to Browser-Local Utility Tools';
 
 export default function SlugGenerator() {
-    const [input, setInput] = useState(sampleTitle);
-    const [separator, setSeparator] = useState<Separator>('-');
-    const [caseMode, setCaseMode] = useState<CaseMode>('lower');
-    const [removeStopWords, setRemoveStopWords] = useState(false);
-    const [maxLength, setMaxLength] = useState('80');
+    const [input, setInput] = useToolState('slug-generator', 'input', sampleTitle);
+    const [separator, setSeparator] = useToolState<Separator>('slug-generator', 'separator', '-');
+    const [caseMode, setCaseMode] = useToolState<CaseMode>('slug-generator', 'caseMode', 'lower');
+    const [removeStopWords, setRemoveStopWords] = useToolState('slug-generator', 'removeStopWords', false);
+    const [maxLength, setMaxLength] = useToolState('slug-generator', 'maxLength', '80');
     const [copied, setCopied] = useState(false);
 
     const parsedMaxLength = Number.parseInt(maxLength, 10);

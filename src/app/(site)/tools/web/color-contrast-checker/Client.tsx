@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Check, X } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolMetric, ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 function parseHex(hex: string): [number, number, number] | null {
     let h = hex.trim().replace(/^#/, '');
@@ -38,8 +39,8 @@ function Badge({ pass, label }: { pass: boolean; label: string }) {
 }
 
 export default function ColorContrastChecker() {
-    const [text, setText] = useState('#1e293b');
-    const [bg, setBg] = useState('#f8fafc');
+    const [text, setText] = useToolState('color-contrast-checker', 'text', '#1e293b');
+    const [bg, setBg] = useToolState('color-contrast-checker', 'bg', '#f8fafc');
 
     const data = useMemo(() => {
         const tc = parseHex(text);

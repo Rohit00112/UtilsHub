@@ -11,6 +11,7 @@ import {
     ToolSegmentedControl,
     ToolStatus,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type RobotsMode = 'index-follow' | 'noindex-follow' | 'noindex-nofollow';
 type CardType = 'summary' | 'summary_large_image';
@@ -50,14 +51,14 @@ function robotsContent(mode: RobotsMode) {
 }
 
 export default function MetaTagGenerator() {
-    const [title, setTitle] = useState(sample.title);
-    const [description, setDescription] = useState(sample.description);
-    const [url, setUrl] = useState(sample.url);
-    const [image, setImage] = useState(sample.image);
-    const [siteName, setSiteName] = useState(sample.siteName);
-    const [twitter, setTwitter] = useState(sample.twitter);
-    const [robots, setRobots] = useState<RobotsMode>('index-follow');
-    const [card, setCard] = useState<CardType>('summary_large_image');
+    const [title, setTitle] = useToolState('meta-tags', 'title', sample.title);
+    const [description, setDescription] = useToolState('meta-tags', 'description', sample.description);
+    const [url, setUrl] = useToolState('meta-tags', 'url', sample.url);
+    const [image, setImage] = useToolState('meta-tags', 'image', sample.image);
+    const [siteName, setSiteName] = useToolState('meta-tags', 'siteName', sample.siteName);
+    const [twitter, setTwitter] = useToolState('meta-tags', 'twitter', sample.twitter);
+    const [robots, setRobots] = useToolState<RobotsMode>('meta-tags', 'robots', 'index-follow');
+    const [card, setCard] = useToolState<CardType>('meta-tags', 'card', 'summary_large_image');
     const [copied, setCopied] = useState(false);
 
     const output = useMemo(() => {

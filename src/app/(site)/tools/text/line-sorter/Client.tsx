@@ -12,6 +12,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type SortMode = 'natural' | 'alphabetical' | 'length' | 'numeric';
 type SortDirection = 'asc' | 'desc';
@@ -54,16 +55,16 @@ function sortKey(line: string, trimWhitespace: boolean, caseSensitive: boolean) 
 }
 
 export default function LineSorter() {
-    const [input, setInput] = useState(sampleText);
-    const [output, setOutput] = useState('');
-    const [sortMode, setSortMode] = useState<SortMode>('natural');
-    const [direction, setDirection] = useState<SortDirection>('asc');
-    const [caseSensitive, setCaseSensitive] = useState(false);
-    const [trimWhitespace, setTrimWhitespace] = useState(true);
-    const [removeEmpty, setRemoveEmpty] = useState(true);
-    const [removeDuplicates, setRemoveDuplicates] = useState(false);
+    const [input, setInput] = useToolState('line-sorter', 'input', sampleText);
+    const [output, setOutput] = useToolState('line-sorter', 'output', '');
+    const [sortMode, setSortMode] = useToolState<SortMode>('line-sorter', 'sortMode', 'natural');
+    const [direction, setDirection] = useToolState<SortDirection>('line-sorter', 'direction', 'asc');
+    const [caseSensitive, setCaseSensitive] = useToolState('line-sorter', 'caseSensitive', false);
+    const [trimWhitespace, setTrimWhitespace] = useToolState('line-sorter', 'trimWhitespace', true);
+    const [removeEmpty, setRemoveEmpty] = useToolState('line-sorter', 'removeEmpty', true);
+    const [removeDuplicates, setRemoveDuplicates] = useToolState('line-sorter', 'removeDuplicates', false);
     const [copied, setCopied] = useState(false);
-    const [meta, setMeta] = useState<SortMeta | null>(null);
+    const [meta, setMeta] = useToolState<SortMeta | null>('line-sorter', 'meta', null);
 
     const sortLines = () => {
         const inputLines = input.length === 0 ? [] : input.split(/\r?\n/);

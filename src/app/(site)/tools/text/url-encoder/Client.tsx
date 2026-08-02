@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { Clipboard, Eraser, Lock, Unlock } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const textareaClass = 'min-h-56 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function URLEncoder() {
-    const [inputText, setInputText] = useState('');
-    const [outputText, setOutputText] = useState('');
-    const [mode, setMode] = useState<'encode' | 'decode'>('encode');
+    const [inputText, setInputText] = useToolState('url-encoder', 'inputText', '');
+    const [outputText, setOutputText] = useToolState('url-encoder', 'outputText', '');
+    const [mode, setMode] = useToolState<'encode' | 'decode'>('url-encoder', 'mode', 'encode');
     const [error, setError] = useState('');
     const [copied, setCopied] = useState(false);
 

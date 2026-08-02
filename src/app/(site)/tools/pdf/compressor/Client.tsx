@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Download, Gauge, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolEmptyState, ToolMetric, ToolPanel, ToolResultCard, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface CompressionResult {
     url: string;
@@ -35,9 +36,9 @@ function downloadBlob(url: string, name: string) {
 }
 
 export default function PDFCompressor() {
-    const [file, setFile] = useState<File | null>(null);
-    const [pageCount, setPageCount] = useState(0);
-    const [result, setResult] = useState<CompressionResult | null>(null);
+    const [file, setFile] = useToolState<File | null>('pdf-compressor', 'file', null);
+    const [pageCount, setPageCount] = useToolState('pdf-compressor', 'pageCount', 0);
+    const [result, setResult] = useToolState<CompressionResult | null>('pdf-compressor', 'result', null);
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 

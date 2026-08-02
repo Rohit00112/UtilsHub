@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Plus, Trash2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolPanel, ToolSegmentedControl } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type GradType = 'linear' | 'radial';
 
@@ -21,9 +22,9 @@ const typeOptions: Array<{ label: string; value: GradType }> = [
 let nextId = 3;
 
 export default function CssGradientGenerator() {
-    const [type, setType] = useState<GradType>('linear');
-    const [angle, setAngle] = useState(90);
-    const [stops, setStops] = useState<Stop[]>([
+    const [type, setType] = useToolState<GradType>('css-gradient-generator', 'type', 'linear');
+    const [angle, setAngle] = useToolState('css-gradient-generator', 'angle', 90);
+    const [stops, setStops] = useToolState<Stop[]>('css-gradient-generator', 'stops', [
         { id: 1, color: '#6366f1', pos: 0 },
         { id: 2, color: '#ec4899', pos: 100 },
     ]);

@@ -5,6 +5,7 @@ import * as Diff from 'diff';
 import { ArrowLeftRight, Check, Clipboard, Eraser, GitCompare } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 function sortJson(value: unknown): unknown {
     if (Array.isArray(value)) {
@@ -39,9 +40,9 @@ function parseAndFormat(input: string) {
 }
 
 export default function JsonDiffViewer() {
-    const [leftJson, setLeftJson] = useState('');
-    const [rightJson, setRightJson] = useState('');
-    const [diffResult, setDiffResult] = useState<Diff.Change[] | null>(null);
+    const [leftJson, setLeftJson] = useToolState('json-diff', 'leftJson', '');
+    const [rightJson, setRightJson] = useToolState('json-diff', 'rightJson', '');
+    const [diffResult, setDiffResult] = useToolState<Diff.Change[] | null>('json-diff', 'diffResult', null);
     const [leftError, setLeftError] = useState('');
     const [rightError, setRightError] = useState('');
     const [copied, setCopied] = useState(false);

@@ -1,17 +1,17 @@
 'use client';
 
-import { useState } from 'react';
 import * as Diff from 'diff';
 import { Eraser, GitCompare } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const textareaClass = 'h-80 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function DiffChecker() {
-    const [original, setOriginal] = useState('');
-    const [changed, setChanged] = useState('');
-    const [diffResult, setDiffResult] = useState<Diff.Change[] | null>(null);
+    const [original, setOriginal] = useToolState('diff-checker', 'original', '');
+    const [changed, setChanged] = useToolState('diff-checker', 'changed', '');
+    const [diffResult, setDiffResult] = useToolState<Diff.Change[] | null>('diff-checker', 'diffResult', null);
 
     const compareText = () => {
         setDiffResult(Diff.diffLines(original, changed));

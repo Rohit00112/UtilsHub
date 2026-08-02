@@ -10,6 +10,7 @@ import {
     ToolSegmentedControl,
     ToolStatus,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Unit = 'px' | 'rem' | 'em' | 'percent' | 'vw' | 'vh';
 
@@ -67,13 +68,13 @@ function toPixels({
 }
 
 export default function CssUnitConverter() {
-    const [value, setValue] = useState('16');
-    const [unit, setUnit] = useState<Unit>('px');
-    const [rootFontSize, setRootFontSize] = useState('16');
-    const [parentFontSize, setParentFontSize] = useState('16');
-    const [parentSize, setParentSize] = useState('320');
-    const [viewportWidth, setViewportWidth] = useState('1440');
-    const [viewportHeight, setViewportHeight] = useState('900');
+    const [value, setValue] = useToolState('css-unit-converter', 'value', '16');
+    const [unit, setUnit] = useToolState<Unit>('css-unit-converter', 'unit', 'px');
+    const [rootFontSize, setRootFontSize] = useToolState('css-unit-converter', 'rootFontSize', '16');
+    const [parentFontSize, setParentFontSize] = useToolState('css-unit-converter', 'parentFontSize', '16');
+    const [parentSize, setParentSize] = useToolState('css-unit-converter', 'parentSize', '320');
+    const [viewportWidth, setViewportWidth] = useToolState('css-unit-converter', 'viewportWidth', '1440');
+    const [viewportHeight, setViewportHeight] = useToolState('css-unit-converter', 'viewportHeight', '900');
     const [copied, setCopied] = useState<string | null>(null);
 
     const numericValue = parseNumber(value, 0);

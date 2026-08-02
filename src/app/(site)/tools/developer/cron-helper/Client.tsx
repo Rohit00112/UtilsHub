@@ -6,6 +6,7 @@ import { CronExpressionParser } from 'cron-parser';
 import { Check, Clipboard, Clock, Eraser, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolMetric, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const presets = [
     { label: 'Every 5 minutes', expression: '*/5 * * * *' },
@@ -85,15 +86,15 @@ function formatRunDate(date: Date, timezone: string) {
 }
 
 export default function CronHelper() {
-    const [expression, setExpression] = useState('*/5 * * * *');
-    const [timezone, setTimezone] = useState('UTC');
-    const [currentDate, setCurrentDate] = useState(() => toDatetimeLocal(new Date()));
+    const [expression, setExpression] = useToolState('cron-helper', 'expression', '*/5 * * * *');
+    const [timezone, setTimezone] = useToolState('cron-helper', 'timezone', 'UTC');
+    const [currentDate, setCurrentDate] = useToolState('cron-helper', 'currentDate', () => toDatetimeLocal(new Date()));
     const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         if (browserTimezone) setTimezone(browserTimezone);
-    }, []);
+    }, [setTimezone]);
 
     const result = useMemo(() => {
         const trimmed = expression.trim();

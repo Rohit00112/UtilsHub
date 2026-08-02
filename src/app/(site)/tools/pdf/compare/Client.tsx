@@ -11,14 +11,15 @@ import {
     ToolStatus,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type TextItem = { str?: string };
 
 export default function PDFCompare() {
-    const [file1, setFile1] = useState<File | null>(null);
-    const [file2, setFile2] = useState<File | null>(null);
+    const [file1, setFile1] = useToolState<File | null>('pdf-compare', 'file1', null);
+    const [file2, setFile2] = useToolState<File | null>('pdf-compare', 'file2', null);
     const [isProcessing, setIsProcessing] = useState(false);
-    const [diffResult, setDiffResult] = useState<Diff.Change[] | null>(null);
+    const [diffResult, setDiffResult] = useToolState<Diff.Change[] | null>('pdf-compare', 'diffResult', null);
     const [error, setError] = useState<string | null>(null);
 
     const extractText = async (file: File): Promise<string> => {

@@ -1,22 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Clipboard, Download, Eye, PenLine } from 'lucide-react';
 import { marked } from 'marked';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolSegmentedControl, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function MarkdownEditor() {
-    const [markdown, setMarkdown] = useState('# Hello World\n\nStart typing markdown here...');
-    const [html, setHtml] = useState('');
-    const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
+    const [markdown, setMarkdown] = useToolState('markdown-editor', 'markdown', '# Hello World\n\nStart typing markdown here...');
+    const [html, setHtml] = useToolState('markdown-editor', 'html', '');
+    const [activeTab, setActiveTab] = useToolState<'write' | 'preview'>('markdown-editor', 'activeTab', 'write');
 
     useEffect(() => {
         const parseMarkdown = async () => {
             setHtml(await marked.parse(markdown));
         };
         parseMarkdown();
-    }, [markdown]);
+    }, [markdown, setHtml]);
 
     const downloadHtml = () => {
         const blob = new Blob([html], { type: 'text/html' });

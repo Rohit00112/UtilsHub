@@ -12,6 +12,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Mode = 'csv-to-json' | 'json-to-csv';
 type Delimiter = 'comma' | 'semicolon' | 'tab';
@@ -168,15 +169,15 @@ const sampleCsv = 'name,email,role\nAda Lovelace,ada@example.com,Engineer\nGrace
 const sampleJson = '[\n  {\n    "name": "Ada Lovelace",\n    "email": "ada@example.com",\n    "role": "Engineer"\n  }\n]';
 
 export default function CsvJsonConverter() {
-    const [mode, setMode] = useState<Mode>('csv-to-json');
-    const [delimiter, setDelimiter] = useState<Delimiter>('comma');
-    const [input, setInput] = useState(sampleCsv);
-    const [output, setOutput] = useState('');
+    const [mode, setMode] = useToolState<Mode>('csv-json', 'mode', 'csv-to-json');
+    const [delimiter, setDelimiter] = useToolState<Delimiter>('csv-json', 'delimiter', 'comma');
+    const [input, setInput] = useToolState('csv-json', 'input', sampleCsv);
+    const [output, setOutput] = useToolState('csv-json', 'output', '');
     const [error, setError] = useState('');
-    const [hasHeader, setHasHeader] = useState(true);
-    const [prettyJson, setPrettyJson] = useState(true);
+    const [hasHeader, setHasHeader] = useToolState('csv-json', 'hasHeader', true);
+    const [prettyJson, setPrettyJson] = useToolState('csv-json', 'prettyJson', true);
     const [copied, setCopied] = useState(false);
-    const [meta, setMeta] = useState<ConversionMeta | null>(null);
+    const [meta, setMeta] = useToolState<ConversionMeta | null>('csv-json', 'meta', null);
 
     const delimiterLabel = useMemo(() => delimiterOptions.find((option) => option.value === delimiter)?.label || 'Comma', [delimiter]);
 

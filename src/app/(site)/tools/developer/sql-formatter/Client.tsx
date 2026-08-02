@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, Minimize2, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolMetric, ToolPanel, ToolSegmentedControl, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type Mode = 'format' | 'minify';
 type KeywordCase = 'upper' | 'lower';
@@ -111,10 +112,10 @@ function minifySql(sql: string, keywordCase: KeywordCase) {
 }
 
 export default function SqlFormatter() {
-    const [input, setInput] = useState(sampleSql);
-    const [mode, setMode] = useState<Mode>('format');
-    const [keywordCase, setKeywordCase] = useState<KeywordCase>('upper');
-    const [indentSize, setIndentSize] = useState('2');
+    const [input, setInput] = useToolState('sql-formatter', 'input', sampleSql);
+    const [mode, setMode] = useToolState<Mode>('sql-formatter', 'mode', 'format');
+    const [keywordCase, setKeywordCase] = useToolState<KeywordCase>('sql-formatter', 'keywordCase', 'upper');
+    const [indentSize, setIndentSize] = useToolState('sql-formatter', 'indentSize', '2');
     const [copied, setCopied] = useState(false);
 
     const output = useMemo(() => {

@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type OutputFormat = 'image/png' | 'image/jpeg' | 'image/webp';
 
@@ -44,10 +45,10 @@ function download(url: string, name: string) {
 }
 
 export default function MetadataRemover() {
-    const [files, setFiles] = useState<File[]>([]);
-    const [cleaned, setCleaned] = useState<CleanedImage[]>([]);
-    const [format, setFormat] = useState<OutputFormat>('image/jpeg');
-    const [quality, setQuality] = useState(92);
+    const [files, setFiles] = useToolState<File[]>('metadata-remover', 'files', []);
+    const [cleaned, setCleaned] = useToolState<CleanedImage[]>('metadata-remover', 'cleaned', []);
+    const [format, setFormat] = useToolState<OutputFormat>('metadata-remover', 'format', 'image/jpeg');
+    const [quality, setQuality] = useToolState('metadata-remover', 'quality', 92);
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState('');
 

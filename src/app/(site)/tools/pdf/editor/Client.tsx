@@ -12,6 +12,7 @@ import {
   ToolStatus,
   ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface EditorSession {
   id: string;
@@ -29,8 +30,8 @@ function formatBytes(bytes: number) {
 }
 
 export default function PDFEditor() {
-  const [session, setSession] = useState<EditorSession | null>(null);
-  const [selectedFileName, setSelectedFileName] = useState('');
+  const [session, setSession] = useToolState<EditorSession | null>('pdf-editor', 'session', null);
+  const [selectedFileName, setSelectedFileName] = useToolState('pdf-editor', 'selectedFileName', '');
   const [isStarting, setIsStarting] = useState(false);
   const [error, setError] = useState('');
 

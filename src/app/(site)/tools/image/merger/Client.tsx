@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Download, ImagePlus, Trash2, X } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
@@ -12,6 +12,7 @@ import {
     ToolSegmentedControl,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type LayoutMode = 'vertical' | 'horizontal' | 'grid';
 
@@ -22,9 +23,9 @@ interface MergeImage {
 }
 
 export default function ImageMerger() {
-    const [images, setImages] = useState<MergeImage[]>([]);
-    const [layout, setLayout] = useState<LayoutMode>('vertical');
-    const [gap, setGap] = useState(0);
+    const [images, setImages] = useToolState<MergeImage[]>('image-merger', 'images', []);
+    const [layout, setLayout] = useToolState<LayoutMode>('image-merger', 'layout', 'vertical');
+    const [gap, setGap] = useToolState('image-merger', 'gap', 0);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

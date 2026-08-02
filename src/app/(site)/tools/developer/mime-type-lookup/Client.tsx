@@ -13,6 +13,7 @@ import {
     ToolSegmentedControl,
     ToolStatus,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type LookupMode = 'all' | 'extension' | 'mime';
 
@@ -96,9 +97,9 @@ function normalizeQuery(value: string) {
 }
 
 export default function MimeTypeLookup() {
-    const [query, setQuery] = useState('json');
-    const [mode, setMode] = useState<LookupMode>('all');
-    const [category, setCategory] = useState('All');
+    const [query, setQuery] = useToolState('mime-type-lookup', 'query', 'json');
+    const [mode, setMode] = useToolState<LookupMode>('mime-type-lookup', 'mode', 'all');
+    const [category, setCategory] = useToolState('mime-type-lookup', 'category', 'All');
     const [copiedKey, setCopiedKey] = useState('');
 
     const results = useMemo(() => {

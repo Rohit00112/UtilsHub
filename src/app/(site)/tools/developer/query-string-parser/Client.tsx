@@ -3,11 +3,12 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Plus, Trash2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 type Pair = { id: number; key: string; value: string };
 export default function QueryStringParser() {
-  const [source, setSource] = useState('https://example.com/search?q=web+tools&page=2');
-  const [base, setBase] = useState('https://example.com/search');
-  const [pairs, setPairs] = useState<Pair[]>([{ id: 1, key: 'q', value: 'web tools' }, { id: 2, key: 'page', value: '2' }]);
+  const [source, setSource] = useToolState('query-string-parser', 'source', 'https://example.com/search?q=web+tools&page=2');
+  const [base, setBase] = useToolState('query-string-parser', 'base', 'https://example.com/search');
+  const [pairs, setPairs] = useToolState<Pair[]>('query-string-parser', 'pairs', [{ id: 1, key: 'q', value: 'web tools' }, { id: 2, key: 'page', value: '2' }]);
   const [error, setError] = useState(''); const [copied, setCopied] = useState(false);
   const parse = () => { try { const isUrl = /^[a-z][a-z\d+.-]*:\/\//i.test(source.trim()); const url = new URL(isUrl ? source.trim() : `https://local.invalid/?${source.replace(/^\?/, '')}`); setBase(isUrl ? `${url.origin}${url.pathname}${url.hash}` : ''); setPairs(Array.from(url.searchParams.entries()).map(([key, value], i) => ({ id: Date.now() + i, key, value }))); setError(''); } catch { setError('Enter a valid absolute URL or raw query string.'); } };
   const query = useMemo(() => { const p = new URLSearchParams(); pairs.forEach(({ key, value }) => { if (key) p.append(key, value); }); return p.toString(); }, [pairs]);

@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { Clipboard, Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const textareaClass = 'min-h-56 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function CaseConverter() {
-    const [inputText, setInputText] = useState('');
-    const [outputText, setOutputText] = useState('');
+    const [inputText, setInputText] = useToolState('case-converter', 'inputText', '');
+    const [outputText, setOutputText] = useToolState('case-converter', 'outputText', '');
     const [copied, setCopied] = useState(false);
 
     const conversions = [

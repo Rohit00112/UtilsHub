@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, Play, RefreshCw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolMetric, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
 
@@ -54,12 +55,12 @@ function formatBody(body: string, contentType: string) {
 }
 
 export default function ApiRequestTester() {
-    const [method, setMethod] = useState<HttpMethod>('GET');
-    const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/todos/1');
-    const [headersText, setHeadersText] = useState('accept: application/json');
-    const [body, setBody] = useState('{\n  "title": "FreeWebTools test"\n}');
-    const [includeCredentials, setIncludeCredentials] = useState(false);
-    const [response, setResponse] = useState<ResponseState | null>(null);
+    const [method, setMethod] = useToolState<HttpMethod>('api-request-tester', 'method', 'GET');
+    const [url, setUrl] = useToolState('api-request-tester', 'url', 'https://jsonplaceholder.typicode.com/todos/1');
+    const [headersText, setHeadersText] = useToolState('api-request-tester', 'headersText', 'accept: application/json');
+    const [body, setBody] = useToolState('api-request-tester', 'body', '{\n  "title": "FreeWebTools test"\n}');
+    const [includeCredentials, setIncludeCredentials] = useToolState('api-request-tester', 'includeCredentials', false);
+    const [response, setResponse] = useToolState<ResponseState | null>('api-request-tester', 'response', null);
     const [error, setError] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [copied, setCopied] = useState(false);

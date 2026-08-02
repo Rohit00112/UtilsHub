@@ -10,6 +10,7 @@ import {
     ToolPanel,
     ToolSegmentedControl,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type StatusClass = 'all' | '1xx' | '2xx' | '3xx' | '4xx' | '5xx';
 
@@ -61,8 +62,8 @@ function statusClass(code: number): StatusClass {
 }
 
 export default function HttpStatusReference() {
-    const [query, setQuery] = useState('');
-    const [selectedClass, setSelectedClass] = useState<StatusClass>('all');
+    const [query, setQuery] = useToolState('http-status', 'query', '');
+    const [selectedClass, setSelectedClass] = useToolState<StatusClass>('http-status', 'selectedClass', 'all');
     const [copied, setCopied] = useState<number | null>(null);
 
     const filtered = useMemo(() => {

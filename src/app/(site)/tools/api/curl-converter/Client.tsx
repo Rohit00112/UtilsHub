@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolMetric, ToolPanel, ToolSegmentedControl, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type OutputMode = 'fetch' | 'axios' | 'python';
 
@@ -227,8 +228,8 @@ function generateCode(parsed: ParsedCurl, mode: OutputMode) {
 }
 
 export default function CurlConverter() {
-    const [curl, setCurl] = useState(sampleCurl);
-    const [mode, setMode] = useState<OutputMode>('fetch');
+    const [curl, setCurl] = useToolState('curl-converter', 'curl', sampleCurl);
+    const [mode, setMode] = useToolState<OutputMode>('curl-converter', 'mode', 'fetch');
     const [copied, setCopied] = useState(false);
 
     const result = useMemo(() => {

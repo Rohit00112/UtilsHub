@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CalendarDays } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface AgeResult {
     years: number;
@@ -60,9 +61,9 @@ function differenceInCalendarDays(start: Date, end: Date) {
 }
 
 export default function AgeCalculator() {
-    const [birthDate, setBirthDate] = useState('');
-    const [targetDate, setTargetDate] = useState('');
-    const [age, setAge] = useState<AgeResult | null>(null);
+    const [birthDate, setBirthDate] = useToolState('age-calculator', 'birthDate', '');
+    const [targetDate, setTargetDate] = useToolState('age-calculator', 'targetDate', '');
+    const [age, setAge] = useToolState<AgeResult | null>('age-calculator', 'age', null);
     const [error, setError] = useState('');
 
     const calculateAge = () => {

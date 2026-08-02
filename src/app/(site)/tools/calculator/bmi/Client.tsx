@@ -1,16 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import { Calculator } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function BMICalculator() {
-    const [weight, setWeight] = useState('');
-    const [height, setHeight] = useState('');
-    const [unit, setUnit] = useState<'metric' | 'imperial'>('metric');
-    const [bmi, setBmi] = useState<number | null>(null);
-    const [category, setCategory] = useState('');
+    const [weight, setWeight] = useToolState('bmi-calculator', 'weight', '');
+    const [height, setHeight] = useToolState('bmi-calculator', 'height', '');
+    const [unit, setUnit] = useToolState<'metric' | 'imperial'>('bmi-calculator', 'unit', 'metric');
+    const [bmi, setBmi] = useToolState<number | null>('bmi-calculator', 'bmi', null);
+    const [category, setCategory] = useToolState('bmi-calculator', 'category', '');
 
     const calculateBMI = () => {
         const w = parseFloat(weight);

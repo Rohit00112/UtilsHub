@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Download, FileArchive, FileText, Scissors, Upload } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolEmptyState, ToolField, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type SplitMode = 'ranges' | 'pages';
 
@@ -67,11 +68,11 @@ function bytesToArrayBuffer(bytes: Uint8Array): ArrayBuffer {
 }
 
 export default function PDFSplitter() {
-    const [file, setFile] = useState<File | null>(null);
-    const [pageCount, setPageCount] = useState(0);
-    const [ranges, setRanges] = useState('1');
-    const [mode, setMode] = useState<SplitMode>('ranges');
-    const [results, setResults] = useState<SplitResult[]>([]);
+    const [file, setFile] = useToolState<File | null>('pdf-splitter', 'file', null);
+    const [pageCount, setPageCount] = useToolState('pdf-splitter', 'pageCount', 0);
+    const [ranges, setRanges] = useToolState('pdf-splitter', 'ranges', '1');
+    const [mode, setMode] = useToolState<SplitMode>('pdf-splitter', 'mode', 'ranges');
+    const [results, setResults] = useToolState<SplitResult[]>('pdf-splitter', 'results', []);
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 

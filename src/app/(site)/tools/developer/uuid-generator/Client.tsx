@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Check, Clipboard, Download, RefreshCw } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 import { v1 as uuidv1, v4 as uuidv4, v7 as uuidv7, validate, version as uuidVersion } from 'uuid';
 
 type UUIDVersion = 'v1' | 'v4' | 'v7';
@@ -21,11 +22,11 @@ const versionLabels: Record<UUIDVersion, string> = {
 };
 
 export default function UuidGenerator() {
-    const [uuids, setUuids] = useState<GeneratedUuid[]>([]);
-    const [count, setCount] = useState('5');
-    const [selectedVersion, setSelectedVersion] = useState<UUIDVersion>('v4');
-    const [letterCase, setLetterCase] = useState<LetterCase>('lower');
-    const [includeHyphens, setIncludeHyphens] = useState(true);
+    const [uuids, setUuids] = useToolState<GeneratedUuid[]>('uuid-generator', 'uuids', []);
+    const [count, setCount] = useToolState('uuid-generator', 'count', '5');
+    const [selectedVersion, setSelectedVersion] = useToolState<UUIDVersion>('uuid-generator', 'selectedVersion', 'v4');
+    const [letterCase, setLetterCase] = useToolState<LetterCase>('uuid-generator', 'letterCase', 'lower');
+    const [includeHyphens, setIncludeHyphens] = useToolState('uuid-generator', 'includeHyphens', true);
     const [error, setError] = useState('');
     const [copiedId, setCopiedId] = useState<string | null>(null);
 

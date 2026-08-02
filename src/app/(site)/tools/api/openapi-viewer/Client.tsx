@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
 import { Check, Clipboard, Eraser, FileJson2, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolMetric, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface Endpoint {
     method: string;
@@ -130,7 +131,7 @@ function endpointSummary(endpoints: Endpoint[]) {
 }
 
 export default function OpenApiViewer() {
-    const [input, setInput] = useState(sampleSpec);
+    const [input, setInput] = useToolState('openapi-viewer', 'input', sampleSpec);
     const [copied, setCopied] = useState(false);
 
     const result = useMemo(() => {

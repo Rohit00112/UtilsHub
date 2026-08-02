@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, ShieldCheck, ShieldX, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolMetric, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type JsonRecord = Record<string, unknown>;
 
@@ -128,8 +129,8 @@ function validateValue(value: unknown, schema: unknown, path = '$'): ValidationI
 }
 
 export default function JsonSchemaValidator() {
-    const [schemaInput, setSchemaInput] = useState(sampleSchema);
-    const [jsonInput, setJsonInput] = useState(sampleJson);
+    const [schemaInput, setSchemaInput] = useToolState('json-schema-validator', 'schemaInput', sampleSchema);
+    const [jsonInput, setJsonInput] = useToolState('json-schema-validator', 'jsonInput', sampleJson);
     const [copied, setCopied] = useState(false);
 
     const result = useMemo(() => {

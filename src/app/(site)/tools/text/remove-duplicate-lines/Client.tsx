@@ -4,14 +4,15 @@ import { useState } from 'react';
 import { Clipboard, Eraser, ListX } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 const textareaClass = 'h-96 w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring';
 
 export default function RemoveDuplicateLines() {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+    const [input, setInput] = useToolState('remove-duplicates-lines', 'input', '');
+    const [output, setOutput] = useToolState('remove-duplicates-lines', 'output', '');
     const [copied, setCopied] = useState(false);
-    const [options, setOptions] = useState({
+    const [options, setOptions] = useToolState('remove-duplicates-lines', 'options', {
         caseSensitive: false,
         ignoreWhitespace: false,
     });

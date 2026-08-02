@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Binary, Check, Clipboard, Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type BaseKey = 'bin' | 'oct' | 'dec' | 'hex';
 
@@ -42,7 +43,7 @@ function toBig(value: string, radix: number): bigint | null {
 }
 
 export default function NumberBaseConverter() {
-    const [values, setValues] = useState<Record<BaseKey, string>>({ ...emptyValues });
+    const [values, setValues] = useToolState<Record<BaseKey, string>>('number-base-converter', 'values', { ...emptyValues });
     const [error, setError] = useState<BaseKey | null>(null);
     const [copied, setCopied] = useState<BaseKey | null>(null);
 

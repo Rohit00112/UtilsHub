@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 import { normalizeImageRect, type ImageRect } from '@/lib/image-processing';
 
 type AspectRatio = 'free' | '1:1' | '4:3' | '16:9';
@@ -25,12 +26,12 @@ const extension: Record<OutputFormat, string> = {
 export default function ImageCropper() {
     const sourceRef = useRef<HTMLCanvasElement>(null);
     const previewRef = useRef<HTMLCanvasElement>(null);
-    const [fileName, setFileName] = useState('');
-    const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-    const [crop, setCrop] = useState<ImageRect>({ x: 0, y: 0, width: 1, height: 1 });
-    const [ratio, setRatio] = useState<AspectRatio>('free');
-    const [format, setFormat] = useState<OutputFormat>('image/png');
-    const [quality, setQuality] = useState(90);
+    const [fileName, setFileName] = useToolState('image-cropper', 'fileName', '');
+    const [imageSize, setImageSize] = useToolState('image-cropper', 'imageSize', { width: 0, height: 0 });
+    const [crop, setCrop] = useToolState<ImageRect>('image-cropper', 'crop', { x: 0, y: 0, width: 1, height: 1 });
+    const [ratio, setRatio] = useToolState<AspectRatio>('image-cropper', 'ratio', 'free');
+    const [format, setFormat] = useToolState<OutputFormat>('image-cropper', 'format', 'image/png');
+    const [quality, setQuality] = useToolState('image-cropper', 'quality', 90);
     const [error, setError] = useState('');
 
     useEffect(() => {

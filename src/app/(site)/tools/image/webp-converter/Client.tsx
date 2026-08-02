@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Download, FileArchive, Image as ImageIcon, Upload, Wand2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolEmptyState, ToolPanel, ToolStatus, ToolUploadZone } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface SourceImage {
     id: string;
@@ -63,9 +64,9 @@ function canvasToBlob(canvas: HTMLCanvasElement, quality: number) {
 }
 
 export default function WebPConverter() {
-    const [images, setImages] = useState<SourceImage[]>([]);
-    const [converted, setConverted] = useState<ConvertedImage[]>([]);
-    const [quality, setQuality] = useState(82);
+    const [images, setImages] = useToolState<SourceImage[]>('webp-converter', 'images', []);
+    const [converted, setConverted] = useToolState<ConvertedImage[]>('webp-converter', 'converted', []);
+    const [quality, setQuality] = useToolState('webp-converter', 'quality', 82);
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 

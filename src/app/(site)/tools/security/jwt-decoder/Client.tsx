@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface JWTHeader {
     alg?: string;
@@ -172,9 +173,9 @@ function parseToken(token: string): DecodedJWT {
 }
 
 export default function JWTDecoder() {
-    const [input, setInput] = useState('');
-    const [decoded, setDecoded] = useState<DecodedJWT | null>(null);
-    const [secret, setSecret] = useState('');
+    const [input, setInput] = useToolState('jwt-decoder', 'input', '');
+    const [decoded, setDecoded] = useToolState<DecodedJWT | null>('jwt-decoder', 'decoded', null);
+    const [secret, setSecret] = useToolState('jwt-decoder', 'secret', '');
     const [error, setError] = useState('');
     const [copiedSection, setCopiedSection] = useState<string | null>(null);
     const [verificationState, setVerificationState] = useState<VerificationState>('idle');

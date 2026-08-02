@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { Palette } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolField, ToolPanel, ToolResultCard } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function ColorPalette() {
-    const [color, setColor] = useState('#111827');
+    const [color, setColor] = useToolState('color-palette', 'color', '#111827');
 
     return (
         <ToolLayout title="Color Palette Generator" description="Generate simple shades and tints from a base color" category="developer">

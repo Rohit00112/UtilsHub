@@ -11,6 +11,7 @@ import {
     ToolStatus,
     ToolTextarea,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface Match {
     match: string;
@@ -28,10 +29,10 @@ const COMMON_PATTERNS = [
 ];
 
 export default function RegexTester() {
-    const [pattern, setPattern] = useState('');
-    const [flags, setFlags] = useState({ g: true, i: false, m: false, s: false, u: false, y: false });
-    const [testString, setTestString] = useState('');
-    const [matches, setMatches] = useState<Match[]>([]);
+    const [pattern, setPattern] = useToolState('regex-tester', 'pattern', '');
+    const [flags, setFlags] = useToolState('regex-tester', 'flags', { g: true, i: false, m: false, s: false, u: false, y: false });
+    const [testString, setTestString] = useToolState('regex-tester', 'testString', '');
+    const [matches, setMatches] = useToolState<Match[]>('regex-tester', 'matches', []);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -65,7 +66,7 @@ export default function RegexTester() {
             setError((err as Error).message);
             setMatches([]);
         }
-    }, [flags, pattern, testString]);
+    }, [flags, pattern, testString, setMatches]);
 
     const toggleFlag = (flag: keyof typeof flags) => {
         setFlags((current) => ({ ...current, [flag]: !current[flag] }));

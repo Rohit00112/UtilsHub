@@ -5,12 +5,13 @@ import format from 'xml-formatter';
 import { Clipboard, Eraser, FileCode2, Minimize2 } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolField, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function XmlFormatter() {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+    const [input, setInput] = useToolState('xml-formatter', 'input', '');
+    const [output, setOutput] = useToolState('xml-formatter', 'output', '');
     const [error, setError] = useState<string | null>(null);
-    const [options, setOptions] = useState({
+    const [options, setOptions] = useToolState('xml-formatter', 'options', {
         indentation: '  ',
         collapseContent: false,
         lineSeparator: '\n',

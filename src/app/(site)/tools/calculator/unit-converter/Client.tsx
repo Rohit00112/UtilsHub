@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { ArrowLeftRight } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPanel } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 type UnitCategory = 'length' | 'weight' | 'temperature' | 'area' | 'volume' | 'time' | 'speed' | 'data';
 
@@ -138,10 +139,10 @@ const categories: Record<UnitCategory, CategoryInfo> = {
 };
 
 export default function UnitConverter() {
-    const [category, setCategory] = useState<UnitCategory>('length');
-    const [inputValue, setInputValue] = useState<string>('1');
-    const [fromUnit, setFromUnit] = useState<number>(0);
-    const [toUnit, setToUnit] = useState<number>(1);
+    const [category, setCategory] = useToolState<UnitCategory>('unit-converter', 'category', 'length');
+    const [inputValue, setInputValue] = useToolState<string>('unit-converter', 'inputValue', '1');
+    const [fromUnit, setFromUnit] = useToolState<number>('unit-converter', 'fromUnit', 0);
+    const [toUnit, setToUnit] = useToolState<number>('unit-converter', 'toUnit', 1);
 
     const currentCategory = categories[category];
 

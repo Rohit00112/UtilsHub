@@ -12,6 +12,7 @@ import {
     ToolStatus,
     ToolUploadZone,
 } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface PdfItem {
     id: string;
@@ -47,8 +48,8 @@ function downloadBlob(url: string, name: string) {
 }
 
 export default function PDFMerger() {
-    const [items, setItems] = useState<PdfItem[]>([]);
-    const [result, setResult] = useState<MergeResult | null>(null);
+    const [items, setItems] = useToolState<PdfItem[]>('pdf-merger', 'items', []);
+    const [result, setResult] = useToolState<MergeResult | null>('pdf-merger', 'result', null);
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 

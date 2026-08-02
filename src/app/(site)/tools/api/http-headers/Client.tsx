@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Check, Clipboard, Eraser, ShieldCheck, ShieldX } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolMetric, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 interface HeaderEntry {
     name: string;
@@ -122,7 +123,7 @@ function summarize(entries: HeaderEntry[], findings: Finding[]) {
 }
 
 export default function HttpHeadersAnalyzer() {
-    const [headers, setHeaders] = useState(sampleHeaders);
+    const [headers, setHeaders] = useToolState('http-headers-analyzer', 'headers', sampleHeaders);
     const [copied, setCopied] = useState(false);
 
     const parsed = useMemo(() => parseHeaders(headers), [headers]);

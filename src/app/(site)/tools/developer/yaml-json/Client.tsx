@@ -5,10 +5,11 @@ import yaml from 'js-yaml';
 import { ArrowLeftRight, Clipboard, Eraser } from 'lucide-react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus, ToolTextarea } from '@/components/tools/ToolPrimitives';
+import { useToolState } from '@/lib/toolState';
 
 export default function YamlJsonConverter() {
-    const [yamlInput, setYamlInput] = useState('');
-    const [jsonInput, setJsonInput] = useState('');
+    const [yamlInput, setYamlInput] = useToolState('yaml-json', 'yamlInput', '');
+    const [jsonInput, setJsonInput] = useToolState('yaml-json', 'jsonInput', '');
     const [error, setError] = useState<string | null>(null);
 
     const convertToJson = () => {
