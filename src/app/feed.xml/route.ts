@@ -10,6 +10,8 @@ function escapeXml(value: string) {
     .replace(/'/g, '&apos;');
 }
 
+export const dynamic = 'force-static';
+
 export async function GET() {
   const posts = getAllPosts();
   const site = absoluteUrl('/');

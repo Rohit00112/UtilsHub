@@ -5,6 +5,8 @@ import { CategoryIcon } from '@/components/CategoryIcon';
 import { getCategoryById, getToolsByCategory, categories } from '@/lib/tools';
 import { categoryJsonLd, getCategoryMetadata } from '@/lib/seo';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return categories.map((category) => ({
     categoryId: category.id,

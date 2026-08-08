@@ -1,12 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getToolBySlug } from '@/lib/tools';
+import { getAllActiveTools, getToolBySlug } from '@/lib/tools';
 import { absoluteUrl, toolPath } from '@/lib/seo';
 import { embedRegistry } from '@/lib/embedRegistry';
 
 interface Params {
   params: Promise<{ categoryId: string; slug: string }>;
+}
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  return getAllActiveTools().map((tool) => ({
+    categoryId: tool.categoryId,
+    slug: tool.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
