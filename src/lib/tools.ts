@@ -715,6 +715,29 @@ export const tools: Tool[] = [
     ],
     related: ['color-palette', 'image-cropper', 'favicon-generator'],
   },
+  {
+    id: 'image-background-remover',
+    name: 'Background Remover',
+    description: 'Remove backgrounds from images using AI, entirely in your browser.',
+    metaDescription: 'Remove image backgrounds using AI locally in your browser. No upload, no server. Download as transparent PNG free. No signup required.',
+    slug: 'background-remover',
+    categoryId: 'image',
+    status: 'active',
+    keywords: ['background remover', 'remove background', 'transparent background', 'AI background removal', 'remove background from image', 'image background eraser', 'free background remover'],
+    longDescription:
+      'Background Remover uses a machine-learning model that runs entirely inside your browser to separate the foreground subject — a person, product, pet, or object — from the background in any photo. The result is a transparent PNG you can download instantly, place on a new background, or drop into a design.\n\nUnlike cloud-based background removers, this tool never uploads your image to a server. The AI model downloads once (~40 MB) and then processes everything locally using WebAssembly and your device\'s GPU where available. That means private photos, unreleased product shots, and confidential materials stay on your device. You can also replace the removed background with a solid color before downloading if transparency is not what you need.',
+    steps: ['Upload a photo from your device.', 'Click the Remove background button.', 'Wait a few seconds for the AI to process.', 'Preview the result and download as transparent PNG.'],
+    useCases: ['Create product photos with transparent or white backgrounds', 'Remove backgrounds from headshots and portraits', 'Prepare images for presentations and marketing', 'Clean up screenshots before pasting into documents', 'Create stickers and cutouts from photos'],
+    faqs: [
+      { q: 'Are my images uploaded to a server?', a: 'No. The AI model runs entirely in your browser using WebAssembly. Your images never leave your device.' },
+      { q: 'Why does it download a large model the first time?', a: 'The AI model is approximately 40 MB. It downloads once from a CDN and is cached by your browser for future visits, so subsequent uses start much faster.' },
+      { q: 'What types of images work best?', a: 'The model works best with clearly defined subjects — people, animals, products, and objects — against reasonably distinct backgrounds. Complex scenes with many overlapping subjects may need manual cleanup.' },
+      { q: 'Can I replace the background with a color?', a: 'Yes. After removing the background you can choose a solid color to composite behind the subject before downloading.' },
+      { q: 'What is the output format?', a: 'The result is always a PNG file, which supports full transparency. This preserves the cutout edges and lets you place the subject on any background in another tool.' },
+      commonFaqPrivacy,
+    ],
+    related: ['watermark-remover', 'metadata-remover', 'image-resizer'],
+  },
 
   // Security
   {
@@ -1309,12 +1332,12 @@ export const tools: Tool[] = [
   {
     id: 'color-palette',
     name: 'Color Palette Generator',
-    description: 'Generate shades, tints, and HEX/RGB/HSL values from a base color.',
-    metaDescription: 'Generate color palettes with shades, tints, and HEX/RGB/HSL values from any base color. Free online tool. No signup required.',
+    description: 'Generate harmonious palettes, shade scales, and export CSS or Tailwind config from any base color.',
+    metaDescription: 'Generate harmonious color palettes with complementary, analogous, triadic, and split-complementary modes. Export CSS variables or Tailwind config. Free online.',
     slug: 'color-palette',
     categoryId: 'developer',
     status: 'active',
-    keywords: ['color palette', 'color picker', 'HEX to RGB', 'color shades'],
+    keywords: ['color palette generator', 'color harmony', 'complementary colors', 'analogous colors', 'triadic colors', 'color scheme generator', 'HEX to RGB', 'color shades', 'CSS color variables', 'Tailwind color config'],
     longDescription:
       'Color Palette Generator takes a single base color and produces a graded strip of shades (darker steps) and tints (lighter steps), each with its HEX, RGB, and HSL value ready to copy. Instead of eyeballing hover and active states or guessing at a lighter background, you get a consistent set of related colors derived from your starting point.\n\nIt is a fast way to build lightweight design tokens for a side project, generate the darker and lighter variants of a button or brand color, or convert a HEX value into HSL for use in CSS custom properties. Seeing all three color models side by side also makes it easy to grab whichever format your codebase prefers. Everything is computed in your browser — pick a color and the palette updates instantly, with nothing sent to a server.',
     steps: ['Pick a color.', 'Inspect generated shades and tints.', 'Copy the HEX or RGB value you need.'],
@@ -1353,12 +1376,12 @@ export const tools: Tool[] = [
   {
     id: 'markdown-editor',
     name: 'Markdown Editor',
-    description: 'Live preview Markdown editor with copy-to-clipboard and HTML export.',
-    metaDescription: 'Live preview Markdown editor with real-time HTML rendering. Export to HTML or copy Markdown. Free online. No signup required.',
+    description: 'Live preview Markdown editor with formatting toolbar, syntax highlighting, word count, and HTML export.',
+    metaDescription: 'Live preview Markdown editor with formatting toolbar, code syntax highlighting, word count, and fullscreen mode. Export to .md or .html. Free online.',
     slug: 'markdown-editor',
     categoryId: 'developer',
     status: 'active',
-    keywords: ['markdown editor', 'markdown preview', 'markdown to HTML'],
+    keywords: ['markdown editor', 'markdown preview', 'markdown to HTML', 'WYSIWYG markdown', 'markdown syntax highlighting', 'GFM editor', 'markdown toolbar'],
     longDescription:
       'Markdown Editor gives you a live split view: write Markdown on the left and watch the rendered HTML update on the right in real time. It is the quick way to draft and preview formatted text — headings, lists, links, tables, code blocks, and task lists — without committing to a heavier editor or pushing to a repo just to see how it looks.\n\nWhen you are happy with the result you can copy the Markdown, copy the rendered HTML, or download the HTML to use elsewhere. It is well suited to drafting a README, previewing Markdown before pasting it into a wiki or issue, or exporting a quick HTML snippet. Rendering uses the marked library with GitHub-flavored Markdown, and everything runs locally in your browser, so your draft is never uploaded.',
     steps: ['Write Markdown.', 'Toggle preview.', 'Copy or download.'],
