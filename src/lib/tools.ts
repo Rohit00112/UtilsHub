@@ -1808,6 +1808,127 @@ export const tools: Tool[] = [
     ],
     related: ['css-gradient-generator', 'meta-tags', 'color-palette'],
   },
+
+  // ── New tools ──────────────────────────────────────────────────────
+
+  // Developer: Color Converter
+  {
+    id: 'color-converter',
+    name: 'Color Converter',
+    description: 'Convert colors between HEX, RGB, HSL, and CMYK formats instantly.',
+    metaDescription: 'Convert colors between HEX, RGB, HSL, and CMYK formats online free. Live preview, copy any format. No signup, no data sent to servers.',
+    slug: 'color-converter',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['color converter', 'HEX to RGB', 'RGB to HSL', 'HSL to HEX', 'CMYK converter', 'color format converter', 'HEX to HSL', 'RGB to HEX'],
+    longDescription:
+      'Color Converter translates a single color value between the four formats developers and designers use most: HEX, RGB, HSL, and CMYK. Type or paste a value in any format — a six-digit hex code, an rgb() function, an hsl() declaration, or CMYK percentages — and the other three update instantly, each with a copy button so you can grab whichever your code, design tool, or print workflow expects.\n\nA live preview swatch shows the resolved color as you type, making it easy to verify you have the right shade before copying. HEX is the compact format used in CSS and design files; RGB gives you explicit red, green, and blue channel values; HSL makes it easy to reason about hue, saturation, and lightness; and CMYK is used in print design. All conversion runs locally in your browser, so color values are never uploaded.',
+    steps: ['Enter a color in any supported format — HEX, RGB, HSL, or CMYK.', 'See the other formats update instantly.', 'Copy the format you need.'],
+    useCases: ['Convert a HEX brand color to RGB for a CSS variable', 'Translate an HSL value to HEX for a design handoff', 'Get CMYK values from a web color for print materials', 'Quickly verify a color value is correct with the live preview'],
+    faqs: [
+      { q: 'Which color formats are supported?', a: 'HEX (e.g. #6366f1), RGB (e.g. rgb(99, 102, 241)), HSL (e.g. hsl(239, 84%, 67%)), and CMYK (e.g. 59%, 58%, 0%, 5%).' },
+      { q: 'Is the conversion accurate?', a: 'HEX, RGB, and HSL conversions are lossless since they all describe the same sRGB color space. CMYK is an approximation because accurate CMYK depends on ICC color profiles, which are a print-workflow concern.' },
+      { q: 'Can I use a color picker?', a: 'Yes. A native color picker is included alongside the text inputs, so you can pick visually and then copy the converted values.' },
+      commonFaqPrivacy,
+    ],
+    related: ['color-palette', 'css-gradient-generator', 'color-contrast-checker'],
+  },
+
+  // Text: Text to Binary
+  {
+    id: 'text-to-binary',
+    name: 'Text to Binary',
+    description: 'Convert text to binary, ASCII, octal, or hexadecimal and back.',
+    metaDescription: 'Convert text to binary, ASCII decimal, octal, or hex online free. Decode back to text instantly. No signup, no data sent to servers.',
+    slug: 'text-to-binary',
+    categoryId: 'text',
+    status: 'active',
+    keywords: ['text to binary', 'binary to text', 'ASCII converter', 'text to hex', 'text to octal', 'binary converter', 'ASCII to text', 'binary translator'],
+    longDescription:
+      'Text to Binary converts plain text into its numeric representations — binary (base 2), ASCII decimal (base 10), octal (base 8), and hexadecimal (base 16) — and decodes those representations back into readable text. Type a message and instantly see every character broken into its byte values in whichever base you choose, or paste a string of binary digits and translate it back into English.\n\nThis is the classic learning tool for understanding how computers store text. Each character in a string has a numeric code point, and these tools show that mapping in the format you pick. Choose space, comma, or no separator between values; switch between encode and decode; and swap the result back into the input to chain conversions. Everything runs in your browser, so the text you convert is never uploaded.',
+    steps: ['Paste or type text in the input.', 'Choose the output format: Binary, ASCII, Octal, or Hex.', 'Copy the result or switch to decode mode to reverse it.'],
+    useCases: ['Learn how computers represent text as binary', 'Encode a message in binary for fun or education', 'Decode a binary or hex string found in logs or documentation', 'Convert characters to ASCII codes for programming reference'],
+    faqs: [
+      { q: 'What character encoding is used?', a: 'The tool uses UTF-8 encoding, which covers ASCII (0–127) and extends to all Unicode characters including emoji and accented letters.' },
+      { q: 'What does each format mean?', a: 'Binary is base 2 (0s and 1s), ASCII/decimal is base 10 (0–255), octal is base 8 (0–377), and hexadecimal is base 16 (00–FF). They all represent the same byte values in different number systems.' },
+      { q: 'Can I decode binary back to text?', a: 'Yes. Switch to decode mode, paste a space-separated binary string, and the original text is recovered.' },
+      { q: 'Why are some characters more than 8 bits?', a: 'Characters outside ASCII (like emoji or accented letters) use multiple bytes in UTF-8. Each byte is shown as a separate binary/hex/octal value.' },
+      commonFaqPrivacy,
+    ],
+    related: ['base64', 'url-encoder', 'hash-generator'],
+  },
+
+  // Developer: JSON Path Finder
+  {
+    id: 'json-path-finder',
+    name: 'JSON Path Finder',
+    description: 'Paste JSON and click any value to get its JSONPath expression.',
+    metaDescription: 'Paste JSON and click any value to copy its JSONPath expression. Interactive tree view with search. Free online, no signup required.',
+    slug: 'json-path-finder',
+    categoryId: 'developer',
+    status: 'active',
+    keywords: ['JSON path finder', 'JSONPath', 'JSON tree viewer', 'JSON navigator', 'find JSON path', 'JSON path expression', 'JSON explorer'],
+    longDescription:
+      'JSON Path Finder parses a JSON document and renders it as an interactive, collapsible tree. Click any key or value in the tree and the tool instantly shows the JSONPath expression that targets that node — for example $.store.books[0].title — ready to copy and use in code, a query library, or an API filter parameter.\n\nNavigating a deeply nested API response or configuration file to figure out the correct accessor path is a surprisingly common and error-prone task. This tool eliminates the guesswork: paste the JSON, visually find the value you care about, click it, and copy the path. A search box lets you filter the tree by key name when the document is large. Everything runs locally in your browser, so API responses and config files stay private.',
+    steps: ['Paste a JSON document.', 'Expand nodes and click the value you need.', 'Copy the JSONPath expression.'],
+    useCases: ['Find the accessor path for a deeply nested API response field', 'Build JSONPath queries for data extraction', 'Navigate large configuration files visually', 'Debug which path points to a specific value in test fixtures'],
+    faqs: [
+      { q: 'What is JSONPath?', a: 'JSONPath is a query language for JSON, similar to XPath for XML. Expressions like $.store.books[0].title describe the location of a value inside a JSON document.' },
+      { q: 'Does it handle arrays?', a: 'Yes. Array elements are shown with their index, so clicking the first item in an array produces a path like $.items[0].' },
+      { q: 'Can I search within the JSON?', a: 'Yes. Use the search box to filter the tree by key name, which is useful for navigating large documents quickly.' },
+      { q: 'Is my JSON uploaded?', a: 'No. Parsing and tree rendering happen entirely in your browser.' },
+      commonFaqPrivacy,
+    ],
+    related: ['json-formatter', 'json-diff', 'json-to-typescript'],
+  },
+
+  // Image: Image to Base64
+  {
+    id: 'image-to-base64',
+    name: 'Image to Base64',
+    description: 'Convert images to Base64 strings, data URIs, and HTML img tags.',
+    metaDescription: 'Convert images to Base64 strings, data URIs, and HTML img tags online free. Drag and drop. No signup, no data sent to servers.',
+    slug: 'image-to-base64',
+    categoryId: 'image',
+    status: 'active',
+    keywords: ['image to Base64', 'image to data URI', 'Base64 image encoder', 'convert image to Base64', 'image Base64 string', 'inline image encoder'],
+    longDescription:
+      'Image to Base64 converts any image file into a Base64-encoded string that can be embedded directly in code, stylesheets, and markup without a separate image request. Upload a JPEG, PNG, GIF, WebP, or SVG and the tool produces three outputs: the raw Base64 string, a complete data: URI you can drop into a CSS background or src attribute, and a ready-to-paste HTML <img> tag.\n\nInlining small images as data URIs eliminates an HTTP round-trip, which can improve perceived load time for icons, logos, and sprites — especially in emails, single-file HTML exports, and embedded widgets where external asset references are inconvenient or impossible. The conversion uses the browser FileReader API, so your image is read locally and never uploaded to a server. File size and dimensions are shown alongside the output so you can judge whether inlining is worthwhile for each image.',
+    steps: ['Upload or drag-and-drop an image file.', 'Review the preview, file size, and dimensions.', 'Copy the Base64 string, data URI, or HTML img tag.'],
+    useCases: ['Inline a small icon in CSS without an extra HTTP request', 'Embed an image in an HTML email template', 'Create a self-contained single-file HTML export', 'Generate a data URI for a test fixture or placeholder'],
+    faqs: [
+      { q: 'Which image formats are supported?', a: 'JPEG, PNG, GIF, WebP, SVG, and other formats your browser can read. The output MIME type matches the source file.' },
+      { q: 'Should I Base64-encode large images?', a: 'Generally no. Base64 increases size by about 33%, so it is best for small assets like icons and logos. Large images are better served as separate files with caching.' },
+      { q: 'What is a data URI?', a: 'A data URI embeds file content directly in a URL using the format data:[mediatype];base64,[data]. Browsers render it like a normal image URL without making a network request.' },
+      { q: 'Is my image uploaded?', a: 'No. The FileReader API reads the file locally in your browser. Nothing is sent to a server.' },
+      commonFaqPrivacy,
+    ],
+    related: ['base64', 'webp-converter', 'image-resizer'],
+  },
+
+  // Calculator: Pomodoro Timer
+  {
+    id: 'pomodoro-timer',
+    name: 'Pomodoro Timer',
+    description: 'Focus timer with configurable work and break intervals.',
+    metaDescription: 'Free online Pomodoro timer with customizable work and break intervals. Visual countdown, session tracking, and audio alerts. No signup required.',
+    slug: 'pomodoro',
+    categoryId: 'calculator',
+    status: 'active',
+    keywords: ['Pomodoro timer', 'focus timer', 'work timer', 'productivity timer', 'Pomodoro technique', 'online timer', 'study timer', 'concentration timer'],
+    longDescription:
+      'Pomodoro Timer implements the Pomodoro Technique — a time-management method that alternates focused work sessions with short breaks to sustain concentration and prevent burnout. The default cycle is 25 minutes of work followed by a 5-minute short break, with a longer 15-minute break after every four work sessions. All intervals are adjustable so you can match your own rhythm.\n\nA large circular progress ring counts down the remaining time so you can glance at it from across a desk, and an audio alert sounds when a session ends so you do not have to watch the screen. The session counter tracks how many work blocks you have completed, giving you a tangible record of focused time. Everything runs in your browser tab — no account, no data collection, and no ads interrupting your focus.',
+    steps: ['Set your preferred work, short break, and long break durations.', 'Press Start to begin a focus session.', 'When the timer ends, take the break it suggests.', 'After four work sessions, take the longer break.'],
+    useCases: ['Structure a study or deep-work session', 'Maintain focus during long coding sprints', 'Pace writing or creative work with regular breaks', 'Track how many focused sessions you complete in a day'],
+    faqs: [
+      { q: 'What is the Pomodoro Technique?', a: 'It is a time-management method created by Francesco Cirillo. You work in focused intervals (traditionally 25 minutes), separated by short breaks, to maintain sustained concentration.' },
+      { q: 'Can I change the timer durations?', a: 'Yes. Work, short break, and long break durations are all adjustable. The defaults are 25, 5, and 15 minutes.' },
+      { q: 'Does it play a sound when the timer ends?', a: 'Yes. An audio alert notifies you when a session completes, so you do not have to watch the countdown.' },
+      { q: 'Does the timer work if I switch tabs?', a: 'Yes. The countdown continues in the background. The audio alert will still play when the timer ends.' },
+      commonFaqPrivacy,
+    ],
+    related: ['age-calculator', 'unit-converter'],
+  },
 ];
 
 export function getToolsByCategory(categoryId: string) {

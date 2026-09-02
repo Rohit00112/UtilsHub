@@ -6,6 +6,19 @@ import ToolLayout from '@/components/ToolLayout';
 import { ToolActionBar, ToolPanel, ToolStatus } from '@/components/tools/ToolPrimitives';
 import { useToolState } from '@/lib/toolState';
 
+function calculateStrength(password: string) {
+    let score = 0;
+    if (password.length > 8) score++;
+    if (password.length > 12) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score < 3) return 'Weak';
+    if (score < 5) return 'Medium';
+    return 'Strong';
+}
+
 export default function PasswordGenerator() {
     const [password, setPassword] = useToolState('password-generator', 'password', '');
     const [length, setLength] = useToolState('password-generator', 'length', 16);
@@ -17,19 +30,6 @@ export default function PasswordGenerator() {
     });
     const [strength, setStrength] = useToolState('password-generator', 'strength', '');
     const [copied, setCopied] = useState(false);
-
-    const calculateStrength = (pass: string) => {
-        let score = 0;
-        if (pass.length > 8) score++;
-        if (pass.length > 12) score++;
-        if (/[A-Z]/.test(pass)) score++;
-        if (/[0-9]/.test(pass)) score++;
-        if (/[^A-Za-z0-9]/.test(pass)) score++;
-
-        if (score < 3) setStrength('Weak');
-        else if (score < 5) setStrength('Medium');
-        else setStrength('Strong');
-    };
 
     const generatePassword = useCallback(() => {
         const charset = {
@@ -58,7 +58,7 @@ export default function PasswordGenerator() {
 
         setPassword(generatedPassword);
         setCopied(false);
-        calculateStrength(generatedPassword);
+        setStrength(calculateStrength(generatedPassword));
     }, [length, options, setPassword, setStrength]);
 
     useEffect(() => {
